@@ -22,6 +22,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '1okg_00w23xs9o62%ql^iazaab0=pw2)4&ltt06=f0g)p_#zg3'
 
+# Key used to access the dPoW service
+DPOW_API_KEY = os.environ["DPOW_API_KEY"]
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
