@@ -28,6 +28,12 @@ $ pip install django-filter
 $ pip install requests  # Used for sending HTTP Requests
 ```
 
+## Environment Variable Setup
+
+### dPoW API Key
+
+In order to run the Django server, the `DPOW_API_KEY` environment variable needs to exist (the server will not start without it).
+
 ## Running the Server
 
 Execute the following to host the web API locally.
