@@ -22,6 +22,12 @@ $ pip install markdown
 $ pip install django-filter
 ```
 
+### Other Python Dependencies
+
+```sh
+$ pip install requests  # Used for sending HTTP Requests
+```
+
 ## Running the Server
 
 Execute the following to host the web API locally.
