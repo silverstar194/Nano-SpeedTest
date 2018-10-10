@@ -31,9 +31,12 @@ $ pip install nano-python  # RPC wrapper for Nano
 
 ## Environment Variable Setup
 
-### dPoW API Key
+### dPoW API
 
-In order to run the Django server, the `DPOW_API_KEY` environment variable needs to exist (the server will not start without it).
+In order to run the Django server, the following environment variables need to exist (the server will not start without them).
+
+* `DPOW_ENDPOINT`
+* `DPOW_API_KEY`
 
 ## Running the Server
 
