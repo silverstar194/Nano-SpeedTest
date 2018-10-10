@@ -1,0 +1,18 @@
+.btn-circle.btn-xl {
+  width: 7.65625em;
+  height: 7.65625em;
+  padding: 1.09375em 1.75em;
+  border-radius: 3.829em;
+  font-size: 2.625em;
+  line-height: 1.33;
+}
+
+.btn-circle {
+  width: 3.28125m;
+  height: 3.28125em;
+  padding: 0.375em 0em;
+  border-radius: 1.6415em;
+  text-align: center;
+  font-size: 0.125em;
+  line-height: 1.42857;
+}
