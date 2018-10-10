@@ -26,6 +26,7 @@ $ pip install django-filter
 
 ```sh
 $ pip install requests  # Used for sending HTTP Requests
+$ pip install nano-python  # RPC wrapper for Nano
 ```
 
 ## Environment Variable Setup
