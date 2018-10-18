@@ -5,7 +5,7 @@ from speedtest_api.models.models import Transaction
 class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
-        fields = ('ID', 'SenderID', 'ReceiverID', 'StartTime', 'EndTime', 'Amount', 'InitiatorIP')
+        fields = ('TransactionId', 'SenderId', 'ReceiverId', 'StartTime', 'EndTime', 'Amount', 'InitiatorIp')
 
     def create(self, validated_data):
         """

@@ -7,22 +7,25 @@ from speedtest_api.models.models import Transaction
 from speedtest_api.serializers import TransactionSerializer
 from datetime import datetime
 
+
 @api_view(['POST'])
-def send_transaction(self):
+def send_transaction(request):
     """
     Send a transaction to the database
     """
-    transaction = Transaction()
-    transaction.ID = '000000000'
-    transaction.SenderID = '123456789'
-    transaction.ReceiverID = '987654321'
-    transaction.StartTime = datetime.utcnow()
-    transaction.EndTime = datetime.utcnow()
-    transaction.Amount = 0.00001
-    transaction.InitiatorIP = '192.168.1.1'
+    # Dummy JSON for the UI guys to test with
+    transaction = {
+        "TransactionId": "000000000",
+        "SenderId": "123456789",
+        "ReceiverId": "987654321",
+        "StartTime": datetime.utcnow(),
+        "EndTime": datetime.utcnow(),
+        "Amount": 0.001,
+        "InitiatorIp": "192.168.0.1"
+    }
 
     serializer = TransactionSerializer(data=transaction)
     if serializer.is_valid():
-        # serializer.save
+        serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
