@@ -16,8 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url, include
+from speedtest_api import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^', include('speedtest_api.urls'))
+    path('transactions/', views.send_transaction),
 ]
