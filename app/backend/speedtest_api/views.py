@@ -23,6 +23,6 @@ def send_transaction():
 
     serializer = TransactionSerializer(data=transaction)
     if serializer.is_valid():
-        #serializer.save
+        # serializer.save
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
