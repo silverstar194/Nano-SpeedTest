@@ -4,7 +4,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from speedtest_api.models.models import Transaction
-from speedtest_api.serializers.serializers import TransactionSerializer
+from speedtest_api.serializers import TransactionSerializer
 from datetime import datetime
 
 @api_view(['POST'])

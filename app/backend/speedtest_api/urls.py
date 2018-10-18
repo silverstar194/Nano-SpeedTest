@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url, include
 from rest_framework.urlpatterns import format_suffix_patterns
-from speedtest_api.views import views
+from speedtest_api import views
 
 urlpatterns = [
     url(r'^transactions/', views.send_transaction),
