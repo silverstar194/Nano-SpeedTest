@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from speedtest_api.models.models import Transaction
+from app.backend.speedtest_api.models.models import Transaction
 
 
 class TransactionSerializer(serializers.ModelSerializer):

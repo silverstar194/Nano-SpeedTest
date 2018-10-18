@@ -3,8 +3,8 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from speedtest_api.models.models import Transaction
-from speedtest_api.serializers import TransactionSerializer
+from app.backend.speedtest_api.models.models import Transaction
+from app.backend.speedtest_api.serializers import TransactionSerializer
 from datetime import datetime
 
 @api_view(['POST'])
