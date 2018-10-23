@@ -8,4 +8,4 @@ class Transaction(models.Model):
     StartTime = models.DateTimeField()
     EndTime = models.DateTimeField()
     Amount = models.FloatField()
-    InitiatorIp = models.TextField()
+    InitiatorIp = models.GenericIPAddressField()
