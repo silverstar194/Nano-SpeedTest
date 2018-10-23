@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import NanoRouter from './NanoRouter';
 import * as serviceWorker from './serviceWorker';
 
+// TODO - uncomment once we have a reducer to pass in as first arg
 // const store = createStore(
 //     combineReducers({
 //         // reducers
