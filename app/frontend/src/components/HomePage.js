@@ -4,6 +4,7 @@ import '../styles/HomePage.css';
 
 class HomePage extends Component {
     onClick = () => {
+        // navigate to /Stats route
         this.props.history.push('/Stats');
     };
     render() {
