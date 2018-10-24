@@ -1,18 +1,36 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import HeaderItem from './HeaderItem';
+import {connect} from 'react-redux';
+import { switchTab } from '../actions/navigation';
 
-const Header = () => (
-    <div className="nav nav-tabs">
-        <li className="nav-item">
-            <Link className="nav-link" to=''>Speed Test</Link>
-        </li>
-        <li className="nav-item">
-            <Link className="nav-link" to='Stats'>Statistics</Link>
-        </li>
-        <li className="nav-item">
-            <Link className='nav-link' to='Info'>More Info</Link>
-        </li>
-    </div>
-);
+const Header = ({activeTab, onSwitchTab}) => {
+	return (
+		<div className="nav nav-tabs">
+			<HeaderItem activeTab={activeTab} onSwitchTab={onSwitchTab} to='' text='Speed Test' tabName=''/>
+			<HeaderItem activeTab={activeTab} onSwitchTab={onSwitchTab} to='Stats' text='Statistics' tabName='Stats'/>
+			<HeaderItem activeTab={activeTab} onSwitchTab={onSwitchTab} to='Info' text='More Info' tabName='Info'/>
+		</div>
+	)
+};
 
-export default Header;
+const mapStateToProps = (state) => {
+	return {
+	  	activeTab: state.navigation.activeTab
+	};
+};
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+	  	onSwitchTab(tab) {
+			dispatch(switchTab(tab));
+	  	}
+	};
+};
+
+Header.propTypes = {
+	activeTab: PropTypes.string.isRequired,
+	onSwitchTab: PropTypes.func.isRequired
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

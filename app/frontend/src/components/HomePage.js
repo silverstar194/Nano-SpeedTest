@@ -1,11 +1,15 @@
 import React, {Component} from 'react';
 import Header from './Header';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import { switchTab } from '../actions/navigation';
 import '../styles/HomePage.css';
 
 class HomePage extends Component {
     onClick = () => {
         // navigate to /Stats route
         this.props.history.push('/Stats');
+        this.props.onGoPressed(); // Update current active tab
     };
     render() {
         return (
@@ -29,4 +33,17 @@ class HomePage extends Component {
     }
 }
 
-export default HomePage;
+const mapDispatchToProps = (dispatch) => {
+	return {
+	  	onGoPressed() {
+			dispatch(switchTab("Stats")); // Update current active tab
+	  	}
+	};
+};
+
+HomePage.propTypes = {
+    history: PropTypes.object.isRequired,
+    onGoPressed: PropTypes.func.isRequired
+}
+
+export default connect(null, mapDispatchToProps)(HomePage);

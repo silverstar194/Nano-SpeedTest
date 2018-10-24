@@ -1,22 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import createStore from 'react-redux';
+import {combineReducers, createStore} from 'redux';
 import { Provider } from 'react-redux';
 import NanoRouter from './NanoRouter';
 import * as serviceWorker from './serviceWorker';
 
-// TODO - uncomment once we have a reducer to pass in as first arg
-// const store = createStore(
-//     combineReducers({
-//         // reducers
-//     }),
-//     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-// );
+import navigation from './reducers/navigation';
+
+const initialState = {
+    navigation: {
+        activeTab: '' // initialize the starting tab to be our default home page
+    }
+}
+
+const store = createStore(
+    combineReducers({
+        navigation
+    }),
+    initialState,
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 const root = (
-    // <Provider store={store}>
+    <Provider store={store}>
         <NanoRouter />
-    // </Provider>
+    </Provider>
 );
 
 ReactDOM.render(root, document.getElementById('root'));
