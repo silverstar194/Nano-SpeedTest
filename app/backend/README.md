@@ -27,13 +27,21 @@ $ pip install django-filter
 ```sh
 $ pip install requests  # Used for sending HTTP Requests
 $ pip install nano-python  # RPC wrapper for Nano
+$ pip install mysqlclient  # We are using a MySQL database
 ```
 
 ## Environment Variable Setup
 
 ### dPoW API Key
 
-In order to run the Django server, the `DPOW_API_KEY` environment variable needs to exist (the server will not start without it).
+In order to run the Django server, the following environment variables need to exist (the server will not start without them).
+
+* `NANO_ST__DPOW__ENDPOINT` endpoint of the dPoW service
+* `NANO_ST__DPOW__API_KEY` API key for the dPoW service
+* `NANO_ST__DB__NAME`
+* `NANO_ST__DB__USER`
+* `NANO_ST__DB__PASSWORD`
+* `NANO_ST__DB__HOST`
 
 ## Running the Server
 
