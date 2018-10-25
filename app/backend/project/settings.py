@@ -23,8 +23,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '1okg_00w23xs9o62%ql^iazaab0=pw2)4&ltt06=f0g)p_#zg3'
 
 # Key used to access the dPoW service
-DPOW_API_KEY = os.environ["DPOW_API_KEY"]
-DPOW_ENDPOINT = os.environ["DPOW_ENDPOINT"]
+DPOW_API_KEY = os.environ["NANO_ST__DPOW__API_KEY"]
+DPOW_ENDPOINT = os.environ["NANO_ST__DPOW__ENDPOINT"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'speedtest_api'
 ]
 
 MIDDLEWARE = [
@@ -79,8 +80,14 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.environ["NANO_ST__DB__NAME"],
+        'USER': os.environ["NANO_ST__DB__USER"],
+        'PASSWORD': os.environ["NANO_ST__DB__PASSWORD"],
+        'HOST': os.environ["NANO_ST__DB__HOST"],
+        'OPTIONS': {
+            'sql_mode': 'STRICT_ALL_TABLES'
+        }
     }
 }
 
