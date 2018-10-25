@@ -9,4 +9,4 @@ class Transaction(models.Model):
     start_timestamp = models.DateField()
     end_timestamp = models.DateField()
     amount = models.IntegerField()  # Measured in RAW
-    initiated_by = models.CharField(max_length=48)
+    initiated_by = models.GenericIPAddressField(protocol='both')
