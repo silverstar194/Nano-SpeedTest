@@ -21,8 +21,8 @@ class HomePage extends Component {
                         <div className="col-md-12 text-center">
                             <button type="button" className="btn btn-success btn-circle btn-xl" onClick={this.onClick}>Go</button>
                             <br/>
-                            <button type="button" className="btn btn-outline-primary">Advanced</button>
-                            <br/>
+                            {/*<button type="button" className="btn btn-outline-primary">Advanced</button>*/}
+                            {/*<br/>*/}
                             Run your live test now.
                         </div>
                     </div>

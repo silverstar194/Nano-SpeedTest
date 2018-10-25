@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Header from './Header'
 import TableRow from './TableRow'
-import '../styles/HomePage.css';
+import '../styles/StatsPage.css';
 
 class StatsPage extends Component {
     render() {
@@ -20,8 +20,8 @@ class StatsPage extends Component {
                 time: 9.7,
                 amount: 55555,
                 completed: 'March 15, 2015'
-            }
-        ]
+            },
+        ];
         return (
             <div className="StatsPage">
                 <Header/>
@@ -41,12 +41,15 @@ class StatsPage extends Component {
                     <tbody>
                     {
                         fakeTableData.map((props, index) => {
-                            props.index = index;
+                            props.index = index + 1;
                             return <TableRow key={props.hash} {...props}/>
                         })
                     }
                     </tbody>
                     </table>
+                <div className="loading-container d-flex justify-content-center">
+                    <div className="loader"></div>
+                </div>
             </div>
         );
     }
