@@ -32,7 +32,7 @@ $ pip install mysqlclient  # We are using a MySQL database
 
 ## Environment Variable Setup
 
-### dPoW API Key
+### dPoW API
 
 In order to run the Django server, the following environment variables need to exist (the server will not start without them).
 
