@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import Header from './Header'
-import TableRow from './TableRow'
+import Header from './Header';
+import TableRow from './TableRow';
 import '../styles/StatsPage.css';
 
 class StatsPage extends Component {
@@ -42,7 +42,7 @@ class StatsPage extends Component {
                     {
                         fakeTableData.map((props, index) => {
                             props.index = index + 1;
-                            return <TableRow key={props.hash} {...props}/>
+                            return <TableRow key={props.hash} {...props}/>;
                         })
                     }
                     </tbody>

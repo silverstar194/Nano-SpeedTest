@@ -11,7 +11,7 @@ const Header = ({activeTab, onSwitchTab}) => {
 			<HeaderItem activeTab={activeTab} onSwitchTab={onSwitchTab} to='Stats' text='Statistics' tabName='Stats'/>
 			<HeaderItem activeTab={activeTab} onSwitchTab={onSwitchTab} to='Info' text='More Info' tabName='Info'/>
 		</div>
-	)
+	);
 };
 
 const mapStateToProps = (state) => {
