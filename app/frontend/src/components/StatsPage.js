@@ -47,7 +47,7 @@ class StatsPage extends Component {
                     }
                     </tbody>
                     </table>
-                <div className="loading-container d-flex justify-content-center">
+                <div className="d-flex justify-content-center">
                     <div className="loader"></div>
                 </div>
             </div>
