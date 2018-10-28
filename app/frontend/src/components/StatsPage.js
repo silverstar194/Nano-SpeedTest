@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Header from './Header';
 import TableRow from './TableRow';
 import '../styles/StatsPage.css';
+import Map from './Map';
 
 class StatsPage extends Component {
     render() {
@@ -26,6 +27,7 @@ class StatsPage extends Component {
             <div className="StatsPage">
                 <Header/>
                 <h1 className="page-header text-center">Stats Page</h1>
+                <Map/>
                 <table className="table">
                     <thead>
                         <tr>
