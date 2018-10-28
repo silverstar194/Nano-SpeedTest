@@ -5,8 +5,9 @@ import '../styles/StatsPage.css';
 import Map from './Map';
 
 class StatsPage extends Component {
-    render() {
-        const fakeTableData = [
+    state = {
+        loading: true,
+        fakeTableData: [
             {
                 hash: 'abc-123',
                 origin: 'SF',
@@ -21,37 +22,87 @@ class StatsPage extends Component {
                 time: 9.7,
                 amount: 55555,
                 completed: 'March 15, 2015'
-            },
-        ];
+            }
+        ]
+    };
+
+    getData = () => {
+        setTimeout(() => {
+            this.setState(() => {
+                return {
+                    fakeTableData: [...this.state.fakeTableData,
+                        {
+                            hash: 'ahd-949',
+                            origin: 'Madison',
+                            destination: 'Austin',
+                            time: 4.3,
+                            amount: 54321,
+                            completed: 'Sept 19, 2018'
+                        }],
+                    loading: false
+                }
+            });
+        }, 4300)
+    };
+
+    handleClick = () => {
+        this.setState(() => {
+            return {
+                fakeTableData: [...this.state.fakeTableData.slice(0, this.state.fakeTableData.length - 1)],
+                loading: true
+            }
+        });
+    };
+
+    render() {
+        // call function to "get data" once (set timer and then add value to array) and to simulate a single
+        // async request
+        if (this.state.loading) {
+            this.getData();
+        }
+
+        // render the jsx
         return (
-            <div className="StatsPage">
+            <div className='StatsPage'>
                 <Header/>
                 <h1 className="page-header text-center">Stats Page</h1>
                 <Map/>
                 <table className="table">
                     <thead>
-                        <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Hash</th>
-                        <th scope="col">Origin</th>
-                        <th scope="col">Destination</th>
-                        <th scope="col">Elapsed Time</th>
-                        <th scope="col">Amount</th>
-                        <th scope="col">Completed</th>
-                        </tr>
+                    <tr>
+                        <th scope='col'>#</th>
+                        <th scope='col'>Hash</th>
+                        <th scope='col'>Origin</th>
+                        <th scope='col'>Destination</th>
+                        <th scope='col'>Elapsed Time</th>
+                        <th scope='col'>Amount</th>
+                        <th scope='col'>Completed</th>
+                    </tr>
                     </thead>
                     <tbody>
                     {
-                        fakeTableData.map((props, index) => {
+                        this.state.fakeTableData.map((props, index) => {
                             props.index = index + 1;
                             return <TableRow key={props.hash} {...props}/>;
                         })
                     }
                     </tbody>
-                    </table>
-                <div className="d-flex justify-content-center">
-                    <div className="loader"></div>
-                </div>
+                </table>
+
+                {/*only show loading if we are waiting for the data.  Else show button to rerun*/}
+                {this.state.loading ? (
+                    <div className='loading-container'>
+                        <div className='loader-container d-flex justify-content-center'>
+                            <div className='loader'></div>
+                        </div>
+                        <div>
+                            <p>Your transaction is processing. Please wait.</p>
+                        </div>
+                    </div> ) : (
+                    <div className='loader-container d-flex justify-content-center'>
+                        <button className='btn btn-primary' onClick={this.handleClick}>Run Test Again</button>
+                    </div>
+                )}
             </div>
         );
     }
