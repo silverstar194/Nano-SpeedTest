@@ -1,64 +1,75 @@
-import React, { Component } from 'react';
-import GoogleMapReact from 'google-map-react';
-import { fitBounds } from 'google-map-react/utils';
-import '../styles/Map.css';
+import React from 'react';
+import { compose, withProps } from 'recompose';
+import { withGoogleMap, GoogleMap, Polyline, Marker } from 'react-google-maps';
 
-const la = {lat: 34.055000, lng: -118.237742};
-const sf = {lat: 37.768249, lng: -122.445145};
-
-// fitBounds method requires knowing the corners of the map
-// either {ne, sw} or {nw, se} -> this method takes two points and returns them formated correctly
-const makeBounds = (locA, locB) => {
-    let coords = {};
-    if (locA.lat > locB.lat) {
-        if (locA.lng > locB.lng) {
-            coords['ne'] = locA;
-            coords['sw'] = locB;
-        } else {
-            coords['nw'] = locA;
-            coords['se'] = locB;
-        }
-    } else {
-        if (locA.lng > locB.lng) {
-            coords['se'] = locA;
-            coords['nw'] = locB;
-        } else {
-            coords['sw'] = locA;
-            coords['ne'] = locB;
-        }
+class TestMap extends React.Component {
+    state = {
+        mapLoaded: false
     }
-    return coords;
-};
-
-const bounds = makeBounds(sf,la);
-
-const size = {
-    width: 960, // Map width in pixels
-    height: 400, // Map height in pixels
-};
-
-const {center, zoom} = fitBounds(bounds, size);
-
-export default class Map extends Component {
-    static defaultProps = { // will need to accept values through props
-        center,
-        zoom
+    // Updates the map window once it is loaded to only show the distance between the two cities
+    recomputeBounds() {
+        const {cities} = this.props;
+        const bounds = new window.google.maps.LatLngBounds();
+        cities.map((city) => bounds.extend(city.coords));
+        this.refs.map.fitBounds(bounds, 3);
+        this.setState({mapLoaded: true});
     }
     render() {
+        const {cities} = this.props;
+        const {mapLoaded} = this.state;
+
         return (
-            <div className='google-map'>
-                <GoogleMapReact
-                    bootstrapURLKeys={{key: 'AIzaSyD27p9eUBuinHJFiVnnT6EA8tLm1bDAgow'}} //TODO should change key from mine to nano
-                    options={{
-                        zoomControl: false,
-                        gestureHandling: 'none',
-                        draggableCursor: 'default',
-                        disableDefaultUI: true
-                    }}
-                    defaultCenter={ this.props.center }
-                    defaultZoom={ this.props.zoom }>
-                </GoogleMapReact>
-            </div>
+            <GoogleMap
+                ref='map'
+                defaultZoom={2}
+                defaultCenter={{ lat: 0, lng: 0 }}
+                defaultOptions={{ // disable moving and zooming the map
+                    zoomControl: false,
+                    gestureHandling: 'none',
+                    draggableCursor: 'default',
+                    disableDefaultUI: true
+                }}
+                onTilesLoaded={() => this.recomputeBounds()}
+            >
+            { // the map needs to render before recomputing and drawing markers and lines
+                mapLoaded ? (
+                    <div>
+                        <Polyline
+                            path={[this.props.cities[0].coords, this.props.cities[1].coords]}
+                            options={{
+                                clickable: false,
+                                strokeOpacity: 1,
+                                strokeWeight: 2,
+                                geodesic: true,
+                            }}
+                        />
+                        {cities.map((city) =>
+                            <Marker
+                                key={city.name}
+                                title={city.name}
+                                position={city.coords}
+                                clickable={false}
+                            />
+                        )}
+                    </div>
+
+                ) : null
+
+            }
+
+            </GoogleMap>
         );
-    }
+  }
 }
+
+const Map = compose(
+    withProps({
+        loadingElement: <div style={{ height: '100%' }} />,
+        containerElement: <div style={{ height: 500, width: '100%' }} />,
+        mapElement: <div style={{ height: '100%' }}
+        />
+    }),
+    withGoogleMap
+)(TestMap);
+
+export default Map;
