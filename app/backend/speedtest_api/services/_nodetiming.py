@@ -1,6 +1,7 @@
 import datetime
 import random
 import time
+import logging
 
 import nano
 
@@ -27,6 +28,9 @@ def transcation_general(node_IP, account_address, current_hash, start_timestamp)
 	@raise BlockAlreadyInHistoryException for when we have missed the  transaction
 	"""
 	rpc_node = nano.rpc.Client(node_IP)
+	
+	# Get an instance of a logger
+	logger = logging.getLogger(__name__)
 
 		#Sleep times are for incase we are still waiting for the transcation to go through
 		backoff_sleep_values = [1,1,2,3,5,8]/2.0
@@ -38,6 +42,7 @@ def transcation_general(node_IP, account_address, current_hash, start_timestamp)
 			try:
 				history_curr_account = rpc_node.account_history(address, account = 5) #magic assuming that if it is not 5 back it hasn't been received 
 			except:
+				logger.error('Unable to get history')
 				raise ValueError("Unable to get history")
 
 			frontier_hash = history_curr_account[0][u'hash']
@@ -50,10 +55,13 @@ def transcation_general(node_IP, account_address, current_hash, start_timestamp)
 			
 			for value in history_curr_account:
 				if value[u'hash'] is hash_of_block:
+					logger.error("Unable to get hash of following block %s" %hash_of_block)
 					raise BlockAlreadyInHistoryException(hash_of_block)
 
 			time.sleep(sleep_value)
 
+
+		logger.error("Transaction was never found")
 		raise TimeoutError("Transaction never found") 
 
 
