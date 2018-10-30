@@ -10,3 +10,8 @@ class Transaction(models.Model):
     end_timestamp = models.DateField()
     amount = models.IntegerField()  # Measured in RAW
     initiated_by = models.GenericIPAddressField(protocol='both')
+    transaction_hash_sending = models.CharField(max_length=64)
+    transaction_hash_receiving = models.CharField(max_length=64)
+
+    def __str__(self):
+        return u'Start: %s\n Amount: %s' % (self.start_timestamp, amount)
