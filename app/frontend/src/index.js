@@ -6,16 +6,21 @@ import NanoRouter from './NanoRouter';
 import * as serviceWorker from './serviceWorker';
 
 import navigation from './reducers/navigation';
+import table from './reducers/table'
 
+
+// TODO - persist state so when user refreshes page, it doesn't delete state (bug: sets active tab to home, stays on curr)
 const initialState = {
     navigation: {
         activeTab: '' // initialize the starting tab to be our default home page
-    }
-}
+    },
+    table: []
+};
 
 const store = createStore(
     combineReducers({
-        navigation
+        navigation,
+        table
     }),
     initialState,
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()

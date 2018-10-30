@@ -7,10 +7,11 @@
     "husky": "^1.1.2",
     "lint-staged": "^7.3.0",
     "prettier": "^1.14.3",
-    "react": "^16.5.2",
-    "react-dom": "^16.5.2",
+    "prop-types": "^15.6.2",
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0",
     "react-google-maps": "^9.4.5",
-    "react-redux": "^5.0.7",
+    "react-redux": "^5.1.0",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.0.4",
@@ -42,6 +43,8 @@
       "!<rootDir>/src/index.js",
       "!<rootDir>/src/serviceWorker.js"
     ],
-    "coverageReporters": ["text"]
+    "coverageReporters": [
+      "text"
+    ]
   }
 }

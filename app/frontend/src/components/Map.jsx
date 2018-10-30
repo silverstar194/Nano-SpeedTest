@@ -5,7 +5,7 @@ import { withGoogleMap, GoogleMap, Polyline, Marker } from 'react-google-maps';
 class TestMap extends React.Component {
     state = {
         mapLoaded: false
-    }
+    };
     // Updates the map window once it is loaded to only show the distance between the two cities
     recomputeBounds() {
         const {cities} = this.props;

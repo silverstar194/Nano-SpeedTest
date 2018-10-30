@@ -1,29 +1,17 @@
 import React, {Component} from 'react';
-import Header from './Header';
+import Header from './Header'
+import PropTypes from 'prop-types';
 import TableRow from './TableRow';
 import '../styles/StatsPage.css';
 import Map from './Map';
+import {connect} from 'react-redux';
+import {addTransaction} from "../actions/table";
+
 
 class StatsPage extends Component {
     state = {
         loading: true,
-        fakeTableData: [
-            {
-                hash: 'abc-123',
-                origin: 'SF',
-                destination: 'LA',
-                time: 9.3,
-                amount: 12345,
-                completed: 'Jan 1, 2018'
-            }, {
-                hash: 'zyx-321',
-                origin: 'NY',
-                destination: 'WI',
-                time: 9.7,
-                amount: 55555,
-                completed: 'March 15, 2015'
-            }
-        ],
+        calledGetData: false,
         cities: [{
             name: 'japan',
             coords: {
@@ -31,54 +19,63 @@ class StatsPage extends Component {
                 lng: 138.2529
             }
         },
-        {
-            name: 'sf',
-            coords: {
-                lat: 37.768249,
-                lng: -122.445145
+            {
+                name: 'sf',
+                coords: {
+                    lat: 37.768249,
+                    lng: -122.445145
+                }
             }
-        }
-    ]
+        ]
     };
 
     getData = () => {
+        this.setState({calledGetData: true});
         setTimeout(() => {
-            this.setState({
-                fakeTableData: [...this.state.fakeTableData,
-                    {
-                        hash: 'ahd-949',
-                        origin: 'Madison',
-                        destination: 'Austin',
-                        time: 4.3,
-                        amount: 54321,
-                        completed: 'Sept 19, 2018'
-                    }],
-                loading: false
+            this.props.onAddData({
+                hash: 'ahd-949',
+                origin: 'Japan',
+                destination: 'SF',
+                time: 4.3,
+                amount: 54321,
+                completed: 'Sept 19, 2018'
             });
+            this.setState({loading: false});
         }, 4300)
     };
-
-    handleClick = () => {
-        this.setState({
-            fakeTableData: [...this.state.fakeTableData.slice(0, this.state.fakeTableData.length - 1)],
-            loading: true
+    componentDidMount() {
+        this.props.onAddData({
+            hash: 'abc-123',
+            origin: 'SF',
+            destination: 'LA',
+            time: 9.3,
+            amount: 12345,
+            completed: 'Jan 1, 2018'
         });
-    };
+        this.props.onAddData({
+            hash: 'zyx-321',
+            origin: 'NY',
+            destination: 'WI',
+            time: 9.7,
+            amount: 55555,
+            completed: 'March 15, 2015'
+        });
 
-    render() {
-        // call function to "get data" once (set timer and then add value to array) and to simulate a single
+        // call function to 'get data' once (set timer and then add value to array) and to simulate a single
         // async request
-        if (this.state.loading) {
+        if (!this.state.calledGetData) {
             this.getData();
         }
+    }
 
+    render() {
         // render the jsx
         return (
             <div className='StatsPage'>
                 <Header/>
-                <h1 className="page-header text-center">Stats Page</h1>
+                <h1 className='page-header text-center'>Stats Page</h1>
                 <Map cities={this.state.cities}/>
-                <table className="table">
+                <table className='table'>
                     <thead>
                     <tr>
                         <th scope='col'>#</th>
@@ -92,7 +89,7 @@ class StatsPage extends Component {
                     </thead>
                     <tbody>
                     {
-                        this.state.fakeTableData.map((props, index) => {
+                        this.props.table.map((props, index) => {
                             props.index = index + 1;
                             return <TableRow key={props.hash} {...props}/>;
                         })
@@ -101,7 +98,7 @@ class StatsPage extends Component {
                 </table>
 
                 {/*only show loading if we are waiting for the data.  Else show button to rerun*/}
-                {this.state.loading ? (
+                {this.state.loading && (
                     <div className='loading-container'>
                         <div className='loader-container d-flex justify-content-center'>
                             <div className='loader'></div>
@@ -109,14 +106,30 @@ class StatsPage extends Component {
                         <div>
                             <p>Your transaction is processing. Please wait.</p>
                         </div>
-                    </div> ) : (
-                    <div className='loader-container d-flex justify-content-center'>
-                        <button className='btn btn-primary' onClick={this.handleClick}>Run Test Again</button>
-                    </div>
-                )}
+                    </div> )
+                }
             </div>
         );
     }
 }
 
-export default StatsPage;
+const mapStateToProps = (state) => {
+    return {
+        table: state.table
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onAddData(data) {
+            dispatch(addTransaction(data));
+        }
+    };
+};
+
+StatsPage.propTypes = {
+    table: PropTypes.array.isRequired,
+    onAddData: PropTypes.func.isRequired
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(StatsPage);

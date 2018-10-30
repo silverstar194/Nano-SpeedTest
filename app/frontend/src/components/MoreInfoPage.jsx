@@ -5,9 +5,9 @@ import '../styles/HomePage.css';
 class MoreInfoPage extends Component {
     render() {
         return (
-            <div className="MoreInfoPage">
+            <div className='MoreInfoPage'>
                 <Header/>
-                <h1 className="page-header text-center">More Info Page</h1>
+                <h1 className='page-header text-center'>More Info Page</h1>
             </div>
         );
     }
