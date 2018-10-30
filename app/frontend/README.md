@@ -1,6 +1,11 @@
 #Nano Frontend
 This app was created using the create-react-app. Below is a large list of useful resources and links provided by create-react-app and helps when modifying this project to our own needs.
 
+## Testing
+Currently basic unit testing of redux actions and reducers exists. Running `npm test` triggers tests to run and continue to run on file changes.
+
+In addition, `npm test -- --coverage` (yes there are two --) will show the coverage report. Currently only `.js` files are being tested and it is specifically set to ignore additional files such as `index.js` and `serviceWorker.js`. These options can be changed in the `package.json`.
+
 TODO: This will need to be cleaned up before release but I will leave it here for now because it will be useful when setting up the various features.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

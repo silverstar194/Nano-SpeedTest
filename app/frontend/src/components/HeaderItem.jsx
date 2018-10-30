@@ -8,7 +8,7 @@ const HeaderItem = ({activeTab, onSwitchTab, tabName, to, text}) => {
       	<li className="nav-item">
 			<Link className={styles} to={to} onClick={() => onSwitchTab(to)}> {text} </Link>
       	</li>
-    )
+    );
 };
 
 HeaderItem.propTypes = {
@@ -17,6 +17,6 @@ HeaderItem.propTypes = {
 	tabName: PropTypes.string.isRequired,
 	to: PropTypes.string.isRequired,
 	text: PropTypes.string.isRequired
-}
+};
 
 export default HeaderItem;

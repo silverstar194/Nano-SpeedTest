@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import Header from './Header'
-import TableRow from './TableRow'
+import Header from './Header';
+import TableRow from './TableRow';
 import '../styles/StatsPage.css';
+import Map from './Map';
 
 class StatsPage extends Component {
     state = {
@@ -22,34 +23,45 @@ class StatsPage extends Component {
                 amount: 55555,
                 completed: 'March 15, 2015'
             }
-        ]
+        ],
+        cities: [{
+            name: 'japan',
+            coords: {
+                lat: 36.2048,
+                lng: 138.2529
+            }
+        },
+        {
+            name: 'sf',
+            coords: {
+                lat: 37.768249,
+                lng: -122.445145
+            }
+        }
+    ]
     };
 
     getData = () => {
         setTimeout(() => {
-            this.setState(() => {
-                return {
-                    fakeTableData: [...this.state.fakeTableData,
-                        {
-                            hash: 'ahd-949',
-                            origin: 'Madison',
-                            destination: 'Austin',
-                            time: 4.3,
-                            amount: 54321,
-                            completed: 'Sept 19, 2018'
-                        }],
-                    loading: false
-                }
+            this.setState({
+                fakeTableData: [...this.state.fakeTableData,
+                    {
+                        hash: 'ahd-949',
+                        origin: 'Madison',
+                        destination: 'Austin',
+                        time: 4.3,
+                        amount: 54321,
+                        completed: 'Sept 19, 2018'
+                    }],
+                loading: false
             });
         }, 4300)
     };
 
     handleClick = () => {
-        this.setState(() => {
-            return {
-                fakeTableData: [...this.state.fakeTableData.slice(0, this.state.fakeTableData.length - 1)],
-                loading: true
-            }
+        this.setState({
+            fakeTableData: [...this.state.fakeTableData.slice(0, this.state.fakeTableData.length - 1)],
+            loading: true
         });
     };
 
@@ -64,8 +76,9 @@ class StatsPage extends Component {
         return (
             <div className='StatsPage'>
                 <Header/>
-                <h1 className='page-header text-center'>Stats Page</h1>
-                <table className='table'>
+                <h1 className="page-header text-center">Stats Page</h1>
+                <Map cities={this.state.cities}/>
+                <table className="table">
                     <thead>
                     <tr>
                         <th scope='col'>#</th>
@@ -81,7 +94,7 @@ class StatsPage extends Component {
                     {
                         this.state.fakeTableData.map((props, index) => {
                             props.index = index + 1;
-                            return <TableRow key={props.hash} {...props}/>
+                            return <TableRow key={props.hash} {...props}/>;
                         })
                     }
                     </tbody>
