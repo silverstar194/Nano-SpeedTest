@@ -16,3 +16,8 @@ def get_account(address):
         return models.Account.objects.get(address=address)
     except models.Account.DoesNotExist:
         return None
+    except MultipleObjectsReturned:
+        raise MultipleObjectsReturned()
+
+def sync_accounts():
+    pass

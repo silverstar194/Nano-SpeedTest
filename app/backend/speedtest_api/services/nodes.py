@@ -16,3 +16,5 @@ def get_node(id):
         return models.Node.objects.get(id=id)
     except models.Node.DoesNotExist:
         return None
+    except MultipleObjectsReturned:
+        raise MultipleObjectsReturned()

@@ -42,8 +42,6 @@ def new_transaction(origin_account, destination_account, amount, initiated_by):
                                      amount=amount,
                                      initiated_by=initiated_by)
     
-    transaction.save()
-
     origin_wallet = get_wallet(id=origin_account.wallet)
     destination_wallet = get_wallet(id=destination_account.wallet)
 
@@ -73,20 +71,30 @@ def new_transaction(origin_account, destination_account, amount, initiated_by):
     if origin_account.POW is None or destination_account.POW is None:
         raise InvalidPOWException()
 
-
     # Start the timestamp before we try to send out the request
     transaction.start_timestamp = datetime.now()
 
-    rpc_origin_node.send(wallet=origin_wallet.wallet_id,
-                         source=origin_account.address,
-                         destination=destination_account.address,
-                         amount=amount,
-                         work=origin_account.POW,
-                         id=transaction.id)
+    try:
+        rpc_origin_node.send(wallet=origin_wallet.wallet_id,
+                            source=origin_account.address,
+                            destination=destination_account.address,
+                            amount=amount,
+                            work=origin_account.POW,
+                            id=transaction.id)
+        
+        origin_account.current_balance = origin_account.current_balance - amount
+    except nano.rpc.RPCException:
+        raise nano.rpc.RPCException()
+    
+    # Save this here as the transaction has been sent
+    transaction.save()
     
     origin_account.POW = None
     
-    incoming_blocks = rpc_destination_node.accounts_pending(accounts=(origin_account.address))
+    try:
+        incoming_blocks = rpc_destination_node.accounts_pending(accounts=(origin_account.address))
+    except nano.rpc.RPCException:
+        raise nano.rpc.RPCException()
 
     if incoming_blocks[origin_account.address] is None or len(incoming_blocks[origin_account.address]) == 0:
         raise NoIncomingBlocksException()
@@ -94,10 +102,15 @@ def new_transaction(origin_account, destination_account, amount, initiated_by):
         raise TooManyIncomingBlocksException()
 
     for block_hash in incoming_blocks[origin_account.address]:
-        rpc_destination_node.receive(wallet=destination_wallet.wallet_id,
-                                     account=destination_account.address,
-                                     block=block_hash,
-                                     work=destination_account.POW)
+        try:
+            rpc_destination_node.receive(wallet=destination_wallet.wallet_id,
+                                        account=destination_account.address,
+                                        block=block_hash,
+                                        work=destination_account.POW)
+            
+            destination_account.current_balance = destination_account.current_balance + amount
+        except nano.rpc.RPCException:
+            raise nano.rpc.RPCException()
     
     destination_account.POW = None
 
@@ -123,3 +136,5 @@ def get_transaction(id):
         return models.Transaction.objects.get(id=id)
     except models.Transaction.DoesNotExist:
         return None
+    except MultipleObjectsReturned:
+        raise MultipleObjectsReturned()

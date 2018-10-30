@@ -16,3 +16,5 @@ def get_wallet(id):
         return models.Wallet.objects.get(id=id)
     except models.Wallet.DoesNotExist:
         return None
+    except MultipleObjectsReturned:
+        raise MultipleObjectsReturned()
