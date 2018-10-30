@@ -10,81 +10,43 @@ class BlockAlreadyInHistoryException(Exception):
         Exception.__init__(self,"Block hash is not frontier {0}".format(dErrArguments))
         self.dErrorArguments = dErrorArguements
 
-def time_transaction_send(transcation):
-	rpc_sending_node = nano.rpc.Client(transcation.origin.wallet.node.IP)
 
-	backoff_sleep_values = [1,1,2,3,5,8]
+def transcation_general(node_IP, account_address, current_hash, start_timestamp)
+	rpc_node = nano.rpc.Client(node_IP)
 
-	
-	for sleep_value in backoff_sleep_values:
+		backoff_sleep_values = [1,1,2,3,5,8]/2.0
+		for sleep_value in backoff_sleep_values:
 
-		origin_address = transcation.destination.address
-		hash_sending = transcation.transaction_hash_sending
+			address = account_address
+			hash_of_block= current_hash
 
-		try:
-			history_sending_account = rpc_sending_node.account_history(origin_address, account = 5) #magic assuming that if it is not 5 back it hasn't been received 
-		except:
-			raise ValueError("Unable to get history")
+			try:
+				history_curr_account = rpc_node.account_history(address, account = 5) #magic assuming that if it is not 5 back it hasn't been received 
+			except:
+				raise ValueError("Unable to get history")
 
-		frontier_hash = history_sending_account[0][u'hash']
+			frontier_hash = history_curr_account[0][u'hash']
 
-		if hash_sending == frontier_hash:
-			end_time = rpc_sending_node.account_info(origin_address)[u'modified_timestamp']
-			end_time = datetime.datetime.fromtimestamp(end_time)
+			if hash_of_block == frontier_hash:
+				end_time = rpc_sending_node.account_info(address)[u'modified_timestamp']
+				end_time = datetime.datetime.fromtimestamp(end_time)
 
-			return end_time- transaction.start_timestamp
-		
-		for value in history_sending_account:
-			if value[u'hash'] is hash_sending:
-				raise BlockAlreadyInHistoryException(hash_sending)
-
-		time.sleep(sleep_value)
-
-	raise TimeoutError("Transaction never found") 
-
-
-def time_transaction_receive(transcation):
-	"""This will return the time delta in the of the sending and recieving block for a more granular time, we use a timer to get miliseconds for the send time
-	@param transcation block for the recieving wallet
-	@return time_delta
-	:raises Exception: TimeoutError 
-	:raises Exception: BlockAlreadyInHistoryException
-	:raises Excpetion: RPCException
-	"""	
-	#Try this three time with a second in between TODO
-	rpc_receiving_node = nano.rpc.Client(transcation.destination.wallet.node.IP)
-
-	backoff_sleep_values = [1,1,2,3,5,8]
-	
-	for sleep_value in backoff_sleep_values:
-
-		destination_address = transcation.destination.address
-		hash_receiving = transaction.transaction_hash_receiving
-
-		try:
-			history_receiving_account = rpc_receiving_node.account_history(destination_address, count = 5) # magic assuming that if it is not 5 back it hasn't been received
-		except:
-			raise ValueError("Unable to get history")
-
-
-		frontier_hash = history_receiving_account[0][u'hash']
-		
-		if hash_receiving == frontier_hash:
-			end_time = rpc_receiving_node.account_info(destination_address)[u'modified_timestamp'] 
-			end_time = datetime.datetime.fromtimestamp(end_time)
+				return end_time- start_timestamp
 			
-			#Add this to the model
-			transcation.end_time = end_time
-			transcation.save()
+			for value in history_curr_account:
+				if value[u'hash'] is hash_of_block:
+					raise BlockAlreadyInHistoryException(hash_of_block)
 
-			return end_time - transaction.start_timestamp
+			time.sleep(sleep_value)
 
-		for value in history_receiving_account:
-			if value[u'hash'] is hash_receiving:
-				raise BlockAlreadyInHistoryException(hash_receiving)
-				# see if we recieved it already
+		raise TimeoutError("Transaction never found") 
 
-		time.sleep(sleep_value)
 
-	raise TimeoutError("Transaction never found") 
+def time_transaction_recieve(transcation):
+	return transcation_general(transaction.node_IP, transcation.destination.address, transaction.transaction_hash_receiving, transcation.start_timestamp)
+
+
+
+def time_transaction_send(transcation):
+	return transcation_general(transaction.node_IP, transaction.origin.address, transaction.transaction_hash_sending,transaction.start_timestamp)
 
