@@ -6,6 +6,13 @@ from _nodetiming import time_transaction
 class TimingTestCase(TestCase):
     def setUp(self):
     	##set up memeber vars
+    curr_Node = Node.objects.create("localhost:7076")
+
+    wallet_sending = Wallet.objects.create(curr_Node)
+    wallet_receiving = Wallet.objects(curr_Node)
+
+    account_sending = Account(wallet_sending, "xrb_3er5ka9cx6nxtcfapcj77za3n4ne74xbp9b6sbxnuzan9iorxj3xoyy6h1n1",0, "POW")
+    account_receiving = Account(wallet_receiving, "")
 
     #Check to see what happens when the hash is in the frontier
     def test_when_hash_in_frontier():
