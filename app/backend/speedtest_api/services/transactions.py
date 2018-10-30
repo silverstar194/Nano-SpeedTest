@@ -75,12 +75,14 @@ def new_transaction(origin_account, destination_account, amount, initiated_by):
     transaction.start_timestamp = datetime.now()
 
     try:
-        rpc_origin_node.send(wallet=origin_wallet.wallet_id,
-                            source=origin_account.address,
-                            destination=destination_account.address,
-                            amount=amount,
-                            work=origin_account.POW,
-                            id=transaction.id)
+        transaction.transaction_hash_sending = rpc_origin_node.send(
+            wallet=origin_wallet.wallet_id,
+            source=origin_account.address,
+            destination=destination_account.address,
+            amount=amount,
+            work=origin_account.POW,
+            id=transaction.id
+        )
         
         origin_account.current_balance = origin_account.current_balance - amount
     except nano.rpc.RPCException:
@@ -103,10 +105,12 @@ def new_transaction(origin_account, destination_account, amount, initiated_by):
 
     for block_hash in incoming_blocks[origin_account.address]:
         try:
-            rpc_destination_node.receive(wallet=destination_wallet.wallet_id,
-                                        account=destination_account.address,
-                                        block=block_hash,
-                                        work=destination_account.POW)
+            transaction.transaction_hash_receiving = rpc_destination_node.receive(
+                wallet=destination_wallet.wallet_id,
+                account=destination_account.address,
+                block=block_hash,
+                work=destination_account.POW
+            )
             
             destination_account.current_balance = destination_account.current_balance + amount
         except nano.rpc.RPCException:
