@@ -23,7 +23,7 @@ class HomePage extends Component {
                             <br/>
                             {/*<button type="button" className="btn btn-outline-primary">Advanced</button>*/}
                             {/*<br/>*/}
-                            Run your live test now.
+                            <p>Run your live test now.</p>
                         </div>
                     </div>
                     <div/>
