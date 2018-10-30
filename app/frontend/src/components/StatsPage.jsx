@@ -6,6 +6,7 @@ import '../styles/StatsPage.css';
 import Map from './Map';
 import {connect} from 'react-redux';
 import {addTransaction} from "../actions/table";
+import uuid from 'uuid'
 
 
 class StatsPage extends Component {
@@ -33,7 +34,7 @@ class StatsPage extends Component {
         this.setState({calledGetData: true});
         setTimeout(() => {
             this.props.onAddData({
-                hash: 'ahd-949',
+                hash: uuid(),
                 origin: 'Japan',
                 destination: 'SF',
                 time: 4.3,
@@ -43,9 +44,10 @@ class StatsPage extends Component {
             this.setState({loading: false});
         }, 4300)
     };
+
     componentDidMount() {
         this.props.onAddData({
-            hash: 'abc-123',
+            hash: uuid(),
             origin: 'SF',
             destination: 'LA',
             time: 9.3,
@@ -53,7 +55,7 @@ class StatsPage extends Component {
             completed: 'Jan 1, 2018'
         });
         this.props.onAddData({
-            hash: 'zyx-321',
+            hash: uuid(),
             origin: 'NY',
             destination: 'WI',
             time: 9.7,
@@ -73,29 +75,33 @@ class StatsPage extends Component {
         return (
             <div className='StatsPage'>
                 <Header/>
-                <h1 className='page-header text-center'>Stats Page</h1>
-                <Map cities={this.state.cities}/>
-                <table className='table'>
-                    <thead>
-                    <tr>
-                        <th scope='col'>#</th>
-                        <th scope='col'>Hash</th>
-                        <th scope='col'>Origin</th>
-                        <th scope='col'>Destination</th>
-                        <th scope='col'>Elapsed Time</th>
-                        <th scope='col'>Amount</th>
-                        <th scope='col'>Completed</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {
-                        this.props.table.map((props, index) => {
-                            props.index = index + 1;
-                            return <TableRow key={props.hash} {...props}/>;
-                        })
-                    }
-                    </tbody>
-                </table>
+                <h2 className='map-header page-header text-left'>Sent from Japan to San Francisco</h2>
+                <div className='nano-container'>
+                    <Map cities={this.state.cities}/>
+                </div>
+                <div className='nano-container'>
+                    <table className='table'>
+                        <thead>
+                        <tr>
+                            <th scope='col'>#</th>
+                            <th scope='col'>Hash</th>
+                            <th scope='col'>Origin</th>
+                            <th scope='col'>Destination</th>
+                            <th scope='col'>Elapsed Time</th>
+                            <th scope='col'>Amount</th>
+                            <th scope='col'>Completed</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {
+                            this.props.table.map((props, index) => {
+                                props.index = index + 1;
+                                return <TableRow key={props.hash} {...props}/>;
+                            })
+                        }
+                        </tbody>
+                    </table>
+                </div>
 
                 {/*only show loading if we are waiting for the data.  Else show button to rerun*/}
                 {this.state.loading && (

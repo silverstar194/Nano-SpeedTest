@@ -16,7 +16,7 @@ class HomePage extends Component {
         return (
             <div className='HomePage'>
                 <Header/>
-                <h1 className='page-header text-center'>Welcome to NanoSpeed.live</h1>
+                <h1 className='greeting page-header text-center'>Welcome to NanoSpeed.live!</h1>
                 <div className='container'>
                     <div className='row'>
                         <div className='col-md-12 text-center'>
@@ -26,7 +26,7 @@ class HomePage extends Component {
                             <br/>
                             {/*<button type='button' className='btn btn-outline-primary'>Advanced</button>*/}
                             {/*<br/>*/}
-                            <p>Run your live test now.</p>
+                            <p className='greeting'>Run your live test now.</p>
                         </div>
                     </div>
                     <div/>
