@@ -19,7 +19,7 @@ def time_transaction(transcation):
 	:raises Exception: BlockAlreadyInHistoryException
 	:raises Excpetion: RPCException
 	"""	
-	#Try this three time with a second in between
+	#Try this three time with a second in between TODO
 	rpc_receiving_node = nano.rpc.Client(transcation.destination.wallet.node.IP)
 
 	backoff_sleep_values = [1,1,2,3,5,8]
@@ -51,5 +51,5 @@ def time_transaction(transcation):
 
 		time.sleep(sleep_value)
 
-	raise TimeoutError("Transcation never found") 
+	raise TimeoutError("Transaction never found") 
 

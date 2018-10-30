@@ -12,3 +12,4 @@ class Transaction(models.Model):
     initiated_by = models.GenericIPAddressField(protocol='both')
     transaction_hash_sending = models.CharField(max_length=64)
     transaction_hash_receiving = models.CharField(max_length=64)
+
