@@ -18,8 +18,8 @@ def send_transaction(request):
 
     # Dummy JSON for the UI guys to test with
     transaction = {
-        "origin": "123456789",
-        "destination": "987654321",
+        "origin": "",
+        "destination": "",
         "start_timestamp": datetime.utcnow(),
         "end_timestamp": datetime.utcnow(),
         "amount": 13,
