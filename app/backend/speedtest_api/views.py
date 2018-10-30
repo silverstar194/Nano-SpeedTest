@@ -5,6 +5,8 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from speedtest_api.models import Transaction
+from speedtest_api.models import Account
+
 from speedtest_api.serializers import TransactionSerializer
 
 from datetime import datetime
@@ -18,12 +20,14 @@ def send_transaction(request):
 
     # Dummy JSON for the UI guys to test with
     transaction = {
-        "origin": "",
-        "destination": "",
+        "origin": 1,
+        "destination": 2,
         "start_timestamp": datetime.utcnow(),
         "end_timestamp": datetime.utcnow(),
-        "amount": 13,
-        "initiated_by": "192.168.0.1"
+        "amount": 1,
+        "initiated_by": "192.168.0.1",
+        "transaction_hash_sending": 0,
+        "transaction_hash_receiving": 0
     }
 
     serializer = TransactionSerializer(data=transaction)
