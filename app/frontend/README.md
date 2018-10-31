@@ -19,6 +19,8 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
 
+NOTE - Currently google maps require a specific API key. For development purposes in the frontend folder create a file called `.env` and place inside `REACT_APP_GOOGLE_MAPS_KEY=<OUR_GOOGLE_MAPS_API_KEY>`. Using `process.env.<VARIABLE>` requires placing the variable you wish to use in the `.env` file prefixed with `REACT_APP_<YOUR_NAME>` which can then be used in the code as `process.env.REACT_APP_<YOUR_NAME>`. If you want to use the variable in the index.html file it must be wrapped `"%<VARIABLE_NAME>%"`.
+
 ## Testing
 Currently basic unit testing of redux actions and reducers exists. Running `npm test` triggers tests to run and continue to run on file changes.
 
