@@ -41,8 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'speedtest_api',
-    'rest_framework',
+    'speedtest_api'
 ]
 
 MIDDLEWARE = [
