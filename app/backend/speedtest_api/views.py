@@ -9,8 +9,6 @@ from rest_framework import status
 from speedtest_api.models import Transaction
 from speedtest_api.models import Account
 
-from speedtest_api.serializers import TransactionSerializer
-
 from datetime import datetime
 from datetime import timedelta
 
@@ -66,6 +64,6 @@ def get_transaction(request):
     transaction_id = int(request.GET.get('id'))
 
     if transaction_id != 122:
-        return JsonResponse()
+        return JsonResponse({'success':'false', 'message': "Transaction not found."}, status=404)
     else:
         return JsonResponse(transaction_stats)
