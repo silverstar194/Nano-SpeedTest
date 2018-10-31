@@ -7,6 +7,7 @@ import nano
 from .. import models as models
 from .wallets import *
 from .nodes import *
+from .accounts import *
 from ._pow import POWService
 from ._nodetiming import *
 
@@ -37,11 +38,20 @@ class InvalidPOWException(Exception):
 
 
 def new_transaction(origin_account, destination_account, amount, initiated_by):
-    transaction = models.Transaction(origin=origin_account.id, 
-                                     destination=destination_account.id,
-                                     amount=amount,
-                                     initiated_by=initiated_by)
-    
+    transaction = models.Transaction(
+        origin=origin_account.id,
+        destination=destination_account.id,
+        amount=amount,
+        initiated_by=initiated_by
+    )
+
+    transaction.save()
+    return transaction
+
+def send_transaction(transaction):
+    origin_account = get_account(address=transaction.origin)
+    destination_account = get_account(address=transaction.destination)
+
     origin_wallet = get_wallet(id=origin_account.wallet)
     destination_wallet = get_wallet(id=destination_account.wallet)
 
@@ -54,18 +64,26 @@ def new_transaction(origin_account, destination_account, amount, initiated_by):
     # Do some origin balance checking
     origin_balance = rpc_origin_node.account_balance(account=origin_account.address)
     if (origin_balance != origin_account.current_balance):
-        raise AccountBalanceMismatchException(balance_actual=origin_balance, 
-                                              balance_db=origin_account.current_balance,
-                                              account=origin_account.address)
-    elif (origin_balance - amount <= 0):
+        raise AccountBalanceMismatchException(
+            balance_actual=origin_balance, 
+            balance_db=origin_account.current_balance,
+            account=origin_account.address
+        )
+    elif (origin_balance - transaction.amount <= 0):
         raise InsufficientNanoException()
     
     # Make sure the wallet contains the account address
     if (not rpc_origin_node.wallet_contains(wallet=origin_wallet.wallet_id, account=origin_account.address)):
-        raise AddressDoesNotExistException(wallet=origin_wallet, account=origin_account.address)
+        raise AddressDoesNotExistException(
+            wallet=origin_wallet,
+            account=origin_account.address
+        )
     
     if (not rpc_destination_node.wallet_contains(wallet=destination_wallet.wallet_id, account=destination_account.address)):
-        raise AddressDoesNotExistException(wallet=destination_wallet, account=destination_account.address)
+        raise AddressDoesNotExistException(
+            wallet=destination_wallet,
+            account=destination_account.address
+        )
 
     # Make sure the POW is there (not in the POW regen queue)
     if origin_account.POW is None or destination_account.POW is None:
@@ -79,11 +97,12 @@ def new_transaction(origin_account, destination_account, amount, initiated_by):
             wallet=origin_wallet.wallet_id,
             source=origin_account.address,
             destination=destination_account.address,
-            amount=amount,
+            amount=transaction.amount,
             work=origin_account.POW,
             id=transaction.id
         )
         
+        # Update the origin balance
         origin_account.current_balance = origin_account.current_balance - amount
     except nano.rpc.RPCException:
         raise nano.rpc.RPCException()
@@ -112,13 +131,14 @@ def new_transaction(origin_account, destination_account, amount, initiated_by):
                 work=destination_account.POW
             )
             
+            # Update the destination balance
             destination_account.current_balance = destination_account.current_balance + amount
         except nano.rpc.RPCException:
             raise nano.rpc.RPCException()
     
     destination_account.POW = None
 
-    # Handover control to the timing service (expecting the timestamp to be sent on return)
+    # Handover control to the timing service (expecting the timestamp to be set on return)
     # TODO: implement error handling
     time_transaction(transaction)
 
