@@ -65,7 +65,7 @@ def transcation_general(node_IP, account_address, current_hash, start_timestamp)
 		raise TimeoutError("Transaction never found") 
 
 
-def time_transaction_recieve(transcation):
+def time_transaction_receive(transcation):
 	"""
 	Will get the time delta of the receiving block
 	@param transaction django model of a transaction
