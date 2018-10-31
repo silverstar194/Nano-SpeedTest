@@ -69,6 +69,7 @@ class Command(BaseCommand):
         amount = min(diff_lower, diff_upper)
 
         # Create a transaction to balance the accounts
+        # TODO: Handle errors
         transaction = new_transaction(accounts[upper], accounts[lower], amount, 'Account Balancer')
         send_transaction(transaction)
 

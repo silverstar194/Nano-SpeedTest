@@ -37,6 +37,11 @@ class InvalidPOWException(Exception):
         Exception.__init__(self, "The POW on the account was not valid.")
 
 
+def new_transaction(initiated_by):
+    # TODO: Select accounts and amount
+
+    return new_transaction(origin_account, destination_account, amount, initiated_by)
+
 def new_transaction(origin_account, destination_account, amount, initiated_by):
     transaction = models.Transaction(
         origin=origin_account.id,
