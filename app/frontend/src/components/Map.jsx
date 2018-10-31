@@ -1,6 +1,7 @@
 import React from 'react';
 import { compose, withProps } from 'recompose';
 import { withGoogleMap, GoogleMap, Polyline, Marker } from 'react-google-maps';
+import '../styles/GoogleMaps.css';
 
 class TestMap extends React.Component {
     state = {
@@ -64,10 +65,9 @@ class TestMap extends React.Component {
 
 const Map = compose(
     withProps({
-        loadingElement: <div style={{ height: '100%' }} />,
-        containerElement: <div style={{ height: 500, width: '100%' }} />,
-        mapElement: <div style={{ height: '100%' }}
-        />
+        loadingElement: <div className={'GoogleMapsLoading'} />,
+        containerElement: <div className={'GoogleMapsContainer'} />,
+        mapElement: <div className={'GoogleMapsElement'} />
     }),
     withGoogleMap
 )(TestMap);
