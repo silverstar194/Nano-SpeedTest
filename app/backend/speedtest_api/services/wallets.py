@@ -3,8 +3,8 @@ from django.conf import settings as settings
 from .. import models as models
 
 
-def new_wallet(node):
-    wallet = models.Wallet(node=node.id)
+def new_wallet(node, wallet_id):
+    wallet = models.Wallet(node=node, wallet_id=wallet_id)
     wallet.save()
     return wallet
 

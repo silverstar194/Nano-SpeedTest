@@ -44,8 +44,8 @@ def new_transaction(initiated_by):
 
 def new_transaction(origin_account, destination_account, amount, initiated_by):
     transaction = models.Transaction(
-        origin=origin_account.id,
-        destination=destination_account.id,
+        origin=origin_account,
+        destination=destination_account,
         amount=amount,
         initiated_by=initiated_by
     )
@@ -56,20 +56,11 @@ def new_transaction(origin_account, destination_account, amount, initiated_by):
     return transaction
 
 def send_transaction(transaction):
-    origin_account = get_account(address=transaction.origin)
-    destination_account = get_account(address=transaction.destination)
-
-    origin_wallet = get_wallet(id=origin_account.wallet)
-    destination_wallet = get_wallet(id=destination_account.wallet)
-
-    origin_node = get_node(id=origin_wallet.node)
-    destination_node = get_node(id=destination_wallet.node)
-
-    rpc_origin_node = nano.rpc.Client(origin_node.IP)
-    rpc_destination_node = nano.rpc.Client(destination_node.IP)
+    rpc_origin_node = nano.rpc.Client(transaction.origin.wallet.node.IP)
+    rpc_destination_node = nano.rpc.Client(transaction.destination.wallet.node.IP)
 
     # Do some origin balance checking
-    origin_balance = rpc_origin_node.account_balance(account=origin_account.address)
+    origin_balance = rpc_origin_node.account_balance(account=transaction.origin.address)
     if (origin_balance != origin_account.current_balance):
         raise AccountBalanceMismatchException(
             balance_actual=origin_balance, 
@@ -80,20 +71,20 @@ def send_transaction(transaction):
         raise InsufficientNanoException()
     
     # Make sure the wallet contains the account address
-    if (not rpc_origin_node.wallet_contains(wallet=origin_wallet.wallet_id, account=origin_account.address)):
+    if (not rpc_origin_node.wallet_contains(wallet=transaction.origin.wallet.wallet_id, account=transaction.origin.address)):
         raise AddressDoesNotExistException(
-            wallet=origin_wallet,
-            account=origin_account.address
+            wallet=transaction.origin.wallet,
+            account=transaction.origin.address
         )
     
-    if (not rpc_destination_node.wallet_contains(wallet=destination_wallet.wallet_id, account=destination_account.address)):
+    if (not rpc_destination_node.wallet_contains(wallet=transaction.destination.wallet.wallet_id, account=transaction.destination.address)):
         raise AddressDoesNotExistException(
-            wallet=destination_wallet,
-            account=destination_account.address
+            wallet=transaction.destination.wallet,
+            account=transaction.destination.address
         )
 
     # Make sure the POW is there (not in the POW regen queue)
-    if origin_account.POW is None or destination_account.POW is None:
+    if transaction.origin.POW is None or transaction.destination.POW is None:
         raise InvalidPOWException()
 
     # Start the timestamp before we try to send out the request
@@ -101,16 +92,16 @@ def send_transaction(transaction):
 
     try:
         transaction.transaction_hash_sending = rpc_origin_node.send(
-            wallet=origin_wallet.wallet_id,
-            source=origin_account.address,
-            destination=destination_account.address,
+            wallet=transaction.origin.wallet.wallet_id,
+            source=transaction.origin.address,
+            destination=transaction.destination.address,
             amount=transaction.amount,
-            work=origin_account.POW,
+            work=transaction.origin.POW,
             id=transaction.id
         )
         
         # Update the origin balance
-        origin_account.current_balance = origin_account.current_balance - amount
+        transaction.origin.current_balance = transaction.origin.current_balance - amount
     except nano.rpc.RPCException:
         raise nano.rpc.RPCException()
     
@@ -119,29 +110,29 @@ def send_transaction(transaction):
     time_transaction_send(transaction)
 
     try:
-        incoming_blocks = rpc_destination_node.accounts_pending(accounts=(origin_account.address))
+        incoming_blocks = rpc_destination_node.accounts_pending(accounts=(transaction.origin.address))
     except nano.rpc.RPCException:
         raise nano.rpc.RPCException()
 
-    if incoming_blocks[origin_account.address] is None or len(incoming_blocks[origin_account.address]) == 0:
+    if incoming_blocks[transaction.origin.address] is None or len(incoming_blocks[transaction.origin.address]) == 0:
         raise NoIncomingBlocksException()
-    elif len(incoming_blocks[origin_account.address]) > 1:
+    elif len(incoming_blocks[transaction.origin.address]) > 1:
         raise TooManyIncomingBlocksException()
 
     # Check to see if this block_hash is the same as the transaction_hash_sending
-    for block_hash in incoming_blocks[origin_account.address]:
+    for block_hash in incoming_blocks[transaction.origin.address]:
         transaction.start_receive_timestamp = datetime.now()
 
         try:
             transaction.transaction_hash_receiving = rpc_destination_node.receive(
-                wallet=destination_wallet.wallet_id,
-                account=destination_account.address,
+                wallet=transaction.destination.wallet.wallet_id,
+                account=transaction.destination.address,
                 block=block_hash,
-                work=destination_account.POW
+                work=transaction.destination.POW
             )
             
             # Update the destination balance
-            destination_account.current_balance = destination_account.current_balance + amount
+            transaction.destination.current_balance = transaction.destination.current_balance + amount
         except nano.rpc.RPCException:
             raise nano.rpc.RPCException()
     
@@ -150,16 +141,14 @@ def send_transaction(transaction):
     time_transaction_receive(transaction)
 
     # We set these to None so they are known to be invalid
-    origin_account.POW = None
-    destination_account.POW = None
+    transaction.origin.POW = None
+    transaction.destination.POW = None
 
     transaction.save()
-    origin_account.save()
-    destination_account.save()
 
     # Regenerate POW on the accounts
-    POWService.enqueue_account(account_id=origin_account.address)
-    POWService.enqueue_account(account_id=destination_account.address)
+    POWService.enqueue_account(account_id=transaction.origin.address)
+    POWService.enqueue_account(account_id=transaction.destination.address)
 
     return transaction
 

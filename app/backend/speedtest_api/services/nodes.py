@@ -3,8 +3,8 @@ from django.conf import settings as settings
 from .. import models as models
 
 
-def new_node(ip):
-    node = models.Node(IP=ip)
+def new_node(ip, latitude, longitude):
+    node = models.Node(IP=ip, latitude=latitude, longitude=longitude)
     node.save()
     return node
 
