@@ -92,7 +92,7 @@ def send_transaction(transaction):
         raise InvalidPOWException()
 
     # Start the timestamp before we try to send out the request
-    transaction.start_timestamp = datetime.now()
+    transaction.start_send_timestamp = datetime.now()
 
     try:
         transaction.transaction_hash_sending = rpc_origin_node.send(
@@ -109,8 +109,10 @@ def send_transaction(transaction):
     except nano.rpc.RPCException:
         raise nano.rpc.RPCException()
     
-    origin_account.POW = None
-    
+    # Handover control to the timing service (expecting the timestamp to be set on return)
+    # TODO: implement error handling
+    time_transaction_send(transaction)
+
     try:
         incoming_blocks = rpc_destination_node.accounts_pending(accounts=(origin_account.address))
     except nano.rpc.RPCException:
@@ -123,6 +125,8 @@ def send_transaction(transaction):
 
     # Check to see if this block_hash is the same as the transaction_hash_sending
     for block_hash in incoming_blocks[origin_account.address]:
+        transaction.start_receive_timestamp = datetime.now()
+
         try:
             transaction.transaction_hash_receiving = rpc_destination_node.receive(
                 wallet=destination_wallet.wallet_id,
@@ -136,11 +140,13 @@ def send_transaction(transaction):
         except nano.rpc.RPCException:
             raise nano.rpc.RPCException()
     
-    destination_account.POW = None
-
     # Handover control to the timing service (expecting the timestamp to be set on return)
     # TODO: implement error handling
-    time_transaction(transaction)
+    time_transaction_receive(transaction)
+
+    # We set these to None so they are known to be invalid
+    origin_account.POW = None
+    destination_account.POW = None
 
     transaction.save()
     origin_account.save()
