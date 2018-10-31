@@ -45,6 +45,8 @@ def new_transaction(origin_account, destination_account, amount, initiated_by):
         initiated_by=initiated_by
     )
 
+    # TODO: Lock the accounts
+
     transaction.save()
     return transaction
 
@@ -107,9 +109,6 @@ def send_transaction(transaction):
     except nano.rpc.RPCException:
         raise nano.rpc.RPCException()
     
-    # Save this here as the transaction has been sent
-    transaction.save()
-    
     origin_account.POW = None
     
     try:
@@ -122,6 +121,7 @@ def send_transaction(transaction):
     elif len(incoming_blocks[origin_account.address]) > 1:
         raise TooManyIncomingBlocksException()
 
+    # Check to see if this block_hash is the same as the transaction_hash_sending
     for block_hash in incoming_blocks[origin_account.address]:
         try:
             transaction.transaction_hash_receiving = rpc_destination_node.receive(
