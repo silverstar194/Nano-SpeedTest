@@ -12,6 +12,7 @@ from speedtest_api.models import Account
 from speedtest_api.serializers import TransactionSerializer
 
 from datetime import datetime
+from datetime import timedelta
 
 
 @api_view(['POST'])
@@ -20,31 +21,51 @@ def send_transaction(request):
     Send a transaction to the database
     """
 
-    # Dummy JSON for the UI guys to test with
-    transaction = {
-        "origin": 1,
-        "destination": 2,
-        "start_timestamp": str(datetime.utcnow()),
-        "end_timestamp": str(datetime.utcnow()),
-        "amount": 1,
-        "initiated_by": "192.168.0.1",
-        "transaction_hash_sending": 0,
-        "transaction_hash_receiving": 0
+    origin_node = {
+        "id": 1,
+        "latitude": 19.154428,
+        "longitude": 72.849616,
     }
 
-    node = {
-        "lat":12,
-        "long":12,
+    destination_node = {
+        "id": 2,
+        "latitude": 37.794591,
+        "longitude": -122.40412,
+    }
+
+    # Dummy JSON for the UI guys to test with
+    transaction = {
+        "id": 122,
+        "origin": origin_node,
+        "destination": destination_node,
+        "amount": 1
     }
 
     output = {
-        "transaction": transaction,
-        "node": node
+        "transaction": transaction
     }
-
 
     return JsonResponse(output)
 
-    #serializer = TransactionSerializer(data=transaction)
 
-    #return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+@api_view(['GET'])
+def get_transaction(request):
+    """
+    Send a transaction from the database
+    """
+
+    start_datetime = datetime.utcnow()
+    end_datetime = start_datetime + timedelta(seconds=10)
+
+    transaction_stats = {
+        "id": 122,
+        "start_timestamp": str(start_datetime),
+        "end_timestamp": str(end_datetime)
+    }
+
+    transaction_id = int(request.GET.get('id'))
+
+    if transaction_id != 122:
+        return JsonResponse()
+    else:
+        return JsonResponse(transaction_stats)

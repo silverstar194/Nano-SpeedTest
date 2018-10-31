@@ -21,4 +21,5 @@ from speedtest_api import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('transactions/random', views.send_transaction),
+    path('transactions/', views.get_transaction)
 ]
