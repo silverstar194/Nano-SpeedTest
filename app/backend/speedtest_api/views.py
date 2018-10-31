@@ -1,4 +1,6 @@
 from django.shortcuts import render
+import json
+from django.http import JsonResponse
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -22,17 +24,27 @@ def send_transaction(request):
     transaction = {
         "origin": 1,
         "destination": 2,
-        "start_timestamp": datetime.utcnow(),
-        "end_timestamp": datetime.utcnow(),
+        "start_timestamp": str(datetime.utcnow()),
+        "end_timestamp": str(datetime.utcnow()),
         "amount": 1,
         "initiated_by": "192.168.0.1",
         "transaction_hash_sending": 0,
         "transaction_hash_receiving": 0
     }
 
-    serializer = TransactionSerializer(data=transaction)
-    if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-    else:
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    node = {
+        "lat":12,
+        "long":12,
+    }
+
+    output = {
+        "transaction": transaction,
+        "node": node
+    }
+
+
+    return JsonResponse(output)
+
+    #serializer = TransactionSerializer(data=transaction)
+
+    #return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
