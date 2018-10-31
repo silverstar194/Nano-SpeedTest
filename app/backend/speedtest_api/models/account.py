@@ -8,3 +8,4 @@ class Account(models.Model):
     address = models.CharField(max_length=64)
     current_balance = models.IntegerField()  # Measured in RAW
     POW = models.CharField(max_length=16)
+
