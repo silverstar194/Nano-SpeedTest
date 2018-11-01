@@ -14,7 +14,7 @@ def send_transaction(request):
     Send a transaction to the database
 
     Args:
-        request : The REST request to the endpoint
+        request: The REST request to the endpoint
 
     Returns:
         JsonResponse: The general transaction information as a JSON object
@@ -54,7 +54,7 @@ def get_transaction(request):
     Get a transaction from the database and return
 
     Args:
-        request : The REST request to the endpoint
+        request: The REST request to the endpoint
 
     Returns:
         JsonResponse: The transaction timing information as a JSON object
@@ -62,13 +62,13 @@ def get_transaction(request):
     """
 
     # Dummy JSON for the UI guys to test with
-    start_datetime = datetime.utcnow()
-    end_datetime = start_datetime + timedelta(seconds=10)
+    start_datetime = datetime.utcnow().timestamp() * 1000  # Convert to millisecond Unix time
+    end_datetime = start_datetime + 10000  # Add ten seconds
 
     transaction_stats = {
         "id": 122,
-        "start_timestamp": str(start_datetime),
-        "end_timestamp": str(end_datetime)
+        "start_timestamp": int(start_datetime),
+        "end_timestamp": int(end_datetime)
     }
 
     transaction_id = int(request.GET.get('id'))
