@@ -13,11 +13,8 @@ def send_transaction(request):
     """
     Send a transaction to the database
 
-    Args:
-        request: The REST request to the endpoint
-
-    Returns:
-        JsonResponse: The general transaction information as a JSON object
+    @param request The REST request to the endpoint
+    @return JsonResponse The general transaction information as a JSON object
 
     """
 
@@ -53,11 +50,8 @@ def get_transaction(request):
     """
     Get a transaction from the database and return
 
-    Args:
-        request: The REST request to the endpoint
-
-    Returns:
-        JsonResponse: The transaction timing information as a JSON object
+    @param request The REST request to the endpoint
+    @return JsonResponse The transaction timing information as a JSON object
 
     """
 
