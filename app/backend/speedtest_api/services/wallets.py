@@ -3,14 +3,18 @@ from django.conf import settings as settings
 from .. import models as models
 
 
-def new_wallet(node, wallet_id):
+def new_wallet(node, wallet_id=None):
     """
     Create a new wallet from the given information
 
     @param node: Node the wallet lives on
-    @param wallet_id: The seed of the wallet
+    @param wallet_id: The seed of the wallet, if None generate a new wallet on the node
     @return: New wallet object
     """
+
+    if wallet_id is None:
+        rpc = nano.rpc.Client(node.IP)
+        wallet_id = rpc.wallet_create()
 
     wallet = models.Wallet(node=node, wallet_id=wallet_id)
     wallet.save()

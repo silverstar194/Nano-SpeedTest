@@ -23,10 +23,7 @@ class Command(BaseCommand):
         nodes_list = nodes.get_nodes()
 
         for node in nodes_list:
-            rpc = nano.rpc.Client(node.IP)
-            wallet_id = rpc.wallet_create()
-
-            wallet = wallets.new_wallet(node=node, wallet_id=wallet_id)
+            wallet = wallets.new_wallet(node=node)
 
             for i in range(5):
                 accounts.new_account(wallet=wallet)

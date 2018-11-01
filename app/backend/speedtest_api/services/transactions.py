@@ -1,4 +1,5 @@
 import logging
+import random
 import requests
 import time
 
@@ -39,9 +40,8 @@ class InvalidPOWException(Exception):
         Exception.__init__(self, "The POW on the account was not valid.")
 
 
-def new_transaction(initiated_by):
+def new_transaction_random(initiated_by):
     """
-    TODO:
     Create a new transaction with random origin, destination, and amount fields.
     This does not execute the transaction on the nano network.
 
@@ -49,10 +49,19 @@ def new_transaction(initiated_by):
     @return: New transaction object
     """
 
-    # TODO: Select accounts and amount
-    # Send 100000000000000000000 RAW
-    pass
-    # return new_transaction(origin_account, destination_account, amount, initiated_by)
+    accounts_list = get_accounts()
+
+    origin = random.choice(accounts_list)
+
+    account_destinations = []
+
+    for account in accounts_list:
+        if account.wallet.node.id != origin.wallet.node.id:
+            account_destinations.append(account)
+    
+    destination = random.choice(account_destinations)
+
+    return new_transaction(origin_account=origin, destination_account=destination, amount=100000000000000000000, initiated_by=initiated_by)
 
 def new_transaction(origin_account, destination_account, amount, initiated_by):
     """
@@ -85,6 +94,11 @@ def send_transaction(transaction):
     @param transaction: Transaction to execute
     @return: Transaction object with new information
     @raise: RPCException: RPC Failure
+    @raise: AccountBalanceMismatchException: Will prevent the execution of the current transaction but will also rebalance the account
+    @raise: InsufficientNanoException: The origin account does not have enough funds
+    @raise: InvalidPOWException: The origin account does not have valid POW
+    @raise: NoIncomingBlocksException: Incoming block not found on destination node. This will lead to invalid POW and balance in the destination account if not handled
+    @raise: TooManyIncomingBlocksException: Incoming block not found on destination node. This will lead to invalid POW and balance in the destination account if not handled
     """
 
     logger = logging.getLogger(__name__)
@@ -95,6 +109,10 @@ def send_transaction(transaction):
     # Do some origin balance checking
     origin_balance = rpc_origin_node.account_balance(account=transaction.origin.address)['balance']
     if (origin_balance != transaction.origin.current_balance):
+        transaction.origin.current_balance = origin_balance
+        transaction.origin.save()
+        transaction.save()
+
         raise AccountBalanceMismatchException(
             balance_actual=origin_balance, 
             balance_db=transaction.origin.current_balance,
@@ -155,6 +173,8 @@ def send_transaction(transaction):
     except:
         pass
 
+    transaction.origin.save()
+    transaction.destination.save()
     transaction.save()
 
     max_retries = 20
@@ -167,18 +187,24 @@ def send_transaction(transaction):
             incoming_blocks = rpc_destination_node.pending(account=transaction.destination.address)
         except nano.rpc.RPCException:
             raise nano.rpc.RPCException()
+        
+        max_retries = max_retries - 1
 
-    # We need to set POW to None because it will be no longer valid as the node will eventually accept the block(s)
+        time.sleep(1)
+
+    # We need to set POW to None because it will be no longer valid as the node will eventually accept the block(s) (if they are unopened?)
     if incoming_blocks is None or len(incoming_blocks) == 0:
         transaction.destination.POW = None
+        transaction.destination.save()
         transaction.save()
         raise NoIncomingBlocksException(transaction.destination.address)
     elif len(incoming_blocks) > 1:
         transaction.destination.POW = None
+        transaction.destination.save()
         transaction.save()
         raise TooManyIncomingBlocksException(transaction.destination.address)
 
-    for block_hash, amount in incoming_blocks:
+    for block_hash in incoming_blocks:
         transaction.start_receive_timestamp = timezone.now()
 
         try:
@@ -188,8 +214,6 @@ def send_transaction(transaction):
                 block=block_hash,
                 work=transaction.destination.POW
             )
-            
-            # Update the destination balance
         except nano.rpc.RPCException:
             raise nano.rpc.RPCException()
     
@@ -201,11 +225,12 @@ def send_transaction(transaction):
 
     transaction.destination.POW = None
 
+    transaction.destination.save()
     transaction.save()
 
     # Regenerate POW on the accounts
-    POWService.enqueue_account(account_id=transaction.origin.address, frontier=transaction.transaction_hash_sending)
-    POWService.enqueue_account(account_id=transaction.destination.address, frontier=transaction.transaction_hash_receiving)
+    POWService.enqueue_account(address=transaction.origin.address, frontier=transaction.transaction_hash_sending)
+    POWService.enqueue_account(address=transaction.destination.address, frontier=transaction.transaction_hash_receiving)
 
     return transaction
 
