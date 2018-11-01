@@ -65,22 +65,18 @@ def get_transaction(request):
 
     transaction_id = int(request.GET.get('id'))
 
-    try:
-        transaction = transactions.get_transaction(transaction_id)
-    except Exception:  # Make this the more specific MultipleObjectsReturned exception once it is implemented
-        # Return 500 until better option is developed
-        return JsonResponse({'message': 'Multiple transactions returned for ' + str(transaction_id) + '.'}, status=500)
+    transaction = transactions.get_transaction(transaction_id)
+
+    if transaction is None:
+        return JsonResponse({'message': 'Transaction ' + str(transaction_id) + ' not found.'}, status=404)
+
     else:
-        if transaction is None:
-            return JsonResponse({'message': 'Transaction ' + str(transaction_id) + ' not found.'}, status=404)
+        sent_transaction = transactions.send_transaction(transaction)
 
-        else:
-            sent_transaction = transactions.send_transaction(transaction)
+        transaction_stats = {
+            'id': sent_transaction.id,
+            'start_datetime': sent_transaction.start_send_timestamp,
+            'end_datetime': sent_transaction.end_receive_timestamp
+        }
 
-            transaction_stats = {
-                'id': sent_transaction.id,
-                'start_datetime': sent_transaction.start_send_timestamp,
-                'end_datetime': sent_transaction.end_receive_timestamp
-            }
-
-            return JsonResponse({'transaction': transaction_stats}, status=404)
+        return JsonResponse(transaction_stats, status=200)
