@@ -112,31 +112,43 @@ def send_transaction(transaction):
             id=transaction.id
         )
 
-        # Update the origin balance
+        # Update the balances and POW
         transaction.origin.current_balance = transaction.origin.current_balance - transaction.amount
+        transaction.destination.current_balance = transaction.destination.current_balance + amount
         transaction.origin.POW = None
     except nano.rpc.RPCException as e:
         logger.error(e)
         raise nano.rpc.RPCException()
     
     # Handover control to the timing service (expecting the timestamp to be set on return)
-    # TODO: implement error handling
-    time_transaction_send(transaction)
+    try:
+        time_transaction_send(transaction)
+    except:
+        pass
 
     transaction.save()
     
-    try:
-        rpc_destination_node.search_pending_all()
-        incoming_blocks = rpc_destination_node.pending(account=transaction.destination.address)
-    except nano.rpc.RPCException:
-        raise nano.rpc.RPCException()
+    max_retries = 20
+    incoming_blocks = None
 
+    while (incoming_blocks is None or len(incoming_blocks) == 0) and max_retries > 0:
+        try:
+            rpc_destination_node.search_pending_all()
+            incoming_blocks = rpc_destination_node.pending(account=transaction.destination.address)
+        except nano.rpc.RPCException:
+            raise nano.rpc.RPCException()
+
+    # We need to set POW to None because it will be no longer valid as the node will eventually accept the block(s)
     if len(incoming_blocks) == 0:
+        transaction.destination.POW = None
+        transaction.save()
         raise NoIncomingBlocksException(transaction.destination.address)
     elif len(incoming_blocks) > 1:
+        transaction.destination.POW = None
+        transaction.save()
         raise TooManyIncomingBlocksException(transaction.destination.address)
 
-    # Check to see if this block_hash is the same as the transaction_hash_sending
+    # Check to see if this block_hash is the same as the transaction_hash_sending (I don't think it will be)
     for block_hash, amount in incoming_blocks:
         transaction.start_receive_timestamp = timezone.now()
 
@@ -149,15 +161,16 @@ def send_transaction(transaction):
             )
             
             # Update the destination balance
-            transaction.destination.current_balance = transaction.destination.current_balance + amount
         except nano.rpc.RPCException:
             raise nano.rpc.RPCException()
     
     # Handover control to the timing service (expecting the timestamp to be set on return)
-    # TODO: implement error handling
-    time_transaction_receive(transaction)
+    
+    try:
+        time_transaction_receive(transaction)
+    except:
+        pass
 
-    # We set these to None so they are known to be invalid
     transaction.destination.POW = None
 
     transaction.save()
