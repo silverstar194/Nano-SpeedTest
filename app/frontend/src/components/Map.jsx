@@ -7,18 +7,21 @@ class TestMap extends React.Component {
     state = {
         mapLoaded: false
     };
+
     // Updates the map window once it is loaded to only show the distance between the two cities
     recomputeBounds() {
         const {cities} = this.props;
+        if (!Object.keys(cities).length) return;
+
         const bounds = new window.google.maps.LatLngBounds();
-        cities.map((city) => bounds.extend(city.coords));
-        this.refs.map.fitBounds(bounds);
+        Object.values(cities).map((city) => bounds.extend(city.coords));
+        this.refs.map.fitBounds(bounds, 3);
         this.setState({mapLoaded: true});
     }
+
     render() {
         const {cities} = this.props;
         const {mapLoaded} = this.state;
-
         return (
             <GoogleMap
                 ref='map'
@@ -33,27 +36,25 @@ class TestMap extends React.Component {
                 onTilesLoaded={() => this.recomputeBounds()}
             >
             { // the map needs to render before recomputing and drawing markers and lines
-                mapLoaded ? (
+                (mapLoaded && Object.keys(cities).length) ? (
                     <div>
                         <Polyline
-                            path={[this.props.cities[0].coords, this.props.cities[1].coords]}
+                            path={[cities.origin.coords, cities.destination.coords]}
                             options={{
                                 clickable: false,
                                 strokeOpacity: 1,
                                 strokeWeight: 2,
-                                geodesic: true,
                             }}
                         />
-                        {cities.map((city) =>
+                        {Object.values(cities).map((city, index) =>
                             <Marker
-                                key={city.name}
+                                key={city.name || index}
                                 title={city.name}
                                 position={city.coords}
                                 clickable={false}
                             />
                         )}
                     </div>
-
                 ) : null
 
             }
