@@ -6,7 +6,9 @@ from rest_framework.decorators import api_view
 
 from speedtest_api.models import Transaction
 from speedtest_api.models import Account
+from speedtest_api.services import transactions
 
+from ipware import get_client_ip
 
 @api_view(['POST'])
 def send_transaction(request):
@@ -18,31 +20,22 @@ def send_transaction(request):
 
     """
 
-    origin_node = {
-        "id": 1,
-        "latitude": 19.154428,
-        "longitude": 72.849616,
-    }
+    client_ip, is_routable = get_client_ip(request)
 
-    destination_node = {
-        "id": 2,
-        "latitude": 37.794591,
-        "longitude": -122.40412,
-    }
+    transaction = transactions.send_transaction(client_ip)
+    origin_node = transaction.origin
+    destination_node = transaction.destination
+    amount = transaction.amount
 
-    # Dummy JSON for the UI guys to test with
-    transaction = {
-        "id": 122,
+    random_transaction = {
+        "id": transaction.id,
         "origin": origin_node,
         "destination": destination_node,
-        "amount": 1
+        "amount": amount,
+        "ip": client_ip
     }
 
-    output = {
-        "transaction": transaction
-    }
-
-    return JsonResponse(output)
+    return JsonResponse(random_transaction)
 
 
 @api_view(['GET'])
