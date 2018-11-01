@@ -4,7 +4,7 @@ from .. import models as models
 
 
 def new_account(wallet, address):
-    account = models.Account(wallet=wallet, current_balance=0, address=address)
+    account = models.Account(wallet=wallet, address=address)
     account.save()
     return account
 
