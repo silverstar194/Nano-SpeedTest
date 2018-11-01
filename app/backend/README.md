@@ -28,6 +28,7 @@ $ pip install django-filter
 $ pip install requests  # Used for sending HTTP Requests
 $ pip install nano-python  # RPC wrapper for Nano
 $ pip install mysqlclient  # We are using a MySQL database
+$ pip install django-ipware  # Used for getting IP from REST request
 ```
 
 ## Environment Variable Setup
