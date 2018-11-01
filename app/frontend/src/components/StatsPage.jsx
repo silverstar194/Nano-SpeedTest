@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import Header from './Header'
+import Header from './Header';
 import PropTypes from 'prop-types';
 import TableRow from './TableRow';
 import '../styles/StatsPage.css';
 import Map from './Map';
 import {connect} from 'react-redux';
 import {addTransaction} from "../actions/table";
-import uuid from 'uuid'
+import uuid from 'uuid';
 
 
 class StatsPage extends Component {
@@ -42,7 +42,7 @@ class StatsPage extends Component {
                 completed: 'Sept 19, 2018'
             });
             this.setState({loading: false});
-        }, 4300)
+        }, 4300);
     };
 
     componentDidMount() {

@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders homepage correctly 1`] = `
+<li
+  className="nav-item"
+>
+  <a
+    className="nav-link active"
+    href="/"
+    onClick={[Function]}
+  >
+     
+    Speed Test
+     
+  </a>
+</li>
+`;
+
+exports[`renders stats page correctly even if not active tab 1`] = `
+<li
+  className="nav-item"
+>
+  <a
+    className="nav-link "
+    href="/Stats"
+    onClick={[Function]}
+  >
+     
+    Statistics
+     
+  </a>
+</li>
+`;

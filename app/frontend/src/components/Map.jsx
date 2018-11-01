@@ -12,7 +12,7 @@ class TestMap extends React.Component {
         const {cities} = this.props;
         const bounds = new window.google.maps.LatLngBounds();
         cities.map((city) => bounds.extend(city.coords));
-        this.refs.map.fitBounds(bounds, 3);
+        this.refs.map.fitBounds(bounds);
         this.setState({mapLoaded: true});
     }
     render() {

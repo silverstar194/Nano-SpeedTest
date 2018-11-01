@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders snapshot correctly 1`] = `
+<tr>
+  <th
+    scope="row"
+  >
+    0
+  </th>
+  <td>
+    abc123
+  </td>
+  <td>
+    SF
+  </td>
+  <td>
+    LA
+  </td>
+  <td>
+     Seconds
+  </td>
+  <td />
+  <td />
+</tr>
+`;
