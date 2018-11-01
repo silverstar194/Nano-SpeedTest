@@ -103,6 +103,7 @@ def send_transaction(transaction):
     transaction.start_send_timestamp = timezone.now()
 
     try:
+        # After this call, the nano will leave the origin
         transaction.transaction_hash_sending = rpc_origin_node.send(
             wallet=transaction.origin.wallet.wallet_id,
             source=transaction.origin.address,
@@ -127,11 +128,12 @@ def send_transaction(transaction):
         pass
 
     transaction.save()
-    
+
     max_retries = 20
     incoming_blocks = None
 
     while (incoming_blocks is None or len(incoming_blocks) == 0) and max_retries > 0:
+        rpc_origin_node.republish(hash=transaction.transaction_hash_sending)
         try:
             rpc_destination_node.search_pending_all()
             incoming_blocks = rpc_destination_node.pending(account=transaction.destination.address)
@@ -139,7 +141,7 @@ def send_transaction(transaction):
             raise nano.rpc.RPCException()
 
     # We need to set POW to None because it will be no longer valid as the node will eventually accept the block(s)
-    if len(incoming_blocks) == 0:
+    if incoming_blocks is None or len(incoming_blocks) == 0:
         transaction.destination.POW = None
         transaction.save()
         raise NoIncomingBlocksException(transaction.destination.address)
@@ -148,7 +150,6 @@ def send_transaction(transaction):
         transaction.save()
         raise TooManyIncomingBlocksException(transaction.destination.address)
 
-    # Check to see if this block_hash is the same as the transaction_hash_sending (I don't think it will be)
     for block_hash, amount in incoming_blocks:
         transaction.start_receive_timestamp = timezone.now()
 
@@ -165,7 +166,6 @@ def send_transaction(transaction):
             raise nano.rpc.RPCException()
     
     # Handover control to the timing service (expecting the timestamp to be set on return)
-    
     try:
         time_transaction_receive(transaction)
     except:
