@@ -48,3 +48,5 @@ An unseccessful query results in a 404 Not Found and:
 {
     "message": "Transaction not found."
 }
+
+Throws: 404 Not Found
