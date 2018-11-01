@@ -40,12 +40,32 @@ class InvalidPOWException(Exception):
 
 
 def new_transaction(initiated_by):
+    """
+    TODO:
+    Create a new transaction with random origin, destination, and amount fields.
+    This does not execute the transaction on the nano network.
+
+    @param initiated_by: IP of the endpoint making a transaction request
+    @return: New transaction object
+    """
+
     # TODO: Select accounts and amount
     # Send 100000000000000000000 RAW
     pass
     # return new_transaction(origin_account, destination_account, amount, initiated_by)
 
 def new_transaction(origin_account, destination_account, amount, initiated_by):
+    """
+    Create a transaction from the given properties.
+    TODO: Locks the accounts in use to prevent other transactions from using these accounts.
+
+    @param origin_account: Account source
+    @param destination_account: Account receiver
+    @param amount: Amount in RAW to send
+    @param initiated_by: IP of the endpoint making a transaction request
+    @return: New transaction object
+    """
+
     transaction = models.Transaction(
         origin=origin_account,
         destination=destination_account,
@@ -59,6 +79,14 @@ def new_transaction(origin_account, destination_account, amount, initiated_by):
     return transaction
 
 def send_transaction(transaction):
+    """
+    Complete a transaction on the Nano network while timing results.
+
+    @param transaction: Transaction to execute
+    @return: Transaction object with new information
+    @raise: RPCException: RPC Failure
+    """
+
     logger = logging.getLogger(__name__)
 
     rpc_origin_node = nano.rpc.Client(transaction.origin.wallet.node.IP)
@@ -182,9 +210,23 @@ def send_transaction(transaction):
     return transaction
 
 def get_transactions():
+    """
+    Get all transactions in the database.
+
+    @return: Query of all transactions
+    """
+
     models.Transaction.objects.all()
 
 def get_transaction(id):
+    """
+    Get a transaction by id
+
+    @param id: Id of the transaction to search for
+    @return: None if not found or Transaction object
+    @raise: MultipleObjectsReturned: If more than one object exists, this is raised
+    """
+
     try:
         return models.Transaction.objects.get(id=id)
     except models.Transaction.DoesNotExist:

@@ -9,4 +9,8 @@ from ...services import *
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
+        """
+        Sync account balances with the nano network
+        """
+
         accounts.sync_accounts()

@@ -21,6 +21,14 @@ class POWService:
 
     @classmethod
     def get_pow(cls, address, hash):
+        """
+        Get a POW, first try the dPoW, on failure, use a node
+
+        @param address: Address for node lookup
+        @param hash: Hash to generate PoW for
+        @return: POW as a string
+        @raise RPCException: RPC Failure
+        """
         try:
             return cls._get_dpow(hash)['work']
         except Exception as e:
@@ -77,10 +85,23 @@ class POWService:
 
     @classmethod
     def enqueue_account(cls, address, frontier):
+        """
+        Add an address, hash pair to the queue for POW generation (this will update the account object)
+
+        @param address: Account address to generate POW for
+        @param frontier: Frontier block to generate valid POW
+        """
+
         cls._pow_queue.put((address, frontier))
     
     @classmethod
     def start(cls, daemon=True):
+        """
+        Start the POW processing thread
+
+        @param daemon: Determines whether or not the thread will force close with the main process
+        """
+
         if not cls._running:
             # Use a condition to wait until this value is set to True and set it in the new thread (to prevent more than one thread)
             cls._running = True
@@ -91,16 +112,30 @@ class POWService:
 
     @classmethod
     def stop(cls):
+        """
+        Stops the POW processing thread
+        """
+
         cls._running = False
 
     @classmethod
     def POW_accounts(cls, daemon=True):
+        """
+        Generate POW for all accounts (even if they have a valid POW TODO: check if valid).
+        If daemon is false, this method will wait for all POWs to be processed and saved
+
+        @param daemon: Pass through to POWService.start(daemon)
+        @raise RPCException: RPC Failure
+        """
+
         if not cls._running:
             cls.start(daemon=daemon)
 
         accounts_list = get_accounts()
 
         for account in accounts_list:
+            # TODO: RPC check if POW is valid and skip if it is
+
             rpc = nano.rpc.Client(account.wallet.node.IP)
 
             try:

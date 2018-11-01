@@ -10,6 +10,15 @@ class AccountNotFound(Exception):
 
 
 def new_account(wallet, address=None):
+    """
+    Create a new account on the database and possibly node if address is None
+
+    @param address: Address of the wallet to add (if None, will generate a new address in the wallet)
+    @param wallet: Wallet of the account
+    @return: New account object
+    @raise RPCException: RPC Failure
+    """
+
     rpc = nano.rpc.Client(wallet.node.IP)
 
     if address is None:
@@ -31,9 +40,23 @@ def new_account(wallet, address=None):
     return account
 
 def get_accounts():
+    """
+    Get all accounts in the database
+
+    @return: Query of all accounts
+    """
+
     return models.Account.objects.all()
 
 def get_account(address):
+    """
+    Get an account in the database with the specified address
+
+    @param address: The account returned will have this address
+    @return: None if there is no account with that address or an Account object
+    @raise MultipleObjectsReturned: If more than one account has the address given, this will be raised
+    """
+
     try:
         return models.Account.objects.get(address=address)
     except models.Account.DoesNotExist:
@@ -42,6 +65,12 @@ def get_account(address):
         raise MultipleObjectsReturned()
 
 def sync_accounts():
+    """
+    Sync all the account balances with the nano network. If there is a difference, the account's POW will also be reset
+
+    @raise RPCException: RPC Failure
+    """
+
     accounts_list = get_accounts()
 
     for account in accounts_list:

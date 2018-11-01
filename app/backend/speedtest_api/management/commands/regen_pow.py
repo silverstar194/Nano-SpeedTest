@@ -10,4 +10,8 @@ from ...services._pow import POWService
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
+        """
+        Get POW for all accounts
+        """
+
         POWService.POW_accounts(daemon=False)

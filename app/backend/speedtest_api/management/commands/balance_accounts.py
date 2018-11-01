@@ -14,6 +14,12 @@ class BalancingException(Exception):
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
+        """
+        Balance all accounts in the database
+
+        @raise BalancingException: Error occured in the balancing process
+        """
+
         accounts_list = accounts.get_accounts()
 
         # Small balances toward the 0 index
@@ -30,6 +36,15 @@ class Command(BaseCommand):
             time.sleep(0.1)
     
     def reduce_accounts(self, accounts, values, mean):
+        """
+        Reduce the list of accounts to balance by balancing two of the higher order accounts
+
+        @param accounts: Ordered list of accounts that matches the ordering of values
+        @param values: Ordered list of account balances that matches the ordering of accounts
+        @param mean: Mean of account balances
+        @raise BalancingException: Error occured in the balancing process
+        """
+
         # Make sure everything checks out
         if len(accounts) < 2:
             return
