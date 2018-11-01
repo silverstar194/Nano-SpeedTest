@@ -45,49 +45,59 @@ class StatsPage extends Component {
             <div className='StatsPage'>
                 <Header/>
                 {
-                    Object.keys(cities).length ?
-                        <h2 className='map-header page-header text-left'>
-                            Sent from {cities.origin.name} to {cities.destination.name}
-                        </h2>
-                        : null
-                }
-                <div className='nano-container'>
-                    <Map cities={cities}/>
-                </div>
-                <div className='nano-container'>
-                    <table className='table'>
-                        <thead>
-                        <tr>
-                            <th scope='col'>#</th>
-                            <th scope='col'>Hash</th>
-                            <th scope='col'>Origin</th>
-                            <th scope='col'>Destination</th>
-                            <th scope='col'>Elapsed Time</th>
-                            <th scope='col'>Amount</th>
-                            <th scope='col'>Completed</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {
-                            table.map((props, index) => {
-                                props.index = index + 1;
-                                return <TableRow key={uuid(props.hash)} {...props}/>;
-                            })
-                        }
-                        </tbody>
-                    </table>
-                </div>
-
-                {/*only show loading if we are waiting for the data.  Else show button to rerun*/}
-                {this.state.loading && (
-                    <div className='loading-container'>
-                        <div className='loader-container d-flex justify-content-center'>
-                            <div className='loader'></div>
-                        </div>
+                    table.length ?
+                    (
                         <div>
-                            <p>Your transaction is processing. Please wait.</p>
+                            <h2 className='map-header page-header text-left'>
+                                Sent from {cities.origin.name} to {cities.destination.name}
+                            </h2>
+                            <div className='nano-container'>
+                                <Map cities={cities}/>
+                            </div>
+                            <div className='nano-container'>
+                                <table className='table'>
+                                    <thead>
+                                    <tr>
+                                        <th scope='col'>#</th>
+                                        <th scope='col'>Hash</th>
+                                        <th scope='col'>Origin</th>
+                                        <th scope='col'>Destination</th>
+                                        <th scope='col'>Elapsed Time</th>
+                                        <th scope='col'>Amount</th>
+                                        <th scope='col'>Completed</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {
+                                        table.map((props, index) => {
+                                            props.index = index + 1;
+                                            return <TableRow key={uuid(props.hash)} {...props}/>;
+                                        })
+                                    }
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            {/* /*** only show loading if we are waiting for the data.  Else show button to rerun
+                                {this.state.loading && (
+                                    <div className='loading-container'>
+                                        <div className='loader-container d-flex justify-content-center'>
+                                            <div className='loader'></div>
+                                        </div>
+                                        <div>
+                                            <p>Your transaction is processing. Please wait.</p>
+                                        </div>
+                                    </div> )
+                                }  */}
                         </div>
-                    </div> )
+                    )
+                    : (
+                        <h2>
+                            No results to show
+                            <p></p>
+                            Please go to the Speed Test tab and run a test
+                        </h2>
+                    )
                 }
             </div>
         );
