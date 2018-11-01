@@ -29,7 +29,7 @@ DPOW_ENDPOINT = os.environ["NANO_ST__DPOW__ENDPOINT"]
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
