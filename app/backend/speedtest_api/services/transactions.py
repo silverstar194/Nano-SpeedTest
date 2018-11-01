@@ -1,6 +1,8 @@
-import datetime as datetime
+import logging
 import requests
+import time
 
+from django.utils import timezone
 from django.conf import settings as settings
 import nano
 
@@ -14,7 +16,7 @@ from ._nodetiming import *
 
 class AccountBalanceMismatchException(Exception):
     def __init__(self, balance_actual, balance_db, account):
-        Exception.__init__(self, "{0} != {0} for account: {0}".format((balance_actual, balance_db, account)))
+        Exception.__init__(self, "{0} != {1} for account: {2}".format(balance_actual, balance_db, account))
 
 class InsufficientNanoException(Exception):
     def __init__(self):
@@ -22,15 +24,15 @@ class InsufficientNanoException(Exception):
 
 class AddressDoesNotExistException(Exception):
     def __init__(self, account, wallet):
-        Exception.__init__(self, "The Nano address {0} does not exist on wallet {0}".format((account, wallet)))
+        Exception.__init__(self, "The Nano address {0} does not exist on wallet {1}".format(account, wallet))
 
 class NoIncomingBlocksException(Exception):
-    def __init__(self):
-        Exception.__init__(self, "There were no incoming blocks to receive for the account specified.")
+    def __init__(self, account):
+        Exception.__init__(self, "There were no incoming blocks to receive for the account: %s." % account)
 
 class TooManyIncomingBlocksException(Exception):
-    def __init__(self):
-        Exception.__init__(self, "There were more than one incoming blocks for the account specified.")
+    def __init__(self, account):
+        Exception.__init__(self, "There were more than one incoming blocks for the account: %s." % account)
 
 class InvalidPOWException(Exception):
     def __init__(self):
@@ -39,8 +41,9 @@ class InvalidPOWException(Exception):
 
 def new_transaction(initiated_by):
     # TODO: Select accounts and amount
-
-    return new_transaction(origin_account, destination_account, amount, initiated_by)
+    # Send 100000000000000000000 RAW
+    pass
+    # return new_transaction(origin_account, destination_account, amount, initiated_by)
 
 def new_transaction(origin_account, destination_account, amount, initiated_by):
     transaction = models.Transaction(
@@ -56,16 +59,18 @@ def new_transaction(origin_account, destination_account, amount, initiated_by):
     return transaction
 
 def send_transaction(transaction):
+    logger = logging.getLogger(__name__)
+
     rpc_origin_node = nano.rpc.Client(transaction.origin.wallet.node.IP)
     rpc_destination_node = nano.rpc.Client(transaction.destination.wallet.node.IP)
 
     # Do some origin balance checking
-    origin_balance = rpc_origin_node.account_balance(account=transaction.origin.address)
-    if (origin_balance != origin_account.current_balance):
+    origin_balance = rpc_origin_node.account_balance(account=transaction.origin.address)['balance']
+    if (origin_balance != transaction.origin.current_balance):
         raise AccountBalanceMismatchException(
             balance_actual=origin_balance, 
-            balance_db=origin_account.current_balance,
-            account=origin_account.address
+            balance_db=transaction.origin.current_balance,
+            account=transaction.origin.address
         )
     elif (origin_balance - transaction.amount <= 0):
         raise InsufficientNanoException()
@@ -84,44 +89,56 @@ def send_transaction(transaction):
         )
 
     # Make sure the POW is there (not in the POW regen queue)
-    if transaction.origin.POW is None or transaction.destination.POW is None:
+    if transaction.origin.POW is None:
+        POWService.enqueue_account(transaction.origin)
         raise InvalidPOWException()
+    
+    if transaction.destination.POW is None:
+        # We ignore this if we are sending a first block
+        # POWService.enqueue_account(transaction.destination)
+        # raise InvalidPOWException()
+        pass
 
     # Start the timestamp before we try to send out the request
-    transaction.start_send_timestamp = datetime.now()
+    transaction.start_send_timestamp = timezone.now()
 
     try:
         transaction.transaction_hash_sending = rpc_origin_node.send(
             wallet=transaction.origin.wallet.wallet_id,
             source=transaction.origin.address,
             destination=transaction.destination.address,
-            amount=transaction.amount,
+            amount=int(transaction.amount),
             work=transaction.origin.POW,
             id=transaction.id
         )
-        
+
         # Update the origin balance
-        transaction.origin.current_balance = transaction.origin.current_balance - amount
-    except nano.rpc.RPCException:
+        transaction.origin.current_balance = transaction.origin.current_balance - transaction.amount
+        transaction.origin.POW = None
+    except nano.rpc.RPCException as e:
+        logger.error(e)
         raise nano.rpc.RPCException()
     
     # Handover control to the timing service (expecting the timestamp to be set on return)
     # TODO: implement error handling
     time_transaction_send(transaction)
 
+    transaction.save()
+    
     try:
-        incoming_blocks = rpc_destination_node.accounts_pending(accounts=(transaction.origin.address))
+        rpc_destination_node.search_pending_all()
+        incoming_blocks = rpc_destination_node.pending(account=transaction.destination.address)
     except nano.rpc.RPCException:
         raise nano.rpc.RPCException()
 
-    if incoming_blocks[transaction.origin.address] is None or len(incoming_blocks[transaction.origin.address]) == 0:
-        raise NoIncomingBlocksException()
-    elif len(incoming_blocks[transaction.origin.address]) > 1:
-        raise TooManyIncomingBlocksException()
+    if len(incoming_blocks) == 0:
+        raise NoIncomingBlocksException(transaction.destination.address)
+    elif len(incoming_blocks) > 1:
+        raise TooManyIncomingBlocksException(transaction.destination.address)
 
     # Check to see if this block_hash is the same as the transaction_hash_sending
-    for block_hash in incoming_blocks[transaction.origin.address]:
-        transaction.start_receive_timestamp = datetime.now()
+    for block_hash, amount in incoming_blocks:
+        transaction.start_receive_timestamp = timezone.now()
 
         try:
             transaction.transaction_hash_receiving = rpc_destination_node.receive(
@@ -141,14 +158,13 @@ def send_transaction(transaction):
     time_transaction_receive(transaction)
 
     # We set these to None so they are known to be invalid
-    transaction.origin.POW = None
     transaction.destination.POW = None
 
     transaction.save()
 
     # Regenerate POW on the accounts
-    POWService.enqueue_account(account_id=transaction.origin.address)
-    POWService.enqueue_account(account_id=transaction.destination.address)
+    POWService.enqueue_account(account_id=transaction.origin.address, frontier=transaction.transaction_hash_sending)
+    POWService.enqueue_account(account_id=transaction.destination.address, frontier=transaction.transaction_hash_receiving)
 
     return transaction
 

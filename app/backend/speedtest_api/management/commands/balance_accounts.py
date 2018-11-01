@@ -1,0 +1,110 @@
+import logging
+import time
+
+from django.core.management.base import BaseCommand, CommandError
+import nano
+
+from ...models import *
+from ...services import *
+
+
+class BalancingException(Exception):
+    def __init__(self):
+        Exception.__init__(self, "Error occurred in the balance process.")
+
+class Command(BaseCommand):
+    def handle(self, *args, **options):
+        accounts_list = accounts.get_accounts()
+
+        # Small balances toward the 0 index
+        accounts_sorted = sorted(accounts_list, key=lambda a: a.current_balance, reverse=False)
+
+        values = list(map(lambda a: a.current_balance, accounts_sorted))
+
+        # Use the average RAW value as the target
+        mean = sum(values) // len(values)
+
+        # Continue until we have only one unbalanced account
+        while len(accounts_sorted) > 1:
+            self.reduce_accounts(accounts_sorted, values, mean)
+            time.sleep(0.1)
+    
+    def reduce_accounts(self, accounts, values, mean):
+        # Make sure everything checks out
+        if len(accounts) < 2:
+            return
+        
+        if len(accounts) != len(values):
+            raise BalancingException()
+        
+        # Find lower and upper accounts that have POW
+        lower = -1
+        upper = len(values)
+
+        found_lower = False
+        found_upper = False
+
+        # Find an account that needs a transaction and has valid POW (starting from the ends)
+        while not found_lower:
+            lower = lower + 1
+            if lower >= upper:
+                break
+            
+            if values[lower] == mean:
+                del values[lower]
+                del accounts[lower]
+                upper = upper - 1
+            
+            rpc = nano.rpc.Client(accounts[lower].wallet.node.IP)
+            
+            # If the wallet is new, allow the balancing to happen
+            try:
+                rpc.account_info(account=accounts[lower].address)
+            except:
+                found_lower = True
+                break
+
+            found_lower = accounts[lower].POW is not None
+
+        while not found_upper:
+            upper = upper - 1
+            if upper <= lower:
+                break
+            
+            if values[upper] == mean:
+                del values[upper]
+                del accounts[upper]
+                upper = upper - 1
+            
+            found_upper = accounts[upper].POW is not None
+        
+        # If we can't do a transaction stop
+        if not found_lower or not found_upper:
+            return
+        
+        # Calculate the amount we want to send
+        diff_lower = mean - values[lower]
+        diff_upper = values[upper] - mean
+
+        amount = min(diff_lower, diff_upper)
+
+        if amount == 0:
+            return
+
+        # Create a transaction to balance the accounts
+        try:
+            transaction = transactions.new_transaction(accounts[upper], accounts[lower], amount, 'Account Balancer')
+            transactions.send_transaction(transaction)
+        except Exception as e:
+            logger = logging.getLogger(__name__)
+            logger.error('Transaction error: %s' % e)
+            
+        # Remove the accounts that got balanced (at least 1 did)
+        if values[lower] + amount == mean:
+            del values[lower]
+            del accounts[lower]
+            upper = upper - 1
+        
+        if values[upper] - amount == mean:
+            del values[upper]
+            del accounts[upper]
