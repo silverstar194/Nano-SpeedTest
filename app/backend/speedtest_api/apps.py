@@ -15,7 +15,7 @@ class SpeedtestApiConfig(AppConfig):
         POWService.POW_accounts()
 
         logger.info('Syncing account balances...')
-        from .services import *
+        from .services import accounts
         accounts.sync_accounts()
 
         # TODO: Add a current state validator that fixes changes between Nano and our DB
