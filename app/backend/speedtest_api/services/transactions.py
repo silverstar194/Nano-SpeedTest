@@ -2,6 +2,7 @@ import logging
 import random
 import requests
 import time
+from decimal import *
 
 from django.utils import timezone
 from django.conf import settings as settings
@@ -61,7 +62,10 @@ def new_transaction_random(initiated_by):
     
     destination = random.choice(account_destinations)
 
-    return new_transaction(origin_account=origin, destination_account=destination, amount=100000000000000000000, initiated_by=initiated_by)
+    base_amount = 100000000000000000000
+    amount = base_amount * Decimal(random.randint(1, 9))
+
+    return new_transaction(origin_account=origin, destination_account=destination, amount=amount, initiated_by=initiated_by)
 
 def new_transaction(origin_account, destination_account, amount, initiated_by):
     """

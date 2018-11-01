@@ -1,5 +1,6 @@
 from datetime import datetime
 from datetime import timedelta
+from decimal import *
 
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
@@ -20,11 +21,11 @@ def send_transaction(request):
 
     """
 
-    client_ip = get_client_ip(request)
+    client_ip, is_routable = get_client_ip(request)
 
-    transaction = transactions.new_transaction(client_ip)
-    origin_node = transaction.origin
-    destination_node = transaction.destination
+    transaction = transactions.new_transaction_random(client_ip)
+    origin_node = transaction.origin.wallet.node
+    destination_node = transaction.destination.wallet.node
 
     origin = {
         'id': origin_node.id,
@@ -38,11 +39,14 @@ def send_transaction(request):
         'longitude': destination_node.longitude
     }
 
+    amount_decimal = Decimal(transaction.amount) / Decimal(1e24)
+    amount = round(amount_decimal, 4)
+
     random_transaction = {
         "id": transaction.id,
         "origin": origin,
         "destination": destination,
-        "amount": transaction.amount,
+        "amount": amount,
         "ip": client_ip
     }
 
