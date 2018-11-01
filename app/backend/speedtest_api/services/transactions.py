@@ -85,6 +85,7 @@ def send_transaction(transaction):
     @param transaction: Transaction to execute
     @return: Transaction object with new information
     @raise: RPCException: RPC Failure
+    @raise: AccountBalanceMismatchException: Will prevent the execution of the current transaction but will also rebalance the account
     @raise: InsufficientNanoException: The origin account does not have enough funds
     @raise: InvalidPOWException: The origin account does not have valid POW
     @raise: NoIncomingBlocksException: Incoming block not found on destination node. This will lead to invalid POW and balance in the destination account if not handled
@@ -99,6 +100,9 @@ def send_transaction(transaction):
     # Do some origin balance checking
     origin_balance = rpc_origin_node.account_balance(account=transaction.origin.address)['balance']
     if (origin_balance != transaction.origin.current_balance):
+        transaction.origin.current_balance = origin_balance
+        transaction.save()
+
         raise AccountBalanceMismatchException(
             balance_actual=origin_balance, 
             balance_db=transaction.origin.current_balance,
