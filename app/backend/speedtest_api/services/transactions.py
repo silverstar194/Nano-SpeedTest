@@ -110,6 +110,7 @@ def send_transaction(transaction):
     origin_balance = rpc_origin_node.account_balance(account=transaction.origin.address)['balance']
     if (origin_balance != transaction.origin.current_balance):
         transaction.origin.current_balance = origin_balance
+        transaction.origin.save()
         transaction.save()
 
         raise AccountBalanceMismatchException(
@@ -172,6 +173,8 @@ def send_transaction(transaction):
     except:
         pass
 
+    transaction.origin.save()
+    transaction.destination.save()
     transaction.save()
 
     max_retries = 20
@@ -192,10 +195,12 @@ def send_transaction(transaction):
     # We need to set POW to None because it will be no longer valid as the node will eventually accept the block(s) (if they are unopened?)
     if incoming_blocks is None or len(incoming_blocks) == 0:
         transaction.destination.POW = None
+        transaction.destination.save()
         transaction.save()
         raise NoIncomingBlocksException(transaction.destination.address)
     elif len(incoming_blocks) > 1:
         transaction.destination.POW = None
+        transaction.destination.save()
         transaction.save()
         raise TooManyIncomingBlocksException(transaction.destination.address)
 
@@ -220,6 +225,7 @@ def send_transaction(transaction):
 
     transaction.destination.POW = None
 
+    transaction.destination.save()
     transaction.save()
 
     # Regenerate POW on the accounts
