@@ -70,6 +70,13 @@ def get_transaction(request):
         if transaction is None:
             return JsonResponse({'message': 'Transaction ' + str(transaction_id) + ' not found.'}, status=404)
 
-    transaction_stats = transactions.send_transaction(transaction)
+        else:
+            sent_transaction = transactions.send_transaction(transaction)
 
-    return JsonResponse({'transaction': transaction_stats}, status=404)
+            transaction_stats = {
+                'id': sent_transaction.id,
+                'start_datetime': sent_transaction.start_send_timestamp,
+                'end_datetime': sent_transaction.end_receive_timestamp
+            }
+
+            return JsonResponse({'transaction': transaction_stats}, status=404)
