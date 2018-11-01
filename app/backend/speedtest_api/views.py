@@ -1,22 +1,24 @@
-from django.shortcuts import render
-import json
-from django.http import JsonResponse
+from datetime import datetime
+from datetime import timedelta
 
+from django.http import JsonResponse
 from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework import status
 
 from speedtest_api.models import Transaction
 from speedtest_api.models import Account
-
-from datetime import datetime
-from datetime import timedelta
 
 
 @api_view(['POST'])
 def send_transaction(request):
     """
     Send a transaction to the database
+
+    Args:
+        request : The REST request to the endpoint
+
+    Returns:
+        JsonResponse: The general transaction information as a JSON object
+
     """
 
     origin_node = {
@@ -49,9 +51,17 @@ def send_transaction(request):
 @api_view(['GET'])
 def get_transaction(request):
     """
-    Send a transaction from the database
+    Get a transaction from the database and return
+
+    Args:
+        request : The REST request to the endpoint
+
+    Returns:
+        JsonResponse: The transaction timing information as a JSON object
+
     """
 
+    # Dummy JSON for the UI guys to test with
     start_datetime = datetime.utcnow()
     end_datetime = start_datetime + timedelta(seconds=10)
 
@@ -64,6 +74,6 @@ def get_transaction(request):
     transaction_id = int(request.GET.get('id'))
 
     if transaction_id != 122:
-        return JsonResponse({'success':'false', 'message': "Transaction not found."}, status=404)
+        return JsonResponse({"message": "Transaction not found."}, status=404)
     else:
         return JsonResponse(transaction_stats)
