@@ -16,4 +16,4 @@ class Transaction(models.Model):
     transaction_hash_receiving = models.CharField(max_length=64)
 
     def __str__(self):
-        return u'Start: %s\n Amount: %s' % (self.start_send_timestamp, amount)
+        return u'Start: %s\n Amount: %s' % (self.start_send_timestamp, self.amount)
