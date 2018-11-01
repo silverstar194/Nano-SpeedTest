@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders snapshot correctly 1`] = `
+<div
+  className="GoogleMapsContainer"
+>
+  <div
+    className="GoogleMapsElement"
+  />
+  <div />
+</div>
+`;

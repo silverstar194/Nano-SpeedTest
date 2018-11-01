@@ -17,8 +17,10 @@
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.0.4",
+    "react-test-renderer": "^16.6.0",
     "reactstrap": "^6.5.0",
     "redux": "^4.0.1",
+    "redux-mock-store": "^1.5.3",
     "redux-observable": "^1.0.0",
     "rxjs": "^6.3.3",
     "uuid": "^3.3.2"
@@ -39,14 +41,16 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "enzyme": "^3.7.0"
+    "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.6.0"
   },
   "jest": {
     "collectCoverageFrom": [
-      "src/**/*.{js}",
+      "src/**/*.{js,jsx}",
       "!<rootDir>/node_modules/",
       "!<rootDir>/src/index.js",
-      "!<rootDir>/src/serviceWorker.js"
+      "!<rootDir>/src/serviceWorker.js",
+      "!<rootDir>/src/NanoRouter.jsx"
     ],
     "coverageReporters": [
       "text"
