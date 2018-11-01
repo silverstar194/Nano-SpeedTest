@@ -20,18 +20,29 @@ def send_transaction(request):
 
     """
 
-    client_ip, is_routable = get_client_ip(request)
+    client_ip = get_client_ip(request)
 
-    transaction = transactions.send_transaction(client_ip)
+    transaction = transactions.new_transaction(client_ip)
     origin_node = transaction.origin
     destination_node = transaction.destination
-    amount = transaction.amount
+
+    origin = {
+        'id': origin_node.id,
+        'latitude': origin_node.latitude,
+        'longitude': origin_node.longitude
+    }
+
+    destination = {
+        'id': destination_node.id,
+        'latitude': destination_node.latitude,
+        'longitude': destination_node.longitude
+    }
 
     random_transaction = {
         "id": transaction.id,
-        "origin": origin_node,
-        "destination": destination_node,
-        "amount": amount,
+        "origin": origin,
+        "destination": destination,
+        "amount": transaction.amount,
         "ip": client_ip
     }
 
