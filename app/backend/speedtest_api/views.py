@@ -48,19 +48,17 @@ def get_transaction(request):
 
     """
 
-    # Dummy JSON for the UI guys to test with
-    start_datetime = datetime.utcnow().timestamp() * 1000  # Convert to millisecond Unix time
-    end_datetime = start_datetime + 10000  # Add ten seconds
-
-    transaction_stats = {
-        "id": 122,
-        "start_timestamp": int(start_datetime),
-        "end_timestamp": int(end_datetime)
-    }
-
     transaction_id = int(request.GET.get('id'))
 
-    if transaction_id != 122:
-        return JsonResponse({"message": "Transaction not found."}, status=404)
+    try:
+        transaction = transactions.get_transaction(transaction_id)
+    except Exception:  # Make this the more specific MultipleObjectsReturned exception once it is implemented
+        # Return 500 until better option is developed
+        return JsonResponse({'message': 'Multiple transactions returned for ' + str(transaction_id) + '.'}, status=500)
     else:
-        return JsonResponse(transaction_stats)
+        if transaction is None:
+            return JsonResponse({'message': 'Transaction ' + str(transaction_id) + ' not found.'}, status=404)
+
+    transaction_stats = transactions.send_transaction(transaction)
+
+    return JsonResponse({'transaction': transaction_stats}, status=404)
