@@ -52,5 +52,8 @@ exports[`renders snapshot correctly 1`] = `
   >
     More Info Page
   </h1>
+  <h2>
+    We are talking with the Nano Team about what information they would like us to display here
+  </h2>
 </div>
 `;
