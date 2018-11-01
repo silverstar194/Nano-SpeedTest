@@ -14,6 +14,12 @@ class PopulationException(Exception):
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
+        """
+        Generate a new wallet for every node and add 5 accounts to it.
+        These new accounts are unopened and require balance_accounts to be run in order to give them nano.
+        POW is also generated on these accounts but will not be able to at this time due to them being unopened (no open block).
+        """
+
         nodes_list = nodes.get_nodes()
 
         for node in nodes_list:
