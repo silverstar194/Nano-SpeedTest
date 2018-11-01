@@ -20,6 +20,7 @@ These are the Django packages installed by following [this tutorial.](https://ww
 $ pip install djangorestframework
 $ pip install markdown
 $ pip install django-filter
+$ pip install docutils
 ```
 
 ### Other Python Dependencies
