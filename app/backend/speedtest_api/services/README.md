@@ -2,7 +2,7 @@
 
 ## Transactions Service
 
-`new_transaction(initiated_by)` create (and get) a transaction object that has a randomly assigned origin, destination, and amount.
+`new_transaction_random(initiated_by)` create (and get) a transaction object that has a randomly assigned origin, destination, and amount.
 
 `new_transaction(origin_account, destination_account, amount, initiated_by)` create a transaction with the given parameters.
 

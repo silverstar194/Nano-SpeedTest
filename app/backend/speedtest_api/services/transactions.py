@@ -1,4 +1,5 @@
 import logging
+import random
 import requests
 import time
 
@@ -39,9 +40,8 @@ class InvalidPOWException(Exception):
         Exception.__init__(self, "The POW on the account was not valid.")
 
 
-def new_transaction(initiated_by):
+def new_transaction_random(initiated_by):
     """
-    TODO:
     Create a new transaction with random origin, destination, and amount fields.
     This does not execute the transaction on the nano network.
 
@@ -49,10 +49,19 @@ def new_transaction(initiated_by):
     @return: New transaction object
     """
 
-    # TODO: Select accounts and amount
-    # Send 100000000000000000000 RAW
-    pass
-    # return new_transaction(origin_account, destination_account, amount, initiated_by)
+    accounts_list = get_accounts()
+
+    origin = random.choice(accounts_list)
+
+    account_destinations = []
+
+    for account in accounts_list:
+        if account.wallet.node.id != origin.wallet.node.id:
+            account_destinations.append(account)
+    
+    destination = random.choice(account_destinations)
+
+    return new_transaction(origin_account=origin, destination_account=destination, amount=100000000000000000000, initiated_by=initiated_by)
 
 def new_transaction(origin_account, destination_account, amount, initiated_by):
     """
@@ -214,8 +223,8 @@ def send_transaction(transaction):
     transaction.save()
 
     # Regenerate POW on the accounts
-    POWService.enqueue_account(account_id=transaction.origin.address, frontier=transaction.transaction_hash_sending)
-    POWService.enqueue_account(account_id=transaction.destination.address, frontier=transaction.transaction_hash_receiving)
+    POWService.enqueue_account(address=transaction.origin.address, frontier=transaction.transaction_hash_sending)
+    POWService.enqueue_account(address=transaction.destination.address, frontier=transaction.transaction_hash_receiving)
 
     return transaction
 
