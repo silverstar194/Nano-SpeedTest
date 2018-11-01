@@ -121,7 +121,7 @@ class POWService:
     @classmethod
     def POW_accounts(cls, daemon=True):
         """
-        Generate POW for all accounts (even if they have a valid POW TODO: check if valid).
+        Generate POW for all accounts.
         If daemon is false, this method will wait for all POWs to be processed and saved
 
         @param daemon: Pass through to POWService.start(daemon)
@@ -134,14 +134,14 @@ class POWService:
         accounts_list = get_accounts()
 
         for account in accounts_list:
-            # TODO: RPC check if POW is valid and skip if it is
-
             rpc = nano.rpc.Client(account.wallet.node.IP)
 
             try:
-                cls.logger.info('Enqueuing address: ' + account.address)
                 frontier = rpc.frontiers(account=account.address, count=1)[account.address]
-                POWService.enqueue_account(address=account.address, frontier=frontier)
+
+                if account.POW is None or not rpc.work_validate(work=account.POW, hash=frontier):
+                    cls.logger.info('Enqueuing address: ' + account.address)
+                    POWService.enqueue_account(address=account.address, frontier=frontier)
             except Exception as e:
                 cls.logger.error('Error getting hash for: ' + account.address)
         

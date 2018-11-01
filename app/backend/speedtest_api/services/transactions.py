@@ -85,6 +85,10 @@ def send_transaction(transaction):
     @param transaction: Transaction to execute
     @return: Transaction object with new information
     @raise: RPCException: RPC Failure
+    @raise: InsufficientNanoException: The origin account does not have enough funds
+    @raise: InvalidPOWException: The origin account does not have valid POW
+    @raise: NoIncomingBlocksException: Incoming block not found on destination node. This will lead to invalid POW and balance in the destination account if not handled
+    @raise: TooManyIncomingBlocksException: Incoming block not found on destination node. This will lead to invalid POW and balance in the destination account if not handled
     """
 
     logger = logging.getLogger(__name__)
@@ -167,8 +171,12 @@ def send_transaction(transaction):
             incoming_blocks = rpc_destination_node.pending(account=transaction.destination.address)
         except nano.rpc.RPCException:
             raise nano.rpc.RPCException()
+        
+        max_retries = max_retries - 1
 
-    # We need to set POW to None because it will be no longer valid as the node will eventually accept the block(s)
+        time.sleep(1)
+
+    # We need to set POW to None because it will be no longer valid as the node will eventually accept the block(s) (if they are unopened?)
     if incoming_blocks is None or len(incoming_blocks) == 0:
         transaction.destination.POW = None
         transaction.save()
@@ -178,7 +186,7 @@ def send_transaction(transaction):
         transaction.save()
         raise TooManyIncomingBlocksException(transaction.destination.address)
 
-    for block_hash, amount in incoming_blocks:
+    for block_hash in incoming_blocks:
         transaction.start_receive_timestamp = timezone.now()
 
         try:
@@ -188,8 +196,6 @@ def send_transaction(transaction):
                 block=block_hash,
                 work=transaction.destination.POW
             )
-            
-            # Update the destination balance
         except nano.rpc.RPCException:
             raise nano.rpc.RPCException()
     
