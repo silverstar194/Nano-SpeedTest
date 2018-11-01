@@ -1,15 +1,16 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import Header from './Header';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import {switchTab} from '../actions/navigation';
+import { connect } from 'react-redux';
+import { switchTab } from '../actions/navigation';
+import { fetchRandomTransaction } from '../actions/table';
 import '../styles/HomePage.css';
 
 class HomePage extends Component {
     onClick = () => {
         // navigate to /Stats route
         this.props.history.push('/Stats');
-        this.props.onGoPressed(); // Update current active tab
+        this.props.onGoPressed(); // Update current active tab and dispatch action to get transaction data
     };
 
     render() {
@@ -39,6 +40,7 @@ class HomePage extends Component {
 const mapDispatchToProps = (dispatch) => {
     return {
         onGoPressed() {
+            dispatch(fetchRandomTransaction());
             dispatch(switchTab('Stats')); // Update current active tab
         }
     };

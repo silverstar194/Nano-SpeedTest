@@ -11,8 +11,6 @@ import uuid from 'uuid'
 
 class StatsPage extends Component {
     state = {
-        loading: true,
-        calledGetData: false,
         cities: [{
             name: 'japan',
             coords: {
@@ -29,46 +27,6 @@ class StatsPage extends Component {
             }
         ]
     };
-
-    getData = () => {
-        this.setState({calledGetData: true});
-        setTimeout(() => {
-            this.props.onAddData({
-                hash: uuid(),
-                origin: 'Japan',
-                destination: 'SF',
-                time: 4.3,
-                amount: 54321,
-                completed: 'Sept 19, 2018'
-            });
-            this.setState({loading: false});
-        }, 4300)
-    };
-
-    componentDidMount() {
-        this.props.onAddData({
-            hash: uuid(),
-            origin: 'SF',
-            destination: 'LA',
-            time: 9.3,
-            amount: 12345,
-            completed: 'Jan 1, 2018'
-        });
-        this.props.onAddData({
-            hash: uuid(),
-            origin: 'NY',
-            destination: 'WI',
-            time: 9.7,
-            amount: 55555,
-            completed: 'March 15, 2015'
-        });
-
-        // call function to 'get data' once (set timer and then add value to array) and to simulate a single
-        // async request
-        if (!this.state.calledGetData) {
-            this.getData();
-        }
-    }
 
     render() {
         // render the jsx
