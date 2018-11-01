@@ -143,7 +143,7 @@ def send_transaction(transaction):
 
         # Update the balances and POW
         transaction.origin.current_balance = transaction.origin.current_balance - transaction.amount
-        transaction.destination.current_balance = transaction.destination.current_balance + amount
+        transaction.destination.current_balance = transaction.destination.current_balance + transaction.amount
         transaction.origin.POW = None
     except nano.rpc.RPCException as e:
         logger.error(e)
