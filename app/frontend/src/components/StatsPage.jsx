@@ -71,7 +71,7 @@ class StatsPage extends Component {
                         {
                             table.map((props, index) => {
                                 props.index = index + 1;
-                                return <TableRow key={props.hash} {...props}/>;
+                                return <TableRow key={uuid(props.hash)} {...props}/>;
                             })
                         }
                         </tbody>
