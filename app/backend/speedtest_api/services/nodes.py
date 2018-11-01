@@ -14,9 +14,7 @@ def new_node(ip, latitude, longitude, location_name=None):
     @return: New node object
     """
 
-    node = models.Node(IP=ip, latitude=latitude, longitude=longitude, location_name=location_name)
-    node.save()
-    return node
+    return models.Node.objects.create(IP=ip, latitude=latitude, longitude=longitude, location_name=location_name)
 
 def get_nodes():
     """

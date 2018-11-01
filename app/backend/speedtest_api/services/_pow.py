@@ -146,7 +146,6 @@ class POWService:
                 cls.logger.error('Error getting hash for: ' + account.address)
         
         # If we are running this from the command, don't stop the main thread until we are done
-        # TODO: There is an issue where the last account in the queue does not get saved into the database
         if not daemon:
             while not cls._pow_queue.empty():
                 time.sleep(1)
