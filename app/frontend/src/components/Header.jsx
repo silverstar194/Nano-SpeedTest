@@ -6,12 +6,12 @@ import { switchTab } from '../actions/navigation';
 
 const Header = ({activeTab, onSwitchTab}) => {
 	return (
-		<div className="nav nav-tabs">
+		<div className='nav nav-tabs'>
 			<HeaderItem activeTab={activeTab} onSwitchTab={onSwitchTab} to='' text='Speed Test' tabName=''/>
 			<HeaderItem activeTab={activeTab} onSwitchTab={onSwitchTab} to='Stats' text='Statistics' tabName='Stats'/>
 			<HeaderItem activeTab={activeTab} onSwitchTab={onSwitchTab} to='Info' text='More Info' tabName='Info'/>
 		</div>
-	)
+	);
 };
 
 const mapStateToProps = (state) => {

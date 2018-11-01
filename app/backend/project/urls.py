@@ -16,6 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from speedtest_api import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('transactions/random', views.send_transaction),
+    path('transactions/', views.get_transaction)
 ]
