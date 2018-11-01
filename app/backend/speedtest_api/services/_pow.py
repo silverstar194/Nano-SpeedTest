@@ -12,11 +12,12 @@ from .. import models as models
 from .accounts import *
 
 
+logger = logging.getLogger(__name__)
+
 class POWService:
     _pow_queue = queue.Queue()
     _running = False
     loop = None
-    logger = logging.getLogger(__name__)
     thread = None
 
     @classmethod
@@ -32,12 +33,23 @@ class POWService:
         try:
             return cls._get_dpow(hash)['work']
         except Exception as e:
-            pass
+            logger.error('dPoW failure: %s' % e)
         
         account = get_account(address=address)
         rpc_node = nano.rpc.Client(account.wallet.node.IP)
+        POW = None
 
-        return rpc_node.work_generate(hash)
+        for i in range(3):
+            try:
+                POW = rpc_node.work_generate(hash)
+                break
+            except Exception as e:
+                logger.error('Node work_generate error: %s' % e)
+            
+        if POW is None:
+            raise Exception()
+
+        return POW
 
     @classmethod
     def _get_dpow(cls, hash):
@@ -71,16 +83,16 @@ class POWService:
                         account = get_account(address=address)
                         account.POW = cls.get_pow(address=address, hash=frontier)
 
-                        cls.logger.info('Generated POW: %s for account %s' % (account.POW, account.address))
+                        logger.info('Generated POW: %s for account %s' % (account.POW, account.address))
 
                         account.save()
                     except Exception as e:
-                        cls.logger.error('Exception in POW thread: ' + e)
+                        logger.error('Exception in POW thread: ' + e)
                 
                 # Run this every second
                 time.sleep(10)
         except Exception as e:
-            cls.logger.error(e)
+            logger.error(e)
             print(e)
 
     @classmethod
@@ -106,6 +118,8 @@ class POWService:
             # Use a condition to wait until this value is set to True and set it in the new thread (to prevent more than one thread)
             cls._running = True
 
+            logger.info('Starting PoW thread.')
+
             cls.thread = threading.Thread(target=cls._run)
             cls.thread.daemon = daemon
             cls.thread.start()
@@ -115,6 +129,8 @@ class POWService:
         """
         Stops the POW processing thread
         """
+
+        logger.info('Stopping PoW thread.')
 
         cls._running = False
 
@@ -140,10 +156,10 @@ class POWService:
                 frontier = rpc.frontiers(account=account.address, count=1)[account.address]
 
                 if account.POW is None or not rpc.work_validate(work=account.POW, hash=frontier):
-                    cls.logger.info('Enqueuing address: ' + account.address)
+                    logger.info('Enqueuing address: ' + account.address)
                     POWService.enqueue_account(address=account.address, frontier=frontier)
             except Exception as e:
-                cls.logger.error('Error getting hash for: ' + account.address)
+                logger.error('Error getting hash for: ' + account.address)
         
         # If we are running this from the command, don't stop the main thread until we are done
         if not daemon:

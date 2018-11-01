@@ -8,6 +8,8 @@ from ...models import *
 from ...services import *
 
 
+logger = logging.getLogger(__name__)
+
 class BalancingException(Exception):
     def __init__(self):
         Exception.__init__(self, "Error occurred in the balance process.")
@@ -77,6 +79,7 @@ class Command(BaseCommand):
                 rpc.account_info(account=accounts[lower].address)
             except:
                 found_lower = True
+                logger.warning('Account is unopened: %s' % accounts[lower].address)
                 break
 
             found_lower = accounts[lower].POW is not None
@@ -111,7 +114,6 @@ class Command(BaseCommand):
             transaction = transactions.new_transaction(accounts[upper], accounts[lower], amount, 'Account Balancer')
             transactions.send_transaction(transaction)
         except Exception as e:
-            logger = logging.getLogger(__name__)
             logger.error('Transaction error: %s' % e)
             
         # Remove the accounts that got balanced (at least 1 did)
