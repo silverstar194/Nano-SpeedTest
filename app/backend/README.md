@@ -62,10 +62,25 @@ $ python manage.py shell
 
 This provides a nice sandbox to interact with the API while coding.
 
-## AWS CodeBuild and CodeDeploy
-
--- TODO --
-
 ## File Structure and Naming
 
--- TODO --
+├── RaiBlocks           # Contains the data, log, and config for how the RaiBlocks node is ran.
+│   ├── config.json     # config.json for run options
+│   ├── data.ldb        # Database for the node
+│   └── log             # Output logs for the node.
+│       ├── log_2018-10-16_17-23-18.0.log
+│        .....
+├── counters.stat       # Empty file idk what
+├── logs.log            # Empty file idk what
+├── rai-16.2.0-Linux    # The implementation for the wallet: Contains binaries and include files
+│   ├── bin
+│   │   ├── nano_wallet
+│   │   └── rai_node
+│   ├── include         # Included File to Run the Wallet
+│   │   └── miniupnpc 
+│   │       ├── igd_desc_parse.h
+│   │       .....
+│   └── lib              # Library Files to Run the Wallet
+│       ├── libminiupnpc.a
+│       └── librai_lib.a
+└── samples.stat         # Empty file idk what
