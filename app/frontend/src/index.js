@@ -8,8 +8,10 @@ import * as serviceWorker from './serviceWorker';
 
 import navigation from './reducers/navigation';
 import table from './reducers/table';
+import transactions from './reducers/transactions';
 
 import rootEpic from './epics/table';
+import transactionsMiddleware from './transactionsMiddleware';
 
 
 // TODO - persist state so when user refreshes page, it doesn't delete state (bug: sets active tab to home, stays on
@@ -29,11 +31,12 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
     combineReducers({
         navigation,
-        table
+        table,
+        transactions
     }),
     initialState,
     composeEnhancers(
-        applyMiddleware(epicMiddleware)
+        applyMiddleware(epicMiddleware, transactionsMiddleware)
     )
 );
 
