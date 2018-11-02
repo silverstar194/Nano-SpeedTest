@@ -72,6 +72,9 @@ def send_transaction(request):
     if transaction is None:
         return JsonResponse({'message': 'Transaction ' + str(transaction_id) + ' not found.'}, status=404)
 
+    elif transaction.start_send_timestamp is not None:
+        return JsonResponse({'message': 'Transaction ' + str(transaction_id) + ' has already been sent.'}, status=403)
+
     else:
         sent_transaction = transactions.send_transaction(transaction)
 
