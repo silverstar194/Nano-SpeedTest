@@ -196,7 +196,7 @@ def send_transaction(transaction):
         
         max_retries = max_retries - 1
 
-        time.sleep(1)
+        time.sleep(0.25)
 
     # We need to set POW to None because it will be no longer valid as the node will eventually accept the block(s) (if they are unopened?)
     if incoming_blocks is None or len(incoming_blocks) == 0:

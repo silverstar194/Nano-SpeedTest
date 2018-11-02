@@ -23,8 +23,8 @@ def transaction_general(node_IP, account_address, current_hash, start_timestamp,
 	rpc_node = nano.rpc.Client(node_IP)
 
 	#Sleep times are incase we are still waiting for the transcation to go through
-	fib_seq =[1,1,2,3,5,8,13,21]
-	backoff_sleep_values = [x for x in fib_seq]
+
+	backoff_sleep_values =[6] + [1]*40
 	for sleep_value in backoff_sleep_values:
 
 		address = account_address
@@ -42,7 +42,7 @@ def transaction_general(node_IP, account_address, current_hash, start_timestamp,
 			end_time = rpc_node.account_info(address)[u'modified_timestamp']
 			end_time = datetime.datetime.fromtimestamp(end_time)
 
-			return end_time.timestamp()- start_timestamp.timestamp()
+			return (end_time.timestamp() - start_timestamp.timestamp()) *1000
 		
 		for value in history_curr_account:
 			if value[u'hash'] is hash_of_block:
