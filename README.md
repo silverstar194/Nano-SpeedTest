@@ -1,7 +1,7 @@
 # Nano-SpeedTest
 
 ## Table of Contents 
-- [Front End](#nano-speedtest-front-End)
+- [Front End](#nano-speedtest-front-end)
 - [Front End: Getting Started](#getting-started)
 - [Front End: Testing](#front-end-testing)
 - [Front End: Other Information](#other-information)
