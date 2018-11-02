@@ -144,7 +144,7 @@ Currently backend tests can be run as follows:
 ```sh
 $ python manage.py test
 ```
-In order to do you need to have a node set up. We have included a link on setup in the next section.
+In order to do this you need to have a node set up. We have included a link on setup in the next section.
 
 ## Setting Up Node
 https://github.com/nanocurrency/raiblocks/wiki/Docker-node
