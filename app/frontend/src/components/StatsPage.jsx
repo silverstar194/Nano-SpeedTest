@@ -14,32 +14,9 @@ class StatsPage extends Component {
     };
 
     render() {
-        let cities = {};
         const {table} = this.props;
-        if (table.length) {
-            const transaction = table[table.length - 1]; // grab the last entry that we have loaded
-            const origin = transaction['origin'];
-            const originIndex = origin.indexOf(',');
-            const destination = transaction['destination'];
-            const destinationIndex = destination.indexOf(',');
+        const mostRecent = table.length && table[table.length - 1];
 
-            cities = {
-                origin: {
-                    name: 'Mumbai', //hard coded for now
-                    coords: {
-                        lat: parseFloat(origin.substring(0, originIndex)),
-                        lng: parseFloat(origin.substring(originIndex + 1))
-                    }
-                },
-                destination: {
-                    name: 'Virginia', //hard coded for now
-                    coords: {
-                        lat: parseFloat(destination.substring(0, destinationIndex)),
-                        lng: parseFloat(destination.substring(destinationIndex + 1))
-                    }
-                }
-            };
-        }
         // render the jsx
         return (
             <div className='StatsPage'>
@@ -49,17 +26,17 @@ class StatsPage extends Component {
                     (
                         <div>
                             <h2 className='map-header page-header text-left'>
-                                Sent from {cities.origin.name} to {cities.destination.name}
+                                Sent from {mostRecent.origin.nodeLocation} to {mostRecent.destination.nodeLocation}
                             </h2>
                             <div className='nano-container'>
-                                <Map cities={cities}/>
+                                <Map {...mostRecent}/>
                             </div>
                             <div className='nano-container'>
                                 <table className='table'>
                                     <thead>
                                     <tr>
                                         <th scope='col'>#</th>
-                                        <th scope='col'>Hash</th>
+                                        <th scope='col'>Id</th>
                                         <th scope='col'>Origin</th>
                                         <th scope='col'>Destination</th>
                                         <th scope='col'>Elapsed Time</th>
@@ -71,7 +48,7 @@ class StatsPage extends Component {
                                     {
                                         table.map((props, index) => {
                                             props.index = index + 1;
-                                            return <TableRow key={uuid(props.hash)} {...props}/>;
+                                            return <TableRow key={uuid(props.id)} {...props}/>;
                                         })
                                     }
                                     </tbody>

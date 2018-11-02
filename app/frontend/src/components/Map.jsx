@@ -10,17 +10,16 @@ class TestMap extends React.Component {
 
     // Updates the map window once it is loaded to only show the distance between the two cities
     recomputeBounds() {
-        const {cities} = this.props;
-        if (!Object.keys(cities).length) return;
+        const {origin, destination} = this.props;
 
         const bounds = new window.google.maps.LatLngBounds();
-        Object.values(cities).map((city) => bounds.extend(city.coords));
+        [origin, destination].map((city) => bounds.extend(city.coords));
         this.refs.map.fitBounds(bounds, 3);
         this.setState({mapLoaded: true});
     }
 
     render() {
-        const {cities} = this.props;
+        const {origin, destination} = this.props;
         const {mapLoaded} = this.state;
         return (
             <GoogleMap
@@ -36,20 +35,20 @@ class TestMap extends React.Component {
                 onTilesLoaded={() => this.recomputeBounds()}
             >
             { // the map needs to render before recomputing and drawing markers and lines
-                (mapLoaded && Object.keys(cities).length) ? (
+                (mapLoaded) ? (
                     <div>
                         <Polyline
-                            path={[cities.origin.coords, cities.destination.coords]}
+                            path={[origin.coords, destination.coords]}
                             options={{
                                 clickable: false,
                                 strokeOpacity: 1,
                                 strokeWeight: 2,
                             }}
                         />
-                        {Object.values(cities).map((city, index) =>
+                        {[origin, destination].map((city, index) =>
                             <Marker
-                                key={city.name || index}
-                                title={city.name}
+                                key={city.nodeLocation || index}
+                                title={city.nodeLocation}
                                 position={city.coords}
                                 clickable={false}
                             />
