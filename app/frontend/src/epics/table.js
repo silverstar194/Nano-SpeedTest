@@ -3,6 +3,7 @@ import { combineEpics, ofType } from 'redux-observable';
 import { map, mergeMap } from 'rxjs/operators';
 import { ADD_TRANSACTION, ADD_TIMING_DATA, FETCH_RANDOM_TRANSACTION } from "../actions/table";
 
+//TODO going to need better error handling if rejected or times out
 export const fetchRandomTransaction = action$ => action$.pipe(
     ofType(FETCH_RANDOM_TRANSACTION),
     mergeMap(action =>
@@ -26,25 +27,18 @@ export const fetchRandomTransaction = action$ => action$.pipe(
     )
 );
 
+//TODO going to need better error handling if rejected or times out
 export const fetchTransactionTiming = action$ => action$.pipe(
     ofType(ADD_TRANSACTION),
     mergeMap(action =>
 
         fetch('http://127.0.0.1:8000/transactions/send', {
-            headers: {
-                'Content-Type': 'application/json'
-            },
             method: 'POST',
             body: JSON.stringify({
                 id: action.transactionData.id
             })
-        }).then((response) => {
-            console.log(response);
-            return response.json();
-        }).then((timingData) => {
-            console.log(timingData);
-            return { type: ADD_TIMING_DATA, timingData };
-        })
+        }).then(response => response.json())
+        .then((timingData) => ({ type: ADD_TIMING_DATA, timingData }) )
     )
 );
 
