@@ -136,7 +136,12 @@ def send_transaction(transaction):
 
     # Make sure the POW is there (not in the POW regen queue)
     if transaction.origin.POW is None:
-        POWService.enqueue_account(transaction.origin)
+        try:
+            frontier = rpc_origin_node.frontiers(account=transaction.origin.address, count=1)[transaction.origin.address]
+            POWService.enqueue_account(address=transaction.origin.address, frontier=frontier)
+        except Exception as e:
+            logger.error('Error adding address, frontier pair to POWService: %s' % e)
+
         logger.warning('Transaction origin POW is invalid, transaction.id: %s' % str(transaction.id))
         raise InvalidPOWException()
     
