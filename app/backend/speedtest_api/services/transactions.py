@@ -171,8 +171,8 @@ def send_transaction(transaction):
     # Handover control to the timing service (expecting the timestamp to be set on return)
     try:
         time_transaction_send(transaction)
-    except:
-        logger.error('Transaction timing_send failed, transaction.id: %s' % str(transaction.id))
+    except Exception as e:
+        logger.error('Transaction timing_send failed, transaction.id: %s, error: %s' % (str(transaction.id), str(e)))
 
     transaction.origin.save()
     transaction.destination.save()
@@ -223,8 +223,8 @@ def send_transaction(transaction):
     # Handover control to the timing service (expecting the timestamp to be set on return)
     try:
         time_transaction_receive(transaction)
-    except:
-        logger.error('Transaction timing_receive failed, transaction.id: %s' % str(transaction.id))
+    except Exception as e:
+        logger.error('Transaction timing_receive failed, transaction.id: %s, error: %s' % (str(transaction.id), str(e)))
 
     transaction.destination.POW = None
 
