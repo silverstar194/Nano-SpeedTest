@@ -42,7 +42,7 @@ def transaction_general(node_IP, account_address, current_hash, start_timestamp,
 			end_time = rpc_node.account_info(address)[u'modified_timestamp']
 			end_time = datetime.datetime.fromtimestamp(end_time)
 
-			return (end_time.timestamp() - start_timestamp.timestamp()) 
+			return end_time.timestamp()
 		
 		for value in history_curr_account:
 			if value[u'hash'] is hash_of_block:
@@ -62,14 +62,14 @@ def time_transaction_receive(transaction):
 	@return delta in seconds of how long it took to get the receiving block
 	@raise Exception for when we have missed the transaction
 	"""
-	time_delta = transaction_general(transaction.destination.wallet.node.IP, 
+	end_time = transaction_general(transaction.destination.wallet.node.IP, 
 		transaction.destination.address, 
 		transaction.transaction_hash_receiving, 
 		transaction.start_receive_timestamp)
 	
-	transaction.end_receive_timestamp = transaction.start_receive_timestamp + datetime.timedelta(seconds=time_delta)
+	transaction.end_receive_timestamp =	end_time
 	transaction.save()
-	return time_delta
+	return	end_time
 
 def time_transaction_send(transaction):
 	"""
@@ -78,12 +78,12 @@ def time_transaction_send(transaction):
 	@return delta in seconds of how long it took to get the sending block
 	@raise Exception for when we have missed the transaction
 	"""
-	time_delta = transaction_general(transaction.origin.wallet.node.IP,
+	end_time = transaction_general(transaction.origin.wallet.node.IP,
 	 transaction.origin.address, 
 	 transaction.transaction_hash_sending,
 	 transaction.start_send_timestamp)
 	
-	transaction.end_send_timestamp = transaction.start_send_timestamp + datetime.timedelta(seconds=time_delta)
+	transaction.end_send_timestamp =	end_time
 	transaction.save()
-	return time_delta
+	return	end_time
 
