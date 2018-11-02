@@ -48,29 +48,6 @@ export const fetchTransactionTiming = action$ => action$.pipe(
     )
 );
 
-// export const fetchTransactionTiming = action$ => action$.pipe(
-//     ofType(ADD_TRANSACTION),
-//     mergeMap(action =>
-//         ajax.post('http://127.0.0.1:8000/transactions/send', {id: action.transactionData.id}).pipe(
-//             map(data => {
-//                     debugger;
-//                     const transactionData = data.response;
-//                     // transactionData.amount = parseFloat(transactionData.amount);
-
-//                     // ['origin', 'destination'].forEach((key) => {
-//                     //     transactionData[key].coords = {
-//                     //         lat: parseFloat(transactionData[key].latitude),
-//                     //         lng: parseFloat(transactionData[key].longitude)
-//                     //     };
-//                     // });
-
-//                     return { type: ADD_TIMING_DATA, transactionData };
-//                 }
-//             )
-//         )
-//     )
-// );
-
 export default combineEpics(
     fetchRandomTransaction,
     fetchTransactionTiming
