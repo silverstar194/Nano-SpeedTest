@@ -23,8 +23,8 @@ def transaction_general(node_IP, account_address, current_hash, start_timestamp,
 	rpc_node = nano.rpc.Client(node_IP)
 
 	#Sleep times are incase we are still waiting for the transcation to go through
-	fib_seq =[1,1,2,3,5,8]
-	backoff_sleep_values = [x/2.0 for x in fib_seq]
+	fib_seq =[1,1,2,3,5,8,13,21]
+	backoff_sleep_values = [x for x in fib_seq]
 	for sleep_value in backoff_sleep_values:
 
 		address = account_address
