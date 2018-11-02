@@ -1,28 +1,26 @@
-from datetime import datetime
-from datetime import timedelta
 from decimal import *
 
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
 
-from speedtest_api.models import Transaction
-from speedtest_api.models import Account
+from ipware import get_client_ip
+
 from speedtest_api.services import transactions
 
-from ipware import get_client_ip
 
 @api_view(['POST'])
 def send_transaction(request):
     """
-    Send a transaction to the database
+    Generate a new random transaction and return its basic information
 
     @param request The REST request to the endpoint
-    @return JsonResponse The general transaction information as a JSON object
+    @return JsonResponse The general transaction information including the id, wallets, wallet locations, amount, and ip
 
     """
 
     client_ip, is_routable = get_client_ip(request)
 
+    #  TODO: Add dictionary of node city locations and return
     transaction = transactions.new_transaction_random(client_ip)
     origin_node = transaction.origin.wallet.node
     destination_node = transaction.destination.wallet.node
@@ -39,6 +37,7 @@ def send_transaction(request):
         'longitude': destination_node.longitude
     }
 
+    #  Convert from RAW to nano and round to four decimal places
     amount_decimal = Decimal(transaction.amount) / Decimal(1e24)
     amount = round(amount_decimal, 4)
 
@@ -56,10 +55,10 @@ def send_transaction(request):
 @api_view(['GET'])
 def get_transaction(request):
     """
-    Get a transaction from the database and return
+    Send the transaction generated in the initial transaction generation
 
     @param request The REST request to the endpoint
-    @return JsonResponse The transaction timing information as a JSON object
+    @return JsonResponse The transaction timing information 
 
     """
 
@@ -75,8 +74,8 @@ def get_transaction(request):
 
         transaction_stats = {
             'id': sent_transaction.id,
-            'start_datetime': sent_transaction.start_send_timestamp,
-            'end_datetime': sent_transaction.end_receive_timestamp
+            'start': sent_transaction.start_send_timestamp,
+            'end': sent_transaction.end_receive_timestamp
         }
 
         return JsonResponse(transaction_stats, status=200)
