@@ -172,7 +172,7 @@ def send_transaction(transaction):
     try:
         time_transaction_send(transaction)
     except:
-        logger.error('Transaction timing failed, transaction.id: %s' % str(transaction.id))
+        logger.error('Transaction timing_send failed, transaction.id: %s' % str(transaction.id))
 
     transaction.origin.save()
     transaction.destination.save()
@@ -224,7 +224,7 @@ def send_transaction(transaction):
     try:
         time_transaction_receive(transaction)
     except:
-        pass
+        logger.error('Transaction timing_receive failed, transaction.id: %s' % str(transaction.id))
 
     transaction.destination.POW = None
 
