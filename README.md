@@ -1,24 +1,24 @@
 # Nano-SpeedTest
 
 ## Table of Contents 
-- [Front End](#nano-speedtest-frontend)
+- [Front End](#nano-speedtest-front-End)
 - [Front End: Getting Started](#getting-started)
-- [Front End: Testing](#frontend-testing)
+- [Front End: Testing](#front-end-testing)
 - [Front End: Other Information](#other-information)
-- [Back End](#nano-speedtest-backend)
+- [Back End](#nano-speedtest-back-end)
 - [Back End: Installing Dependencies](#installing-dependencies) 
-- [Back End: Testing](#backend-testing)
+- [Back End: Testing](#back-end-testing)
 - [Back End: Setting Up Node](#setting-up-node)
 
-This website is able to time nano transactions from between nodes in distinct places. In order to run the project on your own computer, there are two disctinct parts you must setup: frontend and backend.
+This website is able to time nano transactions from between nodes in distinct places. In order to run the project on your own computer, there are two disctinct parts you must setup: front end and back end.
 
 # Nano SpeedTest Front End
-This frontend is created using React. Below are instructions on how to get started and other useful resources.
+This front end is created using React. Below are instructions on how to get started and other useful resources.
 
 ## Getting Started
 1. Clone this repo by running `git clone https://github.com/silverstar194/Nano-SpeedTest.git`
 2. Install node in order to use `npm` commands - `brew install node` (install here for windows: https://nodejs.org/en/)
-3. Navigate to `Nano-SpeedTest/app/frontend`
+3. Navigate to `Nano-SpeedTest/app/front end`
 4. Install all node dependencies - `npm install`
 5. Run app in development mode - `npm start`
 
@@ -27,9 +27,9 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
 
-NOTE - Currently google maps require a specific API key. For development purposes in the frontend folder create a file called `.env` and place inside `REACT_APP_GOOGLE_MAPS_KEY=AIzaSyD27p9eUBuinHJFiVnnT6EA8tLm1bDAgow`. Using `process.env.<VARIABLE>` requires placing the variable you wish to use in the `.env` file prefixed with `REACT_APP_<YOUR_NAME>` which can then be used in the code as `process.env.REACT_APP_<YOUR_NAME>`. If you want to use the variable in the index.html file it must be wrapped `"%<VARIABLE_NAME>%"`.
+NOTE - Currently google maps require a specific API key. For development purposes in the front end folder create a file called `.env` and place inside `REACT_APP_GOOGLE_MAPS_KEY=AIzaSyD27p9eUBuinHJFiVnnT6EA8tLm1bDAgow`. Using `process.env.<VARIABLE>` requires placing the variable you wish to use in the `.env` file prefixed with `REACT_APP_<YOUR_NAME>` which can then be used in the code as `process.env.REACT_APP_<YOUR_NAME>`. If you want to use the variable in the index.html file it must be wrapped `"%<VARIABLE_NAME>%"`.
 
-## Frontend Testing
+## Front End Testing
 Currently basic unit testing of redux actions and reducers exists. Running `npm test` triggers tests to run and continue to run on file changes.
 
 In addition, `npm test -- --coverage` (yes there are two --) will show the coverage report. Currently only `.js` files are being tested and it is specifically set to ignore additional files such as `index.js` and `serviceWorker.js`. These options can be changed in the `package.json`.
@@ -51,7 +51,7 @@ Read instructions below for using assets from JavaScript and HTML.
 You can, however, create more top-level directories.<br>
 They will not be included in the production build so you can use them for things like documentation.
 
-# Nano SpeedTest Backend
+# Nano SpeedTest Back End
 
 ## Installing Dependencies
 
@@ -139,7 +139,7 @@ The following synchronizes the balance of all accounts from the Nano network to 
 $ python manage.py sync_accounts
 ```
 
-## Backend Testing
+## Back End Testing
 Currently backend tests can be run as follows:
 ```sh
 $ python manage.py test
