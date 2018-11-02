@@ -5,14 +5,14 @@
 - [Front End: Getting Started](#getting-started)
 - [Front End: Testing](#frontend-testing)
 - [Front End: Other Information](#other-information)
-- [Back_End](#nano-speedtest-backend)
+- [Back End](#nano-speedtest-backend)
 - [Back End: Installing Dependencies](#installing-dependencies) 
-- [Back_End: Testing](#backend-testing)
+- [Back End: Testing](#backend-testing)
 - [Back End: Setting Up Node](#setting-up-node)
 
 This website is able to time nano transactions from between nodes in distinct places. In order to run the project on your own computer, there are two disctinct parts you must setup: frontend and backend.
 
-# Nano SpeedTest Frontend
+# Nano SpeedTest Front End
 This frontend is created using React. Below are instructions on how to get started and other useful resources.
 
 ## Getting Started
