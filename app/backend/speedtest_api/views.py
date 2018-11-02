@@ -1,73 +1,88 @@
-from datetime import datetime
-from datetime import timedelta
+from decimal import *
+import json
 
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
 
-from speedtest_api.models import Transaction
-from speedtest_api.models import Account
+from ipware import get_client_ip
+
+from speedtest_api.services import transactions
+
+
+@api_view(['GET'])
+def generate_random_transaction(request):
+    """
+    Generate a new random transaction and return its basic information
+
+    @param request The REST request to the endpoint
+    @return JsonResponse The general transaction information including the id, wallets, wallet locations, amount, and ip
+
+    """
+
+    client_ip, is_routable = get_client_ip(request)
+
+    transaction = transactions.new_transaction_random(client_ip)
+    origin_node = transaction.origin.wallet.node
+    destination_node = transaction.destination.wallet.node
+
+    origin = {
+        'id': origin_node.id,
+        'nodeLocation': origin_node.location_name,
+        'latitude': origin_node.latitude,
+        'longitude': origin_node.longitude
+    }
+
+    destination = {
+        'id': destination_node.id,
+        'nodeLocation': destination_node.location_name,
+        'latitude': destination_node.latitude,
+        'longitude': destination_node.longitude
+    }
+
+    #  Convert from RAW to nano and round to four decimal places
+    amount_decimal = Decimal(transaction.amount) / Decimal(1e24)
+    amount = round(amount_decimal, 4)
+
+    random_transaction = {
+        "id": transaction.id,
+        "origin": origin,
+        "destination": destination,
+        "amount": amount,
+        "ip": client_ip
+    }
+
+    return JsonResponse(random_transaction)
 
 
 @api_view(['POST'])
 def send_transaction(request):
     """
-    Send a transaction to the database
+    Send the transaction generated in the initial transaction generation
 
     @param request The REST request to the endpoint
-    @return JsonResponse The general transaction information as a JSON object
+    @return JsonResponse The transaction timing information
 
     """
+    body = json.loads(request.body)
+    transaction_id = body['id']
 
-    origin_node = {
-        "id": 1,
-        "latitude": 19.154428,
-        "longitude": 72.849616,
-    }
+    transaction = transactions.get_transaction(transaction_id)
 
-    destination_node = {
-        "id": 2,
-        "latitude": 37.794591,
-        "longitude": -122.40412,
-    }
+    if transaction is None:
+        return JsonResponse({'message': 'Transaction ' + str(transaction_id) + ' not found.'}, status=404)
 
-    # Dummy JSON for the UI guys to test with
-    transaction = {
-        "id": 122,
-        "origin": origin_node,
-        "destination": destination_node,
-        "amount": 1
-    }
+    elif transaction.start_send_timestamp is not None or transaction.transaction_hash_sending is not None:
+        return JsonResponse({'message': 'Transaction ' + str(transaction_id) + ' has already been sent.'}, status=403)
 
-    output = {
-        "transaction": transaction
-    }
-
-    return JsonResponse(output)
-
-
-@api_view(['GET'])
-def get_transaction(request):
-    """
-    Get a transaction from the database and return
-
-    @param request The REST request to the endpoint
-    @return JsonResponse The transaction timing information as a JSON object
-
-    """
-
-    # Dummy JSON for the UI guys to test with
-    start_datetime = datetime.utcnow().timestamp() * 1000  # Convert to millisecond Unix time
-    end_datetime = start_datetime + 10000  # Add ten seconds
-
-    transaction_stats = {
-        "id": 122,
-        "start_timestamp": int(start_datetime),
-        "end_timestamp": int(end_datetime)
-    }
-
-    transaction_id = int(request.GET.get('id'))
-
-    if transaction_id != 122:
-        return JsonResponse({"message": "Transaction not found."}, status=404)
     else:
-        return JsonResponse(transaction_stats)
+        sent_transaction = transactions.send_transaction(transaction)
+
+        transaction_stats = {
+            'id': sent_transaction.id,
+            'startSendTimestamp': sent_transaction.start_send_timestamp,
+            'endSendTimestamp': sent_transaction.end_send_timestamp,
+            'startReceiveTimestamp': sent_transaction.start_receive_timestamp,
+            'endReceiveTimestamp': sent_transaction.end_receive_timestamp
+        }
+
+        return JsonResponse(transaction_stats, status=200)

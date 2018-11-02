@@ -2,6 +2,7 @@ import logging
 import random
 import requests
 import time
+from decimal import *
 
 from django.conf import settings as settings
 import nano
@@ -62,7 +63,10 @@ def new_transaction_random(initiated_by):
     
     destination = random.choice(account_destinations)
 
-    return new_transaction(origin_account=origin, destination_account=destination, amount=100000000000000000000, initiated_by=initiated_by)
+    base_amount = 100000000000000000000
+    amount = base_amount * Decimal(random.randint(1, 9))
+
+    return new_transaction(origin_account=origin, destination_account=destination, amount=amount, initiated_by=initiated_by)
 
 def new_transaction(origin_account, destination_account, amount, initiated_by):
     """
@@ -182,7 +186,7 @@ def send_transaction(transaction):
     transaction.destination.save()
     transaction.save()
 
-    max_retries = 80
+    max_retries = 120
     incoming_blocks = None
 
     while (incoming_blocks is None or len(incoming_blocks) == 0) and max_retries > 0:
