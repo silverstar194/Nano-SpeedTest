@@ -13,7 +13,7 @@ from ..models import Transaction
 class TimingTestCase(TestCase):
     def setUp(self):
     	## Set up testing vars
-        curr_Node = Node.objects.create(IP="http://127.0.0.1:7076", latitude= 1.1, longitude=1.1) #"http://localhost:7076")
+        curr_Node = Node.objects.create(IP="http://127.0.0.1:7076", latitude= 1.1, longitude=1.1, location_name="Test") #"http://localhost:7076")
 
         wallet_sending = Wallet.objects.create(node=curr_Node)
         wallet_receiving = Wallet.objects.create(node=curr_Node)
@@ -31,9 +31,9 @@ class TimingTestCase(TestCase):
 
         transaction_too_far_back = Transaction.objects.create(origin=account_sending,
             destination=account_receiving,
-            start_send_timestamp=datetime.datetime(2010,1,2),
+            start_send_timestamp=1483050400869,
             end_send_timestamp=None,
-            start_receive_timestamp=datetime.datetime(2010,1,2),
+            start_receive_timestamp=1483250400869,
             end_receive_timestamp=None,
             amount=202,
             initiated_by="127.0.0.1:7076",
@@ -43,9 +43,9 @@ class TimingTestCase(TestCase):
         
         transaction_front = Transaction.objects.create(origin=account_sending,
             destination=account_receiving,
-            start_send_timestamp=datetime.datetime(2010,1,2),
+            start_send_timestamp=1483050400869,
             end_send_timestamp=None,
-            start_receive_timestamp=datetime.date(2010,1,2),
+            start_receive_timestamp=1483250400869,
             end_receive_timestamp=None,
             amount=303,
             initiated_by="127.0.0.1:7076",
@@ -55,9 +55,9 @@ class TimingTestCase(TestCase):
 
         transaction_middle = Transaction.objects.create(origin=account_sending, 
             destination=account_receiving,
-            start_send_timestamp=datetime.datetime(2010,1,2),
+            start_send_timestamp=1483050400869,
             end_send_timestamp=None,
-            start_receive_timestamp=datetime.date(2010,1,2),
+            start_receive_timestamp=1483250400869,
             end_receive_timestamp=None,
             amount=404,
             initiated_by="127.0.0.1:7076",
@@ -92,7 +92,7 @@ class TimingTestCase(TestCase):
     #check to see what happens when the node is down
     def test_when_node_is_down(self):
         ## Bad IP given
-        curr_Node = Node.objects.create(IP="http://0.0.0.1:7076", latitude= 1.1, longitude=1.1)
+        curr_Node = Node.objects.create(IP="http://0.0.0.1:7076", latitude= 1.1, longitude=1.1, location_name='Test')
         self.assertRaises(Exception, time_transaction_send, Transaction.objects.get(amount = 202))
 
 
