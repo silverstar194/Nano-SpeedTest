@@ -144,12 +144,3 @@ Currently backend tests can be run as follows:
 $ python manage.py test
 ```
 
-
-## AWS CodeBuild and CodeDeploy
-
--- TODO --
-
-## File Structure and Naming
-
--- TODO --
-
