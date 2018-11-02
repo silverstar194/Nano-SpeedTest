@@ -1,15 +1,17 @@
 from decimal import *
+import json
 
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
 
 from ipware import get_client_ip
 
+from project import settings
 from speedtest_api.services import transactions
 
 
-@api_view(['POST'])
-def send_transaction(request):
+@api_view(['GET'])
+def generate_random_transaction(request):
     """
     Generate a new random transaction and return its basic information
 
@@ -20,19 +22,20 @@ def send_transaction(request):
 
     client_ip, is_routable = get_client_ip(request)
 
-    #  TODO: Add dictionary of node city locations and return
     transaction = transactions.new_transaction_random(client_ip)
     origin_node = transaction.origin.wallet.node
     destination_node = transaction.destination.wallet.node
 
     origin = {
         'id': origin_node.id,
+        'nodeLocation': settings.NODE_LOCATIONS[origin_node.id],
         'latitude': origin_node.latitude,
         'longitude': origin_node.longitude
     }
 
     destination = {
         'id': destination_node.id,
+        'nodeLocation': settings.NODE_LOCATIONS[destination_node.id],
         'latitude': destination_node.latitude,
         'longitude': destination_node.longitude
     }
@@ -52,17 +55,17 @@ def send_transaction(request):
     return JsonResponse(random_transaction)
 
 
-@api_view(['GET'])
-def get_transaction(request):
+@api_view(['POST'])
+def send_transaction(request):
     """
     Send the transaction generated in the initial transaction generation
 
     @param request The REST request to the endpoint
-    @return JsonResponse The transaction timing information 
+    @return JsonResponse The transaction timing information
 
     """
-
-    transaction_id = int(request.GET.get('id'))
+    body = json.loads(request.body)
+    transaction_id = body['id']
 
     transaction = transactions.get_transaction(transaction_id)
 

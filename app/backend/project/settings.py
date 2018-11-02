@@ -25,7 +25,10 @@ SECRET_KEY = '1okg_00w23xs9o62%ql^iazaab0=pw2)4&ltt06=f0g)p_#zg3'
 # Key used to access the dPoW service
 DPOW_API_KEY = os.environ["NANO_ST__DPOW__API_KEY"]
 DPOW_ENDPOINT = os.environ["NANO_ST__DPOW__ENDPOINT"]
-
+NODE_LOCATIONS = {
+    1: "Virginia, USA",
+    2: "Mumbai, India"
+}
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
