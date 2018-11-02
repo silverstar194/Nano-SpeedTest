@@ -3,6 +3,7 @@ import random
 import time
 import logging
 
+from django.utils import timezone
 import nano
 
 # Get an instance of a logger 
@@ -23,8 +24,8 @@ def transaction_general(node_IP, account_address, current_hash, start_timestamp,
 	rpc_node = nano.rpc.Client(node_IP)
 
 	#Sleep times are incase we are still waiting for the transcation to go through
-	fib_seq =[1,1,2,3,5,8]
-	backoff_sleep_values = [x/2.0 for x in fib_seq]
+
+	backoff_sleep_values =[6] + [.5]*40
 	for sleep_value in backoff_sleep_values:
 
 		address = account_address
@@ -39,10 +40,9 @@ def transaction_general(node_IP, account_address, current_hash, start_timestamp,
 		frontier_hash = history_curr_account[0][u'hash']
 
 		if hash_of_block == frontier_hash:
-			end_time = rpc_node.account_info(address)[u'modified_timestamp']
-			end_time = datetime.datetime.fromtimestamp(end_time)
+			end_time = int(rpc_node.account_info(address)[u'modified_timestamp']) * 1000
 
-			return end_time.timestamp()- start_timestamp.timestamp()
+			return end_time
 		
 		for value in history_curr_account:
 			if value[u'hash'] is hash_of_block:
@@ -62,14 +62,14 @@ def time_transaction_receive(transaction):
 	@return delta in seconds of how long it took to get the receiving block
 	@raise Exception for when we have missed the transaction
 	"""
-	time_delta = transaction_general(transaction.origin.wallet.node.IP, 
+	end_time = transaction_general(transaction.destination.wallet.node.IP, 
 		transaction.destination.address, 
 		transaction.transaction_hash_receiving, 
-		transaction.start_send_timestamp)
+		transaction.start_receive_timestamp)
 	
-	transaction.end_receive_timestamp = transaction.start_receive_timestamp + datetime.timedelta(seconds=time_delta)
+	transaction.end_receive_timestamp =	end_time
 	transaction.save()
-	return time_delta
+	return	end_time
 
 def time_transaction_send(transaction):
 	"""
@@ -78,12 +78,12 @@ def time_transaction_send(transaction):
 	@return delta in seconds of how long it took to get the sending block
 	@raise Exception for when we have missed the transaction
 	"""
-	time_delta = transaction_general(transaction.origin.wallet.node.IP,
+	end_time = transaction_general(transaction.origin.wallet.node.IP,
 	 transaction.origin.address, 
 	 transaction.transaction_hash_sending,
-	 transaction.start_receive_timestamp)
+	 transaction.start_send_timestamp)
 	
-	transaction.end_send_timestamp = transaction.start_send_timestamp + datetime.timedelta(seconds=time_delta)
+	transaction.end_send_timestamp = end_time
 	transaction.save()
-	return time_delta
+	return	end_time
 
