@@ -31,13 +31,10 @@ def new_account(wallet, address=None):
         except:
             pass
 
-    account = models.Account(wallet=wallet, address=address)
-
     if not rpc.validate_account_number(account=address):
         raise AccountNotFound()
 
-    account.save()
-    return account
+    return models.Account.objects.create(wallet=wallet, address=address)
 
 def get_accounts():
     """

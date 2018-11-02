@@ -16,9 +16,7 @@ def new_wallet(node, wallet_id=None):
         rpc = nano.rpc.Client(node.IP)
         wallet_id = rpc.wallet_create()
 
-    wallet = models.Wallet(node=node, wallet_id=wallet_id)
-    wallet.save()
-    return wallet
+    return models.Wallet.objects.create(node=node, wallet_id=wallet_id)
 
 def get_wallets():
     """

@@ -16,6 +16,8 @@ from ._pow import POWService
 from ._nodetiming import *
 
 
+logger = logging.getLogger(__name__)
+
 class AccountBalanceMismatchException(Exception):
     def __init__(self, balance_actual, balance_db, account):
         Exception.__init__(self, "{0} != {1} for account: {2}".format(balance_actual, balance_db, account))
@@ -105,8 +107,6 @@ def send_transaction(transaction):
     @raise: TooManyIncomingBlocksException: Incoming block not found on destination node. This will lead to invalid POW and balance in the destination account if not handled
     """
 
-    logger = logging.getLogger(__name__)
-
     rpc_origin_node = nano.rpc.Client(transaction.origin.wallet.node.IP)
     rpc_destination_node = nano.rpc.Client(transaction.destination.wallet.node.IP)
 
@@ -141,6 +141,7 @@ def send_transaction(transaction):
     # Make sure the POW is there (not in the POW regen queue)
     if transaction.origin.POW is None:
         POWService.enqueue_account(transaction.origin)
+        logger.warning('Transaction origin POW is invalid, transaction.id: %s' % str(transaction.id))
         raise InvalidPOWException()
     
     if transaction.destination.POW is None:
@@ -175,7 +176,7 @@ def send_transaction(transaction):
     try:
         time_transaction_send(transaction)
     except:
-        pass
+        logger.error('Transaction timing_send failed, transaction.id: %s' % str(transaction.id))
 
     transaction.origin.save()
     transaction.destination.save()
@@ -190,6 +191,7 @@ def send_transaction(transaction):
             rpc_destination_node.search_pending_all()
             incoming_blocks = rpc_destination_node.pending(account=transaction.destination.address)
         except nano.rpc.RPCException:
+            logger.error('Transaction send failure, transaction.id: %s' % str(transaction.id))
             raise nano.rpc.RPCException()
         
         max_retries = max_retries - 1
@@ -201,6 +203,7 @@ def send_transaction(transaction):
         transaction.destination.POW = None
         transaction.destination.save()
         transaction.save()
+        logger.error('No Incoming blocks, transaction.id: %s' % str(transaction.id))
         raise NoIncomingBlocksException(transaction.destination.address)
     elif len(incoming_blocks) > 1:
         transaction.destination.POW = None
@@ -225,7 +228,7 @@ def send_transaction(transaction):
     try:
         time_transaction_receive(transaction)
     except:
-        pass
+        logger.error('Transaction timing_receive failed, transaction.id: %s' % str(transaction.id))
 
     transaction.destination.POW = None
 

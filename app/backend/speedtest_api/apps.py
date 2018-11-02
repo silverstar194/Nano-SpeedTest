@@ -3,12 +3,12 @@ import logging
 from django.apps import AppConfig
 
 
+logger = logging.getLogger(__name__)
+
 class SpeedtestApiConfig(AppConfig):
     name = 'speedtest_api'
 
     def ready(self):
-        logger = logging.getLogger(__name__)
-
         logger.info('Starting POWService and running POW_accounts()...')
         from .services._pow import POWService
         POWService.start()
