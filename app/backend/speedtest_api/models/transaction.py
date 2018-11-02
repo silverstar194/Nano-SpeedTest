@@ -16,4 +16,4 @@ class Transaction(models.Model):
     transaction_hash_receiving = models.CharField(max_length=64)
 
     def __str__(self):
-        return u'Amount: %s\nOrigin: %s\nDestination: %s' % (self.amount, self.origin.address, self.destination.address)
+        return u'Amount: %s\nOrigin: %s\nDestination: %s\nOrigin Hash: %s\nDestination Hash: %s' % (self.amount, self.origin.address, self.destination.address, self.transaction_hash_sending, self.transaction_hash_receiving)
