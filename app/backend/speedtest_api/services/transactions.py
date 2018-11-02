@@ -3,7 +3,6 @@ import random
 import requests
 import time
 
-from django.utils import timezone
 from django.conf import settings as settings
 import nano
 
@@ -136,7 +135,12 @@ def send_transaction(transaction):
 
     # Make sure the POW is there (not in the POW regen queue)
     if transaction.origin.POW is None:
-        POWService.enqueue_account(transaction.origin)
+        try:
+            frontier = rpc_origin_node.frontiers(account=transaction.origin.address, count=1)[transaction.origin.address]
+            POWService.enqueue_account(address=transaction.origin.address, frontier=frontier)
+        except Exception as e:
+            logger.error('Error adding address, frontier pair to POWService: %s' % e)
+
         logger.warning('Transaction origin POW is invalid, transaction.id: %s' % str(transaction.id))
         raise InvalidPOWException()
     
@@ -147,7 +151,7 @@ def send_transaction(transaction):
         pass
 
     # Start the timestamp before we try to send out the request
-    transaction.start_send_timestamp = timezone.now()
+    transaction.start_send_timestamp = int(round(time.time() * 1000))
 
     try:
         # After this call, the nano will leave the origin
@@ -178,7 +182,7 @@ def send_transaction(transaction):
     transaction.destination.save()
     transaction.save()
 
-    max_retries = 20
+    max_retries = 80
     incoming_blocks = None
 
     while (incoming_blocks is None or len(incoming_blocks) == 0) and max_retries > 0:
@@ -208,7 +212,7 @@ def send_transaction(transaction):
         raise TooManyIncomingBlocksException(transaction.destination.address)
 
     for block_hash in incoming_blocks:
-        transaction.start_receive_timestamp = timezone.now()
+        transaction.start_receive_timestamp = int(round(time.time() * 1000))
 
         try:
             transaction.transaction_hash_receiving = rpc_destination_node.receive(

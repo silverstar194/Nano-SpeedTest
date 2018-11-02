@@ -3,6 +3,7 @@ import random
 import time
 import logging
 
+from django.utils import timezone
 import nano
 
 # Get an instance of a logger 
@@ -39,10 +40,9 @@ def transaction_general(node_IP, account_address, current_hash, start_timestamp,
 		frontier_hash = history_curr_account[0][u'hash']
 
 		if hash_of_block == frontier_hash:
-			end_time = rpc_node.account_info(address)[u'modified_timestamp']
-			end_time = datetime.datetime.fromtimestamp(end_time)
+			end_time = int(rpc_node.account_info(address)[u'modified_timestamp']) * 1000
 
-			return end_time.timestamp()
+			return end_time
 		
 		for value in history_curr_account:
 			if value[u'hash'] is hash_of_block:
