@@ -85,11 +85,3 @@ The following synchronizes the balance of all accounts from the Nano network to 
 ```sh
 $ python manage.py sync_accounts
 ```
-
-## AWS CodeBuild and CodeDeploy
-
--- TODO --
-
-## File Structure and Naming
-
--- TODO --
