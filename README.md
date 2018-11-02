@@ -6,8 +6,9 @@
 - [Front End: Testing](#frontend-testing)
 - [Front End: Other Information](#other-information)
 - [Back_End](#nano-speedtest-backend)
-- [Backend: Installing Dependencies] (#installing-dependencies) 
+- [Back End: Installing Dependencies] (#installing-dependencies) 
 - [Back_End: Testing](#backend-testing)
+- [Back End: Setting Up Node] (#setting-up-node)
 
 This website is able to time nano transactions from between nodes in distinct places. In order to run the project on your own computer, there are two disctinct parts you must setup: frontend and backend.
 
@@ -143,4 +144,8 @@ Currently backend tests can be run as follows:
 ```sh
 $ python manage.py test
 ```
+In order to do you need to have a node set up. We have included a link on setup in the next section.
+
+## Setting Up Node
+https://github.com/nanocurrency/raiblocks/wiki/Docker-node
 
