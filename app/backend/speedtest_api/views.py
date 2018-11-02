@@ -79,8 +79,10 @@ def send_transaction(request):
 
         transaction_stats = {
             'id': sent_transaction.id,
-            'start': sent_transaction.start_send_timestamp,
-            'end': sent_transaction.end_receive_timestamp
+            'startSendTimestamp': sent_transaction.start_send_timestamp,
+            'endSendTimestamp': sent_transaction.end_send_timestamp,
+            'startReceiveTimestamp': sent_transaction.start_receive_timestamp,
+            'endReceiveTimestamp': sent_transaction.end_receive_timestamp
         }
 
         return JsonResponse(transaction_stats, status=200)
