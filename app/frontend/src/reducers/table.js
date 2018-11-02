@@ -9,12 +9,13 @@ export default (state = INITIAL_STATE, action) => {
                 action.transactionData
             ];
         case ADD_TIMING_DATA:
-            debugger;
             return state.map((trans) => {
                 if (trans.id !== action.timingData.id) return trans;
+
                 return {
                     ...trans,
-                    ...action.timingData
+                    ...action.timingData,
+                    completed: true
                 };
             });
         default:

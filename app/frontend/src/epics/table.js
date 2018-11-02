@@ -10,6 +10,7 @@ export const fetchRandomTransaction = action$ => action$.pipe(
             map(data => {
                     const transactionData = data.response;
                     transactionData.amount = parseFloat(transactionData.amount);
+                    transactionData.completed = false;
 
                     ['origin', 'destination'].forEach((key) => {
                         transactionData[key].coords = {

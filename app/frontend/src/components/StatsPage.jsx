@@ -16,7 +16,7 @@ class StatsPage extends Component {
     render() {
         const {table} = this.props;
         const mostRecent = table.length && table[table.length - 1];
-
+        const sendMessage = mostRecent.completed ? 'Sent' : 'Sending';
         // render the jsx
         return (
             <div className='StatsPage'>
@@ -26,7 +26,7 @@ class StatsPage extends Component {
                     (
                         <div>
                             <h2 className='map-header page-header text-left'>
-                                Sent from {mostRecent.origin.nodeLocation} to {mostRecent.destination.nodeLocation}
+                                {sendMessage} from {mostRecent.origin.nodeLocation} to {mostRecent.destination.nodeLocation}
                             </h2>
                             <div className='nano-container'>
                                 <Map {...mostRecent}/>
@@ -39,9 +39,9 @@ class StatsPage extends Component {
                                         <th scope='col'>Id</th>
                                         <th scope='col'>Origin</th>
                                         <th scope='col'>Destination</th>
-                                        <th scope='col'>Elapsed Time</th>
                                         <th scope='col'>Amount</th>
-                                        <th scope='col'>Completed</th>
+                                        <th scope='col'>Elapsed Time</th>
+                                        <th scope='col'>Status</th>
                                     </tr>
                                     </thead>
                                     <tbody>
