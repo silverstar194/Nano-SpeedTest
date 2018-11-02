@@ -24,15 +24,16 @@ const initialState = {
 // call this in order to get argument needed for applyMiddleware (when creating the store)
 const epicMiddleware = createEpicMiddleware();
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 const store = createStore(
     combineReducers({
         navigation,
         table
     }),
     initialState,
-    compose(
-        applyMiddleware(epicMiddleware),
-        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    composeEnhancers(
+        applyMiddleware(epicMiddleware)
     )
 );
 
