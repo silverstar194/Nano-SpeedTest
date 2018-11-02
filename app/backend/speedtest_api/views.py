@@ -6,7 +6,6 @@ from rest_framework.decorators import api_view
 
 from ipware import get_client_ip
 
-from project import settings
 from speedtest_api.services import transactions
 
 
@@ -28,14 +27,14 @@ def generate_random_transaction(request):
 
     origin = {
         'id': origin_node.id,
-        'nodeLocation': settings.NODE_LOCATIONS[origin_node.id],
+        'nodeLocation': origin_node.location_name,
         'latitude': origin_node.latitude,
         'longitude': origin_node.longitude
     }
 
     destination = {
         'id': destination_node.id,
-        'nodeLocation': settings.NODE_LOCATIONS[destination_node.id],
+        'nodeLocation': destination_node.location_name,
         'latitude': destination_node.latitude,
         'longitude': destination_node.longitude
     }

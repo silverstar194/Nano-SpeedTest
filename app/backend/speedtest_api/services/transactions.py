@@ -186,7 +186,7 @@ def send_transaction(transaction):
     transaction.destination.save()
     transaction.save()
 
-    max_retries = 80
+    max_retries = 120
     incoming_blocks = None
 
     while (incoming_blocks is None or len(incoming_blocks) == 0) and max_retries > 0:
