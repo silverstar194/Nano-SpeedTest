@@ -13,12 +13,36 @@ let store = mockStore({
     },
     table: [
         {
-            index: 0,
-            hash: 'abc123',
-            origin: 'SF',
-            destination: 'LA',
-        }
-    ]
+            id: 148,
+            origin: {
+              id: 2,
+              nodeLocation: 'Mumbai',
+              latitude: '19.014400',
+              longitude: '72.847900',
+              coords: {
+                lat: 19.0144,
+                lng: 72.8479
+              }
+            },
+            destination: {
+              id: 1,
+              nodeLocation: 'N. Virginia',
+              latitude: '39.043700',
+              longitude: '-77.487500',
+              coords: {
+                lat: 39.0437,
+                lng: -77.4875
+              }
+            },
+            amount: 0.0009,
+            ip: '127.0.0.1',
+            completed: false,
+            index: 1
+          }
+    ],
+    transactions: {
+
+    }
 });
 
 const props = {

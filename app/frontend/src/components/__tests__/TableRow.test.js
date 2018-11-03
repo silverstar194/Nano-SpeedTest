@@ -5,9 +5,9 @@ import { shallow } from 'enzyme';
 
 const props = {
     index: 0,
-    hash: 'abc123',
-    origin: 'SF',
-    destination: 'LA',
+    id: 123,
+    origin: {},
+    destination: {}
 };
 
 it('shallow renders without crashing', () => {
