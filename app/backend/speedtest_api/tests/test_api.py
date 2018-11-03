@@ -41,7 +41,7 @@ class ApiTests(APITestCase):
                                                  start_receive_timestamp=1483250400869,
                                                  end_receive_timestamp=1483050400869,
                                                  amount=202,
-                                                 initiated_by="127.0.0.1:7076",
+                                                 initiated_by="127.0.0.1",
                                                  transaction_hash_sending=
                                                  "F26A33F2238F365CE0E154429C2AEBAC968930912C7C8BBC3B5667EDFEE36D8C",
                                                  transaction_hash_receiving=
