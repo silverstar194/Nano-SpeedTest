@@ -1,4 +1,5 @@
 from rest_framework.test import APITestCase
+import json
 
 from speedtest_api.models import Node
 from speedtest_api.models import Wallet
@@ -34,19 +35,30 @@ class ApiTests(APITestCase):
                                                   POW="POW")
 
         transaction = Transaction.objects.create(id=27,
-                                                 origin=mumbai_account,
-                                                 destination=virginia_account,
-                                                 amount=1,
-                                                 initiated_by="127.0.0.1:7076")
+                                                 origin=virginia_account,
+                                                 destination=mumbai_account,
+                                                 start_send_timestamp=1483050400869,
+                                                 end_send_timestamp=1483050400869,
+                                                 start_receive_timestamp=1483250400869,
+                                                 end_receive_timestamp=1483050400869,
+                                                 amount=202,
+                                                 initiated_by="127.0.0.1:7076",
+                                                 transaction_hash_sending=
+                                                 "F26A33F2238F365CE0E154429C2AEBAC968930912C7C8BBC3B5667EDFEE36D8C",
+                                                 transaction_hash_receiving=
+                                                 "A210BC22CD295D78F4E21347F1C041150911D6208E04BE0EA65433DCCFA1577D"
+                                                 )
 
     def test_random_transaction(self):
         response = self.client.get('/transactions/random', format='json')
         self.assertEqual(response.status_code, 200)
 
-    def test_send_transaction(self):
-        response = self.client.post('/transactions/send', {'id': 27}, format='json')
-        self.assertEqual(response.status_code, 200)
-
-    def test_send_transaction_negative(self):
+    def test_send_transaction_negative_404(self):
         send_response = self.client.post('/transactions/send', {'id': 0}, format='json')
         self.assertEqual(send_response.status_code, 404)
+
+    def test_send_transaction_negative_403(self):
+        send_response = self.client.post('/transactions/send', {'id': 27}, format='json')
+        self.assertEqual(send_response.status_code, 403)
+
+    #  TODO: Add positive test for sending a transaction, will require setting up a live node during the test
