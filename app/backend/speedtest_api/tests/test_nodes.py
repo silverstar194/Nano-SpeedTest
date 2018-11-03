@@ -26,8 +26,8 @@ class TestNodes(TestCase):
     
     def test_nodes_get(self):
         node = Node.objects.get(id=1)
-        assert node.location_name == "Testville, USA"
+        assert (node.location_name == "Testville, USA")
     
     def test_nodes_get_all(self):
         nodes = Node.objects.all()
-        assert nodes.count() == 2
+        assert (nodes.count() == 2)

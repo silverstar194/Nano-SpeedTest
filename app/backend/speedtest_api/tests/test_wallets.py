@@ -24,8 +24,8 @@ class TestWallet(TestCase):
     
     def test_wallets_get(self):
         wallet = Wallet.objects.get(wallet_id=1)
-        assert wallet.node.id == 1
+        assert (wallet.node.id == 1)
     
     def test_wallets_get_all(self):
         wallets = Wallet.objects.all()
-        assert wallets.count() == 2
+        assert (wallets.count() == 2)

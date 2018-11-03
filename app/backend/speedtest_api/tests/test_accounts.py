@@ -39,8 +39,8 @@ class TestAccounts(TestCase):
     
     def test_accounts_get(self):
         account = Account.objects.get(id=1)
-        assert account.current_balance == 100
+        assert (account.current_balance == 100)
     
     def test_accounts_get_all(self):
         accounts = Account.objects.all()
-        assert accounts.count() == 2
+        assert (accounts.count() == 2)
