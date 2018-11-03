@@ -8,11 +8,13 @@ const TableRow = ({
     destination,
     startSendTimestamp,
     endReceiveTimestamp,
+    error,
     completed,
     amount
 }) => {
+    const classStyle = error ? 'table-danger' : '';
     return (
-        <tr>
+        <tr className={classStyle}>
             <th scope='row'>{index}</th>
             <td>{id}</td>
             <td>{origin.nodeLocation}</td>
@@ -20,8 +22,15 @@ const TableRow = ({
             <td>{amount} nano</td>
             { completed ?
                 <>
-                    <td>{(endReceiveTimestamp - startSendTimestamp)/1000} Seconds</td>
-                    <td>Completed</td>
+                { error ?
+                    <>
+                        <td>ERROR</td>
+                        <td>ERROR OCCURRED</td>
+                    </> : <>
+                        <td>{(endReceiveTimestamp - startSendTimestamp)/1000} Seconds</td>
+                        <td>Completed</td>
+                    </>
+                }
                 </>
                 : <>
                     <td>Pending...</td>
