@@ -3,6 +3,7 @@ from rest_framework.test import APITestCase
 from speedtest_api.models import Node
 from speedtest_api.models import Wallet
 from speedtest_api.models import Account
+from speedtest_api.models import Transaction
 
 
 class ApiTests(APITestCase):
@@ -32,12 +33,20 @@ class ApiTests(APITestCase):
                                                   current_balance=10000000000000000000000,
                                                   POW="POW")
 
+        transaction = Transaction.objects.create(id=27,
+                                                 origin=mumbai_account,
+                                                 destination=virginia_account,
+                                                 amount=1,
+                                                 initiated_by="127.0.0.1:7076")
+
     def test_random_transaction(self):
         response = self.client.get('/transactions/random', format='json')
         self.assertEqual(response.status_code, 200)
 
     def test_send_transaction(self):
-        random_response = self.client.get('/transactions/random', format='json')
-        random_transaction_id = random_response.body['id']
-        send_response = self.client.post('/transactions/send', {'id': random_transaction_id}, format='json')
-        self.assertEqual(send_response.status_code, 200)
+        response = self.client.post('/transactions/send', {'id': 27}, format='json')
+        self.assertEqual(response.status_code, 200)
+
+    def test_send_transaction_negative(self):
+        send_response = self.client.post('/transactions/send', {'id': 0}, format='json')
+        self.assertEqual(send_response.status_code, 404)
