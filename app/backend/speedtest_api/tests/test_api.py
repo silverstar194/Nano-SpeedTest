@@ -13,7 +13,7 @@ class ApiTests(APITestCase):
                                           longitude=1.1,
                                           location_name="Mumbai")
 
-        virginia_node = Node.objects.create(IP="http://127.0.0.1:7077",
+        virginia_node = Node.objects.create(IP="http://127.0.0.1:7076",
                                             latitude=1.1,
                                             longitude=1.1,
                                             location_name="N. Virginia")
