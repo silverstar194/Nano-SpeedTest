@@ -11,7 +11,6 @@ export default (state = INITIAL_STATE, action) => {
         case ADD_TIMING_DATA:
             return state.map((trans) => {
                 if (trans.id !== action.timingData.id) return trans;
-
                 return {
                     ...trans,
                     ...action.timingData,

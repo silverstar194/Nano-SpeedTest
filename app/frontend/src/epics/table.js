@@ -37,8 +37,13 @@ export const fetchTransactionTiming = action$ => action$.pipe(
             body: JSON.stringify({
                 id: action.transactionData.id
             })
-        }).then(response => response.json())
-        .then((timingData) => ({ type: ADD_TIMING_DATA, timingData }) )
+        }).then(response => {
+            if (response.ok) return response.json();
+            return {
+                error: true,
+                id: action.transactionData.id
+            };
+        }).then((timingData) => ({ type: ADD_TIMING_DATA, timingData }) )
     )
 );
 

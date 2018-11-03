@@ -32,6 +32,12 @@ class StatsPage extends Component {
         return (
             <div className='StatsPage'>
                 <Header/>
+                {(mostRecent && mostRecent.error && !isFetchingTransaction) ?
+                    <div className='alert alert-danger' role='alert'>
+                        Something went wrong while trying to get the transaction. Please try again
+                    </div>
+                    : null
+                }
                 { (isFetchingTransaction || mostRecent || isFetchingTiming) ? ( // this is pretty ugly and should be refactored in V2
                     <>{
                         (isFetchingTransaction || !mostRecent) ? loader // show loader if no data or is getting a transaction

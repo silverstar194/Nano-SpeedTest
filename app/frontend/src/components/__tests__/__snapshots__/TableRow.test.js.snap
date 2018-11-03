@@ -1,25 +1,27 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders snapshot correctly 1`] = `
-<tr>
+<tr
+  className=""
+>
   <th
     scope="row"
   >
     0
   </th>
   <td>
-    abc123
-  </td>
-  <td>
-    SF
-  </td>
-  <td>
-    LA
-  </td>
-  <td>
-     Seconds
+    123
   </td>
   <td />
   <td />
+  <td>
+     nano
+  </td>
+  <td>
+    Pending...
+  </td>
+  <td>
+    Pending...
+  </td>
 </tr>
 `;

@@ -47,97 +47,103 @@ exports[`renders snapshot correctly 1`] = `
       </a>
     </li>
   </div>
-  <div>
-    <h2
-      className="map-header page-header text-left"
-    >
-      Sent from 
-      Mumbai
-       to 
-      Virginia
-    </h2>
+  <h2
+    className="map-header page-header text-left"
+  >
+    Sending
+     from 
+    Mumbai
+     to 
+    N. Virginia
+  </h2>
+  <div
+    className="nano-container"
+  >
     <div
-      className="nano-container"
+      className="GoogleMapsContainer"
     >
       <div
-        className="GoogleMapsContainer"
-      >
-        <div
-          className="GoogleMapsElement"
-        />
-        <div />
-      </div>
+        className="GoogleMapsElement"
+      />
+      <div />
     </div>
-    <div
-      className="nano-container"
+  </div>
+  <div
+    className="nano-container"
+  >
+    <table
+      className="table"
     >
-      <table
-        className="table"
-      >
-        <thead>
-          <tr>
-            <th
-              scope="col"
-            >
-              #
-            </th>
-            <th
-              scope="col"
-            >
-              Hash
-            </th>
-            <th
-              scope="col"
-            >
-              Origin
-            </th>
-            <th
-              scope="col"
-            >
-              Destination
-            </th>
-            <th
-              scope="col"
-            >
-              Elapsed Time
-            </th>
-            <th
-              scope="col"
-            >
-              Amount
-            </th>
-            <th
-              scope="col"
-            >
-              Completed
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th
-              scope="row"
-            >
-              1
-            </th>
-            <td>
-              abc123
-            </td>
-            <td>
-              SF
-            </td>
-            <td>
-              LA
-            </td>
-            <td>
-               Seconds
-            </td>
-            <td />
-            <td />
-          </tr>
-        </tbody>
-      </table>
-    </div>
+      <thead>
+        <tr>
+          <th
+            scope="col"
+          >
+            #
+          </th>
+          <th
+            scope="col"
+          >
+            Id
+          </th>
+          <th
+            scope="col"
+          >
+            Origin
+          </th>
+          <th
+            scope="col"
+          >
+            Destination
+          </th>
+          <th
+            scope="col"
+          >
+            Amount
+          </th>
+          <th
+            scope="col"
+          >
+            Elapsed Time
+          </th>
+          <th
+            scope="col"
+          >
+            Status
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          className=""
+        >
+          <th
+            scope="row"
+          >
+            1
+          </th>
+          <td>
+            148
+          </td>
+          <td>
+            Mumbai
+          </td>
+          <td>
+            N. Virginia
+          </td>
+          <td>
+            0.0009
+             nano
+          </td>
+          <td>
+            Pending...
+          </td>
+          <td>
+            Pending...
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 `;
