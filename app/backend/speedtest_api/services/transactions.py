@@ -252,7 +252,7 @@ def get_transactions():
     @return: Query of all transactions
     """
 
-    models.Transaction.objects.all()
+    return models.Transaction.objects.all()
 
 def get_transaction(id):
     """
