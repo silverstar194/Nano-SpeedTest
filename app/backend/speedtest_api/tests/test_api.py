@@ -1,10 +1,9 @@
 from rest_framework.test import APITestCase
-import json
 
-from speedtest_api.models import Node
-from speedtest_api.models import Wallet
 from speedtest_api.models import Account
+from speedtest_api.models import Node
 from speedtest_api.models import Transaction
+from speedtest_api.models import Wallet
 
 
 class ApiTests(APITestCase):
