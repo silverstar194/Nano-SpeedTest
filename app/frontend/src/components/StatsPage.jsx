@@ -6,11 +6,12 @@ import Map from './Map';
 import Table from './Table';
 import NoTableEntries from './NoTableEntries';
 import {connect} from 'react-redux';
+import Ad from './Ad';
 
 const loader = (
     <div className='loading-container'>
     <div className='loader-container d-flex justify-content-center'>
-        <div className='loader'></div>
+        <div className='loader'/>
     </div>
     <div>
         <p>Your transaction is processing. Please wait.</p>
@@ -32,6 +33,7 @@ class StatsPage extends Component {
         return (
             <div className='StatsPage'>
                 <Header/>
+                <Ad/>
                 {(mostRecent && mostRecent.error && !isFetchingTransaction) ?
                     <div className='alert alert-danger' role='alert'>
                         Something went wrong while trying to get the transaction. Please try again

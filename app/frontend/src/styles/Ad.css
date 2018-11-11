@@ -1,0 +1,32 @@
+.container {
+    margin-top: 10px;
+}
+.jumbotron {
+    padding: 15px 30px;
+    margin-bottom: 0;
+    background-color: dodgerblue;
+}
+.jumbotron > p {
+    text-align: left;
+    margin: 0;
+}
+p > a {
+    color: #f3f3f3;
+}
+p > p {
+    color: gainsboro;
+    font-size: 70%;
+    font-weight: 600;
+    text-decoration: underline;
+    margin: 0 5px;
+}
+
+p > a:hover{
+    color: gainsboro;
+    text-decoration: none;
+}
+
+p > a:hover{
+    color: gainsboro;
+    text-decoration: none;
+}

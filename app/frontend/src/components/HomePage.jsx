@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Header from './Header';
+import Ad from './Ad';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { switchTab } from '../actions/navigation';
@@ -17,6 +18,7 @@ class HomePage extends Component {
         return (
             <div className='HomePage'>
                 <Header/>
+                <Ad/>
                 <h1 className='greeting page-header text-center'>Welcome to NanoSpeed.live!</h1>
                 <div className='container'>
                     <div className='row'>
