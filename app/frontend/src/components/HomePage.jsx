@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Header from './Header';
 import Ad from './Ad';
+import AdvancedModal from './AdvancedModal';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { switchTab } from '../actions/navigation';
@@ -8,10 +9,23 @@ import { fetchRandomTransaction } from '../actions/table';
 import '../styles/HomePage.css';
 
 class HomePage extends Component {
+    // component specific state -- don't need to add to redux store
+    state = {
+        modalOpen: false
+    };
+
+    onAdvancedClick = () => {
+      this.setState(() => ({modalOpen: true}));
+    };
+
     onClick = () => {
         // navigate to /Stats route
         this.props.history.push('/Stats');
         this.props.onGoPressed(); // Update current active tab and dispatch action to get transaction data
+    };
+
+    handleAdvancedSettings = () => {
+        console.log('got it');
     };
 
     render() {
@@ -19,6 +33,10 @@ class HomePage extends Component {
             <div className='HomePage'>
                 <Header/>
                 <Ad/>
+                <AdvancedModal
+                    open={this.state.modalOpen}
+                    handleAdvancedSettings={this.handleAdvancedSettings}
+                />
                 <h1 className='greeting page-header text-center'>Welcome to NanoSpeed.live!</h1>
                 <div className='container'>
                     <div className='row'>
@@ -27,8 +45,8 @@ class HomePage extends Component {
                                 Go
                             </button>
                             <br/>
-                            {/*<button type='button' className='btn btn-outline-primary'>Advanced</button>*/}
-                            {/*<br/>*/}
+                            <button type='button' className='btn btn-primary' onClick={this.onAdvancedClick}>Advanced</button>
+                            <br/>
                             <p className='greeting'>Run your live test now.</p>
                         </div>
                     </div>
