@@ -1,12 +1,8 @@
-.GoogleMapsLoading {
-    height: 100%;
-}
-
-.GoogleMapsContainer {
-    height: 100%;
-}
-
-.GoogleMapsElement {
+.GoogleMap {
     height: 400px;
-    width: 100%;
+}
+
+#MapPlaceholder {
+    max-width: 800;
+    height: 400px;
 }

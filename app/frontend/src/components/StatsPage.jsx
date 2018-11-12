@@ -49,7 +49,7 @@ class StatsPage extends Component {
                                 This can take upwards of 30 seconds so please be patient!
                             </>}
                             </h2>
-                            <div className='nano-container'>
+                            <div className='nano-container map-container'>
                                 <Map {...mostRecent}/>
                             </div>
                             <Table tableData={table}/>
