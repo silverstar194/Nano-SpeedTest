@@ -36,13 +36,17 @@ def new_account(wallet, address=None):
 
     return models.Account.objects.create(wallet=wallet, address=address)
 
-def get_accounts(enabled=True):
+def get_accounts(enabled=True, node=None):
     """
     Get all accounts in the database
 
     @param enabled: Filter based on account's wallet's node enability
-    @return: Query of all accounts
+    @param node: Filter based on accounts belonging to the node (precendence) 
+    @return: Query of all accounts (filtered by enabled or node)
     """
+
+    if node is not None:
+        return models.Account.objects.filter(wallet__node__id=node.id)
 
     return models.Account.objects.filter(wallet__node__enabled=enabled)
 

@@ -41,6 +41,10 @@ class InvalidPOWException(Exception):
     def __init__(self):
         Exception.__init__(self, "The POW on the account was not valid.")
 
+class InvalidNodesException(Exception):
+    def __init__(self):
+        Exception.__init__(self, "Cannot send a transaction with the same origin/destination nodes.")
+
 
 def new_transaction_random(initiated_by):
     """
@@ -62,6 +66,28 @@ def new_transaction_random(initiated_by):
             account_destinations.append(account)
     
     destination = random.choice(account_destinations)
+
+    base_amount = 100000000000000000000
+    amount = base_amount * Decimal(random.randint(1, 9))
+
+    return new_transaction(origin_account=origin, destination_account=destination, amount=amount, initiated_by=initiated_by)
+
+def new_transaction_nodes(origin_node, destination_node, initiated_by):
+    """
+    Create a transaction from the given properties.
+    TODO: Locks the accounts in use to prevent other transactions from using these accounts.
+
+    @param origin_node: Node source
+    @param destination_node: Node receiver
+    @param initiated_by: IP of the endpoint making a transaction request
+    @return: New transaction object
+    """
+
+    origin_accounts_list = get_accounts(node=origin_node)
+    destination_accounts_list = get_accounts(node=destination_node)
+
+    origin = random.choice(origin_accounts_list)
+    destination = random.choice(destination_accounts_list)
 
     base_amount = 100000000000000000000
     amount = base_amount * Decimal(random.randint(1, 9))
@@ -105,6 +131,9 @@ def send_transaction(transaction):
     @raise: NoIncomingBlocksException: Incoming block not found on destination node. This will lead to invalid POW and balance in the destination account if not handled
     @raise: TooManyIncomingBlocksException: Incoming block not found on destination node. This will lead to invalid POW and balance in the destination account if not handled
     """
+
+    if (transaction.origin.wallet.node.id == transaction.destination.wallet.node.id):
+        raise InvalidNodesException()
 
     rpc_origin_node = nano.rpc.Client(transaction.origin.wallet.node.URL)
     rpc_destination_node = nano.rpc.Client(transaction.destination.wallet.node.URL)
