@@ -101,4 +101,5 @@ def get_ad(request):
         'message': 'This is a sample advertisement for Nano-SpeedTest.live!',
         'url': 'https://www.nanode.co/'
     }
+
     return JsonResponse(ad, status=200)

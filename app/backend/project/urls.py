@@ -22,5 +22,6 @@ urlpatterns = [
     path('admin/doc/', include('django.contrib.admindocs.urls')),
     path('admin/', admin.site.urls),
     path('transactions/random', views.generate_random_transaction),
-    path('transactions/send', views.send_transaction)
+    path('transactions/send', views.send_transaction),
+    path('ad/random', views.get_ad)
 ]
