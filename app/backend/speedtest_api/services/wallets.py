@@ -13,7 +13,7 @@ def new_wallet(node, wallet_id=None):
     """
 
     if wallet_id is None:
-        rpc = nano.rpc.Client(node.IP)
+        rpc = nano.rpc.Client(node.URL)
         wallet_id = rpc.wallet_create()
 
     return models.Wallet.objects.create(node=node, wallet_id=wallet_id)

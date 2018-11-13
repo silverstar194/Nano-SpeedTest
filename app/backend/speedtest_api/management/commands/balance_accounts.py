@@ -72,7 +72,7 @@ class Command(BaseCommand):
                 del accounts[lower]
                 upper = upper - 1
             
-            rpc = nano.rpc.Client(accounts[lower].wallet.node.IP)
+            rpc = nano.rpc.Client(accounts[lower].wallet.node.address)
             
             # If the wallet is new, allow the balancing to happen
             try:

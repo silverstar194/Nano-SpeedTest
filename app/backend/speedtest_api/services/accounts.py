@@ -19,7 +19,7 @@ def new_account(wallet, address=None):
     @raise RPCException: RPC Failure
     """
 
-    rpc = nano.rpc.Client(wallet.node.IP)
+    rpc = nano.rpc.Client(wallet.node.URL)
 
     if address is None:
         address = rpc.account_create(wallet=wallet.wallet_id)
@@ -71,7 +71,7 @@ def sync_accounts():
     accounts_list = get_accounts()
 
     for account in accounts_list:
-        rpc = nano.rpc.Client(account.wallet.node.IP)
+        rpc = nano.rpc.Client(account.wallet.node.URL)
 
         new_balance = rpc.account_balance(account=account.address)['balance']
 

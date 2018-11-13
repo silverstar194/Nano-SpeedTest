@@ -106,8 +106,8 @@ def send_transaction(transaction):
     @raise: TooManyIncomingBlocksException: Incoming block not found on destination node. This will lead to invalid POW and balance in the destination account if not handled
     """
 
-    rpc_origin_node = nano.rpc.Client(transaction.origin.wallet.node.IP)
-    rpc_destination_node = nano.rpc.Client(transaction.destination.wallet.node.IP)
+    rpc_origin_node = nano.rpc.Client(transaction.origin.wallet.node.URL)
+    rpc_destination_node = nano.rpc.Client(transaction.destination.wallet.node.URL)
 
     # Do some origin balance checking
     origin_balance = rpc_origin_node.account_balance(account=transaction.origin.address)['balance']

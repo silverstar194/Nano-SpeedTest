@@ -8,7 +8,7 @@ from speedtest_api.models import Wallet
 class TestAccounts(TestCase):
     def setUp(self):
         test_node = Node.objects.create(id=1,
-                                        IP="http://127.0.0.1:7076",
+                                        URL="http://127.0.0.1:7076",
                                         latitude= 1.1,
                                         longitude=1.1,
                                         location_name="Testville, USA")
