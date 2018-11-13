@@ -7,6 +7,7 @@ from rest_framework.decorators import api_view
 from ipware import get_client_ip
 
 from speedtest_api.services import transactions
+from speedtest_api.services import advertisements
 
 
 @api_view(['GET'])
@@ -89,7 +90,7 @@ def send_transaction(request):
 
 
 @api_view(['GET'])
-def get_ad(request):
+def get_advertisement(request):
     """
     Get a random ad from the database
 
@@ -97,9 +98,11 @@ def get_ad(request):
     @return JsonResponse The ad to be displayed
 
     """
+    random_ad = advertisements.get_random_ad()
+
     ad = {
-        'message': 'This is a sample advertisement for Nano-SpeedTest.live!',
-        'url': 'https://www.nanode.co/'
+        'message': random_ad.message,
+        'url': random_ad.URL
     }
 
     return JsonResponse(ad, status=200)
