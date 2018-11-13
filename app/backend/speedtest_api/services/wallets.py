@@ -18,14 +18,15 @@ def new_wallet(node, wallet_id=None):
 
     return models.Wallet.objects.create(node=node, wallet_id=wallet_id)
 
-def get_wallets():
+def get_wallets(enabled=True):
     """
     Get all wallets in the database
 
+    @enabled: Filter based on wallet's node enability
     @return: Query of all wallets
     """
 
-    return models.Wallet.objects.all()
+    return models.Wallet.objects.filter(node__enabled=enabled)
 
 def get_wallet(id):
     """

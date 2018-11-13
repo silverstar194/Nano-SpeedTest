@@ -16,14 +16,15 @@ def new_node(URL, latitude, longitude, location_name=None):
 
     return models.Node.objects.create(URL=URL, latitude=latitude, longitude=longitude, location_name=location_name)
 
-def get_nodes():
+def get_nodes(enabled=True):
     """
     Get all nodes
 
+    @param enabled: Filter nodes by enability.
     @return: Query of Node objects
     """
 
-    return models.Node.objects.all()
+    return models.Node.objects.filter(enabled=enabled)
 
 def get_node(id):
     """
