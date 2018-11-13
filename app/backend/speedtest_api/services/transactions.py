@@ -41,10 +41,6 @@ class InvalidPOWException(Exception):
     def __init__(self):
         Exception.__init__(self, "The POW on the account was not valid.")
 
-class InvalidNodesException(Exception):
-    def __init__(self):
-        Exception.__init__(self, "Cannot send a transaction with the same origin/destination nodes.")
-
 class NoAccountsException(Exception):
     def __init__(self, node='NA'):
         Exception.__init__(self, "The specified node (%s) does not have any accounts." % node)
@@ -103,6 +99,10 @@ def new_transaction_nodes(origin_node, destination_node, initiated_by):
         raise NoAccountsException(destination_node)
 
     origin = random.choice(origin_accounts_list)
+
+    if destination_accounts_list.filter(address=origin.address).exists():
+        destination_accounts_list = destination_accounts_list.exclude(address=origin.address)
+
     destination = random.choice(destination_accounts_list)
 
     base_amount = 100000000000000000000
