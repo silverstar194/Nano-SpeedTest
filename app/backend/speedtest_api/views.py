@@ -56,7 +56,7 @@ def generate_random_transaction(request):
 
 
 @api_view(['POST'])
-def send_transaction(request):
+def send_random_transaction(request):
     """
     Send the transaction generated in the initial transaction generation
 
@@ -87,6 +87,25 @@ def send_transaction(request):
         }
 
         return JsonResponse(transaction_stats, status=200)
+
+
+@api_view(['GET'])
+def get_advertisement(request):
+    """
+    Get a random ad from the database
+
+    @param request The REST request to the endpoint
+    @return JsonResponse The ad to be displayed
+
+    """
+    random_ad = advertisements.get_random_ad()
+
+    ad = {
+        'message': random_ad.message,
+        'url': random_ad.URL
+    }
+
+    return JsonResponse(ad, status=200)
 
 
 @api_view(['GET'])
