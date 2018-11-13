@@ -1,0 +1,12 @@
+.GoogleMapsLoading {
+    height: 100%;
+}
+
+.GoogleMapsContainer {
+    height: 100%;
+}
+
+.GoogleMapsElement {
+    height: 400px;
+    width: 100%;
+}
