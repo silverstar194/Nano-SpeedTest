@@ -8,11 +8,18 @@
 }
 
 .btn-circle {
-  width: 3.28125m;
+  width: 3.28125em;
   height: 3.28125em;
-  padding: 0.375em 0em;
+  padding: 0.375em 0;
   border-radius: 1.6415em;
   text-align: center;
   font-size: 0.125em;
   line-height: 1.42857;
+}
+
+.greeting {
+  padding: 20px;
+  margin-bottom: 0;
+  font-family: sans-serif;
+  font-weight: 100;
 }

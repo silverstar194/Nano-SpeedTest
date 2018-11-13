@@ -1,0 +1,149 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders snapshot correctly 1`] = `
+<div
+  className="StatsPage"
+>
+  <div
+    className="nav nav-tabs"
+  >
+    <li
+      className="nav-item"
+    >
+      <a
+        className="nav-link active"
+        href="/"
+        onClick={[Function]}
+      >
+         
+        Speed Test
+         
+      </a>
+    </li>
+    <li
+      className="nav-item"
+    >
+      <a
+        className="nav-link "
+        href="/Stats"
+        onClick={[Function]}
+      >
+         
+        Statistics
+         
+      </a>
+    </li>
+    <li
+      className="nav-item"
+    >
+      <a
+        className="nav-link "
+        href="/Info"
+        onClick={[Function]}
+      >
+         
+        More Info
+         
+      </a>
+    </li>
+  </div>
+  <h2
+    className="map-header page-header text-left"
+  >
+    Sending
+     from 
+    Mumbai
+     to 
+    N. Virginia
+  </h2>
+  <div
+    className="nano-container"
+  >
+    <div
+      className="GoogleMapsContainer"
+    >
+      <div
+        className="GoogleMapsElement"
+      />
+      <div />
+    </div>
+  </div>
+  <div
+    className="nano-container"
+  >
+    <table
+      className="table"
+    >
+      <thead>
+        <tr>
+          <th
+            scope="col"
+          >
+            #
+          </th>
+          <th
+            scope="col"
+          >
+            Id
+          </th>
+          <th
+            scope="col"
+          >
+            Origin
+          </th>
+          <th
+            scope="col"
+          >
+            Destination
+          </th>
+          <th
+            scope="col"
+          >
+            Amount
+          </th>
+          <th
+            scope="col"
+          >
+            Elapsed Time
+          </th>
+          <th
+            scope="col"
+          >
+            Status
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          className=""
+        >
+          <th
+            scope="row"
+          >
+            1
+          </th>
+          <td>
+            148
+          </td>
+          <td>
+            Mumbai
+          </td>
+          <td>
+            N. Virginia
+          </td>
+          <td>
+            0.0009
+             nano
+          </td>
+          <td>
+            Pending...
+          </td>
+          <td>
+            Pending...
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+`;
