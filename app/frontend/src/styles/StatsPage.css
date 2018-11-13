@@ -22,6 +22,10 @@
     padding: 10px 40px;
 }
 
+.map-container {
+    text-align: center;
+}
+
 .map-header {
     padding: 20px 0 0 40px;
     margin-bottom: 0;
