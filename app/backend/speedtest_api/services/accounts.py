@@ -1,7 +1,12 @@
+import logging
+
 from django.conf import settings as settings
 import nano
 
 from .. import models as models
+
+
+logger = logging.getLogger(__name__)
 
 
 class AccountNotFound(Exception):
@@ -77,6 +82,16 @@ def sync_accounts():
 
     for account in accounts_list:
         rpc = nano.rpc.Client(account.wallet.node.URL)
+
+        try:
+            incoming_blocks = rpc.pending(account=account.address)
+            for block_hash in incoming_blocks:
+                rpc.receive(wallet=account.wallet.wallet_id, account=account.address, block=block_hash)
+                account.POW = None
+                account.save()
+                logger.warning('Received block: %s' % block_hash)
+        except Exception as e:
+            logger.error('Error trying to receive blocks (for %s): %s' % (account.address, e))
 
         new_balance = rpc.account_balance(account=account.address)['balance']
 

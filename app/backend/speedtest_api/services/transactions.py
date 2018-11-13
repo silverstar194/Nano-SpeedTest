@@ -47,7 +47,7 @@ class InvalidNodesException(Exception):
 
 class NoAccountsException(Exception):
     def __init__(self, node='NA'):
-        Exception.__init__(self, "The specified node ({0}) does not have any accounts." % node)
+        Exception.__init__(self, "The specified node (%s) does not have any accounts." % node)
 
 
 def new_transaction_random(initiated_by):
