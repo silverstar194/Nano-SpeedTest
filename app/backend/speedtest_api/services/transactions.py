@@ -148,9 +148,6 @@ def send_transaction(transaction):
     @raise: TooManyIncomingBlocksException: Incoming block not found on destination node. This will lead to invalid POW and balance in the destination account if not handled
     """
 
-    if transaction.origin.wallet.node.id == transaction.destination.wallet.node.id:
-        raise InvalidNodesException()
-
     rpc_origin_node = nano.rpc.Client(transaction.origin.wallet.node.URL)
     rpc_destination_node = nano.rpc.Client(transaction.destination.wallet.node.URL)
 
