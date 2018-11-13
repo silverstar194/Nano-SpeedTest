@@ -24,8 +24,10 @@ class HomePage extends Component {
         this.props.onGoPressed(); // Update current active tab and dispatch action to get transaction data
     };
 
-    handleAdvancedSettings = () => {
-        console.log('got it');
+    handleAdvancedSettings = (e) => {
+        // don't reload page on form submit from modal
+        e.preventDefault();
+        console.log(e.target.elements.origin.value);
     };
 
     render() {
@@ -45,7 +47,7 @@ class HomePage extends Component {
                                 Go
                             </button>
                             <br/>
-                            <button type='button' className='btn btn-primary' onClick={this.onAdvancedClick}>Advanced</button>
+                            <button id='advanced-btn' type='button' className='btn btn-primary' onClick={this.onAdvancedClick}>Advanced</button>
                             <br/>
                             <p className='greeting'>Run your live test now.</p>
                         </div>
