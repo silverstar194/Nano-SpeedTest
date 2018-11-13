@@ -45,6 +45,10 @@ class InvalidNodesException(Exception):
     def __init__(self):
         Exception.__init__(self, "Cannot send a transaction with the same origin/destination nodes.")
 
+class NoAccountsException(Exception):
+    def __init__(self, node='NA'):
+        Exception.__init__(self, "The specified node ({0}) does not have any accounts." % node)
+
 
 def new_transaction_random(initiated_by):
     """
@@ -57,6 +61,9 @@ def new_transaction_random(initiated_by):
 
     accounts_list = get_accounts()
 
+    if len(accounts_list) == 0:
+        raise NoAccountsException()
+
     origin = random.choice(accounts_list)
 
     account_destinations = []
@@ -65,6 +72,9 @@ def new_transaction_random(initiated_by):
         if account.wallet.node.id != origin.wallet.node.id:
             account_destinations.append(account)
     
+    if len(account_destinations) == 0:
+        raise NoAccountsException()
+
     destination = random.choice(account_destinations)
 
     base_amount = 100000000000000000000
@@ -85,6 +95,12 @@ def new_transaction_nodes(origin_node, destination_node, initiated_by):
 
     origin_accounts_list = get_accounts(node=origin_node)
     destination_accounts_list = get_accounts(node=destination_node)
+
+    if len(origin_accounts_list) == 0:
+        raise NoAccountsException(origin_node)
+    
+    if len(destination_accounts_list) == 0:
+        raise NoAccountsException(destination_node)
 
     origin = random.choice(origin_accounts_list)
     destination = random.choice(destination_accounts_list)
@@ -132,7 +148,7 @@ def send_transaction(transaction):
     @raise: TooManyIncomingBlocksException: Incoming block not found on destination node. This will lead to invalid POW and balance in the destination account if not handled
     """
 
-    if (transaction.origin.wallet.node.id == transaction.destination.wallet.node.id):
+    if transaction.origin.wallet.node.id == transaction.destination.wallet.node.id:
         raise InvalidNodesException()
 
     rpc_origin_node = nano.rpc.Client(transaction.origin.wallet.node.URL)
