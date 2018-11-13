@@ -1,4 +1,5 @@
 from django.conf import settings as settings
+import nano
 
 from .. import models as models
 
