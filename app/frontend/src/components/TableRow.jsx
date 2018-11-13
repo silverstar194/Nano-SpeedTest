@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
 
 const TableRow = ({
@@ -21,21 +21,21 @@ const TableRow = ({
             <td>{destination.nodeLocation}</td>
             <td>{amount} nano</td>
             { completed ?
-                <>
+                <Fragment>
                 { error ?
-                    <>
+                    <Fragment>
                         <td>ERROR</td>
                         <td>ERROR OCCURRED</td>
-                    </> : <>
+                    </Fragment> : <Fragment>
                         <td>{(endReceiveTimestamp - startSendTimestamp)/1000} Seconds</td>
                         <td>Completed</td>
-                    </>
+                    </Fragment>
                 }
-                </>
-                : <>
+                </Fragment>
+                : <Fragment>
                     <td>Pending...</td>
                     <td>Pending...</td>
-                </>
+                </Fragment>
             }
         </tr>
     );
