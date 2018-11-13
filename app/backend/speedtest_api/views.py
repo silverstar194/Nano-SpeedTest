@@ -86,3 +86,19 @@ def send_transaction(request):
         }
 
         return JsonResponse(transaction_stats, status=200)
+
+
+@api_view(['GET'])
+def get_ad(request):
+    """
+    Get a random ad from the database
+
+    @param request The REST request to the endpoint
+    @return JsonResponse The ad to be displayed
+
+    """
+    ad = {
+        'message': 'This is a sample advertisement for Nano-SpeedTest.live!',
+        'url': 'https://www.nanode.co/'
+    }
+    return JsonResponse(ad, status=200)
