@@ -6,8 +6,9 @@ from rest_framework.decorators import api_view
 
 from ipware import get_client_ip
 
-from speedtest_api.services import transactions
 from speedtest_api.services import advertisements
+from speedtest_api.services import transactions
+from speedtest_api.services import nodes
 
 
 @api_view(['GET'])
@@ -125,3 +126,17 @@ def get_advertisement(request):
     }
 
     return JsonResponse(ad, status=200)
+
+
+@api_view(['GET'])
+def list_nodes(request):
+    """
+    Get a list of all nodes from the database
+
+    @param request The REST request to the endpoint
+    @return JsonResponse An array of nodes
+
+    """
+    all_nodes = nodes.get_nodes().values('id', 'location_name', 'latitude', 'longitude')
+
+    return JsonResponse(all_nodes, status=200)

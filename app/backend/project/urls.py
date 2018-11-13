@@ -23,5 +23,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('transactions/random', views.generate_random_transaction),
     path('transactions/send', views.send_random_transaction),
-    path('advertisements/random', views.get_advertisement)
+    path('advertisements/random', views.get_advertisement),
+    path('nodes/list', views.list_nodes)
 ]
