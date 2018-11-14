@@ -24,7 +24,7 @@
 
 ## Nodes Service
 
-`new_node(ip, latitude, longitude, location_name=None)` create a new node with the given properties.
+`new_node(URL, latitude, longitude, location_name=None)` create a new node with the given properties.
 
 `get_node(id)` get a node by id.
 
