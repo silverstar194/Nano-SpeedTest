@@ -24,10 +24,14 @@
 
 .map-container {
     text-align: center;
+    padding-bottom: 20px;
+}
+
+.page-header {
+    padding: 20px 0 0 40px;
 }
 
 .map-header {
-    padding: 20px 0 0 40px;
     margin-bottom: 0;
     font-family: sans-serif;
     font-weight: 100;

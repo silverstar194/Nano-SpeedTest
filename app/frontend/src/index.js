@@ -20,8 +20,24 @@ const initialState = {
     navigation: {
         activeTab: '' // initialize the starting tab to be our default home page
     },
-    table: []
+    table: [
+         {
+            id: 123,
+            origin: {
+                nodeLocation: 'Mumbia, India'
+            },
+            destination: {
+                nodeLocation: 'W. Virginia'
+            },
+            amount: .009,
+            completed: true,
+            endReceiveTimestamp: 12345,
+            startSendTimestamp: 1234
+        }
+    ]
 };
+
+
 
 // call this in order to get argument needed for applyMiddleware (when creating the store)
 const epicMiddleware = createEpicMiddleware();
