@@ -7,52 +7,13 @@ import {connect} from 'react-redux';
 import PastResultsTable from 'components/HistoricalData/PastResultsTable';
 import CurrentTransactionsView from 'components/CurrentTransactions/CurrentTransactionsView';
 
-const pastResults = [
-    {
-        id: 1,
-        origin: {
-            nodeLocation: 'A'
-        },
-        destination: {
-            nodeLocation: 'B'
-        },
-        amount: .009,
-        startSendTimestamp: 1542138102953,
-        endReceiveTimestamp: 1542138109826
-    },
-    {
-        id: 2,
-        origin: {
-            nodeLocation: 'C'
-        },
-        destination: {
-            nodeLocation: 'D'
-        },
-        amount: .008,
-        startSendTimestamp: 1542138147900,
-        endReceiveTimestamp: 1542138152088
-    },
-    {
-        id: 3,
-        origin: {
-            nodeLocation: 'B'
-        },
-        destination: {
-            nodeLocation: 'A'
-        },
-        amount: .001,
-        startSendTimestamp: 1542138170727,
-        endReceiveTimestamp: 1542138175372
-    }
-];
-
 class UserStatsPage extends Component {
     state = {
 
     };
 
     render() {
-        const {table, isFetchingTransaction, isFetchingTiming} = this.props;
+        const {table, pastResults, isFetchingTransaction, isFetchingTiming} = this.props;
         return (
             <div className='UserStatsPage'>
                 <Header/>
@@ -80,6 +41,7 @@ class UserStatsPage extends Component {
 const mapStateToProps = (state) => {
     return {
         table: state.table,
+        pastResults: state.pastResults,
         isFetchingTransaction: state.transactions.isFetchingTransaction,
         isFetchingTiming: state.transactions.isFetchingTiming
     };
@@ -88,6 +50,7 @@ const mapStateToProps = (state) => {
 
 UserStatsPage.propTypes = {
     table: PropTypes.array.isRequired,
+    pastResults: PropTypes.array.isRequired,
     isFetchingTransaction: PropTypes.bool,
     isFetchingTiming: PropTypes.bool
 };

@@ -9,6 +9,7 @@ import * as serviceWorker from './serviceWorker';
 import navigation from './reducers/navigation';
 import table from './reducers/table';
 import transactions from './reducers/transactions';
+import pastResults from './reducers/pastResults';
 
 import rootEpic from './epics/table';
 import transactionsMiddleware from './transactionsMiddleware';
@@ -34,6 +35,44 @@ const initialState = {
             endReceiveTimestamp: 12345,
             startSendTimestamp: 1234
         }
+    ],
+    pastResults: [
+        {
+            id: 1,
+            origin: {
+                nodeLocation: 'A'
+            },
+            destination: {
+                nodeLocation: 'B'
+            },
+            amount: .009,
+            startSendTimestamp: 1542138102953,
+            endReceiveTimestamp: 1542138109826
+        },
+        {
+            id: 2,
+            origin: {
+                nodeLocation: 'C'
+            },
+            destination: {
+                nodeLocation: 'D'
+            },
+            amount: .008,
+            startSendTimestamp: 1542138147900,
+            endReceiveTimestamp: 1542138152088
+        },
+        {
+            id: 3,
+            origin: {
+                nodeLocation: 'B'
+            },
+            destination: {
+                nodeLocation: 'A'
+            },
+            amount: .001,
+            startSendTimestamp: 1542138170727,
+            endReceiveTimestamp: 1542138175372
+        }
     ]
 };
 
@@ -48,7 +87,8 @@ const store = createStore(
     combineReducers({
         navigation,
         table,
-        transactions
+        transactions,
+        pastResults
     }),
     initialState,
     composeEnhancers(

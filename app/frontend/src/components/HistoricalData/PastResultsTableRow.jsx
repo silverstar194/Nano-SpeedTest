@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 const TableRow = ({
@@ -35,7 +35,6 @@ TableRow.propTypes = {
     destination: PropTypes.object.isRequired,
     time: PropTypes.number,
     amount: PropTypes.number,
-    completed: PropTypes.bool,
     endReceiveTimestamp: PropTypes.number,
     startSendTimestamp: PropTypes.number
 };
