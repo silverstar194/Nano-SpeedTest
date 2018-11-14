@@ -11,8 +11,8 @@ from speedtest_api.services import transactions
 from speedtest_api.services import nodes
 
 
-@api_view(['GET'])
-def generate_random_transaction(request):
+@api_view(['POST'])
+def generate_transaction(request):
     """
     Generate a new random transaction and return its basic information
 
@@ -20,55 +20,70 @@ def generate_random_transaction(request):
     @return JsonResponse The general transaction information including the id, wallets, wallet locations, amount, and ip
 
     """
-
     client_ip, is_routable = get_client_ip(request)
+    body = json.loads(request.body)
 
-    transaction = transactions.new_transaction_random(client_ip)
-    origin_node = transaction.origin.wallet.node
-    destination_node = transaction.destination.wallet.node
+    batch_transactions = body['transactions']
 
-    origin = {
-        'id': origin_node.id,
-        'nodeLocation': origin_node.location_name,
-        'latitude': origin_node.latitude,
-        'longitude': origin_node.longitude
-    }
+    if len(batch_transactions) == 0:
+        return JsonResponse({'message': 'Must specify at least one transaction.'}, status=400)
 
-    destination = {
-        'id': destination_node.id,
-        'nodeLocation': destination_node.location_name,
-        'latitude': destination_node.latitude,
-        'longitude': destination_node.longitude
-    }
+    elif not batch_transactions[0]['originNodeId'] and not batch_transactions[0]['destinationNodeId']:
+        transaction_array = []
 
-    #  Convert from RAW to nano and round to four decimal places
-    amount_decimal = Decimal(transaction.amount) / Decimal(1e24)
-    amount = round(amount_decimal, 4)
+        for transaction in batch_transactions:
+            random_transaction = transactions.new_transaction_random(client_ip)
+            origin_node = random_transaction.origin.wallet.node
+            destination_node = random_transaction.destination.wallet.node
 
-    random_transaction = {
-        "id": transaction.id,
-        "origin": origin,
-        "destination": destination,
-        "amount": amount,
-        "ip": client_ip
-    }
+            origin = {
+                'id': origin_node.id,
+                'nodeLocation': origin_node.location_name,
+                'latitude': origin_node.latitude,
+                'longitude': origin_node.longitude
+            }
 
-    return JsonResponse(random_transaction)
+            destination = {
+                'id': destination_node.id,
+                'nodeLocation': destination_node.location_name,
+                'latitude': destination_node.latitude,
+                'longitude': destination_node.longitude
+            }
+
+            #  Convert from RAW to nano and round to four decimal places
+            amount_decimal = Decimal(random_transaction.amount) / Decimal(1e24)
+            amount = round(amount_decimal, 4)
+
+            random_transaction = {
+                "id": random_transaction.id,
+                "origin": origin,
+                "destination": destination,
+                "amount": amount,
+                "ip": client_ip
+            }
+
+            transaction_array.append(random_transaction)
+
+        return JsonResponse(transaction_array, status=200)
+
+
 
 
 @api_view(['POST'])
-def send_random_transaction(request):
+def send_transaction(request):
     """
-    Send the transaction generated in the initial transaction generation
+    Send the transaction specified in the request body
 
     @param request The REST request to the endpoint
     @return JsonResponse The transaction timing information
 
     """
     body = json.loads(request.body)
-    transaction_id = body['id']
+    node_one_id = body['nodeOneId']
+    node_two_id = body['nodeTwoId']
+    node_three_id = body['nodeThreeId']
 
-    transaction = transactions.get_transaction(transaction_id)
+    client_ip, is_routable = get_client_ip(request)
 
     if transaction is None:
         return JsonResponse({'message': 'Transaction ' + str(transaction_id) + ' not found.'}, status=404)
@@ -91,7 +106,7 @@ def send_random_transaction(request):
 
 
 @api_view(['GET'])
-def get_advertisement(request):
+def get_random_advertisement(request):
     """
     Get a random ad from the database
 
@@ -102,25 +117,7 @@ def get_advertisement(request):
     random_ad = advertisements.get_random_ad()
 
     ad = {
-        'message': random_ad.message,
-        'url': random_ad.URL
-    }
-
-    return JsonResponse(ad, status=200)
-
-
-@api_view(['GET'])
-def get_advertisement(request):
-    """
-    Get a random ad from the database
-
-    @param request The REST request to the endpoint
-    @return JsonResponse The ad to be displayed
-
-    """
-    random_ad = advertisements.get_random_ad()
-
-    ad = {
+        'title': random_ad.title,
         'message': random_ad.message,
         'url': random_ad.URL
     }
