@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import Header from './Header';
 import PropTypes from 'prop-types';
-import 'styles/StatsPage.css';
+import 'styles/UserResultsPage.css';
 
 import {connect} from 'react-redux';
-import PastResultsTable from './PastTransactions/PastResultsTable';
-import TransactionsView from './CurrentTransactions/TransactionsView';
+import PastResultsTable from 'components/HistoricalData/PastResultsTable';
+import CurrentTransactionsView from 'components/CurrentTransactions/CurrentTransactionsView';
 
 const pastResults = [
     {
@@ -46,7 +46,7 @@ const pastResults = [
     }
 ];
 
-class StatsPage extends Component {
+class UserStatsPage extends Component {
     state = {
 
     };
@@ -54,12 +54,12 @@ class StatsPage extends Component {
     render() {
         const {table, isFetchingTransaction, isFetchingTiming} = this.props;
         return (
-            <div className='StatsPage'>
+            <div className='UserStatsPage'>
                 <Header/>
                 <div className='container-fluid'>
                     <div className='row'>
                         <div className='col'>
-                            <TransactionsView
+                            <CurrentTransactionsView
                                 table={table}
                                 isFetchingTiming={isFetchingTiming}
                                 isFetchingTransaction={isFetchingTransaction}
@@ -68,7 +68,7 @@ class StatsPage extends Component {
                     </div>
                     <div className='row'>
                         <div className='col'>
-                        <PastResultsTable tableData={pastResults} />
+                            <PastResultsTable tableData={pastResults} />
                         </div>
                     </div>
                 </div>
@@ -86,10 +86,10 @@ const mapStateToProps = (state) => {
 };
 
 
-StatsPage.propTypes = {
+UserStatsPage.propTypes = {
     table: PropTypes.array.isRequired,
     isFetchingTransaction: PropTypes.bool,
     isFetchingTiming: PropTypes.bool
 };
 
-export default connect(mapStateToProps)(StatsPage);
+export default connect(mapStateToProps)(UserStatsPage);

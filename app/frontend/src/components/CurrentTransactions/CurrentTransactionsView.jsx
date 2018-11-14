@@ -21,7 +21,7 @@ const errorMessage = (mostRecent, isFetchingTransaction) =>
         </div>
         : null;
 
-const TransactionsView = ({table, isFetchingTiming, isFetchingTransaction}) => {
+const CurrentTransactionsView = ({table, isFetchingTiming, isFetchingTransaction}) => {
     const mostRecent = table.length && table[table.length - 1];
     const sendMessage = mostRecent.completed ? 'Sent' : 'Sending';
     // render the jsx
@@ -56,4 +56,4 @@ const TransactionsView = ({table, isFetchingTiming, isFetchingTransaction}) => {
     );
 };
 
-export default TransactionsView;
+export default CurrentTransactionsView;

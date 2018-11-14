@@ -89,7 +89,7 @@ class PastResultsTable extends React.Component {
                             Showing {startIndex + 1} to {end} of {tableData.length} transactions.
                     </div>
                     <div className='col-sm-auto'>
-                        <nav aria-label='Page navigation'>
+                        <nav aria-label='Table navigation'>
                             <ul className='pagination'>
                                 <li className={prevClass}>
                                     <button className='page-link' onClick={this.prevPage}>
