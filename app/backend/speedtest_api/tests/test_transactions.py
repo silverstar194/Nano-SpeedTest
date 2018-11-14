@@ -6,8 +6,8 @@ import speedtest_api.models as models
 
 class TestTransactions(TestCase):
     def setUp(self):
-        curr_Node = models.Node.objects.create(IP="http://127.0.0.1:7076", latitude= 1.1, longitude=1.1, location_name='')
-        curr_Node2 = models.Node.objects.create(IP="http://127.0.0.2:7076", latitude= 1.0, longitude=1.0, location_name='')
+        curr_Node = models.Node.objects.create(URL="http://127.0.0.1:7076", latitude= 1.1, longitude=1.1, location_name='')
+        curr_Node2 = models.Node.objects.create(URL="http://127.0.0.2:7076", latitude= 1.0, longitude=1.0, location_name='')
 
         wallet_sending = models.Wallet.objects.create(node=curr_Node)
         wallet_receiving = models.Wallet.objects.create(node=curr_Node2)
