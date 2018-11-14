@@ -46,12 +46,12 @@ class NoAccountsException(Exception):
         Exception.__init__(self, "The specified node (%s) does not have any accounts." % node)
 
 
-def new_transaction_random(initiated_by):
+def new_transaction_random(batch):
     """
     Create a new transaction with random origin, destination, and amount fields.
     This does not execute the transaction on the nano network.
 
-    @param initiated_by: IP of the endpoint making a transaction request
+    @param batch: Batch this transaction is a part of
     @return: New transaction object
     """
 
@@ -76,16 +76,16 @@ def new_transaction_random(initiated_by):
     base_amount = 100000000000000000000
     amount = base_amount * Decimal(random.randint(1, 9))
 
-    return new_transaction(origin_account=origin, destination_account=destination, amount=amount, initiated_by=initiated_by)
+    return new_transaction(origin_account=origin, destination_account=destination, amount=amount, batch=batch)
 
-def new_transaction_nodes(origin_node, destination_node, initiated_by):
+def new_transaction_nodes(origin_node, destination_node, batch):
     """
     Create a transaction from the given properties.
     TODO: Locks the accounts in use to prevent other transactions from using these accounts.
 
     @param origin_node: Node source
     @param destination_node: Node receiver
-    @param initiated_by: IP of the endpoint making a transaction request
+    @param batch: Batch of the new transaction
     @return: New transaction object
     """
 
@@ -108,9 +108,9 @@ def new_transaction_nodes(origin_node, destination_node, initiated_by):
     base_amount = 100000000000000000000
     amount = base_amount * Decimal(random.randint(1, 9))
 
-    return new_transaction(origin_account=origin, destination_account=destination, amount=amount, initiated_by=initiated_by)
+    return new_transaction(origin_account=origin, destination_account=destination, amount=amount, batch=batch)
 
-def new_transaction(origin_account, destination_account, amount, initiated_by):
+def new_transaction(origin_account, destination_account, amount, batch):
     """
     Create a transaction from the given properties.
     TODO: Locks the accounts in use to prevent other transactions from using these accounts.
@@ -118,7 +118,7 @@ def new_transaction(origin_account, destination_account, amount, initiated_by):
     @param origin_account: Account source
     @param destination_account: Account receiver
     @param amount: Amount in RAW to send
-    @param initiated_by: IP of the endpoint making a transaction request
+    @param batch: Batch of the transaction
     @return: New transaction object
     """
 
@@ -126,7 +126,7 @@ def new_transaction(origin_account, destination_account, amount, initiated_by):
         origin=origin_account,
         destination=destination_account,
         amount=amount,
-        initiated_by=initiated_by
+        batch=batch
     )
 
     # TODO: Lock the accounts
@@ -287,13 +287,21 @@ def send_transaction(transaction):
 
     return transaction
 
-def get_transactions():
+def get_transactions(enabled=True, batch=None):
     """
     Get all transactions in the database.
 
+    @param enabled: Get transactions whose origin and destination node is enabled
+    @param batch: If not None, only get transactions within a batch (precedence)
     @return: Query of all transactions
     """
 
+    if batch is not None:
+        return models.Transaction.objects.filter(batch__id=batch.id)
+
+    if enabled:
+        return models.Transaction.objects.filter(origin__wallet__node__enabled=enabled, destination__wallet__node__enabled=enabled)
+    
     return models.Transaction.objects.all()
 
 def get_transaction(id):

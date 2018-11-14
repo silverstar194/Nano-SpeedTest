@@ -24,6 +24,8 @@ class Command(BaseCommand):
 
         accounts_list = accounts.get_accounts()
 
+        batch = batches.new_batch('Account balancer')
+
         # Small balances toward the 0 index
         accounts_sorted = sorted(accounts_list, key=lambda a: a.current_balance, reverse=False)
 
@@ -34,10 +36,10 @@ class Command(BaseCommand):
 
         # Continue until we have only one unbalanced account
         while len(accounts_sorted) > 1:
-            self.reduce_accounts(accounts_sorted, values, mean)
+            self.reduce_accounts(accounts_sorted, values, mean, batch)
             time.sleep(0.5)
     
-    def reduce_accounts(self, accounts, values, mean):
+    def reduce_accounts(self, accounts, values, mean, batch):
         """
         Reduce the list of accounts to balance by balancing two of the higher order accounts
 
@@ -111,7 +113,7 @@ class Command(BaseCommand):
 
         # Create a transaction to balance the accounts
         try:
-            transaction = transactions.new_transaction(accounts[upper], accounts[lower], amount, 'Account Balancer')
+            transaction = transactions.new_transaction(accounts[upper], accounts[lower], amount, batch)
             transactions.send_transaction(transaction)
         except Exception as e:
             logger.error('Transaction error: %s' % e)
