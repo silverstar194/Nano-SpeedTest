@@ -84,6 +84,7 @@ def sync_accounts():
         rpc = nano.rpc.Client(account.wallet.node.URL)
 
         try:
+            rpc.search_pending_all()
             incoming_blocks = rpc.pending(account=account.address)
             for block_hash in incoming_blocks:
                 rpc.receive(wallet=account.wallet.wallet_id, account=account.address, block=block_hash)

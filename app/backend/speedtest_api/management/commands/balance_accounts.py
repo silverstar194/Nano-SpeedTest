@@ -35,7 +35,7 @@ class Command(BaseCommand):
         # Continue until we have only one unbalanced account
         while len(accounts_sorted) > 1:
             self.reduce_accounts(accounts_sorted, values, mean)
-            time.sleep(0.1)
+            time.sleep(0.5)
     
     def reduce_accounts(self, accounts, values, mean):
         """
