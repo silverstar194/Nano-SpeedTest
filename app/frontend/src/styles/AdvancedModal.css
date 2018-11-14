@@ -5,3 +5,6 @@
 #submit {
     margin-right: 10px;
 }
+.modal-body {
+    max-height: 300px;
+}

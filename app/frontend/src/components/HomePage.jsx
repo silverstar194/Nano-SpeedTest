@@ -24,7 +24,7 @@ class HomePage extends Component {
         this.props.onGoPressed(); // Update current active tab and dispatch action to get transaction data
     };
 
-    handleAdvancedSettings = (e) => {
+    handleLocationSettings = (e) => {
         // don't reload page on form submit from modal
         e.preventDefault();
         console.log(e.target.elements.origin.value);
@@ -37,7 +37,7 @@ class HomePage extends Component {
                 <Ad/>
                 <AdvancedModal
                     open={this.state.modalOpen}
-                    handleAdvancedSettings={this.handleAdvancedSettings}
+                    handleLocationSettings={this.handleLocationSettings}
                 />
                 <h1 className='greeting page-header text-center'>Welcome to NanoSpeed.live!</h1>
                 <div className='container'>
