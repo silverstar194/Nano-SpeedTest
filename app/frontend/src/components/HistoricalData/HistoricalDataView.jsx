@@ -67,7 +67,7 @@ class HistoricalDataView extends React.Component {
                             <ScatterView plotData={plotData}/>
                         </div>
                         <div className='col-6'>
-                            <HeatMap locations={nodeLocations} />
+                            <HeatMap nodeLocations={{}} />
                         </div>
                     </div>
                     <div className='row'>

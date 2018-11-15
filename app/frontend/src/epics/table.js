@@ -7,23 +7,35 @@ import { ADD_TRANSACTION, ADD_TIMING_DATA, FETCH_RANDOM_TRANSACTION } from "../a
 export const fetchRandomTransaction = action$ => action$.pipe(
     ofType(FETCH_RANDOM_TRANSACTION),
     mergeMap(action =>
-        ajax.get('http://127.0.0.1:8000/transactions/random').pipe(
-            map(data => {
-                    const transactionData = data.response;
-                    transactionData.amount = parseFloat(transactionData.amount);
-                    transactionData.completed = false;
+        fetch('http://127.0.0.1:8000/transactions/send', {
+            method: 'POST',
+            body: JSON.stringify({
+                transactions: [{
+                    originNodeId: null,
+                    destinationNodeId: null
+                }]
+            })
+        }).then((response) => {
+            if (response.ok) return response.json();
+            debugger;
+            return {
+                error: true
+            };
+        }).then((data) => {
+            debugger;
+            const transactionData = data.response;
+            transactionData.amount = parseFloat(transactionData.amount);
+            transactionData.completed = false;
 
-                    ['origin', 'destination'].forEach((key) => {
-                        transactionData[key].coords = {
-                            lat: parseFloat(transactionData[key].latitude),
-                            lng: parseFloat(transactionData[key].longitude)
-                        };
-                    });
+            ['origin', 'destination'].forEach((key) => {
+                transactionData[key].coords = {
+                    lat: parseFloat(transactionData[key].latitude),
+                    lng: parseFloat(transactionData[key].longitude)
+                };
+            });
 
-                    return { type: ADD_TRANSACTION, transactionData };
-                }
-            )
-        )
+            return { type: ADD_TRANSACTION, transactionData };
+        })
     )
 );
 
