@@ -13,7 +13,7 @@ from ..models import Transaction
 class TimingTestCase(TestCase):
     def setUp(self):
     	## Set up testing vars
-        curr_Node = Node.objects.create(IP="http://127.0.0.1:7076", latitude= 1.1, longitude=1.1, location_name="Test") #"http://localhost:7076")
+        curr_Node = Node.objects.create(URL="http://127.0.0.1:7076", latitude= 1.1, longitude=1.1, location_name="Test") #"http://localhost:7076")
 
         wallet_sending = Wallet.objects.create(node=curr_Node)
         wallet_receiving = Wallet.objects.create(node=curr_Node)
@@ -91,8 +91,8 @@ class TimingTestCase(TestCase):
     
     #check to see what happens when the node is down
     def test_when_node_is_down(self):
-        ## Bad IP given
-        curr_Node = Node.objects.create(IP="http://0.0.0.1:7076", latitude= 1.1, longitude=1.1, location_name='Test')
+        ## Bad URL given
+        curr_Node = Node.objects.create(URL="http://0.0.0.1:7076", latitude= 1.1, longitude=1.1, location_name='Test')
         self.assertRaises(Exception, time_transaction_send, Transaction.objects.get(amount = 202))
 
 

@@ -8,12 +8,12 @@ from speedtest_api.models import Wallet
 
 class ApiTests(APITestCase):
     def setUp(self):
-        mumbai_node = Node.objects.create(IP="http://127.0.0.1:7076",
+        mumbai_node = Node.objects.create(URL="http://127.0.0.1:7076",
                                           latitude=1.1,
                                           longitude=1.1,
                                           location_name="Mumbai")
 
-        virginia_node = Node.objects.create(IP="http://127.0.0.1:7076",
+        virginia_node = Node.objects.create(URL="http://127.0.0.1:7076",
                                             latitude=1.1,
                                             longitude=1.1,
                                             location_name="N. Virginia")
