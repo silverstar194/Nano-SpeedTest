@@ -67,10 +67,12 @@ def generate_transaction(request):
             destination_node = nodes.get_node(transaction['destinationNodeId'])
 
             if origin_node is None:
-                return JsonResponse({'message': "The originNodeId " + transaction['originNodeId'] + " was not found."}, status=404)
+                return JsonResponse({'message': "The originNodeId " + transaction['originNodeId'] +
+                                                " was not found."}, status=404)
 
             if destination_node is None:
-                return JsonResponse({'message': "The destinationNodeId " + transaction['destinationNodeId'] + " was not found."}, status=404)
+                return JsonResponse({'message': "The destinationNodeId " + transaction['destinationNodeId'] +
+                                                " was not found."}, status=404)
 
             new_transaction = transactions.new_transaction_nodes(origin_node, destination_node, batch)
 
@@ -169,6 +171,12 @@ def list_nodes(request):
     }
 
     return JsonResponse(node_dict, status=200)
+
+
+@api_view(['GET'])
+def get_transaction_statistics(request):
+    # TODO build this
+    pass
 
 
 def convert_transaction_to_dict(transaction):

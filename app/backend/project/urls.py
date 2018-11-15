@@ -25,5 +25,5 @@ urlpatterns = [
     path('transactions', views.generate_transaction),
     path('advertisements/random', views.get_random_advertisement),
     path('nodes/list', views.list_nodes),
-    # path('transactions/statistics', views.get_transaction_statistics)
+    path('transactions/statistics', views.get_transaction_statistics)
 ]
