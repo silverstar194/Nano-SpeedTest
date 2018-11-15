@@ -104,7 +104,7 @@ def send_batch_transactions(request):
     if batch is None:
         return JsonResponse({'message': 'Batch ' + str(batch_id) + ' not found.'}, status=404)
 
-    # TODO verify each batch, not transaction, need services
+    # TODO verify each batch, not transaction, then send - need services to support this
     elif transaction.start_send_timestamp or transaction.transaction_hash_sending:
         return JsonResponse({'message': 'Transaction ' + str(transaction_id) + ' has already been sent.'}, status=403)
 
@@ -151,9 +151,24 @@ def list_nodes(request):
     @return JsonResponse An array of nodes
 
     """
-    all_nodes = nodes.get_nodes().values('id', 'location_name', 'latitude', 'longitude')
+    nodes_array = []
+    all_nodes = nodes.get_nodes()
 
-    return JsonResponse(all_nodes, status=200)
+    for node in all_nodes:
+        temp_node = {
+            'id': node.id,
+            'location': node.location_name,
+            'latitude': node.latitude,
+            'longitude': node.longitude
+        }
+
+        nodes_array.append(temp_node)
+
+    node_dict = {
+        'nodes': nodes_array
+    }
+
+    return JsonResponse(node_dict, status=200)
 
 
 def convert_transaction_to_dict(transaction):
