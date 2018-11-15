@@ -5,10 +5,14 @@ import 'styles/GoogleMaps.css';
 const base = 'https://maps.googleapis.com/maps/api/staticmap';
 const scale = '2';
 const size = `1200x400`;
-const googleKey = 'AIzaSyD27p9eUBuinHJFiVnnT6EA8tLm1bDAgow';
+const googleKey = process.env.REACT_APP_GOOGLE_MAPS_KEY;
+
+const makeCoordinate = (point) => {
+    return `${point.latitude},${point.longitude}`;
+};
 
 const Map = ({origin, destination}) => {
-    const locations = `${origin.nodeLocation}|${destination.nodeLocation}`;
+    const locations = `${makeCoordinate(origin)}|${makeCoordinate(destination)}`;
     const markers = `size:small|${locations}`;
     return (
         <img className='GoogleMap'

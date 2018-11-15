@@ -4,18 +4,8 @@ import {connect} from 'react-redux';
 
 import Header from 'components/Header';
 import PastResultsTable from './PastResultsTable';
-
-import {
-    ResponsiveContainer,
-    ScatterChart,
-    Scatter,
-    XAxis,
-    YAxis,
-    CartesianGrid,
-    Tooltip,
-    Legend,
-    Label
-} from 'recharts';
+import ScatterView from './ScatterView';
+import HeatMap from './HeatMap';
 
 class HistoricalDataView extends React.Component {
     constructor(props) {
@@ -23,15 +13,31 @@ class HistoricalDataView extends React.Component {
         const {pastResults} = props;
 
         let totalTime = 0;
-        const data = [];
+        const plotData = [];
+        const mapData = {};
         pastResults.forEach((transaction, i) => {
             totalTime += transaction.elapsedTime;
-            data.push({x: i, y: transaction.elapsedTime});
+            plotData.push({x: i, y: transaction.elapsedTime});
+
+            ['origin', 'destination'].forEach((key) => {
+                const {id, nodeLocation, latitude, longitude} = transaction[key];
+                if (!mapData[id]) {
+                    mapData[id] = {
+                        count: 1,
+                        nodeLocation,
+                        latitude,
+                        longitude
+                    };
+                } else {
+                    mapData[id].count++;
+                }
+            });
         });
         const avg = totalTime/pastResults.length;
         this.state = {
             averageTime: avg,
-            data
+            plotData,
+            mapData
         };
     }
     componentDidUpdate(prevProps, prevState) {
@@ -39,7 +45,7 @@ class HistoricalDataView extends React.Component {
     }
     render() {
         const {pastResults} = this.props;
-        const {averageTime, data} = this.state;
+        const {averageTime, plotData, mapData} = this.state;
         return (
             <div className='HistoricalData'>
                 <Header/>
@@ -57,20 +63,11 @@ class HistoricalDataView extends React.Component {
                         </div>
                     </div>
                     <div className='row'>
-                        <div className='col'>
-                            <ResponsiveContainer width='100%' height={500}>
-                                <ScatterChart>
-                                    {/* <CartesianGrid strokeDasharray='3 3' /> */}
-                                    <XAxis dataKey='x' name='date' label='xxxxx' />
-                                    <YAxis dataKey='y' name='elapsed time' />>
-                                    <Tooltip cursor={{ strokeDasharray: '3 3' }} />
-                                    <Legend />
-                                    <Scatter name='Transactions' data={data} fill='#8884d8' />
-                                    </ScatterChart>
-                            </ResponsiveContainer>
+                        <div className='col-6'>
+                            <ScatterView plotData={plotData}/>
                         </div>
-                        <div className='col'>
-
+                        <div className='col-6'>
+                            <HeatMap locations={''} />
                         </div>
                     </div>
                     <div className='row'>

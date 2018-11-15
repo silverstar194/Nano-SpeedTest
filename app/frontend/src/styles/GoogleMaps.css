@@ -2,6 +2,12 @@
     height: 400px;
 }
 
+.GoogleHeatMap {
+    width: 100%;
+    /* max-width: 800px; */
+    height: 100%;
+}
+
 #MapPlaceholder {
     max-width: 800;
     height: 400px;

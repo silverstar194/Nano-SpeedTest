@@ -46,10 +46,16 @@ const initialState = {
         {
             id: 1,
             origin: {
-                nodeLocation: 'A'
+                id: 3,
+                nodeLocation: 'Mumbai',
+                latitude: 37.785,
+                longitude: -122.447
             },
             destination: {
-                nodeLocation: 'B'
+                id: 2,
+                nodeLocation: 'W. Virginia',
+                latitude: 34.782,
+                longitude: -132.445
             },
             amount: .009,
             startSendTimestamp: 1542138102953,
@@ -59,10 +65,16 @@ const initialState = {
         {
             id: 2,
             origin: {
-                nodeLocation: 'C'
+                id: 3,
+                nodeLocation: 'Mumbai',
+                latitude: 37.785,
+                longitude: -122.447
             },
             destination: {
-                nodeLocation: 'D'
+                id: 2,
+                nodeLocation: 'W. Virginia',
+                latitude: 34.782,
+                longitude: -132.445
             },
             amount: .008,
             startSendTimestamp: 1542138147900,
@@ -70,12 +82,18 @@ const initialState = {
             elapsedTime: 4.188
         },
         {
-            id: 3,
+            id:3,
             origin: {
-                nodeLocation: 'B'
+                id: 2,
+                nodeLocation: 'W. Virginia',
+                latitude: 34.782,
+                longitude: -132.445
             },
             destination: {
-                nodeLocation: 'A'
+                id: 3,
+                nodeLocation: 'Mumbai',
+                latitude: 37.785,
+                longitude: -122.447
             },
             amount: .001,
             startSendTimestamp: 1542138170727,
