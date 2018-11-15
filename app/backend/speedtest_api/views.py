@@ -30,6 +30,9 @@ def generate_transaction(request):
     if len(body_transactions) == 0:
         return JsonResponse({'message': 'Must specify at least one transaction.'}, status=400)
 
+    elif len(body_transactions) > 5:
+        return JsonResponse({'message': 'You cannot send more than 5 transactions at once.'}, status=400)
+
     # If the first element in batch_transactions has null origin and destination nodes, generate random transactions
     # for each element in the array
     elif not body_transactions[0]['originNodeId'] and not body_transactions[0]['destinationNodeId']:
@@ -103,7 +106,7 @@ def send_batch_transactions(request):
     batch_id = body['id']
     batch = batches.get_batch(batch_id)
 
-    if batch is None:
+    if not batch:
         return JsonResponse({'message': 'Batch ' + str(batch_id) + ' not found.'}, status=404)
 
     # TODO verify each batch, not transaction, then send - need services to support this
@@ -135,13 +138,16 @@ def get_random_advertisement(request):
     """
     random_ad = advertisements.get_random_ad()
 
-    ad = {
-        'title': random_ad.title,
-        'message': random_ad.message,
-        'url': random_ad.URL
-    }
+    if random_ad:
+        ad = {
+            'title': random_ad.title,
+            'message': random_ad.message,
+            'url': random_ad.URL
+        }
 
-    return JsonResponse(ad, status=200)
+        return JsonResponse(ad, status=200)
+    else:
+        return JsonResponse({'message': "No advertisements were found."}, status=200)
 
 
 @api_view(['GET'])
@@ -175,8 +181,47 @@ def list_nodes(request):
 
 @api_view(['GET'])
 def get_transaction_statistics(request):
-    # TODO build this
-    pass
+    count = request.GET.get('count')
+    transactions_array = []
+
+    recent_transactions = transactions.get_transactions(int(count))
+
+    for transaction in recent_transactions:
+        origin_node = nodes.get_node(transaction.origin.wallet.node.id)
+        destination_node = nodes.get_node(transaction.destination.wallet.node.id)
+
+        temp_origin_node = {
+            'id': origin_node.id,
+            'location': origin_node.location_name,
+            'latitude': origin_node.latitude,
+            'longitude': origin_node.longitude
+        }
+
+        temp_destination_node = {
+            'id': destination_node.id,
+            'location': destination_node.location_name,
+            'latitude': destination_node.latitude,
+            'longitude': destination_node.longitude
+        }
+
+        amount_decimal = Decimal(transaction.amount) / Decimal(1e24)
+        amount = round(amount_decimal, 4)
+
+        temp_transaction = {
+            'id': transaction.id,
+            'originNode': temp_origin_node,
+            'destinationNode': temp_destination_node,
+            'amount': amount,
+            'ipAddress': transaction.batch.initiated_by,
+            'startSendTimestamp': transaction.start_send_timestamp,
+            'endSendTimestamp': transaction.end_send_timestamp,
+            'startReceiveTimestamp': transaction.start_receive_timestamp,
+            'endReceiveTimestamp': transaction.end_receive_timestamp
+        }
+
+        transactions_array.append(temp_transaction)
+
+    return JsonResponse({'transactions': transactions_array}, status=200)
 
 
 def convert_transaction_to_dict(transaction):
@@ -204,7 +249,7 @@ def convert_transaction_to_dict(transaction):
         'longitude': destination_node.longitude
     }
 
-    #  Convert from RAW to nano and round to four decimal places
+    # Convert from RAW to nano and round to four decimal places
     amount_decimal = Decimal(transaction.amount) / Decimal(1e24)
     amount = round(amount_decimal, 4)
 
