@@ -30,8 +30,6 @@ def generate_transaction(request):
     if len(body_transactions) == 0:
         return JsonResponse({'message': 'Must specify at least one transaction.'}, status=400)
 
-    # TODO Add node ID verification
-
     # If the first element in batch_transactions has null origin and destination nodes, generate random transactions
     # for each element in the array
     elif not body_transactions[0]['originNodeId'] and not body_transactions[0]['destinationNodeId']:
@@ -67,6 +65,12 @@ def generate_transaction(request):
 
             origin_node = nodes.get_node(transaction['originNodeId'])
             destination_node = nodes.get_node(transaction['destinationNodeId'])
+
+            if origin_node is None:
+                return JsonResponse({'message': "The originNodeId " + transaction['originNodeId'] + " was not found."}, status=404)
+
+            if destination_node is None:
+                return JsonResponse({'message': "The destinationNodeId " + transaction['destinationNodeId'] + " was not found."}, status=404)
 
             new_transaction = transactions.new_transaction_nodes(origin_node, destination_node, batch)
 
