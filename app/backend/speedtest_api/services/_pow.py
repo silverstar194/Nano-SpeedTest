@@ -36,7 +36,7 @@ class POWService:
             logger.error('dPoW failure: %s' % e)
         
         account = get_account(address=address)
-        rpc_node = nano.rpc.Client(account.wallet.node.IP)
+        rpc_node = nano.rpc.Client(account.wallet.node.URL)
         POW = None
 
         for i in range(3):
@@ -150,7 +150,7 @@ class POWService:
         accounts_list = get_accounts()
 
         for account in accounts_list:
-            rpc = nano.rpc.Client(account.wallet.node.IP)
+            rpc = nano.rpc.Client(account.wallet.node.URL)
 
             try:
                 frontier = rpc.frontiers(account=account.address, count=1)[account.address]
