@@ -14,30 +14,27 @@ class HistoricalDataView extends React.Component {
 
         let totalTime = 0;
         const plotData = [];
-        const mapData = {};
         pastResults.forEach((transaction, i) => {
             totalTime += transaction.elapsedTime;
-            plotData.push({x: i, y: transaction.elapsedTime});
 
-            ['origin', 'destination'].forEach((key) => {
-                const {id, nodeLocation, latitude, longitude} = transaction[key];
-                if (!mapData[id]) {
-                    mapData[id] = {
-                        count: 1,
-                        nodeLocation,
-                        latitude,
-                        longitude
-                    };
-                } else {
-                    mapData[id].count++;
-                }
-            });
+            //TODO doesn't scale well on graph, might want to just do index
+            plotData.push({
+                x: i,
+                // x: transaction.endReceiveTimestamp,
+                // x: (new Date(transaction.endReceiveTimestamp)).toLocaleDateString({}, {
+                //     day : 'numeric',
+                //     month : 'short',
+                //     year : 'numeric',
+                //     hour: 'numeric',
+                //     minute: 'numeric',
+                //     second: 'numeric'
+                // }),
+                y: transaction.elapsedTime});
         });
-        const avg = totalTime/pastResults.length;
+
         this.state = {
-            averageTime: avg,
-            plotData,
-            mapData // TODO - will eventually be replaced by list of nodes
+            averageTime: totalTime/pastResults.length,
+            plotData
         };
     }
     render() {

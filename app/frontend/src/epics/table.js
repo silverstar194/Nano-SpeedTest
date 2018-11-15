@@ -27,7 +27,6 @@ export const fetchRandomTransaction = action$ => action$.pipe(
             transactionData.amount = parseFloat(transactionData.amount);
             transactionData.completed = false;
 
-            // TODO
             ['origin', 'destination'].forEach((key) => {
                 transactionData[key].coords = convertCoordsToString(transactionData[key]);
             });
@@ -41,13 +40,15 @@ export const fetchRandomTransaction = action$ => action$.pipe(
 export const fetchTransactionTiming = action$ => action$.pipe(
     ofType(ADD_TRANSACTION),
     mergeMap(action =>
-        fetch('http://127.0.0.1:8000/transactions/send', {
-            method: 'POST',
-            body: JSON.stringify({
-                id: action.transactionData.id
-            })
-        }).then(response => {
-            if (response.ok) return response.json();
+        // fetch('http://127.0.0.1:8000/transactions/send', {
+        //     method: 'POST',
+        //     body: JSON.stringify({
+        //         id: action.transactionData.id
+        //     })
+    // )}
+        Promise.resolve()
+        .then(response => {
+            // if (response.ok) return response.json();
             // return { TODO
             //     error: true,
             //     id: action.transactionData.id
