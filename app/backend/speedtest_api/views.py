@@ -103,7 +103,7 @@ def send_batch_transactions(request):
     batch_id = body['id']
     batch = batches.get_batch(batch_id)
 
-    if batch is None:
+    if not batch:
         return JsonResponse({'message': 'Batch ' + str(batch_id) + ' not found.'}, status=404)
 
     # TODO verify each batch, not transaction, then send - need services to support this
@@ -135,13 +135,16 @@ def get_random_advertisement(request):
     """
     random_ad = advertisements.get_random_ad()
 
-    ad = {
-        'title': random_ad.title,
-        'message': random_ad.message,
-        'url': random_ad.URL
-    }
+    if random_ad:
+        ad = {
+            'title': random_ad.title,
+            'message': random_ad.message,
+            'url': random_ad.URL
+        }
 
-    return JsonResponse(ad, status=200)
+        return JsonResponse(ad, status=200)
+    else:
+        return JsonResponse({'message': "No advertisements were found."}, status=200)
 
 
 @api_view(['GET'])
@@ -204,7 +207,7 @@ def convert_transaction_to_dict(transaction):
         'longitude': destination_node.longitude
     }
 
-    #  Convert from RAW to nano and round to four decimal places
+    # Convert from RAW to nano and round to four decimal places
     amount_decimal = Decimal(transaction.amount) / Decimal(1e24)
     amount = round(amount_decimal, 4)
 
