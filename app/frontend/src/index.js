@@ -25,10 +25,16 @@ const initialState = {
          {
             id: 123,
             origin: {
-                nodeLocation: 'Mumbia, India'
+                id: 2,
+                nodeLocation: 'Mumbai',
+                latitude: 37.785,
+                longitude: -122.447
             },
             destination: {
-                nodeLocation: 'W. Virginia'
+                id: 3,
+                nodeLocation: 'W. Virginia',
+                latitude: 34.782,
+                longitude: -132.445
             },
             amount: .009,
             completed: true,
@@ -47,7 +53,8 @@ const initialState = {
             },
             amount: .009,
             startSendTimestamp: 1542138102953,
-            endReceiveTimestamp: 1542138109826
+            endReceiveTimestamp: 1542138109826,
+            elapsedTime: 6.873
         },
         {
             id: 2,
@@ -59,7 +66,8 @@ const initialState = {
             },
             amount: .008,
             startSendTimestamp: 1542138147900,
-            endReceiveTimestamp: 1542138152088
+            endReceiveTimestamp: 1542138152088,
+            elapsedTime: 4.188
         },
         {
             id: 3,
@@ -71,7 +79,8 @@ const initialState = {
             },
             amount: .001,
             startSendTimestamp: 1542138170727,
-            endReceiveTimestamp: 1542138175372
+            endReceiveTimestamp: 1542138175372,
+            elapsedTime: 4.645
         }
     ]
 };
