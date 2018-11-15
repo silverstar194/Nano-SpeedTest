@@ -7,6 +7,7 @@ from rest_framework.decorators import api_view
 from ipware import get_client_ip
 
 from speedtest_api.services import advertisements
+from speedtest_api.services import batches
 from speedtest_api.services import transactions
 from speedtest_api.services import nodes
 
@@ -23,71 +24,83 @@ def generate_transaction(request):
     client_ip, is_routable = get_client_ip(request)
     body = json.loads(request.body)
 
-    batch_transactions = body['transactions']
+    batch = batches.new_batch(client_ip)
+    body_transactions = body['transactions']
 
-    if len(batch_transactions) == 0:
+    if len(body_transactions) == 0:
         return JsonResponse({'message': 'Must specify at least one transaction.'}, status=400)
 
-    elif not batch_transactions[0]['originNodeId'] and not batch_transactions[0]['destinationNodeId']:
+    # TODO Add node ID verification
+
+    # If the first element in batch_transactions has null origin and destination nodes, generate random transactions
+    # for each element in the array
+    elif not body_transactions[0]['originNodeId'] and not body_transactions[0]['destinationNodeId']:
         transaction_array = []
 
-        for transaction in batch_transactions:
-            random_transaction = transactions.new_transaction_random(client_ip)
-            origin_node = random_transaction.origin.wallet.node
-            destination_node = random_transaction.destination.wallet.node
+        for transaction in body_transactions:
+            # If any of the transactions have defined origin or destination node ids, throw a 400
+            if transaction['originNodeId'] or transaction['destinationNodeId']:
+                return JsonResponse({'message': "Transactions cannot be both random and defined."}, status=400)
 
-            origin = {
-                'id': origin_node.id,
-                'nodeLocation': origin_node.location_name,
-                'latitude': origin_node.latitude,
-                'longitude': origin_node.longitude
-            }
+            random_transaction = transactions.new_transaction_random(batch)
 
-            destination = {
-                'id': destination_node.id,
-                'nodeLocation': destination_node.location_name,
-                'latitude': destination_node.latitude,
-                'longitude': destination_node.longitude
-            }
+            transaction_array.append(convert_transaction_to_dict(random_transaction))
 
-            #  Convert from RAW to nano and round to four decimal places
-            amount_decimal = Decimal(random_transaction.amount) / Decimal(1e24)
-            amount = round(amount_decimal, 4)
+        batch_data = {
+            'id': batch.id,
+            'transactions': transaction_array
+        }
 
-            random_transaction = {
-                "id": random_transaction.id,
-                "origin": origin,
-                "destination": destination,
-                "amount": amount,
-                "ip": client_ip
-            }
+        return JsonResponse(batch_data, status=200)
 
-            transaction_array.append(random_transaction)
+    # If the first element in batch_transactions has origin and destination node ids, generate transactions for each
+    elif body_transactions[0]['originNodeId'] and body_transactions[0]['destinationNodeId']:
+        transaction_array = []
 
-        return JsonResponse(transaction_array, status=200)
+        for transaction in body_transactions:
+            # If any of the transactions have null origin or destination node ids, throw a 400
+            if not transaction['originNodeId'] or not transaction['destinationNodeId']:
+                return JsonResponse({'message': "Transactions cannot be both random and defined."}, status=400)
 
+            elif transaction['originNodeId'] == transaction['destinationNodeId']:
+                return JsonResponse({'message': "The origin and destination nodes cannot be the same."}, status=400)
 
+            origin_node = nodes.get_node(transaction['originNodeId'])
+            destination_node = nodes.get_node(transaction['destinationNodeId'])
+
+            new_transaction = transactions.new_transaction_nodes(origin_node, destination_node, batch)
+
+            transaction_array.append(convert_transaction_to_dict(new_transaction))
+
+        batch_data = {
+            'id': batch.id,
+            'transactions': transaction_array
+        }
+
+        return JsonResponse(batch_data, status=200)
+
+    else:
+        return JsonResponse({'message': "The transaction format is invalid. Please try again."}, status=400)
 
 
 @api_view(['POST'])
-def send_transaction(request):
+def send_batch_transactions(request):
     """
-    Send the transaction specified in the request body
+    Send the batch transactions specified in the request body
 
     @param request The REST request to the endpoint
     @return JsonResponse The transaction timing information
 
     """
     body = json.loads(request.body)
-    node_one_id = body['nodeOneId']
-    node_two_id = body['nodeTwoId']
-    node_three_id = body['nodeThreeId']
 
-    client_ip, is_routable = get_client_ip(request)
+    batch_id = body['id']
+    batch = batches.get_batch(batch_id)
 
-    if transaction is None:
-        return JsonResponse({'message': 'Transaction ' + str(transaction_id) + ' not found.'}, status=404)
+    if batch is None:
+        return JsonResponse({'message': 'Batch ' + str(batch_id) + ' not found.'}, status=404)
 
+    # TODO verify each batch, not transaction, need services
     elif transaction.start_send_timestamp or transaction.transaction_hash_sending:
         return JsonResponse({'message': 'Transaction ' + str(transaction_id) + ' has already been sent.'}, status=403)
 
@@ -137,3 +150,42 @@ def list_nodes(request):
     all_nodes = nodes.get_nodes().values('id', 'location_name', 'latitude', 'longitude')
 
     return JsonResponse(all_nodes, status=200)
+
+
+def convert_transaction_to_dict(transaction):
+    """
+    Private helper method to convert a transaction database query object to a dict
+
+    @param transaction The transaction database query object
+    @return dict A dictionary representation of the transaction
+
+    """
+    origin_node = transaction.origin.wallet.node
+    destination_node = transaction.destination.wallet.node
+
+    origin = {
+        'id': origin_node.id,
+        'nodeLocation': origin_node.location_name,
+        'latitude': origin_node.latitude,
+        'longitude': origin_node.longitude
+    }
+
+    destination = {
+        'id': destination_node.id,
+        'nodeLocation': destination_node.location_name,
+        'latitude': destination_node.latitude,
+        'longitude': destination_node.longitude
+    }
+
+    #  Convert from RAW to nano and round to four decimal places
+    amount_decimal = Decimal(transaction.amount) / Decimal(1e24)
+    amount = round(amount_decimal, 4)
+
+    converted_transaction = {
+        "id": transaction.id,
+        "origin": origin,
+        "destination": destination,
+        "amount": amount
+    }
+
+    return converted_transaction
