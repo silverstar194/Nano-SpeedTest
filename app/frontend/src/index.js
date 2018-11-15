@@ -10,9 +10,12 @@ import navigation from './reducers/navigation';
 import table from './reducers/table';
 import transactions from './reducers/transactions';
 import pastResults from './reducers/pastResults';
+import nodes from 'reducers/nodes';
 
 import rootEpic from './epics/table';
 import transactionsMiddleware from './transactionsMiddleware';
+
+import {addNodes} from 'actions/nodes';
 
 
 // TODO - persist state so when user refreshes page, it doesn't delete state (bug: sets active tab to home, stays on
@@ -119,7 +122,8 @@ const store = createStore(
         navigation,
         table,
         transactions,
-        pastResults
+        pastResults,
+        nodes
     }),
     initialState,
     composeEnhancers(
@@ -130,6 +134,18 @@ const store = createStore(
 // Runs our epic (requires a 'root' epic and makes us import from one "root epics" file in order to work.  Just
 // importing from epics/table rn since it is our only one so far)
 epicMiddleware.run(rootEpic);
+
+fetch('http://127.0.0.1:8000/nodes/list', {
+    method: 'GET'
+}).then((response) => {
+    if (response.ok) return response.json();
+    debugger;
+    return {
+        error: true
+    };
+}).then((data) => {
+    store.dispatch(addNodes(data.nodes));
+});
 
 const root = (
     <Provider store={store}>

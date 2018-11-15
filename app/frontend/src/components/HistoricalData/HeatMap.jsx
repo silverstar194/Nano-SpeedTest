@@ -7,33 +7,10 @@ const scale = '2';
 const size = `1200x600`;
 const googleKey = process.env.REACT_APP_GOOGLE_MAPS_KEY;
 
-const fakeLocations = [
-    {
-        id: 2,
-        nodeLocation: 'Mumbai',
-        latitude: 37.785,
-        longitude: -122.447,
-        coords: '37.785,-122.447'
-    },
-    {
-        id: 4,
-        nodeLocation: 'Japan',
-        latitude: 36.2048,
-        longitude: 138.2529,
-        coords: '36.2048,138.2529'
-    },
-    {
-        id: 3,
-        nodeLocation: 'Virginia',
-        latitude: 34.782,
-        longitude: -132.445,
-        coords: '34.782,-132.445'
-    }
-];
-
-const HeatMap = ({nodeLocations}) => { //TODO - will eventually read from node locations
-    const points = fakeLocations.map((node) => node.coords);
+const HeatMap = ({nodeLocations}) => {
+    const points = Object.keys(nodeLocations).map((id) => nodeLocations[id].coords);
     const markers = `size:small|${points.join('|')}`;
+    // Google maps will auto zoom and fit any markers on a map
     return (
         <img className='GoogleHeatMap'
         src={`${base}?size=${size}&scale=${scale}&markers=${markers}&key=${googleKey}`}

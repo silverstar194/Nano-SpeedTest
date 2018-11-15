@@ -40,37 +40,50 @@ class HistoricalDataView extends React.Component {
             mapData // TODO - will eventually be replaced by list of nodes
         };
     }
-    componentDidUpdate(prevProps, prevState) {
-
-    }
     render() {
-        const {pastResults} = this.props;
-        const {averageTime, plotData, mapData} = this.state;
+        const {pastResults, nodeLocations} = this.props;
+        const {averageTime, plotData} = this.state;
         return (
             <div className='HistoricalData'>
                 <Header/>
                 <div className='container-fluid'>
-                     <div className='row'>
-                        <div className='col-auto'>
-                            <h2 className='map-header'>
-                                Total Transactions Sent: {pastResults.length}
-                            </h2>
-                        </div>
-                        <div className='col-auto'>
-                            <h2 className='map-header'>
-                                Average Time: {averageTime.toFixed(3)} Seconds
-                            </h2>
+                     <div className='row form-group'>
+                        <h2 className='map-header text-center'>
+                            Some Stats
+                        </h2>
+                        <div className='container-fluid'>
+                            <div className='row form-group'>
+                                <div className='col-auto'>
+                                    <h3 className='map-header'>
+                                        Total Transactions Sent: {pastResults.length}
+                                    </h3>
+                                </div>
+                                <div className='col-auto'>
+                                    <h3 className='map-header'>
+                                        Average Time: {averageTime.toFixed(3)} Seconds
+                                    </h3>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div className='row'>
+                    <div className='row form-group mt-5'>
                         <div className='col-6'>
+                            <h2 className='map-header text-center'>
+                                Scatter Chart of Recent Transactions
+                            </h2>
                             <ScatterView plotData={plotData}/>
                         </div>
                         <div className='col-6'>
-                            <HeatMap nodeLocations={{}} />
+                            <h2 className='map-header text-center'>
+                                Locations of Our Nano Nodes
+                            </h2>
+                            { nodeLocations && Object.keys(nodeLocations).length ?
+
+                                <HeatMap nodeLocations={nodeLocations} /> : null
+                            }
                         </div>
                     </div>
-                    <div className='row'>
+                    <div className='row form-groups mt-5'>
                         <div className='col'>
                             <PastResultsTable tableData={pastResults}/>
                         </div>
@@ -83,7 +96,8 @@ class HistoricalDataView extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        pastResults: state.pastResults
+        pastResults: state.pastResults,
+        nodeLocations: state.nodes
     };
 };
 

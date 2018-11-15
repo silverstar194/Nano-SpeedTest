@@ -21,7 +21,7 @@ This front end is created using React. Below are instructions on how to get star
 3. Navigate to `Nano-SpeedTest/app/frontend`
 4. Install all node dependencies - `npm install`
 5. While it is installing, inside the `frontend` folder create a file called `.env`. Inside place:
-`REACT_APP_GOOGLE_MAPS_KEY=AIzaSyD27p9eUBuinHJFiVnnT6EA8tLm1bDAgow` and `NODE_PATH=src/`. This will allow you to use the Google Maps and keep the local structure of the project working correctly.
+`REACT_APP_GOOGLE_MAPS_KEY=AIzaSyAovwwttuLBsvolc97QUc5pejsbwfLPPZs` and `NODE_PATH=src/`. This will allow you to use the Google Maps and keep the local structure of the project working correctly.
 6. Finally, run app in development mode - `npm start`
 
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
