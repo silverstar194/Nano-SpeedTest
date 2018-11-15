@@ -47,6 +47,32 @@ exports[`renders snapshot correctly 1`] = `
       </a>
     </li>
   </div>
+  <div
+    className="container"
+  >
+    <div
+      className="jumbotron"
+    >
+      <div
+        id="ad-content"
+      >
+        <a
+          className="row"
+          href="https://nano21.net"
+        >
+          <b>
+            ♠ Nano21.net 
+          </b>
+            | 20 Nano Give-Away for testers! | Nano Blackjack Casino
+        </a>
+        <p
+          className="row"
+        >
+          COMMUNITY AD
+        </p>
+      </div>
+    </div>
+  </div>
   <h2
     className="map-header page-header text-left"
   >

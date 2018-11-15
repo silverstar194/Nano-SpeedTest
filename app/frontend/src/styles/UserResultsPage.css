@@ -37,7 +37,7 @@
     font-weight: 100;
 }
 
-p {
+h2 > p {
     margin-top: 10px;
     text-align: center;
 }

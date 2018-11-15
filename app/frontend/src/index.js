@@ -11,6 +11,7 @@ import table from './reducers/table';
 import transactions from './reducers/transactions';
 import pastResults from './reducers/pastResults';
 import nodes from 'reducers/nodes';
+import { reducer as formReducer } from 'redux-form';
 
 import rootEpic from './epics/table';
 import transactionsMiddleware from './transactionsMiddleware';
@@ -204,7 +205,8 @@ const store = createStore(
         table,
         transactions,
         pastResults,
-        nodes
+        nodes,
+        form: formReducer
     }),
     initialState,
     composeEnhancers(
