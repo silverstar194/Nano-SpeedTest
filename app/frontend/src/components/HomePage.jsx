@@ -27,7 +27,21 @@ class HomePage extends Component {
     handleLocationSettings = (e) => {
         // don't reload page on form submit from modal
         e.preventDefault();
-        console.log(e.target.elements.origin.value);
+        console.log('origin: ' + e.target.elements.origin.value);
+        console.log('dest: ' + e.target.elements.destination.value);
+        this.setState(() => ({modalOpen: false}));
+    };
+
+    handleMultiSettings = (e) => {
+        // don't reload page on form submit from modal
+        e.preventDefault();
+        console.log('five rand: ' + e.target.elements[0].checked);
+        console.log('10 rand: ' + e.target.elements[1].checked);
+        this.setState(() => ({modalOpen: false}));
+    };
+
+    handleCancel = () => {
+        this.setState(() => ({modalOpen: false}));
     };
 
     render() {
@@ -38,6 +52,8 @@ class HomePage extends Component {
                 <AdvancedModal
                     open={this.state.modalOpen}
                     handleLocationSettings={this.handleLocationSettings}
+                    handleMultiSettings={this.handleMultiSettings}
+                    handleCancel={this.handleCancel}
                 />
                 <h1 className='greeting page-header text-center'>Welcome to NanoSpeed.live!</h1>
                 <div className='container'>

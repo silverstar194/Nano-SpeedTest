@@ -9,6 +9,7 @@ import * as serviceWorker from './serviceWorker';
 import navigation from './reducers/navigation';
 import table from './reducers/table';
 import transactions from './reducers/transactions';
+import { reducer as formReducer } from 'redux-form';
 
 import rootEpic from './epics/table';
 import transactionsMiddleware from './transactionsMiddleware';
@@ -32,7 +33,8 @@ const store = createStore(
     combineReducers({
         navigation,
         table,
-        transactions
+        transactions,
+        form: formReducer
     }),
     initialState,
     composeEnhancers(

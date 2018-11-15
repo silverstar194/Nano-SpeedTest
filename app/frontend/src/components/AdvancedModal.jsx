@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
-import '../styles/AdvancedModal.css';
-import { Form, FormGroup, Input, Label } from 'reactstrap';
+import { Field, reduxForm} from 'redux-form';
+
 // Need to make this a class component so it can have some local state
-export default class AdvancedModal extends Component {
+class AdvancedModal extends Component {
     state = {
         locationsActive: true,
         multipleActive: false
@@ -11,17 +11,23 @@ export default class AdvancedModal extends Component {
 
     // Having 2 separate sounds silly.  Is there a way to condense?
     setLocationsTab = () => {
-        this.setState(() => ({
-            locationsActive: true,
-            multipleActive: false
-        }));
+        if (!this.state.locationsActive) {
+            this.props.reset();
+            this.setState(() => ({
+                locationsActive: true,
+                multipleActive: false
+            }));
+        }
     };
 
     setMultipleTab = () => {
-        this.setState(() => ({
-            locationsActive: false,
-            multipleActive: true
-        }));
+        if (!this.state.multipleActive) {
+            this.props.reset();
+            this.setState(() => ({
+                locationsActive: false,
+                multipleActive: true
+            }));
+        }
     };
 
     render() {
@@ -32,7 +38,8 @@ export default class AdvancedModal extends Component {
                 contentLabel='Advanced Settings'
                 style={{
                     content: {
-                        bottom: 'auto'
+                        bottom: 'auto',
+                        width: 'auto'
                     }
                 }}
             >
@@ -41,14 +48,14 @@ export default class AdvancedModal extends Component {
                 {this.state.locationsActive ?
                     (
                         <div className='row'>
-                            <div className='adv-form-button col-6'>
+                            <div className='col-6'>
                                 <button
                                     className='btn btn-primary col-12'
                                     onClick={this.setLocationsTab}
                                 >Choose Locations
                                 </button>
                             </div>
-                            <div className='adv-form-button col-6'>
+                            <div className='col-6'>
                                 <button
                                     className='btn col-12'
                                     onClick={this.setMultipleTab}
@@ -58,14 +65,14 @@ export default class AdvancedModal extends Component {
                         </div>
                     ) : (
                         <div className='row'>
-                            <div className='adv-form-button col-6'>
+                            <div className='col-6'>
                                 <button
                                     className='btn col-12'
                                     onClick={this.setLocationsTab}
                                 >Choose Locations
                                 </button>
                             </div>
-                            <div className='adv-form-button col-6'>
+                            <div className='col-6'>
                                 <button
                                     className='btn btn-primary col-12'
                                     onClick={this.setMultipleTab}
@@ -76,59 +83,86 @@ export default class AdvancedModal extends Component {
                     )}
                 {this.state.locationsActive ?
                     (
-                        <Form onSubmit={this.props.handleLocationSettings}>
-                            <p>Select the node locations that you want to be used for your test.</p>
-                            <FormGroup>
-                                <Label for="origin">Origin</Label>
-                                <Input type="select" name="origin" id="origin">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                </Input>
-                            </FormGroup>
-                            <FormGroup>
-                                <Label for="destination">Destination</Label>
-                                <Input type="select" name="destination" id="destination">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                </Input>
-                            </FormGroup>
+                        <form onSubmit={this.props.handleLocationSettings}>
                             <div>
-                                <button className='btn btn-light float-right col-2'>Cancel</button>
-                                <button id='submit' className='btn btn-primary float-right col-2'>Save</button>
+                                <p>Select the node locations that you want to be used for your test.</p>
                             </div>
-                        </Form>
+                            <div>
+                                <label>Origin</label>
+                                <div>
+                                    <Field name="origin" component='select'>
+                                        <option></option>
+                                        <option>This</option>
+                                        <option>Is</option>
+                                        <option>Dummy</option>
+                                        <option>Location</option>
+                                        <option>Data</option>
+                                    </Field>
+                                </div>
+                            </div>
+                            <div>
+                                <label>Destination</label>
+                                <div>
+                                    <Field name="destination" component='select'>
+                                        <option></option>
+                                        <option>This</option>
+                                        <option>Is</option>
+                                        <option>Dummy</option>
+                                        <option>Location</option>
+                                        <option>Data</option>
+                                    </Field>
+                                </div>
+                            </div>
+                            <div>
+                                <button
+                                    type='button'
+                                    className='btn btn-light float-right col-2'
+                                    onClick={this.props.handleCancel}>Cancel
+                                </button>
+                                <button
+                                    id='submit'
+                                    type='submit'
+                                    className='btn btn-primary float-right col-2'
+                                >Save
+                                </button>
+                            </div>
+                        </form>
                     ) : (
-                        <Form onSubmit={this.props.handleLocationSettings}>
+                        <form onSubmit={this.props.handleMultiSettings}>
                             <p>Select to send either 5 or 10 random transactions for your test.</p>
-                            <FormGroup check>
-                                <Label check>
-                                    <Input
-                                        type='radio'
-                                        name='five-rand'/>
-                                    5 Random Transactions
-                                </Label>
-                            </FormGroup>
-                            <FormGroup check>
-                                <Label check>
-                                    <Input
-                                        type='radio'
-                                        name='five-rand'/>
-                                    10 Random Transactions
-                                </Label>
-                            </FormGroup>
                             <div>
-                                <button className='btn btn-light float-right col-2'>Cancel</button>
-                                <button id='submit' className='btn btn-primary float-right col-2'>Save</button>
+                                <div>
+                                    <label><Field name="numTransactions" component="input" type="radio" value="5"/> 5 Random Transactions</label>
+                                </div>
+                                <div>
+                                    <label><Field name="numTransactions" component="input" type="radio" value="10"/> 10 Random Transactions</label>
+                                </div>
                             </div>
-                        </Form>
+                            <div>
+                                <button
+                                    type='button'
+                                    className='btn btn-light float-right col-2'
+                                    onClick={this.props.handleCancel}
+                                >Cancel
+                                </button>
+                                <button
+                                    id='submit'
+                                    type='submit'
+                                    className='btn btn-primary float-right col-2'
+                                >Save
+                                </button>
+                            </div>
+                        </form>
                     )}
             </Modal>
         );
     }
 }
+
+// Allows form to communicate with store
+AdvancedModal = reduxForm({
+    // a unique name for the form
+    form: 'advSettings'
+})(AdvancedModal);
+
+export default AdvancedModal;
