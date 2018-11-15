@@ -9,7 +9,7 @@ import '../styles/HomePage.css';
 class HomePage extends Component {
     onClick = () => {
         // navigate to /Stats route
-        this.props.history.push('/Stats');
+        this.props.history.push('/Results');
         this.props.onGoPressed(); // Update current active tab and dispatch action to get transaction data
     };
 
@@ -41,7 +41,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onGoPressed() {
             dispatch(fetchRandomTransaction());
-            dispatch(switchTab('Stats')); // Update current active tab
+            dispatch(switchTab('Results')); // Update current active tab
         }
     };
 };

@@ -7,34 +7,32 @@ const scale = '2';
 const size = `1200x600`;
 const googleKey = process.env.REACT_APP_GOOGLE_MAPS_KEY;
 
-const makeCoordinate = (point) => {
-    return `${point.latitude},${point.longitude}`;
-};
-
-
 const fakeLocations = [
     {
         id: 2,
         nodeLocation: 'Mumbai',
         latitude: 37.785,
-        longitude: -122.447
+        longitude: -122.447,
+        coords: '37.785,-122.447'
     },
     {
         id: 4,
         nodeLocation: 'Japan',
         latitude: 36.2048,
-        longitude: 138.2529
+        longitude: 138.2529,
+        coords: '36.2048,138.2529'
     },
     {
         id: 3,
         nodeLocation: 'Virginia',
         latitude: 34.782,
-        longitude: -132.445
+        longitude: -132.445,
+        coords: '34.782,-132.445'
     }
 ];
 
 const HeatMap = ({nodeLocations}) => { //TODO - will eventually read from node locations
-    const points = fakeLocations.map((node) => makeCoordinate(node));
+    const points = fakeLocations.map((node) => node.coords);
     const markers = `size:small|${points.join('|')}`;
     return (
         <img className='GoogleHeatMap'

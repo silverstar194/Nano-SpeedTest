@@ -22,25 +22,29 @@ const initialState = {
         activeTab: '' // initialize the starting tab to be our default home page
     },
     table: [
-         {
-            id: 123,
+        {
+            id: 266,
             origin: {
-                id: 2,
-                nodeLocation: 'Mumbai',
-                latitude: 37.785,
-                longitude: -122.447
+              id: 3,
+              nodeLocation: 'Singapore',
+              latitude: '1.293100',
+              longitude: '103.850100',
+              coords: '1.293100,103.850100'
             },
             destination: {
-                id: 3,
-                nodeLocation: 'W. Virginia',
-                latitude: 34.782,
-                longitude: -132.445
+              id: 4,
+              nodeLocation: 'New York',
+              latitude: '40.804300',
+              longitude: '-74.012100',
+              coords: '40.804300,-74.012100'
             },
-            amount: .009,
+            amount: 0.0001,
             completed: true,
-            endReceiveTimestamp: 12345,
-            startSendTimestamp: 1234
-        }
+            index: 2,
+            startSendTimestamp: 1542260521944,
+            endReceiveTimestamp: 1542260564075,
+            elapsedTime: 42131
+          }
     ],
     pastResults: [
         {
