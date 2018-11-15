@@ -30,6 +30,11 @@ class AdvancedModal extends Component {
         }
     };
 
+    cancelForm = () => {
+        this.props.reset();
+        this.props.handleCancel();
+    };
+
     render() {
         return (
             <Modal
@@ -142,7 +147,7 @@ class AdvancedModal extends Component {
                                 <button
                                     type='button'
                                     className='btn btn-light float-right col-2'
-                                    onClick={this.props.handleCancel}
+                                    onClick={this.cancelForm}
                                 >Cancel
                                 </button>
                                 <button

@@ -27,17 +27,15 @@ class HomePage extends Component {
     handleLocationSettings = (e) => {
         // don't reload page on form submit from modal
         e.preventDefault();
-        console.log('origin: ' + e.target.elements.origin.value);
-        console.log('dest: ' + e.target.elements.destination.value);
         this.setState(() => ({modalOpen: false}));
     };
 
     handleMultiSettings = (e) => {
         // don't reload page on form submit from modal
         e.preventDefault();
-        console.log('five rand: ' + e.target.elements[0].checked);
-        console.log('10 rand: ' + e.target.elements[1].checked);
         this.setState(() => ({modalOpen: false}));
+
+        console.log(this.props.advSettings.values);
     };
 
     handleCancel = () => {
@@ -74,6 +72,11 @@ class HomePage extends Component {
         );
     }
 }
+const mapStateToProps = (state) => {
+    return {
+        advSettings: state.form.advSettings,
+    };
+};
 
 const mapDispatchToProps = (dispatch) => {
     return {
@@ -89,4 +92,4 @@ HomePage.propTypes = {
     onGoPressed: PropTypes.func.isRequired
 };
 
-export default connect(null, mapDispatchToProps)(HomePage);
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
