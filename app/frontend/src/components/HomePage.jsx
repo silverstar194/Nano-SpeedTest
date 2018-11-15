@@ -28,6 +28,8 @@ class HomePage extends Component {
         // don't reload page on form submit from modal
         e.preventDefault();
         this.setState(() => ({modalOpen: false}));
+
+        console.log(this.props.advSettingsForm.advSettings.values);
     };
 
     handleMultiSettings = (e) => {
@@ -35,7 +37,7 @@ class HomePage extends Component {
         e.preventDefault();
         this.setState(() => ({modalOpen: false}));
 
-        console.log(this.props.advSettings.values);
+        console.log(this.props.advSettingsForm.advSettings.values);
     };
 
     handleCancel = () => {
@@ -74,7 +76,7 @@ class HomePage extends Component {
 }
 const mapStateToProps = (state) => {
     return {
-        advSettings: state.form.advSettings,
+        advSettingsForm: state.form,
     };
 };
 
