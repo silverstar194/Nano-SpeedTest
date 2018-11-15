@@ -37,7 +37,7 @@ class HistoricalDataView extends React.Component {
         this.state = {
             averageTime: avg,
             plotData,
-            mapData
+            mapData // TODO - will eventually be replaced by list of nodes
         };
     }
     componentDidUpdate(prevProps, prevState) {
@@ -67,14 +67,12 @@ class HistoricalDataView extends React.Component {
                             <ScatterView plotData={plotData}/>
                         </div>
                         <div className='col-6'>
-                            <HeatMap locations={''} />
+                            <HeatMap locations={nodeLocations} />
                         </div>
                     </div>
                     <div className='row'>
-                        <div className='col-lg-auto'>
-                            <PastResultsTable tableData={pastResults}/>
-                        </div>
                         <div className='col'>
+                            <PastResultsTable tableData={pastResults}/>
                         </div>
                     </div>
                 </div>

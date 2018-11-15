@@ -33,7 +33,7 @@ const fakeLocations = [
     }
 ];
 
-const HeatMap = ({locations}) => {
+const HeatMap = ({nodeLocations}) => { //TODO - will eventually read from node locations
     const points = fakeLocations.map((node) => makeCoordinate(node));
     const markers = `size:small|${points.join('|')}`;
     return (
@@ -44,6 +44,7 @@ const HeatMap = ({locations}) => {
 };
 
 HeatMap.propTypes = {
+    nodeLocations: PropTypes.object.isRequired
 };
 
 export default HeatMap;
