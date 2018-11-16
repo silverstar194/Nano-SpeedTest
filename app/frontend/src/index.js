@@ -78,7 +78,6 @@ fetch('http://127.0.0.1:8000/transactions/statistics?count=150', {
 }).then((data) => {
 	const transactions = data.transactions.filter((transaction) => transaction.endReceiveTimestamp);
 	transactions.forEach((transaction) => {
-		transaction.amount = parseFloat(transaction.amount);
 		transaction.elapsedTime = transaction.endReceiveTimestamp - transaction.startSendTimestamp;
 	});
 	const average = data.average/1000;
