@@ -30,7 +30,7 @@ def generate_transaction(request):
     if len(body_transactions) == 0:
         return JsonResponse({'message': 'Must specify at least one transaction.'}, status=400)
 
-    elif len(body_transactions) > 5:
+    elif len(body_transactions) > 3:
         return JsonResponse({'message': 'You cannot send more than 5 transactions at once.'}, status=400)
 
     # If the first element in batch_transactions has null origin and destination nodes, generate random transactions
