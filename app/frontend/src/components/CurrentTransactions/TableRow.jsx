@@ -22,10 +22,10 @@ const TableRow = ({
                 <Fragment>
                 { error ?
                     <Fragment>
+                        <td>NO DATA</td>
                         <td>ERROR</td>
-                        <td>ERROR OCCURRED</td>
-                        <td>ERROR OCCURRED</td>
-                        <td>ERROR OCCURRED</td>
+                        <td>NO DATA</td>
+                        <td>NO DATA</td>
                     </Fragment> : <Fragment>
                         <td>{(endReceiveTimestamp - startSendTimestamp)/1000} Seconds</td>
                         <td>Completed</td>

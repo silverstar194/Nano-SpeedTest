@@ -48,8 +48,6 @@ class HomePage extends Component {
         // don't reload page on form submit from modal
         e.preventDefault();
         this.setState(() => ({modalOpen: false}));
-
-        console.log(this.props.advSettingsForm.advSettings.values);
     };
 
     handleCancel = () => {
@@ -97,16 +95,17 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         onGoPressed(origin, dest, multi) {
-
             if (multi) {
+                const transactions = [];
                 for (let i = 0; i < multi; i++) {
-                    dispatch(fetchTransaction({
-                        transactions: [{
-                            originNodeId: null,
-                            destinationNodeId: null
-                        }]
-                    }));
+                    transactions.push({
+                        originNodeId: null,
+                        destinationNodeId: null
+                    });
                 }
+                dispatch(fetchTransaction({
+                    transactions
+                }));
             } else {
                 dispatch(fetchTransaction({
                     transactions: [{

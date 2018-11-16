@@ -59,7 +59,8 @@ fetchWrapper('http://127.0.0.1:8000/nodes/list', {
 }).then((data) => {
     store.dispatch(addNodes(data.nodes));
 }).catch((err) => {
-	//TODO handle error
+    //TODO handle error
+    console.warn('TODO Error in fetching nodes');
 });
 
 fetchWrapper('http://127.0.0.1:8000/transactions/statistics?count=150', {
@@ -78,7 +79,8 @@ fetchWrapper('http://127.0.0.1:8000/transactions/statistics?count=150', {
 		globalAverage: average
 	}));
 }).catch((err) => {
-	//TODO handle error
+    //TODO handle error
+    console.warn('TODO Error in fetching stats');
 });
 
 

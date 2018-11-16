@@ -95,7 +95,7 @@ class AdvancedModal extends Component {
                             <div>
                                 <label>Origin</label>
                                 <div>
-                                    <Field name="origin" component='select'>
+                                    <Field name='origin' component='select'>
                                         <option></option>
                                         {
                                             Object.keys(this.props.nodes).map(nodeKey => {
@@ -111,7 +111,7 @@ class AdvancedModal extends Component {
                             <div>
                                 <label>Destination</label>
                                 <div>
-                                    <Field name="destination" component='select'>
+                                    <Field name='destination' component='select'>
                                         <option></option>
                                         {
                                             Object.keys(this.props.nodes).map(nodeKey => {
@@ -140,13 +140,13 @@ class AdvancedModal extends Component {
                         </form>
                     ) : (
                         <form onSubmit={this.props.handleMultiSettings}>
-                            <p>Select to send either 5 or 10 random transactions for your test.</p>
+                            <p>Select to send either 2 or 3 random transactions for your test.</p>
                             <div>
                                 <div>
-                                    <label><Field name="numTransactions" component="input" type="radio" value="5"/> 5 Random Transactions</label>
+                                    <label><Field name='numTransactions' component='input' type='radio' value='2'/> 2 Random Transactions</label>
                                 </div>
                                 <div>
-                                    <label><Field name="numTransactions" component="input" type="radio" value="10"/> 10 Random Transactions</label>
+                                    <label><Field name='numTransactions' component='input' type='radio' value='3'/> 3 Random Transactions</label>
                                 </div>
                             </div>
                             <div>

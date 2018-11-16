@@ -23,6 +23,7 @@ export const fetchTransaction = action$ => action$.pipe(
             return { type: ADD_TRANSACTIONS, transactionData, batchId: data.id };
         }).catch((err) => {
             //TODO handle error
+            console.warn("TODO error in fetchTransaction");
         })
     )
 );
@@ -40,7 +41,7 @@ export const fetchTransactionTiming = action$ => action$.pipe(
             return { type: ADD_TIMING_DATA, timingData: parsedResponse.transactions};
         }).catch((err) => {
             //TODO throw something
-            console.log(action);
+            console.warn("TODO error in fetchTransactionTiming");
             action.transactionData.forEach((trans) => {
                 trans.error = true;
             });
