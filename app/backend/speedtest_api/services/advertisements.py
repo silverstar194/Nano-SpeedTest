@@ -10,7 +10,11 @@ def get_random_ad():
     @return: A random Advertisement from the database
     """
     ads = get_advertisements()
-    return random.choice(ads)
+
+    if not len(ads) == 0:
+        return random.choice(ads)
+    else:
+        return ads
 
 
 def get_advertisements():
