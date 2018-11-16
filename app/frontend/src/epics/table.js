@@ -1,6 +1,5 @@
-import { ajax } from 'rxjs/ajax';
 import { combineEpics, ofType } from 'redux-observable';
-import { map, mergeMap } from 'rxjs/operators';
+import { mergeMap } from 'rxjs/operators';
 import { ADD_TRANSACTION, ADD_TIMING_DATA, FETCH_TRANSACTION } from 'actions/table';
 import { convertCoordsToString } from 'util/helpers';
 
@@ -18,7 +17,9 @@ export const fetchTransaction = action$ => action$.pipe(
                 error: true
             };
         }).then((data) => {
+            console.log(data);
             const transactionData = data.transactions[0];
+            transactionData.id = data.id;
             transactionData.amount = parseFloat(transactionData.amount);
             transactionData.completed = false;
 
