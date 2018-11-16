@@ -18,7 +18,8 @@ const loader = (
 const errorMessage = (mostRecent, isFetchingTransaction) =>
     (mostRecent && mostRecent.error && !isFetchingTransaction) ?
         <div className='alert alert-danger' role='alert'>
-            Something went wrong while trying to get the transaction. Please try again
+            Something went wrong while trying to get the transaction.
+            This is most likely an issue with our servers and not the Nano transaction
         </div>
         : null;
 

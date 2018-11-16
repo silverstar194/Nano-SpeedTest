@@ -21,8 +21,7 @@ const Table = ({tableData}) => {
                 </thead>
                 <tbody>
                 {
-                    tableData.map((transactionData, index) => {
-                        transactionData.index = index + 1;
+                    tableData.map((transactionData) => {
                         return <TableRow key={uuid(transactionData.id)} {...transactionData}/>;
                     })
                 }

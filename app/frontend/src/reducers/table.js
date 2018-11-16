@@ -12,18 +12,15 @@ export default (state = INITIAL_STATE, action) => {
             // state is an array
             // action.timingData is in array
             //combine the two
-            const newState = [];
-            state.forEach((trans) => {
+            const newState = [...state];
+            newState.forEach((trans) => {
                 action.timingData.forEach((incomingData) => {
-                    if (trans.id !== incomingData.id) {
-                        newState.push(trans);
-                    }
-                    newState.push(
+                    if (trans.id === incomingData.id) {
                         Object.assign(trans, {
                             ...incomingData,
                             completed: true
-                        })
-                    );
+                        });
+                    }
                 });
             });
             return [...newState];

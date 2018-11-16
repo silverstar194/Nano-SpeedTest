@@ -19,6 +19,8 @@ import transactionsMiddleware from './transactionsMiddleware';
 import {addNodes} from 'actions/nodes';
 import {addPastResults} from 'actions/pastResults';
 
+import {fetchWrapper} from 'util/helpers';
+
 
 // TODO - persist state so when user refreshes page, it doesn't delete state (bug: sets active tab to home, stays on
 // curr)
@@ -52,31 +54,20 @@ const store = createStore(
 // importing from epics/table rn since it is our only one so far)
 epicMiddleware.run(rootEpic);
 
-fetch('http://127.0.0.1:8000/nodes/list', {
+fetchWrapper('http://127.0.0.1:8000/nodes/list', {
     method: 'GET'
-}).then((response) => {
-    if (response.ok) return response.json();
-    debugger;
-    return {
-        error: true
-    };
 }).then((data) => {
     store.dispatch(addNodes(data.nodes));
 }).catch((err) => {
-	debugger;
-	console.error(err);
+	//TODO handle error
 });
 
-fetch('http://127.0.0.1:8000/transactions/statistics?count=150', {
+fetchWrapper('http://127.0.0.1:8000/transactions/statistics?count=150', {
     method: 'GET'
-}).then((response) => {
-    if (response.ok) return response.json();
-    debugger;
-    return {
-        error: true
-    };
 }).then((data) => {
-	const transactions = data.transactions.filter((transaction) => transaction.endReceiveTimestamp);
+	const transactions = data.transactions.filter((transaction) => {
+        return transaction.endReceiveTimestamp && transaction.endReceiveTimestamp - transaction.startSendTimestamp > 0;
+    });
 	transactions.forEach((transaction) => {
 		transaction.elapsedTime = transaction.endReceiveTimestamp - transaction.startSendTimestamp;
 	});
@@ -87,8 +78,7 @@ fetch('http://127.0.0.1:8000/transactions/statistics?count=150', {
 		globalAverage: average
 	}));
 }).catch((err) => {
-	debugger;
-	console.error(err);
+	//TODO handle error
 });
 
 
