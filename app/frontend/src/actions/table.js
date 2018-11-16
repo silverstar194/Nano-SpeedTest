@@ -8,10 +8,11 @@ export const fetchRandomTransaction = () => {
     };
 };
 
-export const addTransaction = transactionData => {
+export const addTransaction = (transactionData, batchId) => {
     return {
         type: ADD_TRANSACTION,
-        transactionData
+        transactionData,
+        batchId
     };
 };
 

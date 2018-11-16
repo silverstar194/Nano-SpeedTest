@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
 import Header from 'components/Header';
+import Ad from 'components/Ad';
 import PastResultsTable from './PastResultsTable';
 import ScatterView from './ScatterView';
 import HeatMap from './HeatMap';
@@ -19,8 +20,8 @@ class HistoricalDataView extends React.Component {
 
             //TODO doesn't scale well on graph, might want to just do index
             plotData.push({
-                x: i,
-                // x: transaction.endReceiveTimestamp,
+                // x: i,
+                x: transaction.endReceiveTimestamp,
                 // x: (new Date(transaction.endReceiveTimestamp)).toLocaleDateString({}, {
                 //     day : 'numeric',
                 //     month : 'short',
@@ -33,16 +34,38 @@ class HistoricalDataView extends React.Component {
         });
 
         this.state = {
-            averageTime: totalTime/pastResults.length,
+            averageTime: totalTime/1000/pastResults.length,
             plotData
         };
     }
     render() {
         const {pastResults, nodeLocations} = this.props;
-        const {averageTime, plotData} = this.state;
+        const plotData = [];
+        let totalTime = 0;
+        pastResults.forEach((transaction, i) => {
+            totalTime += transaction.elapsedTime;
+
+            //TODO doesn't scale well on graph, might want to just do index
+            plotData.push({
+                x: transaction.endReceiveTimestamp,
+                // x: (new Date(transaction.endReceiveTimestamp)).toLocaleDateString({}, {
+                //     day : 'numeric',
+                //     month : 'short',
+                //     year : 'numeric',
+                //     hour: 'numeric',
+                //     minute: 'numeric',
+                //     second: 'numeric'
+                // }),
+                y: transaction.elapsedTime});
+        });
+
+        const averageTime = totalTime/1000/pastResults.length;
+        // const {averageTime, plotData} = this.state;
+
         return (
             <div className='HistoricalData'>
                 <Header/>
+                <Ad />
                 <div className='container-fluid'>
                      <div className='row form-group'>
                         <h2 className='map-header text-center'>
@@ -68,7 +91,11 @@ class HistoricalDataView extends React.Component {
                             <h2 className='map-header text-center'>
                                 Scatter Chart of Recent Transactions
                             </h2>
-                            <ScatterView plotData={plotData}/>
+                            {
+                                plotData && plotData.length ?
+                                <ScatterView plotData={plotData}/>
+                                : null
+                            }
                         </div>
                         <div className='col-6'>
                             <h2 className='map-header text-center'>

@@ -23,6 +23,8 @@ export const fetchRandomTransaction = action$ => action$.pipe(
                 error: true
             };
         }).then((data) => {
+            // data has transactions and a batchId
+            //batchId is used to fetch the data on it
             const transactionData = data.transactions[0];
             transactionData.amount = parseFloat(transactionData.amount);
             transactionData.completed = false;
@@ -30,8 +32,7 @@ export const fetchRandomTransaction = action$ => action$.pipe(
             ['origin', 'destination'].forEach((key) => {
                 transactionData[key].coords = convertCoordsToString(transactionData[key]);
             });
-
-            return { type: ADD_TRANSACTION, transactionData };
+            return { type: ADD_TRANSACTION, transactionData, batchId: data.id };
         })
     )
 );
@@ -40,31 +41,19 @@ export const fetchRandomTransaction = action$ => action$.pipe(
 export const fetchTransactionTiming = action$ => action$.pipe(
     ofType(ADD_TRANSACTION),
     mergeMap(action =>
-        // fetch('http://127.0.0.1:8000/transactions/send', {
-        //     method: 'POST',
-        //     body: JSON.stringify({
-        //         id: action.transactionData.id
-        //     })
-    // )}
-        Promise.resolve()
+        fetch('http://127.0.0.1:8000/transactions/send', {
+            method: 'POST',
+            body: JSON.stringify({
+                id: action.batchId
+            })
+        })
         .then(response => {
-            // if (response.ok) return response.json();
-            // return { TODO
-            //     error: true,
-            //     id: action.transactionData.id
-            // };
-            const endReceiveTimestamp = Date.now();
-            const startSendTimestamp = Date.now() - parseInt(Math.random() * 50000);
-            const elapsedTime = endReceiveTimestamp - startSendTimestamp;
-            return {
-                // error: true, TODO - disables error handling
-                id: action.transactionData.id,
-                startSendTimestamp,
-                endReceiveTimestamp,
-                elapsedTime
-            };
-        }).then((timingData) => ({ type: ADD_TIMING_DATA, timingData }) )
-        .catch((err) => {
+            if (response.ok) return response.json();
+            debugger;
+        }).then((timingData) => {
+            debugger;
+            return { type: ADD_TIMING_DATA, timingData};
+        }).catch((err) => {
             debugger;
         })
     )

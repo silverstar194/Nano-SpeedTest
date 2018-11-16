@@ -17,6 +17,7 @@ import rootEpic from './epics/table';
 import transactionsMiddleware from './transactionsMiddleware';
 
 import {addNodes} from 'actions/nodes';
+import {addPastResults} from 'actions/pastResults';
 
 
 // TODO - persist state so when user refreshes page, it doesn't delete state (bug: sets active tab to home, stays on
@@ -24,175 +25,8 @@ import {addNodes} from 'actions/nodes';
 const initialState = {
     navigation: {
         activeTab: '' // initialize the starting tab to be our default home page
-    },
-    table: [
-        {
-            id: 266,
-            origin: {
-              id: 3,
-              nodeLocation: 'Singapore',
-              latitude: '1.293100',
-              longitude: '103.850100',
-              coords: '1.293100,103.850100'
-            },
-            destination: {
-              id: 4,
-              nodeLocation: 'New York',
-              latitude: '40.804300',
-              longitude: '-74.012100',
-              coords: '40.804300,-74.012100'
-            },
-            amount: 0.0001,
-            completed: true,
-            index: 2,
-            startSendTimestamp: 1542260521944,
-            endReceiveTimestamp: 1542260564075,
-            elapsedTime: 42131
-          }
-    ],
-    pastResults: [
-        // {
-        //   id: 266,
-        //   origin: {
-        //     id: 3,
-        //     nodeLocation: 'Singapore',
-        //     latitude: '1.293100',
-        //     longitude: '103.850100',
-        //     coords: '1.293100,103.850100'
-        //   },
-        //   destination: {
-        //     id: 4,
-        //     nodeLocation: 'New York',
-        //     latitude: '40.804300',
-        //     longitude: '-74.012100',
-        //     coords: '40.804300,-74.012100'
-        //   },
-        //   amount: 0.0001,
-        //   completed: true,
-        //   index: 1,
-        //   startSendTimestamp: 1542260521944,
-        //   endReceiveTimestamp: 1542260564075,
-        //   elapsedTime: 42.131
-        // },
-        {
-          id: 271,
-          origin: {
-            id: 4,
-            nodeLocation: 'New York',
-            latitude: '40.804300',
-            longitude: '-74.012100',
-            coords: '40.804300,-74.012100'
-          },
-          destination: {
-            id: 3,
-            nodeLocation: 'Singapore',
-            latitude: '1.293100',
-            longitude: '103.850100',
-            coords: '1.293100,103.850100'
-          },
-          amount: 0.0001,
-          completed: true,
-          startSendTimestamp: 1542309149331,
-          endReceiveTimestamp: 1542309189697,
-          elapsedTime: 40.366,
-          index: 2
-        },
-        {
-          id: 272,
-          origin: {
-            id: 3,
-            nodeLocation: 'Singapore',
-            latitude: '1.293100',
-            longitude: '103.850100',
-            coords: '1.293100,103.850100'
-          },
-          destination: {
-            id: 4,
-            nodeLocation: 'New York',
-            latitude: '40.804300',
-            longitude: '-74.012100',
-            coords: '40.804300,-74.012100'
-          },
-          amount: 0.0002,
-          completed: true,
-          index: 3,
-          startSendTimestamp: 1542309181592,
-          endReceiveTimestamp: 1542309193732,
-          elapsedTime: 12.140
-        },
-        {
-          id: 273,
-          origin: {
-            id: 3,
-            nodeLocation: 'Singapore',
-            latitude: '1.293100',
-            longitude: '103.850100',
-            coords: '1.293100,103.850100'
-          },
-          destination: {
-            id: 4,
-            nodeLocation: 'New York',
-            latitude: '40.804300',
-            longitude: '-74.012100',
-            coords: '40.804300,-74.012100'
-          },
-          amount: 0.0009,
-          completed: true,
-          index: 4,
-          startSendTimestamp: 1542309179537,
-          endReceiveTimestamp: 1542309205310,
-          elapsedTime: 25.773
-        },
-        {
-          id: 274,
-          origin: {
-            id: 3,
-            nodeLocation: 'Singapore',
-            latitude: '1.293100',
-            longitude: '103.850100',
-            coords: '1.293100,103.850100'
-          },
-          destination: {
-            id: 4,
-            nodeLocation: 'New York',
-            latitude: '40.804300',
-            longitude: '-74.012100',
-            coords: '40.804300,-74.012100'
-          },
-          amount: 0.0005,
-          completed: true,
-          index: 5,
-          startSendTimestamp: 1542309218162,
-          endReceiveTimestamp: 1542309218900,
-          elapsedTime: .738
-        },
-        {
-          id: 275,
-          origin: {
-            id: 4,
-            nodeLocation: 'New York',
-            latitude: '40.804300',
-            longitude: '-74.012100',
-            coords: '40.804300,-74.012100'
-          },
-          destination: {
-            id: 3,
-            nodeLocation: 'Singapore',
-            latitude: '1.293100',
-            longitude: '103.850100',
-            coords: '1.293100,103.850100'
-          },
-          amount: 0.0001,
-          completed: true,
-          index: 6,
-          startSendTimestamp: 1542309208790,
-          endReceiveTimestamp: 1542309222433,
-          elapsedTime: 13.643
-        }
-    ]
+    }
 };
-
-
 
 // call this in order to get argument needed for applyMiddleware (when creating the store)
 const epicMiddleware = createEpicMiddleware();
@@ -242,8 +76,13 @@ fetch('http://127.0.0.1:8000/transactions/statistics?count=150', {
         error: true
     };
 }).then((data) => {
-	console.log(data.transactions)
-    // debugger;
+	const transactions = data.transactions.filter((transaction) => transaction.endReceiveTimestamp);
+	transactions.forEach((transaction) => {
+		transaction.amount = parseFloat(transaction.amount);
+		transaction.elapsedTime = transaction.endReceiveTimestamp - transaction.startSendTimestamp;
+	});
+	debugger;
+	store.dispatch(addPastResults(transactions));
 }).catch((err) => {
 	debugger;
 	console.error(err);

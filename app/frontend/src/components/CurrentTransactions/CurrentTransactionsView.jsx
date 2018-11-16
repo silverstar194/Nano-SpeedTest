@@ -1,4 +1,5 @@
 import React, {Fragment} from 'react';
+import Ad from 'components/Ad';
 import Map from './Map';
 import Table from './Table';
 import NoTableEntries from './NoTableEntries';
@@ -29,6 +30,7 @@ const CurrentTransactionsView = ({table, isFetchingTiming, isFetchingTransaction
     const shouldShowTable = (isFetchingTransaction || mostRecent || isFetchingTiming);
     return (
         <Fragment>
+            <Ad/>
             <h2 className='map-header page-header text-left'>Your Transactions</h2>
             {errorMessage(mostRecent, isFetchingTransaction)} {/*Displays an error message if fetching the transaction fails*/}
             { (shouldShowTable) ?  // this is pretty ugly and should be refactored in V2
