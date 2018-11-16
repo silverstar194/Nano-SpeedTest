@@ -304,6 +304,17 @@ def get_transactions(enabled=True, batch=None):
     
     return models.Transaction.objects.all()
 
+
+def get_recent_transactions(count=25):
+    """
+    Get most recent count transaction with enabled nodes
+
+    @param count: Number of most recent transactions to return
+    @return: Query of transactions
+    """
+    return models.Transaction.objects.select_related()[:count]
+
+
 def get_transaction(id):
     """
     Get a transaction by id

@@ -26,7 +26,7 @@ def get_nodes(enabled=True):
 
     return models.Node.objects.filter(enabled=enabled)
 
-def get_node(id):
+def get_node(id, enabled=True):
     """
     Get a node with the specified node.id
 
@@ -35,7 +35,7 @@ def get_node(id):
     """
 
     try:
-        return models.Node.objects.get(id=id)
+        return models.Node.objects.get(id=id, enabled=enabled)
     except models.Node.DoesNotExist:
         return None
     except MultipleObjectsReturned:
