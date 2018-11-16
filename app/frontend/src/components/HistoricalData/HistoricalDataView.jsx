@@ -9,58 +9,20 @@ import ScatterView from './ScatterView';
 import HeatMap from './HeatMap';
 
 class HistoricalDataView extends React.Component {
-    constructor(props) {
-        super(props);
-        const {pastResults} = props;
-
-        let totalTime = 0;
-        const plotData = [];
-        pastResults.forEach((transaction, i) => {
-            totalTime += transaction.elapsedTime;
-
-            //TODO doesn't scale well on graph, might want to just do index
-            plotData.push({
-                // x: i,
-                x: transaction.endReceiveTimestamp,
-                // x: (new Date(transaction.endReceiveTimestamp)).toLocaleDateString({}, {
-                //     day : 'numeric',
-                //     month : 'short',
-                //     year : 'numeric',
-                //     hour: 'numeric',
-                //     minute: 'numeric',
-                //     second: 'numeric'
-                // }),
-                y: transaction.elapsedTime});
-        });
-
-        this.state = {
-            averageTime: totalTime/1000/pastResults.length,
-            plotData
-        };
-    }
     render() {
-        const {pastResults, nodeLocations} = this.props;
+        const {pastTransactions, nodeLocations} = this.props;
         const plotData = [];
         let totalTime = 0;
-        pastResults.forEach((transaction, i) => {
+        pastTransactions.forEach((transaction, i) => {
             totalTime += transaction.elapsedTime;
 
             //TODO doesn't scale well on graph, might want to just do index
             plotData.push({
                 x: transaction.endReceiveTimestamp,
-                // x: (new Date(transaction.endReceiveTimestamp)).toLocaleDateString({}, {
-                //     day : 'numeric',
-                //     month : 'short',
-                //     year : 'numeric',
-                //     hour: 'numeric',
-                //     minute: 'numeric',
-                //     second: 'numeric'
-                // }),
                 y: transaction.elapsedTime});
         });
 
-        const averageTime = totalTime/1000/pastResults.length;
-        // const {averageTime, plotData} = this.state;
+        const averageTime = totalTime/1000/pastTransactions.length;
 
         return (
             <div className='HistoricalData'>
@@ -75,7 +37,7 @@ class HistoricalDataView extends React.Component {
                             <div className='row form-group'>
                                 <div className='col-auto'>
                                     <h3 className='map-header'>
-                                        Total Transactions Sent: {pastResults.length}
+                                        Total Transactions Sent: {pastTransactions.length}
                                     </h3>
                                 </div>
                                 <div className='col-auto'>
@@ -109,7 +71,7 @@ class HistoricalDataView extends React.Component {
                     </div>
                     <div className='row form-groups mt-5'>
                         <div className='col'>
-                            <PastResultsTable tableData={pastResults}/>
+                            <PastResultsTable tableData={pastTransactions}/>
                         </div>
                     </div>
                 </div>
@@ -120,13 +82,15 @@ class HistoricalDataView extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        pastResults: state.pastResults,
+        pastTransactions: state.pastResults.pastTransactions,
+        totalTransactions: state.pastResults.totalTransactions,
+        globalAverage: state.pastResults.globalAverage,
         nodeLocations: state.nodes
     };
 };
 
 HistoricalDataView.propTypes = {
-    pastResults: PropTypes.array.isRequired
+    pastTransactions: PropTypes.array.isRequired
 };
 
 export default connect(mapStateToProps)(HistoricalDataView);

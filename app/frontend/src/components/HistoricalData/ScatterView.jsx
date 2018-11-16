@@ -22,7 +22,6 @@ const ScatterView = ({plotData}) => {
         minute: 'numeric',
         second: 'numeric'
     });
-    // debugger;
     // const offset = (domainToday[1] - domainToday[0])/5;
     // const ticks = [];
     // for (let i = 0; i < 5; i++) {

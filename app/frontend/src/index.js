@@ -81,8 +81,12 @@ fetch('http://127.0.0.1:8000/transactions/statistics?count=150', {
 		transaction.amount = parseFloat(transaction.amount);
 		transaction.elapsedTime = transaction.endReceiveTimestamp - transaction.startSendTimestamp;
 	});
-	debugger;
-	store.dispatch(addPastResults(transactions));
+	const average = data.average/1000;
+	store.dispatch(addPastResults({
+		pastTransactions: transactions,
+		totalTransactions: data.count,
+		globalAverage: average
+	}));
 }).catch((err) => {
 	debugger;
 	console.error(err);

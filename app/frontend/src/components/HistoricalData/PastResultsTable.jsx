@@ -4,6 +4,7 @@ import PastResultsTableRow from './PastResultsTableRow';
 import uuid from 'uuid';
 
 const viewItems = 25;
+//TODO switch to HASHes
 
 class PastResultsTable extends React.Component {
     constructor(props) {
@@ -77,8 +78,8 @@ class PastResultsTable extends React.Component {
                     </tr>
                     </thead>
                     <tbody>
-                    {
-                        tableData.reverse().slice(startIndex, end).map((transactionData) => { //TODO maybe reverse when first loading data
+                    { tableData && //TODO remove reverse
+                        tableData.reverse().slice(startIndex, end).map((transactionData) => {
                             return <PastResultsTableRow key={uuid(transactionData.id)} {...transactionData}/>;
                         })
                     }
@@ -109,7 +110,7 @@ class PastResultsTable extends React.Component {
             </div>
         );
     }
-};
+}
 
 PastResultsTable.propTypes = {
     tableData: PropTypes.array
