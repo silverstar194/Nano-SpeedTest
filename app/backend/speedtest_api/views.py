@@ -243,6 +243,8 @@ def convert_transaction_to_dict(transaction):
 
     converted_transaction = {
         "id": transaction.id,
+        "transactionHashSending": transaction.transaction_hash_sending,
+        "transactionHashReceiving": transaction.transaction_hash_receiving,
         "origin": origin,
         "destination": destination,
         "amount": amount,
