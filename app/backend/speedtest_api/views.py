@@ -30,7 +30,7 @@ def generate_transaction(request):
     if len(body_transactions) == 0:
         return JsonResponse({'message': 'Must specify at least one transaction.'}, status=400)
 
-    elif len(body_transactions) > 5:
+    elif len(body_transactions) > 3:
         return JsonResponse({'message': 'You cannot send more than 5 transactions at once.'}, status=400)
 
     # If the first element in batch_transactions has null origin and destination nodes, generate random transactions
@@ -183,14 +183,19 @@ def get_transaction_statistics(request):
     count = request.GET.get('count')
     transactions_array = []
 
-    recent_transactions = transactions.get_transactions(int(count))
+    recent_transactions = transactions.get_recent_transactions(int(count))
 
     for transaction in recent_transactions:
         temp_transaction = convert_transaction_to_dict(transaction)
 
         transactions_array.append(temp_transaction)
 
-    return JsonResponse({'transactions': transactions_array}, status=200)
+    statistics = {
+        'transactions': transactions_array,
+
+    }
+
+    return JsonResponse(statistics, status=200)
 
 
 def convert_transaction_to_dict(transaction):
