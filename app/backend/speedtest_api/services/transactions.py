@@ -312,8 +312,7 @@ def get_transactions(count=25):
     @param count: Number of most recent transactions to return
     @return: Query of transactions
     """
-    return models.Transaction.objects.filter(origin__wallet__node__enabled=True,
-                                             destination__wallet__node__enabled=True)[:count]
+    return models.Transaction.objects.all()[:count]
 
 
 def get_transaction(id):
