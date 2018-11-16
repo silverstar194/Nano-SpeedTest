@@ -133,9 +133,11 @@ def send_batch_transactions(request):
             if transaction.start_send_timestamp or transaction.end_receive_timestamp:
                 return JsonResponse({'message': "This batch has already been sent."}, status=405)
 
-            sent_transaction = transactions.send_transaction(transaction)
-
-            transaction_array.append(convert_transaction_to_dict(sent_transaction))
+            try:
+                sent_transaction = transactions.send_transaction(transaction)
+                transaction_array.append(convert_transaction_to_dict(sent_transaction))
+            except transactions.InvalidPOWException as e:
+                return JsonResponse({'message': "The transaction POW was invalid. Please try again."}, status=400)
 
         sent_batch = {
             'id': batch_id,
