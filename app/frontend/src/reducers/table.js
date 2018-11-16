@@ -6,7 +6,7 @@ export default (state = INITIAL_STATE, action) => {
         case ADD_TRANSACTIONS:
             return [
                 ...state,
-                action.transactionData
+                ...action.transactionData
             ];
         case ADD_TIMING_DATA:
             // state is an array

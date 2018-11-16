@@ -46,11 +46,10 @@ const TableRow = ({
 };
 
 TableRow.propTypes = {
-    id: PropTypes.number.isRequired,
     origin: PropTypes.object.isRequired,
     destination: PropTypes.object.isRequired,
     time: PropTypes.number,
-    amount: PropTypes.number,
+    amount: PropTypes.string,
     endReceiveTimestamp: PropTypes.number,
     startSendTimestamp: PropTypes.number,
     transactionHashSending: PropTypes.string,

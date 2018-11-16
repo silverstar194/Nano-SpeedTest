@@ -1,16 +1,17 @@
-export const FETCH_RANDOM_TRANSACTION = 'FETCH_RANDOM_TRANSACTION';
-export const ADD_TRANSACTION = 'ADD_TRANSACTION';
+export const FETCH_TRANSACTION = 'FETCH_TRANSACTION';
+export const ADD_TRANSACTIONS = 'ADD_TRANSACTIONS';
 export const ADD_TIMING_DATA = 'ADD_TIMING_DATA';
 
-export const fetchRandomTransaction = () => {
+export const fetchTransaction = transactionParams => {
     return {
-        type: FETCH_RANDOM_TRANSACTION
+        type: FETCH_TRANSACTION,
+        transactionParams
     };
 };
 
-export const addTransaction = (transactionData, batchId) => {
+export const addTransactions = (transactionData, batchId) => {
     return {
-        type: ADD_TRANSACTION,
+        type: ADD_TRANSACTIONS,
         transactionData,
         batchId
     };

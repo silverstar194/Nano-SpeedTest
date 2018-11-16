@@ -6,7 +6,7 @@ import { Field, reduxForm} from 'redux-form';
 class AdvancedModal extends Component {
     state = {
         locationsActive: true,
-        multipleActive: false
+        multipleActive: false,
     };
 
     // Having 2 separate sounds silly.  Is there a way to condense?
@@ -97,11 +97,14 @@ class AdvancedModal extends Component {
                                 <div>
                                     <Field name="origin" component='select'>
                                         <option></option>
-                                        <option>This</option>
-                                        <option>Is</option>
-                                        <option>Dummy</option>
-                                        <option>Location</option>
-                                        <option>Data</option>
+                                        {
+                                            Object.keys(this.props.nodes).map(nodeKey => {
+                                                return <option
+                                                    key={nodeKey}
+                                                    value={this.props.nodes[nodeKey].id}
+                                                >{this.props.nodes[nodeKey].location}</option>;
+                                            })
+                                        }
                                     </Field>
                                 </div>
                             </div>
@@ -110,11 +113,14 @@ class AdvancedModal extends Component {
                                 <div>
                                     <Field name="destination" component='select'>
                                         <option></option>
-                                        <option>This</option>
-                                        <option>Is</option>
-                                        <option>Dummy</option>
-                                        <option>Location</option>
-                                        <option>Data</option>
+                                        {
+                                            Object.keys(this.props.nodes).map(nodeKey => {
+                                                return <option
+                                                    key={nodeKey}
+                                                    value={this.props.nodes[nodeKey].id}
+                                                >{this.props.nodes[nodeKey].location}</option>;
+                                            })
+                                        }
                                     </Field>
                                 </div>
                             </div>

@@ -1,21 +1,15 @@
-import { ajax } from 'rxjs/ajax';
 import { combineEpics, ofType } from 'redux-observable';
-import { map, mergeMap } from 'rxjs/operators';
-import { ADD_TRANSACTION, ADD_TIMING_DATA, FETCH_RANDOM_TRANSACTION } from 'actions/table';
+import { mergeMap } from 'rxjs/operators';
+import { ADD_TRANSACTIONS, ADD_TIMING_DATA, FETCH_TRANSACTION } from 'actions/table';
 import { convertCoordsToString } from 'util/helpers';
 
 //TODO going to need better error handling if rejected or times out
-export const fetchRandomTransaction = action$ => action$.pipe(
-    ofType(FETCH_RANDOM_TRANSACTION),
+export const fetchTransaction = action$ => action$.pipe(
+    ofType(FETCH_TRANSACTION),
     mergeMap(action =>
         fetch('http://127.0.0.1:8000/transactions', {
             method: 'POST',
-            body: JSON.stringify({
-                transactions: [{
-                    originNodeId: null,
-                    destinationNodeId: null
-                }]
-            })
+            body: JSON.stringify(action.transactionParams)
         }).then((response) => {
             if (response.ok) return response.json();
             debugger;
@@ -25,21 +19,24 @@ export const fetchRandomTransaction = action$ => action$.pipe(
         }).then((data) => {
             // data has transactions and a batchId
             //batchId is used to fetch the data on it
-            const transactionData = data.transactions[0];
-            transactionData.amount = parseFloat(transactionData.amount);
-            transactionData.completed = false;
-
-            ['origin', 'destination'].forEach((key) => {
-                transactionData[key].coords = convertCoordsToString(transactionData[key]);
+            const transactionData = data.transactions.map((trans) => {
+                trans.completed = false;
+                ['origin', 'destination'].forEach((key) => {
+                    trans[key].coords = convertCoordsToString(trans[key]);
+                });
+                return trans;
             });
-            return { type: ADD_TRANSACTION, transactionData, batchId: data.id };
+            return { type: ADD_TRANSACTIONS, transactionData, batchId: data.id };
+        }).catch((err) => {
+            debugger;
+            console.error(err);
         })
     )
 );
 
 //TODO going to need better error handling if rejected or times out
 export const fetchTransactionTiming = action$ => action$.pipe(
-    ofType(ADD_TRANSACTION),
+    ofType(ADD_TRANSACTIONS),
     mergeMap(action =>
         fetch('http://127.0.0.1:8000/transactions/send', {
             method: 'POST',
@@ -50,9 +47,8 @@ export const fetchTransactionTiming = action$ => action$.pipe(
         .then(response => {
             if (response.ok) return response.json();
             debugger;
-        }).then((timingData) => {
-            debugger;
-            return { type: ADD_TIMING_DATA, timingData};
+        }).then((parsedResponse) => {
+            return { type: ADD_TIMING_DATA, timingData: parsedResponse.transactions};
         }).catch((err) => {
             debugger;
         })
@@ -60,6 +56,6 @@ export const fetchTransactionTiming = action$ => action$.pipe(
 );
 
 export default combineEpics(
-    fetchRandomTransaction,
+    fetchTransaction,
     fetchTransactionTiming
 );
