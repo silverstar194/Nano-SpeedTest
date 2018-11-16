@@ -182,17 +182,19 @@ def list_nodes(request):
 def get_transaction_statistics(request):
     count = request.GET.get('count')
     transactions_array = []
-
+    time_delta_sum = 0
     recent_transactions = transactions.get_recent_transactions(int(count))
 
     for transaction in recent_transactions:
         temp_transaction = convert_transaction_to_dict(transaction)
 
         transactions_array.append(temp_transaction)
+        time_delta = transaction.start_send_timestamp - transaction.end_receive_timestamp
 
     statistics = {
         'transactions': transactions_array,
-
+        'count': len(recent_transactions),
+        'average': "" # TODO
     }
 
     return JsonResponse(statistics, status=200)
@@ -231,7 +233,11 @@ def convert_transaction_to_dict(transaction):
         "id": transaction.id,
         "origin": origin,
         "destination": destination,
-        "amount": amount
+        "amount": amount,
+        "startSendTimestamp": transaction.start_send_timestamp,
+        "endSendTimestamp": transaction.end_send_timestamp,
+        "startReceiveTimestamp": transaction.start_receive_timestamp,
+        "endReceiveTimestamp": transaction.end_receive_timestamp
     }
 
     return converted_transaction
