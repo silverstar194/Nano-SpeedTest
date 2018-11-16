@@ -183,19 +183,27 @@ def get_transaction_statistics(request):
     count = request.GET.get('count')
     transactions_array = []
     time_delta_sum = 0
+    query_count = 0
+    average_transaction_time = 0
     recent_transactions = transactions.get_recent_transactions(int(count))
 
     for transaction in recent_transactions:
         temp_transaction = convert_transaction_to_dict(transaction)
 
         transactions_array.append(temp_transaction)
-        #time_delta = transaction.start_send_timestamp - transaction.end_receive_timestamp
-        #time_delta_sum +=
+
+        if transaction.start_send_timestamp and transaction.end_receive_timestamp:
+            time_delta = transaction.end_receive_timestamp - transaction.start_send_timestamp
+            time_delta_sum += time_delta
+            query_count += 1
+
+    if query_count != 0:
+        average_transaction_time = time_delta_sum/query_count
 
     statistics = {
         'transactions': transactions_array,
         'count': len(recent_transactions),
-        'average': "" # TODO
+        'average': average_transaction_time
     }
 
     return JsonResponse(statistics, status=200)
