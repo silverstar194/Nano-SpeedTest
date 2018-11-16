@@ -190,7 +190,12 @@ def get_transaction_statistics(request):
 
         transactions_array.append(temp_transaction)
 
-    return JsonResponse({'transactions': transactions_array}, status=200)
+    statistics = {
+        'transactions': transactions_array,
+
+    }
+
+    return JsonResponse(statistics, status=200)
 
 
 def convert_transaction_to_dict(transaction):

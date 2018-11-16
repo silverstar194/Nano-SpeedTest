@@ -312,7 +312,7 @@ def get_recent_transactions(count=25):
     @param count: Number of most recent transactions to return
     @return: Query of transactions
     """
-    return models.Transaction.objects.all()[:count]
+    return models.Transaction.objects.select_related()[:count]
 
 
 def get_transaction(id):
