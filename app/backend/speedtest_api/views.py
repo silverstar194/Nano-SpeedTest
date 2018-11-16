@@ -118,6 +118,12 @@ def send_batch_transactions(request):
 
             transaction_array.append(convert_transaction_to_dict(sent_transaction))
 
+        sent_batch = {
+            'id': batch_id,
+            'transactions': transaction_array
+        }
+
+        return JsonResponse(sent_batch, status=200)
 
 
 @api_view(['GET'])
@@ -180,37 +186,7 @@ def get_transaction_statistics(request):
     recent_transactions = transactions.get_transactions(int(count))
 
     for transaction in recent_transactions:
-        origin_node = transaction.origin.wallet.node
-        destination_node = transaction.destination.wallet.node
-
-        temp_origin_node = {
-            'id': origin_node.id,
-            'location': origin_node.location_name,
-            'latitude': origin_node.latitude,
-            'longitude': origin_node.longitude
-        }
-
-        temp_destination_node = {
-            'id': destination_node.id,
-            'location': destination_node.location_name,
-            'latitude': destination_node.latitude,
-            'longitude': destination_node.longitude
-        }
-
-        amount_decimal = Decimal(transaction.amount) / Decimal(1e24)
-        amount = round(amount_decimal, 4)
-
-        temp_transaction = {
-            'id': transaction.id,
-            'originNode': temp_origin_node,
-            'destinationNode': temp_destination_node,
-            'amount': amount,
-            'ipAddress': transaction.batch.initiated_by,
-            'startSendTimestamp': transaction.start_send_timestamp,
-            'endSendTimestamp': transaction.end_send_timestamp,
-            'startReceiveTimestamp': transaction.start_receive_timestamp,
-            'endReceiveTimestamp': transaction.end_receive_timestamp
-        }
+        temp_transaction = convert_transaction_to_dict(transaction)
 
         transactions_array.append(temp_transaction)
 
