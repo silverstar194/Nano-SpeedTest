@@ -2,6 +2,7 @@ from decimal import *
 import json
 
 from django.db.models import Avg
+from django.db.models import F
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
 
@@ -214,8 +215,7 @@ def get_transaction_statistics(request):
         temp_transaction = convert_transaction_to_dict(transaction)
         transactions_array.append(temp_transaction)
 
-    average_delta = Transaction.objects.all().aggregate(Avg('end_receive_timestamp'))['end_receive_timestamp__avg'] - \
-                    Transaction.objects.all().aggregate(Avg('start_send_timestamp'))['start_send_timestamp__avg']
+    average_delta = Transaction.objects.all().aggregate(average_difference=Avg(F('end_receive_timestamp') - F('start_send_timestamp')))['average_difference']
 
     transaction_count = len(Transaction.objects.all())
 
