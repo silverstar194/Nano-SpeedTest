@@ -114,9 +114,9 @@ def send_batch_transactions(request):
         batch_transactions = transactions.get_transactions(enabled=True, batch=batch)
 
         for transaction in batch_transactions:
-            pass
-        pass
+            sent_transaction = transactions.send_transaction(transaction)
 
+            transaction_array.append(convert_transaction_to_dict(sent_transaction))
 
 
 
