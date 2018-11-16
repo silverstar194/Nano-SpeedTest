@@ -105,26 +105,19 @@ def send_batch_transactions(request):
 
     batch_id = body['id']
     batch = batches.get_batch(batch_id)
+    transaction_array = []
 
     if not batch:
         return JsonResponse({'message': 'Batch ' + str(batch_id) + ' not found.'}, status=404)
 
-    # TODO verify each batch, not transaction, then send - need services to support this
-    elif transaction.start_send_timestamp or transaction.transaction_hash_sending:
-        return JsonResponse({'message': 'Transaction ' + str(transaction_id) + ' has already been sent.'}, status=403)
-
     else:
-        sent_transaction = transactions.send_transaction(transaction)
+        batch_transactions = transactions.get_transactions(enabled=True, batch=batch)
 
-        transaction_stats = {
-            'id': sent_transaction.id,
-            'startSendTimestamp': sent_transaction.start_send_timestamp,
-            'endSendTimestamp': sent_transaction.end_send_timestamp,
-            'startReceiveTimestamp': sent_transaction.start_receive_timestamp,
-            'endReceiveTimestamp': sent_transaction.end_receive_timestamp
-        }
+        for transaction in batch_transactions:
+            pass
+        pass
 
-        return JsonResponse(transaction_stats, status=200)
+
 
 
 @api_view(['GET'])
@@ -187,8 +180,8 @@ def get_transaction_statistics(request):
     recent_transactions = transactions.get_transactions(int(count))
 
     for transaction in recent_transactions:
-        origin_node = nodes.get_node(transaction.origin.wallet.node.id)
-        destination_node = nodes.get_node(transaction.destination.wallet.node.id)
+        origin_node = transaction.origin.wallet.node
+        destination_node = transaction.destination.wallet.node
 
         temp_origin_node = {
             'id': origin_node.id,
