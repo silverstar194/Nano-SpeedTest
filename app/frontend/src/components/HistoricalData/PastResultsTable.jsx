@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import PastResultsTableRow from './PastResultsTableRow';
 import uuid from 'uuid';
+import 'styles/PastResults.css';
 
 const viewItems = 25;
 //TODO switch to HASHes
@@ -69,12 +70,13 @@ class PastResultsTable extends React.Component {
                 <table className='table'>
                     <thead>
                     <tr>
-                        <th scope='col'>Id</th>
                         <th scope='col'>Origin</th>
                         <th scope='col'>Destination</th>
                         <th scope='col'>Amount</th>
                         <th scope='col'>Elapsed Time</th>
                         <th scope='col'>Date</th>
+                        <th scope='col' className='block-col'>Sending Block</th>
+                        <th scope='col' className='block-col'>Receiving Block</th>
                     </tr>
                     </thead>
                     <tbody>
