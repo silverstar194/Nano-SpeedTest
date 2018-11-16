@@ -1,21 +1,16 @@
 import { ajax } from 'rxjs/ajax';
 import { combineEpics, ofType } from 'redux-observable';
 import { map, mergeMap } from 'rxjs/operators';
-import { ADD_TRANSACTION, ADD_TIMING_DATA, FETCH_RANDOM_TRANSACTION } from 'actions/table';
+import { ADD_TRANSACTION, ADD_TIMING_DATA, FETCH_TRANSACTION } from 'actions/table';
 import { convertCoordsToString } from 'util/helpers';
 
 //TODO going to need better error handling if rejected or times out
-export const fetchRandomTransaction = action$ => action$.pipe(
-    ofType(FETCH_RANDOM_TRANSACTION),
+export const fetchTransaction = action$ => action$.pipe(
+    ofType(FETCH_TRANSACTION),
     mergeMap(action =>
         fetch('http://127.0.0.1:8000/transactions', {
             method: 'POST',
-            body: JSON.stringify({
-                transactions: [{
-                    originNodeId: null,
-                    destinationNodeId: null
-                }]
-            })
+            body: JSON.stringify(action.transactionParams)
         }).then((response) => {
             if (response.ok) return response.json();
             debugger;
@@ -71,6 +66,6 @@ export const fetchTransactionTiming = action$ => action$.pipe(
 );
 
 export default combineEpics(
-    fetchRandomTransaction,
+    fetchTransaction,
     fetchTransactionTiming
 );

@@ -4,7 +4,7 @@ import {
 } from './actions/transactions';
 
 import {
-    FETCH_RANDOM_TRANSACTION,
+    FETCH_TRANSACTION,
     ADD_TRANSACTION,
     ADD_TIMING_DATA
 } from './actions/table';
@@ -12,7 +12,7 @@ import {
 // 'Listens' for actions and will dispatch others while they are occurring
 const transactionsMiddleware = store => next => action => {
     switch(action.type) {
-        case FETCH_RANDOM_TRANSACTION:
+        case FETCH_TRANSACTION:
             store.dispatch(setTransactionFetchStatus(true));
             break;
         case ADD_TRANSACTION:

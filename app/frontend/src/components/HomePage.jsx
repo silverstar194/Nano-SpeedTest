@@ -5,7 +5,7 @@ import AdvancedModal from './AdvancedModal';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { switchTab } from '../actions/navigation';
-import { fetchRandomTransaction } from '../actions/table';
+import { fetchTransaction } from '../actions/table';
 import '../styles/HomePage.css';
 
 class HomePage extends Component {
@@ -21,7 +21,19 @@ class HomePage extends Component {
     onClick = () => {
         // navigate to /Stats route
         this.props.history.push('/Results');
-        this.props.onGoPressed(); // Update current active tab and dispatch action to get transaction data
+
+        // check if user selected locations to send to and from.  Make null (random) if it is NOT the case
+        // that they selected two different valid locations
+        const hasFormData = this.props.advSettingsForm.advSettings;
+        const notSame = !!hasFormData ? hasFormData.values.origin !== hasFormData.values.destination : false;
+        const origin = !!hasFormData && notSame ? hasFormData.values.origin : null;
+        const dest = !!hasFormData && notSame ? hasFormData.values.destination : null;
+
+        // multiple transactions
+        console.log(hasFormData);
+        const numTransactions = hasFormData && hasFormData.values.numTransactions ? hasFormData.values.numTransactions : false;
+
+        this.props.onGoPressed(origin, dest, numTransactions); // Update current active tab and dispatch action to get transaction data
     };
 
     handleLocationSettings = (e) => {
@@ -54,6 +66,7 @@ class HomePage extends Component {
                     handleLocationSettings={this.handleLocationSettings}
                     handleMultiSettings={this.handleMultiSettings}
                     handleCancel={this.handleCancel}
+                    nodes={this.props.nodes}
                 />
                 <h1 className='greeting page-header text-center'>Welcome to NanoSpeed.live!</h1>
                 <div className='container'>
@@ -77,13 +90,31 @@ class HomePage extends Component {
 const mapStateToProps = (state) => {
     return {
         advSettingsForm: state.form,
+        nodes: state.nodes
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onGoPressed() {
-            dispatch(fetchRandomTransaction());
+        onGoPressed(origin, dest, multi) {
+
+            if (multi) {
+                for (let i = 0; i < multi; i++) {
+                    dispatch(fetchTransaction({
+                        transactions: [{
+                            originNodeId: null,
+                            destinationNodeId: null
+                        }]
+                    }));
+                }
+            } else {
+                dispatch(fetchTransaction({
+                    transactions: [{
+                        originNodeId: origin,
+                        destinationNodeId: dest
+                    }]
+                }));
+            }
             dispatch(switchTab('Results')); // Update current active tab
         }
     };
