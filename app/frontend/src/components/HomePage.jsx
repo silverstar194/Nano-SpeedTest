@@ -122,7 +122,9 @@ const mapDispatchToProps = (dispatch) => {
 
 HomePage.propTypes = {
     history: PropTypes.object.isRequired,
-    onGoPressed: PropTypes.func.isRequired
+    onGoPressed: PropTypes.func.isRequired,
+    advSettingsForm: PropTypes.object,
+    nodes: PropTypes.object
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import TableRow from '../TableRow';
+import TableRow from '../CurrentTransactions/TableRow';
 import { shallow } from 'enzyme';
 
 const props = {
