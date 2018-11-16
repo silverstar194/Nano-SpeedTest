@@ -10,7 +10,7 @@ const loader = (
         <div className='loader'></div>
     </div>
     <div>
-        <p>Your transaction is processing. Please wait.</p>
+        <p className='text-center'>Your transaction is processing. Please wait.</p>
     </div>
 </div>
 );

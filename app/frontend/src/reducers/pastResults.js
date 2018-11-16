@@ -1,9 +1,7 @@
 import { ADD_PAST_RESULTS } from 'actions/pastResults';
 
 export const INITIAL_STATE = {
-    pastTransactions: [],
-    totalTransactions: 'Fetching...',
-    globalAverage: 'Fetching...'
+    pastTransactions: []
 };
 
 export default (state = INITIAL_STATE, action) => {
