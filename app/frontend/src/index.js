@@ -63,7 +63,7 @@ fetchWrapper('http://127.0.0.1:8000/nodes/list', {
     console.warn('TODO Error in fetching nodes');
 });
 
-fetchWrapper('http://127.0.0.1:8000/transactions/statistics?count=150', {
+fetchWrapper('http://127.0.0.1:8000/transactions/statistics?count=500', {
     method: 'GET'
 }).then((data) => {
 	const transactions = data.transactions.filter((transaction) => {

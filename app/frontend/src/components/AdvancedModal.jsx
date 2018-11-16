@@ -36,10 +36,11 @@ class AdvancedModal extends Component {
     };
 
     render() {
+        const {open, handleLocationSettings, handleCancel, handleMultiSettings, nodes, settings} = this.props;
         return (
             <Modal
                 appElement={document.getElementById('root')}
-                isOpen={this.props.open}
+                isOpen={open}
                 contentLabel='Advanced Settings'
                 style={{
                     content: {
@@ -88,7 +89,7 @@ class AdvancedModal extends Component {
                     )}
                 {this.state.locationsActive ?
                     (
-                        <form onSubmit={this.props.handleLocationSettings}>
+                        <form onSubmit={handleLocationSettings}>
                             <div>
                                 <p>Select the node locations that you want to be used for your test.</p>
                             </div>
@@ -98,11 +99,11 @@ class AdvancedModal extends Component {
                                     <Field name='origin' component='select'>
                                         <option></option>
                                         {
-                                            Object.keys(this.props.nodes).map(nodeKey => {
+                                            Object.keys(nodes).map(nodeKey => {
                                                 return <option
                                                     key={nodeKey}
-                                                    value={this.props.nodes[nodeKey].id}
-                                                >{this.props.nodes[nodeKey].location}</option>;
+                                                    value={nodes[nodeKey].id}
+                                                >{nodes[nodeKey].location}</option>;
                                             })
                                         }
                                     </Field>
@@ -114,11 +115,20 @@ class AdvancedModal extends Component {
                                     <Field name='destination' component='select'>
                                         <option></option>
                                         {
-                                            Object.keys(this.props.nodes).map(nodeKey => {
+                                            Object.keys(nodes).filter((nodeId) => {
+                                                console.log(settings)
+                                                if (settings.advSettings && settings.advSettings.values
+                                                    && settings.advSettings.values.origin) {
+                                                    return settings.advSettings.values.origin !== nodeId;
+                                                } else {
+                                                    return true;
+                                                }
+                                            })
+                                            .map(nodeKey => {
                                                 return <option
                                                     key={nodeKey}
-                                                    value={this.props.nodes[nodeKey].id}
-                                                >{this.props.nodes[nodeKey].location}</option>;
+                                                    value={nodes[nodeKey].id}
+                                                >{nodes[nodeKey].location}</option>;
                                             })
                                         }
                                     </Field>
@@ -128,7 +138,7 @@ class AdvancedModal extends Component {
                                 <button
                                     type='button'
                                     className='btn btn-light float-right col-2'
-                                    onClick={this.props.handleCancel}>Cancel
+                                    onClick={handleCancel}>Cancel
                                 </button>
                                 <button
                                     id='submit'
@@ -139,7 +149,7 @@ class AdvancedModal extends Component {
                             </div>
                         </form>
                     ) : (
-                        <form onSubmit={this.props.handleMultiSettings}>
+                        <form onSubmit={handleMultiSettings}>
                             <p>Select to send either 2 or 3 random transactions for your test.</p>
                             <div>
                                 <div>

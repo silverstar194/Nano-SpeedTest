@@ -65,6 +65,7 @@ class HomePage extends Component {
                     handleMultiSettings={this.handleMultiSettings}
                     handleCancel={this.handleCancel}
                     nodes={this.props.nodes}
+                    settings= {this.props.advSettingsForm}
                 />
                 <h1 className='greeting page-header text-center'>Welcome to NanoSpeed.live!</h1>
                 <div className='container'>
