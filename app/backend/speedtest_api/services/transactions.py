@@ -305,7 +305,7 @@ def get_transactions(enabled=True, batch=None):
     return models.Transaction.objects.all()
 
 
-def get_transactions(count=25):
+def get_recent_transactions(count=25):
     """
     Get most recent count transaction with enabled nodes
 

@@ -183,7 +183,7 @@ def get_transaction_statistics(request):
     count = request.GET.get('count')
     transactions_array = []
 
-    recent_transactions = transactions.get_transactions(int(count))
+    recent_transactions = transactions.get_recent_transactions(int(count))
 
     for transaction in recent_transactions:
         temp_transaction = convert_transaction_to_dict(transaction)
