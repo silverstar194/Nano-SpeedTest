@@ -190,6 +190,7 @@ def get_transaction_statistics(request):
 
         transactions_array.append(temp_transaction)
         time_delta = transaction.start_send_timestamp - transaction.end_receive_timestamp
+        #time_delta_sum +=
 
     statistics = {
         'transactions': transactions_array,
