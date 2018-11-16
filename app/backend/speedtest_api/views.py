@@ -6,6 +6,7 @@ from django.http import JsonResponse
 from rest_framework.decorators import api_view
 
 from ipware import get_client_ip
+from ratelimit.decorators import ratelimit
 
 from speedtest_api.models import Transaction
 
@@ -15,6 +16,7 @@ from speedtest_api.services import transactions
 from speedtest_api.services import nodes
 
 
+@ratelimit(key='ip', rate='50/d')
 @api_view(['POST'])
 def generate_transaction(request):
     """
@@ -24,6 +26,11 @@ def generate_transaction(request):
     @return JsonResponse The general transaction information including the id, wallets, wallet locations, amount, and ip
 
     """
+    was_limited = getattr(request, 'limited', False)
+    if was_limited:
+        return JsonResponse({'message': "You reached the max number of requests per day. Try again tomorrow."},
+                            status=403)
+
     client_ip, is_routable = get_client_ip(request)
     body = json.loads(request.body)
 
@@ -95,6 +102,7 @@ def generate_transaction(request):
         return JsonResponse({'message': "The transaction format is invalid. Please try again."}, status=400)
 
 
+@ratelimit(key='ip', rate='50/d')
 @api_view(['POST'])
 def send_batch_transactions(request):
     """
@@ -104,6 +112,11 @@ def send_batch_transactions(request):
     @return JsonResponse The transaction timing information
 
     """
+    was_limited = getattr(request, 'limited', False)
+    if was_limited:
+        return JsonResponse({'message': "You reached the max number of requests per day. Try again tomorrow."},
+                            status=403)
+
     body = json.loads(request.body)
 
     batch_id = body['id']
@@ -117,6 +130,9 @@ def send_batch_transactions(request):
         batch_transactions = transactions.get_transactions(enabled=True, batch=batch)
 
         for transaction in batch_transactions:
+            if transaction.start_send_timestamp or transaction.end_receive_timestamp:
+                return JsonResponse({'message': "This batch has already been sent."}, status=405)
+
             sent_transaction = transactions.send_transaction(transaction)
 
             transaction_array.append(convert_transaction_to_dict(sent_transaction))
