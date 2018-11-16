@@ -116,8 +116,7 @@ class AdvancedModal extends Component {
                                         <option></option>
                                         {
                                             Object.keys(nodes).filter((nodeId) => {
-                                                console.log(settings)
-                                                if (settings.advSettings && settings.advSettings.values
+                                                if (settings.advSettings && settings.advSettings.values //grab the origin nodes value and don't show it
                                                     && settings.advSettings.values.origin) {
                                                     return settings.advSettings.values.origin !== nodeId;
                                                 } else {

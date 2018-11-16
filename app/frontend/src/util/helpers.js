@@ -6,7 +6,7 @@ export const fetchWrapper = (url, options) => {
     return fetch(url, {
         ...options
     }).catch((err) => { // This only occurs if there is a connection error
-        console.log(err);
+        console.error(err);
         throw err;
     }).then((response) => {
         if (response.ok) return response.json(); //proceed normally

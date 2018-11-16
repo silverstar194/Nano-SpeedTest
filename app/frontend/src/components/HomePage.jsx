@@ -30,7 +30,6 @@ class HomePage extends Component {
         const dest = !!hasFormData && notSame ? hasFormData.values.destination : null;
 
         // multiple transactions
-        console.log(hasFormData);
         const numTransactions = hasFormData && hasFormData.values.numTransactions ? hasFormData.values.numTransactions : false;
 
         this.props.onGoPressed(origin, dest, numTransactions); // Update current active tab and dispatch action to get transaction data
@@ -40,8 +39,6 @@ class HomePage extends Component {
         // don't reload page on form submit from modal
         e.preventDefault();
         this.setState(() => ({modalOpen: false}));
-
-        console.log(this.props.advSettingsForm.advSettings.values);
     };
 
     handleMultiSettings = (e) => {
@@ -54,7 +51,24 @@ class HomePage extends Component {
         this.setState(() => ({modalOpen: false}));
     };
 
+    nodeIdToLocation = (nodeId, nodes) => {
+        return nodes[nodeId].location;
+    }
+
+    drawMessage(advSettingsForm, nodes) {
+        const {values} = (advSettingsForm && advSettingsForm.advSettings) || {};
+        if (values) {
+            if (values.numTransactions) { // multi transaction message
+                return <h3 className='greeting'>Hit GO to send {values.numTransactions} Transactions!</h3>;
+            } else if (values.origin && values.destination) { // two city message
+                return <h3 className='greeting'>Hit GO to send Nano from {this.nodeIdToLocation(values.origin, nodes)} to {this.nodeIdToLocation(values.destination, nodes)}!</h3>;
+            }
+        }
+        return <h3 className='greeting'>Hit GO to send Nano between two random nodes!</h3>; // show random message
+    }
+
     render() {
+        const {advSettingsForm, nodes} = this.props;
         return (
             <div className='HomePage'>
                 <Header/>
@@ -64,19 +78,21 @@ class HomePage extends Component {
                     handleLocationSettings={this.handleLocationSettings}
                     handleMultiSettings={this.handleMultiSettings}
                     handleCancel={this.handleCancel}
-                    nodes={this.props.nodes}
-                    settings= {this.props.advSettingsForm}
+                    nodes={nodes}
+                    settings= {advSettingsForm}
                 />
                 <h1 className='greeting page-header text-center'>Welcome to NanoSpeed.live!</h1>
                 <div className='container'>
                     <div className='row'>
                         <div className='col-md-12 text-center'>
+                            {this.drawMessage(advSettingsForm, nodes)}
+
                             <button type='button' className='btn btn-success btn-circle btn-xl' onClick={this.onClick}>
                                 Go
                             </button>
                             <br/>
                             <button id='advanced-btn' type='button' className='btn btn-primary' onClick={this.onAdvancedClick}>Advanced</button>
-                            <br/>
+                            <br />
                             <p className='greeting'>Run your live test now.</p>
                         </div>
                     </div>
