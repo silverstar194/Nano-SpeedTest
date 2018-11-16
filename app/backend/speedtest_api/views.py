@@ -1,10 +1,13 @@
 from decimal import *
 import json
 
+from django.db.models import Avg
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
 
 from ipware import get_client_ip
+
+from speedtest_api.models import Transaction
 
 from speedtest_api.services import advertisements
 from speedtest_api.services import batches
@@ -180,22 +183,30 @@ def list_nodes(request):
 
 @api_view(['GET'])
 def get_transaction_statistics(request):
+    """
+    Gets statistics from the most recent number of transactions specified in the body
+
+    @param request The number of transactions to return
+    @return dict An array of transactions with average timing and total count metadata
+
+    """
     count = request.GET.get('count')
     transactions_array = []
-    time_delta_sum = 0
     recent_transactions = transactions.get_recent_transactions(int(count))
 
     for transaction in recent_transactions:
         temp_transaction = convert_transaction_to_dict(transaction)
-
         transactions_array.append(temp_transaction)
-        #time_delta = transaction.start_send_timestamp - transaction.end_receive_timestamp
-        #time_delta_sum +=
+
+    average_delta = Transaction.objects.all().aggregate(Avg('end_receive_timestamp'))['end_receive_timestamp__avg'] - \
+                    Transaction.objects.all().aggregate(Avg('start_send_timestamp'))['start_send_timestamp__avg']
+
+    transaction_count = len(Transaction.objects.all())
 
     statistics = {
         'transactions': transactions_array,
-        'count': len(recent_transactions),
-        'average': "" # TODO
+        'count': transaction_count,
+        'average': average_delta
     }
 
     return JsonResponse(statistics, status=200)
