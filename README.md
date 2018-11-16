@@ -87,6 +87,7 @@ $ pip3 install requests  # Used for sending HTTP Requests
 $ pip3 install nano-python  # RPC wrapper for Nano
 $ pip3 install mysqlclient  # We are using a MySQL database
 $ pip3 install django-ipware  # Used for getting IP from REST request
+$ pip3 install django-ratelimit # Puts a limit on the transaction endpoints to prevent spamming
 ```
 
 ## Environment Variable Setup
