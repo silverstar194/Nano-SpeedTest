@@ -11,7 +11,7 @@ def get_random_ad():
     """
     ads = get_advertisements()
 
-    if len(ads) != 0:
+    if not len(ads) == 0:
         return random.choice(ads)
     else:
         return ads
