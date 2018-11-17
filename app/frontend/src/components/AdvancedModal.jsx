@@ -99,7 +99,7 @@ class AdvancedModal extends Component {
                                     <Field name='origin' component='select'>
                                         <option></option>
                                         {
-                                            Object.keys(nodes).map(nodeKey => {
+                                            nodes && Object.keys(nodes).map(nodeKey => {
                                                 return <option
                                                     key={nodeKey}
                                                     value={nodes[nodeKey].id}
@@ -115,8 +115,8 @@ class AdvancedModal extends Component {
                                     <Field name='destination' component='select'>
                                         <option></option>
                                         {
-                                            Object.keys(nodes).filter((nodeId) => {
-                                                if (settings.advSettings && settings.advSettings.values //grab the origin nodes value and don't show it
+                                            nodes && Object.keys(nodes).filter((nodeId) => {
+                                                if (settings && settings.advSettings && settings.advSettings.values //grab the origin nodes value and don't show it
                                                     && settings.advSettings.values.origin) {
                                                     return settings.advSettings.values.origin !== nodeId;
                                                 } else {

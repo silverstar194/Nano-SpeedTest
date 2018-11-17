@@ -1,13 +1,16 @@
 import {
-    addTransaction,
-    ADD_TRANSACTION,
+    addTransactions,
+    ADD_TRANSACTIONS,
 
     addTimingData,
-    ADD_TIMING_DATA
+    ADD_TIMING_DATA,
+
+    FETCH_TRANSACTION,
+    fetchTransaction
 } from '../table';
 
-describe('Actions - addTransaction', () => {
-    it('should correctly setup addTransaction action', () => {
+describe('Actions - table', () => {
+    it('should correctly setup addTransactions action', () => {
         const transactionData = {
             hash: 'abc-123',
             origin: 'Chicago',
@@ -16,10 +19,10 @@ describe('Actions - addTransaction', () => {
             amount: 11111,
             completed: 'Oct 9, 2018'
         };
-        const action = addTransaction(transactionData);
+        const action = addTransactions(transactionData);
 
         expect(action).toEqual({
-            type: ADD_TRANSACTION,
+            type: ADD_TRANSACTIONS,
             transactionData
         });
     });
@@ -33,6 +36,18 @@ describe('Actions - addTransaction', () => {
         expect(action).toEqual({
             type: ADD_TIMING_DATA,
             timingData
+        });
+    });
+
+    it('should correctly setup fetchTransaction action', () => {
+        const data = {
+           id: 123
+        };
+        const action = fetchTransaction(data);
+
+        expect(action).toEqual({
+            type: FETCH_TRANSACTION,
+            transactionParams: data
         });
     });
 });

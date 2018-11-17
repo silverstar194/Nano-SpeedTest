@@ -17,20 +17,62 @@ const props = {
     history: {},
     onGoPressed: () => {},
     advSettingsForm: {},
-    nodes: {}
+    nodes: {
+        1: {
+            location: 'A'
+        },
+        2: {
+            location: 'B'
+        }
+    }
 };
 
 it('shallow renders without crashing', () => {
     shallow(<HomePage store={store} {...props}/>);
 });
-//
-// it(`renders snapshot correctly`, () => {
-//     const tree = renderer.create(
-//         <Provider store={store}>
-//             <BrowserRouter>
-//                 <HomePage {...props}/>
-//             </BrowserRouter>
-//         </Provider>
-//     ).toJSON();
-//     expect(tree).toMatchSnapshot();
-// });
+
+it(`renders base snapshot correctly`, () => {
+    const tree = renderer.create(
+        <Provider store={store}>
+            <BrowserRouter>
+                <HomePage {...props}/>
+            </BrowserRouter>
+        </Provider>
+    ).toJSON();
+    expect(tree).toMatchSnapshot();
+});
+
+it(`renders multi city snapshot correctly`, () => {
+    props.advSettings = {
+        values: {
+            numTransactions: 3
+        }
+    };
+
+    const tree = renderer.create(
+        <Provider store={store}>
+            <BrowserRouter>
+                <HomePage {...props}/>
+            </BrowserRouter>
+        </Provider>
+    ).toJSON();
+    expect(tree).toMatchSnapshot();
+});
+
+it(`renders two city snapshot correctly`, () => {
+    props.advSettings = {
+        values: {
+            origin: 1,
+            destination: 2
+        }
+    };
+
+    const tree = renderer.create(
+        <Provider store={store}>
+            <BrowserRouter>
+                <HomePage {...props}/>
+            </BrowserRouter>
+        </Provider>
+    ).toJSON();
+    expect(tree).toMatchSnapshot();
+});
