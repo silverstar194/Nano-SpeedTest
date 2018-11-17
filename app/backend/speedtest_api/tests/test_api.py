@@ -25,7 +25,7 @@ class ApiTests(APITestCase):
     def test_list_nodes(self):
         send_response = self.client.get('/nodes/list', format='json')
         data = json.loads(send_response.text)
-        assert(len(data["nodes"]) == 0)
+        assert(len(data["nodes"]) == 1)
         self.assertEqual(send_response.status_code, 200)
 
 
