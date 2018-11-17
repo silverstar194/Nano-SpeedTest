@@ -10,19 +10,19 @@ const Table = ({tableData}) => {
             <table className='table'>
                 <thead>
                 <tr>
-                    <th scope='col'>#</th>
-                    <th scope='col'>Id</th>
                     <th scope='col'>Origin</th>
                     <th scope='col'>Destination</th>
                     <th scope='col'>Amount</th>
                     <th scope='col'>Elapsed Time</th>
                     <th scope='col'>Status</th>
+                    <th scope='col' className='block-col'>Sending Block</th>
+                    <th scope='col' className='block-col'>Receiving Block</th>
                 </tr>
                 </thead>
                 <tbody>
                 {
-                    tableData.map((transactionData, index) => {
-                        transactionData.index = index + 1;
+                    tableData.sort((a,b) => b.endReceiveTimestamp - a.endReceiveTimestamp)
+                    .map((transactionData) => {
                         return <TableRow key={uuid(transactionData.id)} {...transactionData}/>;
                     })
                 }

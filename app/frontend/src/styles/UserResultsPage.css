@@ -22,14 +22,22 @@
     padding: 10px 40px;
 }
 
-.map-header {
+.map-container {
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+.page-header {
     padding: 20px 0 0 40px;
+}
+
+.map-header {
     margin-bottom: 0;
     font-family: sans-serif;
     font-weight: 100;
 }
 
-p {
+h2 > p {
     margin-top: 10px;
     text-align: center;
 }
