@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Header from './Header';
+import Footer from './Footer';
 import Ad from './Ad';
 import AdvancedModal from './AdvancedModal';
 import PropTypes from 'prop-types';
@@ -98,6 +99,7 @@ class HomePage extends Component {
                     </div>
                     <div/>
                 </div>
+                <Footer/>
             </div>
         );
     }

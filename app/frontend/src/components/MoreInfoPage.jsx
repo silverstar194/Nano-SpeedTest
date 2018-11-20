@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Header from './Header';
+import Footer from './Footer';
 import '../styles/HomePage.css';
 import Ad from './Ad';
 
@@ -82,6 +83,7 @@ class MoreInfoPage extends Component {
 
 
                 </div>
+                 <Footer/>
             </div>
         );
     }
