@@ -41,7 +41,7 @@ def new_account(wallet, address=None):
 
     return models.Account.objects.create(wallet=wallet, address=address)
 
-def get_accounts(enabled=True, node=None):
+def get_accounts(enabled=True, node=None, in_use=None):
     """
     Get all accounts in the database
 
@@ -49,10 +49,19 @@ def get_accounts(enabled=True, node=None):
     @param node: Filter based on accounts belonging to the node (precendence) 
     @return: Query of all accounts (filtered by enabled or node)
     """
+    if in_use is not None and node:
+        print("Fetching One")
+        return models.Account.objects.filter(wallet__node__id=node.id).filter(in_use=in_use)
 
-    if node is not None:
+    if in_use is not None:
+        print("Fetching Two")
+        return models.Account.objects.filter(wallet__node__enabled=enabled).filter(in_use=in_use)
+
+    if node:
+        print("Fetching Three")
         return models.Account.objects.filter(wallet__node__id=node.id)
 
+    print("Fetching Four")
     return models.Account.objects.filter(wallet__node__enabled=enabled)
 
 def get_account(address):
