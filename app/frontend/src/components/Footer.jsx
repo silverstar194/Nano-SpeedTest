@@ -8,7 +8,7 @@ import '../styles/Footer.css';
 const Footer = ({activeTab, onSwitchTab}) => {
 	return (
 	    <footer class="footer">
-	        <FooterItem to='https://github.com/silverstar194/Nano-SpeedTest' text='Our Github' url='https://github.com/silverstar194/Nano-SpeedTest'/>
+	        <FooterItem to='https://github.com/silverstar194/Nano-SpeedTest' text='❤️ Our Github' url='https://github.com/silverstar194/Nano-SpeedTest'/>
 	    </footer>
 	);
 };

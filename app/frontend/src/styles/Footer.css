@@ -15,6 +15,7 @@ body {
     text-align: center;
     font-size: .95em;
     color:#A9A9A9;
+    float:left;
 }
 
 .footer-item:hover{
@@ -24,7 +25,7 @@ body {
 
 .text-muted{
   position: absolute;
-  left: 5%;
+  left:50%;
   top: 50%;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);

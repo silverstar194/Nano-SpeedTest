@@ -5,6 +5,7 @@ import UserResultsPage from './components/UserResultsPage';
 import HistoricalDataView from './components/HistoricalData/HistoricalDataView';
 import MoreInfoPage from './components/MoreInfoPage';
 import NotFoundPage from './components/NotFoundPage';
+import BuildAd from './components/BuildAd';
 
 export default() => (
     <BrowserRouter>
@@ -14,6 +15,7 @@ export default() => (
                 <Route path='/Stats' component={HistoricalDataView}/>
                 <Route path='/Results' component={UserResultsPage}/>
                 <Route path='/Info' component={MoreInfoPage}/>
+                <Route path='/BuildAd' component={BuildAd}/>
                 <Route component={NotFoundPage}/>
             </Switch>
         </div>
