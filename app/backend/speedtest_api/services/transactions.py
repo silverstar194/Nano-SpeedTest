@@ -56,7 +56,6 @@ def new_transaction_random(batch):
     """
 
     accounts_list = get_accounts(in_use=False)
-    print(len(accounts_list), " count of possible accounts")
 
     if len(accounts_list) == 0:
         raise NoAccountsException()
@@ -90,9 +89,7 @@ def new_transaction_nodes(origin_node, destination_node, batch):
     """
 
     origin_accounts_list = get_accounts(node=origin_node, in_use=False)
-    print(len(origin_accounts_list), " count possible origin")
     destination_accounts_list = get_accounts(node=destination_node, in_use=False)
-    print(len(destination_accounts_list), " count possible destination")
 
     if len(origin_accounts_list) == 0:
         raise NoAccountsException(origin_node)

@@ -134,7 +134,6 @@ def send_batch_transactions(request):
         transactions_queue = Queue()
         all_threads = []
         for transaction in batch_transactions:
-            print(transaction)
             if transaction.start_send_timestamp or transaction.end_receive_timestamp:
                 return JsonResponse({'message': "This batch has already been sent."}, status=405)
 
