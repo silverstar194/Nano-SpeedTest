@@ -171,7 +171,7 @@ def get_random_advertisement(request):
     if random_ad:
         ad = {
             'title': random_ad.title,
-            'message': random_ad.message,
+            'message': random_ad.description,
             'url': random_ad.URL
         }
 
