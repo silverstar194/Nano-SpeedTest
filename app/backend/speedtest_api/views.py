@@ -170,9 +170,11 @@ def get_random_advertisement(request):
 
     if random_ad:
         ad = {
+            "ad":{
             'title': random_ad.title,
             'message': random_ad.description,
             'url': random_ad.URL
+            }
         }
 
         return JsonResponse(ad, status=200)
