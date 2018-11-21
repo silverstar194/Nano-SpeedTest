@@ -179,6 +179,19 @@ def get_random_advertisement(request):
     else:
         return JsonResponse({'message': "No advertisements were found."}, status=200)
 
+@api_view(['POST'])
+def add_advertisement(request):
+    """
+    Get information for a new advertisement
+
+    @param request The REST request to the endpoint
+    @return JsonResponse The status of ad addition
+
+    """
+    body = json.loads(request.body)
+
+    return JsonResponse({'message': "Implementation todo", "data_passed": str(body)}, status=400)
+
 
 @api_view(['GET'])
 def list_nodes(request):

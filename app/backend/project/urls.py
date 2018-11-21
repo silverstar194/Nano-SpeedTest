@@ -24,6 +24,7 @@ urlpatterns = [
     path('transactions/send', views.send_batch_transactions),
     path('transactions', views.generate_transaction),
     path('advertisements/random', views.get_random_advertisement),
+    path('advertisements/add', views.add_advertisement),
     path('nodes/list', views.list_nodes),
     path('transactions/statistics', views.get_transaction_statistics)
 ]
