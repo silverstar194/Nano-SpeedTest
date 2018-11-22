@@ -4,6 +4,10 @@ import nano
 from .. import models as models
 
 
+class WalletNotFoundException(Exception):
+    def __init__(self, wallet):
+        Exception.__init__(self, "Fatal error occurred occurred. Wallet %s not found on node %s" % (wallet.wallet_id, wallet.node.URL))
+
 def new_wallet(node, wallet_id=None):
     """
     Create a new wallet from the given information
@@ -14,6 +18,7 @@ def new_wallet(node, wallet_id=None):
     """
 
     if wallet_id is None:
+        print(node.URL)
         rpc = nano.rpc.Client(node.URL)
         wallet_id = rpc.wallet_create()
 
