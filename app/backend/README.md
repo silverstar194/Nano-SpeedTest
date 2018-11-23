@@ -72,7 +72,7 @@ The following runs the account balancer (attach this to a cron job):
 $ python manage.py balance_accounts
 ```
 
-The following generates wallets and accounts on available nodes and adds them to the database:
+The following generates wallets and accounts on available nodes, distributes funds to them and adds them to the database:
 ```sh
 $ python manage.py populate_nodes
 ```
@@ -85,6 +85,11 @@ $ python manage.py regen_pow
 The following synchronizes the balance of all accounts from the Nano network to our database balance:
 ```sh
 $ python manage.py sync_accounts
+```
+
+The following moves all funds held in node account to the specified external address.
+```sh
+$ python manage.py sweep_funds <external_address>
 ```
 
 ## AWS CodeBuild and CodeDeploy
