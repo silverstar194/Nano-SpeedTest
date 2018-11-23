@@ -1,4 +1,5 @@
 import logging
+import time
 
 from django.core.management.base import BaseCommand, CommandError
 
@@ -9,7 +10,7 @@ from ...services.transactions import simple_send
 
 class SweepException(Exception):
     def __init__(self, s):
-        Exception.__init__(self, "Error occurred in the account sweeping process. "+s)
+        Exception.__init__(self, "Error occurred in the account sweeping process. %s" % str(s))
 
 logger = logging.getLogger(__name__)
 
@@ -34,7 +35,9 @@ class Command(BaseCommand):
         for account in accounts_list:
             i+=1
             logger.info("%s of %s %s -> %s" % (i, len(accounts_list), account.address, out_address))
-            simple_send(account, out_address, account.current_balance)
+            if account.current_balance > 0:
+                simple_send(account, out_address, int(account.current_balance))
+                time.sleep(10) ## Helps with timeout issues on nodes
 
         # Disable nodes
         all_enabled_nodes = get_nodes()

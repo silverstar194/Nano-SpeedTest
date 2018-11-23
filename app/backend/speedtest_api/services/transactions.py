@@ -353,6 +353,7 @@ def simple_send(from_account, to_address, amount):
     @return: hash of send block
     """
     from_account.lock()
+    transaction_hash_sending = None
     try:
         rpc_origin_node = nano.rpc.Client(from_account.wallet.node.URL)
         # No dPoW is used. PoW will be generated on nodes instead.
@@ -360,14 +361,14 @@ def simple_send(from_account, to_address, amount):
             wallet=from_account.wallet.wallet_id,
             source=from_account.address,
             destination=to_address,
-            amount=amount,
+            amount=amount
         )
 
         POWService.enqueue_account(address=from_account.address, frontier=transaction_hash_sending)
         from_account.current_balance = from_account.current_balance - amount
         from_account.save()
     except Exception as e:
-        logger.error("Error in simple_send account %s to account %s $s", from_account.address, to_address, str(e))
+        logger.error("Error in simple_send account %s to account %s", from_account.address, to_address)
 
     from_account.unlock()
 
