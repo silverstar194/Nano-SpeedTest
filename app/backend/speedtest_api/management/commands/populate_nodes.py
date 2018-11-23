@@ -25,11 +25,11 @@ class Command(BaseCommand):
         number_accounts_per_node = 5
 
         nodes_list = get_nodes()
-        # for node in nodes_list:
-        #     wallet = new_wallet(node=node)
-        #
-        #     for i in range(number_accounts_per_node):
-        #         new_account(wallet=wallet)
+        for node in nodes_list:
+            wallet = new_wallet(node=node)
+
+            for i in range(number_accounts_per_node):
+                new_account(wallet=wallet)
 
         all_accounts = get_accounts()
         funding_account = all_accounts[0]
