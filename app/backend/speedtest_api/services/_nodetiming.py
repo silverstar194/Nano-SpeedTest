@@ -9,11 +9,11 @@ import nano
 # Get an instance of a logger 
 logger = logging.getLogger(__name__)
 
-def transaction_general(node_IP, account_address, current_hash, start_timestamp, ):
+def transaction_general(node_URL, account_address, current_hash, start_timestamp, ):
 	"""
 	This to time the sending and recieving of blocks
 	@return delta of how long send or receive took in seconds
-	@param node_IP address of client
+	@param node_URL address of client
 	@param account_address account address
 	@param current_hash hash of the part of transcation we are interested in
 	@param start_timestamp the start of time the transaction
@@ -21,7 +21,7 @@ def transaction_general(node_IP, account_address, current_hash, start_timestamp,
 	@raise Exception for when we have missed the transaction
 	"""
 
-	rpc_node = nano.rpc.Client(node_IP)
+	rpc_node = nano.rpc.Client(node_URL)
 
 	#Sleep times are incase we are still waiting for the transcation to go through
 
@@ -62,7 +62,7 @@ def time_transaction_receive(transaction):
 	@return delta in seconds of how long it took to get the receiving block
 	@raise Exception for when we have missed the transaction
 	"""
-	end_time = transaction_general(transaction.destination.wallet.node.IP, 
+	end_time = transaction_general(transaction.destination.wallet.node.URL, 
 		transaction.destination.address, 
 		transaction.transaction_hash_receiving, 
 		transaction.start_receive_timestamp)
@@ -78,7 +78,7 @@ def time_transaction_send(transaction):
 	@return delta in seconds of how long it took to get the sending block
 	@raise Exception for when we have missed the transaction
 	"""
-	end_time = transaction_general(transaction.origin.wallet.node.IP,
+	end_time = transaction_general(transaction.origin.wallet.node.URL,
 	 transaction.origin.address, 
 	 transaction.transaction_hash_sending,
 	 transaction.start_send_timestamp)

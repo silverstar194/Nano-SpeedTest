@@ -1,7 +1,12 @@
+import logging
+
 from django.conf import settings as settings
 import nano
 
 from .. import models as models
+
+
+logger = logging.getLogger(__name__)
 
 
 class AccountNotFound(Exception):
@@ -19,7 +24,7 @@ def new_account(wallet, address=None):
     @raise RPCException: RPC Failure
     """
 
-    rpc = nano.rpc.Client(wallet.node.IP)
+    rpc = nano.rpc.Client(wallet.node.URL)
 
     if address is None:
         address = rpc.account_create(wallet=wallet.wallet_id)
@@ -36,14 +41,19 @@ def new_account(wallet, address=None):
 
     return models.Account.objects.create(wallet=wallet, address=address)
 
-def get_accounts():
+def get_accounts(enabled=True, node=None):
     """
     Get all accounts in the database
 
-    @return: Query of all accounts
+    @param enabled: Filter based on account's wallet's node enability
+    @param node: Filter based on accounts belonging to the node (precendence) 
+    @return: Query of all accounts (filtered by enabled or node)
     """
 
-    return models.Account.objects.all()
+    if node is not None:
+        return models.Account.objects.filter(wallet__node__id=node.id)
+
+    return models.Account.objects.filter(wallet__node__enabled=enabled)
 
 def get_account(address):
     """
@@ -71,7 +81,18 @@ def sync_accounts():
     accounts_list = get_accounts()
 
     for account in accounts_list:
-        rpc = nano.rpc.Client(account.wallet.node.IP)
+        rpc = nano.rpc.Client(account.wallet.node.URL)
+
+        try:
+            rpc.search_pending_all()
+            incoming_blocks = rpc.pending(account=account.address)
+            for block_hash in incoming_blocks:
+                rpc.receive(wallet=account.wallet.wallet_id, account=account.address, block=block_hash)
+                account.POW = None
+                account.save()
+                logger.warning('Received block: %s' % block_hash)
+        except Exception as e:
+            logger.error('Error trying to receive blocks (for %s): %s' % (account.address, e))
 
         new_balance = rpc.account_balance(account=account.address)['balance']
 

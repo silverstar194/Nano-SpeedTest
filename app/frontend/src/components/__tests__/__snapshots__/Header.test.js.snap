@@ -22,11 +22,24 @@ exports[`renders snapshot correctly when activeTab is '' 1`] = `
   >
     <a
       className="nav-link "
+      href="/Results"
+      onClick={[Function]}
+    >
+       
+      Your Results
+       
+    </a>
+  </li>
+  <li
+    className="nav-item"
+  >
+    <a
+      className="nav-link "
       href="/Stats"
       onClick={[Function]}
     >
        
-      Statistics
+      Global Statistics
        
     </a>
   </li>

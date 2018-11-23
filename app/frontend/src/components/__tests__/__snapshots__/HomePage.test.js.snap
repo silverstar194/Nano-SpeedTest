@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders snapshot correctly 1`] = `
+exports[`renders base snapshot correctly 1`] = `
 <div
   className="HomePage"
 >
@@ -25,11 +25,24 @@ exports[`renders snapshot correctly 1`] = `
     >
       <a
         className="nav-link "
+        href="/Results"
+        onClick={[Function]}
+      >
+         
+        Your Results
+         
+      </a>
+    </li>
+    <li
+      className="nav-item"
+    >
+      <a
+        className="nav-link "
         href="/Stats"
         onClick={[Function]}
       >
          
-        Statistics
+        Global Statistics
          
       </a>
     </li>
@@ -47,6 +60,32 @@ exports[`renders snapshot correctly 1`] = `
       </a>
     </li>
   </div>
+  <div
+    className="container"
+  >
+    <div
+      className="jumbotron"
+    >
+      <div
+        id="ad-content"
+      >
+        <a
+          className="row"
+          href="https://nano21.net"
+        >
+          <b>
+            ♠ Nano21.net 
+          </b>
+            | 20 Nano Give-Away for testers! | Nano Blackjack Casino
+        </a>
+        <p
+          className="row"
+        >
+          COMMUNITY AD
+        </p>
+      </div>
+    </div>
+  </div>
   <h1
     className="greeting page-header text-center"
   >
@@ -61,12 +100,294 @@ exports[`renders snapshot correctly 1`] = `
       <div
         className="col-md-12 text-center"
       >
+        <h3
+          className="greeting"
+        >
+          Hit GO to send Nano between two random nodes!
+        </h3>
         <button
           className="btn btn-success btn-circle btn-xl"
           onClick={[Function]}
           type="button"
         >
           Go
+        </button>
+        <br />
+        <button
+          className="btn btn-primary"
+          id="advanced-btn"
+          onClick={[Function]}
+          type="button"
+        >
+          Advanced
+        </button>
+        <br />
+        <p
+          className="greeting"
+        >
+          Run your live test now.
+        </p>
+      </div>
+    </div>
+    <div />
+  </div>
+</div>
+`;
+
+exports[`renders multi city snapshot correctly 1`] = `
+<div
+  className="HomePage"
+>
+  <div
+    className="nav nav-tabs"
+  >
+    <li
+      className="nav-item"
+    >
+      <a
+        className="nav-link active"
+        href="/"
+        onClick={[Function]}
+      >
+         
+        Speed Test
+         
+      </a>
+    </li>
+    <li
+      className="nav-item"
+    >
+      <a
+        className="nav-link "
+        href="/Results"
+        onClick={[Function]}
+      >
+         
+        Your Results
+         
+      </a>
+    </li>
+    <li
+      className="nav-item"
+    >
+      <a
+        className="nav-link "
+        href="/Stats"
+        onClick={[Function]}
+      >
+         
+        Global Statistics
+         
+      </a>
+    </li>
+    <li
+      className="nav-item"
+    >
+      <a
+        className="nav-link "
+        href="/Info"
+        onClick={[Function]}
+      >
+         
+        More Info
+         
+      </a>
+    </li>
+  </div>
+  <div
+    className="container"
+  >
+    <div
+      className="jumbotron"
+    >
+      <div
+        id="ad-content"
+      >
+        <a
+          className="row"
+          href="https://nano21.net"
+        >
+          <b>
+            ♠ Nano21.net 
+          </b>
+            | 20 Nano Give-Away for testers! | Nano Blackjack Casino
+        </a>
+        <p
+          className="row"
+        >
+          COMMUNITY AD
+        </p>
+      </div>
+    </div>
+  </div>
+  <h1
+    className="greeting page-header text-center"
+  >
+    Welcome to NanoSpeed.live!
+  </h1>
+  <div
+    className="container"
+  >
+    <div
+      className="row"
+    >
+      <div
+        className="col-md-12 text-center"
+      >
+        <h3
+          className="greeting"
+        >
+          Hit GO to send Nano between two random nodes!
+        </h3>
+        <button
+          className="btn btn-success btn-circle btn-xl"
+          onClick={[Function]}
+          type="button"
+        >
+          Go
+        </button>
+        <br />
+        <button
+          className="btn btn-primary"
+          id="advanced-btn"
+          onClick={[Function]}
+          type="button"
+        >
+          Advanced
+        </button>
+        <br />
+        <p
+          className="greeting"
+        >
+          Run your live test now.
+        </p>
+      </div>
+    </div>
+    <div />
+  </div>
+</div>
+`;
+
+exports[`renders two city snapshot correctly 1`] = `
+<div
+  className="HomePage"
+>
+  <div
+    className="nav nav-tabs"
+  >
+    <li
+      className="nav-item"
+    >
+      <a
+        className="nav-link active"
+        href="/"
+        onClick={[Function]}
+      >
+         
+        Speed Test
+         
+      </a>
+    </li>
+    <li
+      className="nav-item"
+    >
+      <a
+        className="nav-link "
+        href="/Results"
+        onClick={[Function]}
+      >
+         
+        Your Results
+         
+      </a>
+    </li>
+    <li
+      className="nav-item"
+    >
+      <a
+        className="nav-link "
+        href="/Stats"
+        onClick={[Function]}
+      >
+         
+        Global Statistics
+         
+      </a>
+    </li>
+    <li
+      className="nav-item"
+    >
+      <a
+        className="nav-link "
+        href="/Info"
+        onClick={[Function]}
+      >
+         
+        More Info
+         
+      </a>
+    </li>
+  </div>
+  <div
+    className="container"
+  >
+    <div
+      className="jumbotron"
+    >
+      <div
+        id="ad-content"
+      >
+        <a
+          className="row"
+          href="https://nano21.net"
+        >
+          <b>
+            ♠ Nano21.net 
+          </b>
+            | 20 Nano Give-Away for testers! | Nano Blackjack Casino
+        </a>
+        <p
+          className="row"
+        >
+          COMMUNITY AD
+        </p>
+      </div>
+    </div>
+  </div>
+  <h1
+    className="greeting page-header text-center"
+  >
+    Welcome to NanoSpeed.live!
+  </h1>
+  <div
+    className="container"
+  >
+    <div
+      className="row"
+    >
+      <div
+        className="col-md-12 text-center"
+      >
+        <h3
+          className="greeting"
+        >
+          Hit GO to send Nano between two random nodes!
+        </h3>
+        <button
+          className="btn btn-success btn-circle btn-xl"
+          onClick={[Function]}
+          type="button"
+        >
+          Go
+        </button>
+        <br />
+        <button
+          className="btn btn-primary"
+          id="advanced-btn"
+          onClick={[Function]}
+          type="button"
+        >
+          Advanced
         </button>
         <br />
         <p

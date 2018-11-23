@@ -9,9 +9,17 @@ import * as serviceWorker from './serviceWorker';
 import navigation from './reducers/navigation';
 import table from './reducers/table';
 import transactions from './reducers/transactions';
+import pastResults from './reducers/pastResults';
+import nodes from 'reducers/nodes';
+import { reducer as formReducer } from 'redux-form';
 
 import rootEpic from './epics/table';
 import transactionsMiddleware from './transactionsMiddleware';
+
+import {addNodes} from 'actions/nodes';
+import {addPastResults} from 'actions/pastResults';
+
+import {fetchWrapper} from 'util/helpers';
 
 
 // TODO - persist state so when user refreshes page, it doesn't delete state (bug: sets active tab to home, stays on
@@ -19,8 +27,7 @@ import transactionsMiddleware from './transactionsMiddleware';
 const initialState = {
     navigation: {
         activeTab: '' // initialize the starting tab to be our default home page
-    },
-    table: []
+    }
 };
 
 // call this in order to get argument needed for applyMiddleware (when creating the store)
@@ -32,7 +39,10 @@ const store = createStore(
     combineReducers({
         navigation,
         table,
-        transactions
+        transactions,
+        pastResults,
+        nodes,
+        form: formReducer
     }),
     initialState,
     composeEnhancers(
@@ -43,6 +53,36 @@ const store = createStore(
 // Runs our epic (requires a 'root' epic and makes us import from one "root epics" file in order to work.  Just
 // importing from epics/table rn since it is our only one so far)
 epicMiddleware.run(rootEpic);
+
+fetchWrapper('http://127.0.0.1:8000/nodes/list', {
+    method: 'GET'
+}).then((data) => {
+    store.dispatch(addNodes(data.nodes));
+}).catch((err) => {
+    //TODO handle error
+    console.warn('TODO Error in fetching nodes');
+});
+
+fetchWrapper('http://127.0.0.1:8000/transactions/statistics?count=500', {
+    method: 'GET'
+}).then((data) => {
+	const transactions = data.transactions.filter((transaction) => {
+        return transaction.endReceiveTimestamp && transaction.endReceiveTimestamp - transaction.startSendTimestamp > 0;
+    });
+	transactions.forEach((transaction) => {
+		transaction.elapsedTime = transaction.endReceiveTimestamp - transaction.startSendTimestamp;
+	});
+	const average = data.average/1000;
+	store.dispatch(addPastResults({
+		pastTransactions: transactions,
+		totalTransactions: data.count,
+		globalAverage: average
+	}));
+}).catch((err) => {
+    //TODO handle error
+    console.warn('TODO Error in fetching stats');
+});
+
 
 const root = (
     <Provider store={store}>

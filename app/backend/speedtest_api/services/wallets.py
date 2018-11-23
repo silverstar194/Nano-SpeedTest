@@ -1,4 +1,5 @@
 from django.conf import settings as settings
+import nano
 
 from .. import models as models
 
@@ -13,19 +14,20 @@ def new_wallet(node, wallet_id=None):
     """
 
     if wallet_id is None:
-        rpc = nano.rpc.Client(node.IP)
+        rpc = nano.rpc.Client(node.URL)
         wallet_id = rpc.wallet_create()
 
     return models.Wallet.objects.create(node=node, wallet_id=wallet_id)
 
-def get_wallets():
+def get_wallets(enabled=True):
     """
     Get all wallets in the database
 
+    @enabled: Filter based on wallet's node enability
     @return: Query of all wallets
     """
 
-    return models.Wallet.objects.all()
+    return models.Wallet.objects.filter(node__enabled=enabled)
 
 def get_wallet(id):
     """

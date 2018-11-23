@@ -18,16 +18,16 @@ This front end is created using React. Below are instructions on how to get star
 ## Getting Started
 1. Clone this repo by running `git clone https://github.com/silverstar194/Nano-SpeedTest.git`
 2. Install node in order to use `npm` commands - `brew install node` (install here for windows: https://nodejs.org/en/)
-3. Navigate to `Nano-SpeedTest/app/front end`
+3. Navigate to `Nano-SpeedTest/app/frontend`
 4. Install all node dependencies - `npm install`
-5. Run app in development mode - `npm start`
+5. While it is installing, inside the `frontend` folder create a file called `.env`. Inside place:
+`REACT_APP_GOOGLE_MAPS_KEY=AIzaSyAovwwttuLBsvolc97QUc5pejsbwfLPPZs` and `NODE_PATH=src/`. This will allow you to use the Google Maps and keep the local structure of the project working correctly.
+6. Finally, run app in development mode - `npm start`
 
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
-
-NOTE - Currently google maps require a specific API key. For development purposes in the front end folder create a file called `.env` and place inside `REACT_APP_GOOGLE_MAPS_KEY=AIzaSyD27p9eUBuinHJFiVnnT6EA8tLm1bDAgow`. Using `process.env.<VARIABLE>` requires placing the variable you wish to use in the `.env` file prefixed with `REACT_APP_<YOUR_NAME>` which can then be used in the code as `process.env.REACT_APP_<YOUR_NAME>`. If you want to use the variable in the index.html file it must be wrapped `"%<VARIABLE_NAME>%"`.
 
 ## Front End Testing
 Currently basic unit testing of redux actions and reducers exists. Running `npm test` triggers tests to run and continue to run on file changes.
@@ -50,6 +50,11 @@ Read instructions below for using assets from JavaScript and HTML.
 
 You can, however, create more top-level directories.<br>
 They will not be included in the production build so you can use them for things like documentation.
+
+### Using Process.env
+
+Using `process.env.<VARIABLE>` requires placing the variable you wish to use in the `.env` file prefixed with `REACT_APP_<YOUR_NAME>` which can then be used in the code as `process.env.REACT_APP_<YOUR_NAME>`. If you want to use the variable in the index.html file it must be wrapped `"%<VARIABLE_NAME>%"`.
+
 
 # Nano SpeedTest Back End
 
@@ -82,6 +87,7 @@ $ pip3 install requests  # Used for sending HTTP Requests
 $ pip3 install nano-python  # RPC wrapper for Nano
 $ pip3 install mysqlclient  # We are using a MySQL database
 $ pip3 install django-ipware  # Used for getting IP from REST request
+$ pip3 install django-ratelimit # Puts a limit on the transaction endpoints to prevent spamming
 ```
 
 ## Environment Variable Setup
