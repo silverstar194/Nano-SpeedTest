@@ -13,6 +13,8 @@ class PopulationException(Exception):
         Exception.__init__(self, "Error occurred in the node population process.")
 
 class Command(BaseCommand):
+    help = "Generate a new wallet for every node, add accounts and distribute funds"
+
     def handle(self, *args, **options):
         """
         Generate a new wallet for every node and add 5 accounts to it.
