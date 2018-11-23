@@ -10,11 +10,11 @@ class SpeedtestApiConfig(AppConfig):
     name = 'speedtest_api'
 
     def ready(self):
-        from .services.wallets import get_wallets, WalletNotFoundException
         from .services.accounts import get_accounts, sync_accounts
         from .services.nodes import NodeNotFoundException
         from .services.transactions import AddressDoesNotExistException, AccountBalanceMismatchException
         from .services._pow import POWService
+        from .services.wallets import get_wallets, WalletNotFoundException
 
         logger.info('Starting POWService and running POW_accounts()...')
         POWService.start()
@@ -23,7 +23,7 @@ class SpeedtestApiConfig(AppConfig):
         logger.info('Syncing account balances...')
         sync_accounts()
 
-        #Current state validator that fixes changes between Nano and our DB
+        # Current state validator that fixes changes between Nano and our DB
         logger.info('Starting node, wallet and account validation...')
 
         # Check to see if the node contains the wallets
@@ -38,6 +38,8 @@ class SpeedtestApiConfig(AppConfig):
             if not rpc_node.wallet_key_valid(wallet=wallet.wallet_id):
                 logger.error('Wallet %s not found on node %s' % (wallet.wallet_id, wallet.node.URL))
                 raise WalletNotFoundException(wallet)
+
+        logger.info('Nodes and wallets validated...')
 
         # Check to see if the accounts are contained in the wallets
         enabled_accounts = get_accounts()
@@ -54,8 +56,12 @@ class SpeedtestApiConfig(AppConfig):
             pending = balances['pending']
             balance = balances['balance']
             if not pending == 0:
-                logger.error('Account %s has pending transactions' % (account.address))
+                logger.info('Account %s has pending transactions' % (account.address))
+                continue
 
             if not balance == account.current_balance:
                 logger.error('Account %s has mismatched balence' % (account.address))
                 raise AccountBalanceMismatchException(balance, account.current_balance, account.address)
+
+        logger.info('Accounts validated...')
+        logger.info('Balances validated...')

@@ -1,11 +1,9 @@
 import logging
 
 from django.core.management.base import BaseCommand, CommandError
-import nano
 
-from ...services.nodes import get_nodes
 from ...services.accounts import get_accounts
-from ...services._pow import POWService
+from ...services.nodes import get_nodes
 from ...services.transactions import simple_send
 
 
@@ -23,22 +21,22 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         """
-        Move all funds across nodes (from all wallets and accounts) into an external account. This is used to clean up setup and recover nano.
+        Move all funds across nodes (from all wallets and accounts) into an external account. This is used to teardown setup and recover nano.
         """
         out_address = options['output_address']
         accounts_list = get_accounts()
 
         if out_address in [x.address for x in accounts_list]:
-            raise SweepException("Output address on node(s) already.")
+            raise SweepException("Output address on node(s) already and is not external.")
 
-        ##Move funds to out_address
+        # Move funds to out_address
         i = 0
         for account in accounts_list:
             i+=1
             logger.info("%s of %s %s -> %s" % (i, len(accounts_list), account.address, out_address))
             simple_send(account, out_address, account.current_balance)
 
-        ##Disable nodes
+        # Disable nodes
         all_enabled_nodes = get_nodes()
         for node in all_enabled_nodes:
             node.enabled = False

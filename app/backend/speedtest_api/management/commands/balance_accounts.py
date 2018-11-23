@@ -113,7 +113,6 @@ class Command(BaseCommand):
 
         # Create a transaction to balance the accounts
         try:
-            print(accounts[upper], accounts[lower], amount, batch)
             transaction = transactions.new_transaction(accounts[upper], accounts[lower], amount, batch)
             transactions.send_transaction(transaction)
         except Exception as e:

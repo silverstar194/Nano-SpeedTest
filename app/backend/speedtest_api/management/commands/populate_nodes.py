@@ -35,15 +35,15 @@ class Command(BaseCommand):
 
         sync_accounts()
 
-        ##Distribute funds between accounts to open them
+        # Distribute funds between accounts to open them
         amount = funding_account.current_balance / (number_accounts_per_node * len(nodes_list))
         for account_init in all_accounts:
 
-            ##Already opened
+            # Already opened
             if account_init.current_balance > 0:
                 continue
             simple_send(funding_account, account_init.address, int(amount)) ##Using send simple allows node to generate open block for us
 
-        ##Resync to acquire balances
+        # Resync to acquire balances
         sync_accounts()
         POW_accounts()
