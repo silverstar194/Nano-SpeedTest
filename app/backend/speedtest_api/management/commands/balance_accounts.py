@@ -94,7 +94,7 @@ class Command(BaseCommand):
             if values[upper] == mean:
                 del values[upper]
                 del accounts[upper]
-                upper = upper - 1
+                continue
             
             found_upper = accounts[upper].POW is not None
         
