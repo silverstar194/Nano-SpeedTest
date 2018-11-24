@@ -184,15 +184,50 @@ def get_random_advertisement(request):
 @api_view(['POST'])
 def add_advertisement(request):
     """
-    Get information for a new advertisement
+    Post information for a new advertisement
 
     @param request The REST request to the endpoint
     @return JsonResponse The status of ad addition
 
     """
     body = json.loads(request.body)
+    if 'ad' not in body:
+        return JsonResponse({'message': "Please provide an ad."}, status=400)
 
-    return JsonResponse({'message': "Implementation todo", "data_passed": str(body)}, status=400)
+    ad = body['ad']
+    if not ('description' in ad and 'URL' in ad and 'title' in ad and 'email' in ad and 'tokens' in ad):
+        return JsonResponse({'message': "Please provide all information for an ad."}, status=400)
+
+    description = ad['description']
+    URL = ad['URL']
+    title = ad['title']
+    company = ad['company']
+    email = ad['email']
+
+    try:
+        tokens = int(ad['tokens'])
+    except Exception:
+        return JsonResponse({'message': "Tokens must be integer value."}, status=400)
+
+
+    ad = advertisements.create_advertisement(title, description, URL, company, email, tokens)
+
+    advertisements.email_admin_with_new_ad(ad)
+
+    return JsonResponse({'message': "Success"}, status=200)
+
+@api_view(['GET'])
+def advertisement_information(request):
+    """
+    Get information about creating a new advertisement
+
+    @param request The REST request to the endpoint
+    @return JsonResponse The status of ad addition
+
+    """
+    data = {'current_cost_per_slot': 2}
+
+    return JsonResponse({'data': data}, status=200)
 
 
 @api_view(['GET'])
