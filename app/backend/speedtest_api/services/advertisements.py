@@ -11,7 +11,7 @@ from django.conf import settings as settings
 logger = logging.getLogger(__name__)
 def get_random_ad():
     """
-    Get a random advertisement from the database with uneven probs. using Lahiri's Method
+    Get a random advertisement from the database with uneven probabilities using Lahiri's Method
 
     @return: A random Advertisement from the database based on token weight
     """
@@ -23,7 +23,7 @@ def get_random_ad():
             max_tokens = a.tokens
 
     while True:
-        random_m = random.randint(1,max_tokens)
+        random_m = random.randint(1, max_tokens)
         ad = random.choice(ads)
         if random_m < ad.tokens:
             return ad
@@ -57,13 +57,37 @@ def create_advertisement(title, description, URL, company, email, tokens):
     return ad
 
 def email_admin_with_new_ad(ad):
-    sg = sendgrid.SendGridAPIClient(apikey=settings.SENDGRID_API_KEY)
+    try:
+        sg = sendgrid.SendGridAPIClient(apikey=settings.SENDGRID_API_KEY)
+    except Exception as e:
+        logger.error("Error occurred connecting to sendgrid %s " % str(e))
+
+
     from_email = Email("admin@NanoSpeed.live")
     to_email = Email(settings.ADMIN_EMAIL)
-    subject = "New Ad Submited from %s " % ad.company
-    content = Content("text/plain", "%s %s %s " % (ad.company, ad.email, ad.description))
+
+    subject = "NanoSpeed: New Ad Submited from %s " % ad.company
+    text = """
+              Looks like you have a new ad lead from %s. They want to post this as using %s tokens:
+              
+              %s | %s | %s.
+              
+              Email them back at %s.
+              
+              Best,
+              NanoSpeed
+              
+              """ % (ad.company, ad.tokens, ad.title, ad.description, ad.URL, ad.email)
+
+    content = Content("text/plain", text)
+
     mail = Mail(from_email, subject, to_email, content)
-    response = sg.client.mail.send.post(request_body=mail.get())
+
+    try:
+        response = sg.client.mail.send.post(request_body=mail.get())
+    except Exception as e:
+        logger.error("Error occurred sending email with sendgrid %s " % str(e))
+
     logger.info("Email sent to %s to_email regarding %s " % (from_email, ad.company))
 
     return response

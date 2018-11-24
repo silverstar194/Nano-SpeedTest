@@ -12,4 +12,4 @@ class Advertisement(models.Model):
     tokens = models.IntegerField(null=True, default=None)
 
     def __str__(self):
-        return u'Title: %s\nDescription: %s\nCompany:%s' % (self.title, self.description, self.company)
+        return u'Title: %s\nDescription: %s\nCompany: %s' % (self.title, self.description, self.company)
