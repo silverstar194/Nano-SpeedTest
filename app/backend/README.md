@@ -87,7 +87,7 @@ The following synchronizes the balance of all accounts from the Nano network to 
 $ python manage.py sync_accounts
 ```
 
-The following moves all funds held in node account to the specified external address.
+The following moves all funds held in node accounts to the specified external address.
 ```sh
 $ python manage.py sweep_funds <external_address>
 ```
