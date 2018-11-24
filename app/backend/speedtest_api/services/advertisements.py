@@ -68,7 +68,9 @@ def email_admin_with_new_ad(ad):
 
     subject = "NanoSpeed: New Ad Submited from %s " % ad.company
     text = """
-              Looks like you have a new ad lead from %s. They want to post this as using %s tokens:
+              Hello Admin,
+              
+              Looks like you have a new ad lead from %s. They want to post using %s tokens:
               
               %s | %s | %s.
               
