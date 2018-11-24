@@ -121,6 +121,9 @@ def new_transaction(origin_account, destination_account, amount, batch):
     @return: New transaction object
     """
 
+    if amount < 0:
+        raise ValueError("Amount sent must be positive.")
+
     transaction = models.Transaction(
         origin=origin_account,
         destination=destination_account,
@@ -170,7 +173,7 @@ def send_transaction(transaction):
             balance_db=transaction.origin.current_balance,
             account=transaction.origin.address
         )
-    elif (origin_balance - transaction.amount <= 0):
+    elif (origin_balance - transaction.amount < 0):
         ##Unlock accounts
         transaction.origin.unlock()
         transaction.destination.unlock()
@@ -338,6 +341,39 @@ def send_transaction(transaction):
     transaction.destination.unlock()
 
     return transaction
+
+
+def simple_send(from_account, to_address, amount):
+    """
+    Send funds from managed account to external/new account. ONLY send block will be generated and sent. No receive block or timing is handled.
+
+    @param from_account: Managed account to send funds from
+    @param to_address: Account to receive funds
+    @param amount: nano to send in RAW
+    @return: hash of send block
+    """
+    from_account.lock()
+    transaction_hash_sending = None
+    try:
+        rpc_origin_node = nano.rpc.Client(from_account.wallet.node.URL)
+        # No dPoW is used. PoW will be generated on nodes instead.
+        transaction_hash_sending = rpc_origin_node.send(
+            wallet=from_account.wallet.wallet_id,
+            source=from_account.address,
+            destination=to_address,
+            amount=amount
+        )
+
+        POWService.enqueue_account(address=from_account.address, frontier=transaction_hash_sending)
+        from_account.current_balance = from_account.current_balance - amount
+        from_account.save()
+    except Exception as e:
+        logger.error("Error in simple_send account %s to account %s", from_account.address, to_address)
+
+    from_account.unlock()
+
+    return transaction_hash_sending
+
 
 def get_transactions(enabled=True, batch=None):
     """

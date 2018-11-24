@@ -15,6 +15,8 @@ class BalancingException(Exception):
         Exception.__init__(self, "Error occurred in the balance process.")
 
 class Command(BaseCommand):
+    help = "Balance all accounts in the database"
+
     def handle(self, *args, **options):
         """
         Balance all accounts in the database

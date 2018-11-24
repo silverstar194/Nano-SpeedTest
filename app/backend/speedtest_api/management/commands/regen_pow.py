@@ -9,6 +9,8 @@ from ...services._pow import POWService
 
 
 class Command(BaseCommand):
+    help = 'Get POW for all accounts'
+
     def handle(self, *args, **options):
         """
         Get POW for all accounts

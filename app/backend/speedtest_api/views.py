@@ -152,7 +152,6 @@ def send_batch_transactions(request):
             'id': batch_id,
             'transactions': list(transactions_queue.queue),
         }
-        print(sent_batch)
 
         return JsonResponse(sent_batch, status=200)
 
