@@ -15,10 +15,13 @@ const HistoricalDataView = ({
     nodeLocations
 }) => {
     const plotData = [];
-    pastTransactions.forEach((transaction, i) => {
+    pastTransactions.sort((a,b) => a.endReceiveTimestamp - b.endReceiveTimestamp)
+    .forEach((transaction, i) => {
         plotData.push({
-            x: transaction.endReceiveTimestamp,
-            y: transaction.elapsedTime});
+            x: i,
+            date: transaction.endReceiveTimestamp,
+            y: transaction.elapsedTime
+        });
     });
 
     return (
