@@ -66,12 +66,6 @@ class MoreInfoPage extends Component {
                         has information about Nano projects worldwide.
                     </div>
                     <br/>
-                    <h3>What's a Nano node?</h3>
-                     Nano nodes broadcast transactions to the Nano network and keep the network secure by voting on transactions. They store and validate your transactions. Our nodes are physically located in data centers around the world.
-                     <br/>
-                     <a href="https://github.com/clemahieu/raiblocks">You can also run a node yourself.</a>
-                    <br/>
-                    <br/>
 
                     <h3>Let’s get social</h3>
                     <div>
@@ -117,9 +111,34 @@ class MoreInfoPage extends Component {
                             LinkedIn
                         </a> </li>
                     </ul>
+                    <h3>FAQ</h3>
+                    <h5>What is this site doing?</h5>
+                    What are timing the speed of a Nano transaction as it happens.
+                    Everytime you click the big green 'GO' button we send a small amount of money in the form of Nano between two locations worldwide and time how long it takes.
+                    <br/>
+                    <br/>
+                    <h5>Technically, what do you record as the time? Isn't the network decentralized?</h5>
+                    Yes, the Nano network is decentralized so not all parts see transactions at the same time. We record four times:
+                    <ol>
+                        <li>Time we boardcast send block at location #1</li>
+                        <li>Time we see send block at location #2</li>
+                        <li>Time we boardcast receive block at location #2</li>
+                        <li>Time we see the receive block back at location #1</li>
+                    </ol>
+                    We time delta between 1 and 4 is the time you see displayed. This represents the time is takes to send AND pocket a transaction.
+                    Transactions are techinally final and confirmed after step 2 or less then 10 seconds.
+                    <br/>
+                    <a href="https://nano.org/en/whitepaper">Learn more about Nano in the whitepaper</a>
 
-
-                </div>
+                   <br/>
+                   <br/>
+                   <h5>What's a Nano node?</h5>
+                        Nano nodes broadcast transactions to the Nano network and keep the network secure by voting on transactions. They store and validate your transactions. Our nodes are physically located in data centers around the world.
+                        <br/>
+                        <a href="https://github.com/clemahieu/raiblocks">You can also run a node yourself.</a>
+                        <br/>
+                         <br/>
+              </div>
             </div>
         );
     }
