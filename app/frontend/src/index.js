@@ -22,6 +22,34 @@ import {addPastResults} from 'actions/pastResults';
 import {fetchWrapper} from 'util/helpers';
 
 
+import {connect } from 'react-redux';
+import createHistory from 'history/createBrowserHistory';
+import {
+  ConnectedRouter,
+  routerReducer,
+  routerMiddleware,
+  push,
+  LOCATION_CHANGE,
+} from 'react-router-redux';
+import { createMiddleware } from 'redux-beacon';
+import GoogleAnalytics, { trackPageView } from '@redux-beacon/google-analytics';
+
+
+
+const history = createHistory();
+
+// Redux Beacon --->
+const eventsMap = {
+  [LOCATION_CHANGE]: trackPageView(action => ({
+    page: action.payload.pathname,
+    title:'Test'
+  })),
+};
+
+const gaMiddleware = createMiddleware(eventsMap, GoogleAnalytics());
+// <--- Redux Beacon
+
+
 // TODO - persist state so when user refreshes page, it doesn't delete state (bug: sets active tab to home, stays on
 // curr)
 const initialState = {
@@ -42,11 +70,13 @@ const store = createStore(
         transactions,
         pastResults,
         nodes,
-        form: formReducer
+        form: formReducer,
+        routerReducer
     }),
     initialState,
     composeEnhancers(
-        applyMiddleware(epicMiddleware, transactionsMiddleware)
+        applyMiddleware(epicMiddleware, transactionsMiddleware),
+        applyMiddleware(gaMiddleware, routerMiddleware(history)),
     )
 );
 
