@@ -1,4 +1,5 @@
 import logging
+import requests
 
 from django.apps import AppConfig
 import nano
@@ -11,10 +12,20 @@ class SpeedtestApiConfig(AppConfig):
 
     def ready(self):
         from .services.accounts import get_accounts, sync_accounts
-        from .services.nodes import NodeNotFoundException
+        from .services.nodes import NodeNotFoundException, get_nodes
         from .services.transactions import AddressDoesNotExistException, AccountBalanceMismatchException
         from .services._pow import POWService
         from .services.wallets import get_wallets, WalletNotFoundException
+
+        logger.info('Starting check that nodes are up...')
+        ## Check that all nodes are up
+        nodes = get_nodes()
+        for node in nodes:
+            try:
+                requests.post(url=node.URL, data={"action":"peers"})
+            except Exception as e:
+                logger.error('Node %s not found.' % (node.URL))
+                raise NodeNotFoundException(node)
 
         logger.info('Starting POWService and running POW_accounts()...')
         POWService.start()
