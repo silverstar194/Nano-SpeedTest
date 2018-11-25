@@ -48,21 +48,31 @@ class MoreInfoPage extends Component {
                     <h3>How to start using Nano</h3>
                      <h5>Buy some Nano</h5>
                      You can find a list of exchanges on <a href="https://coinmarketcap.com/currencies/nano/">CoinMarketCap</a>.
+                     <br/>
+                      <br/>
                     <h5>Accept Nano as a merchant</h5>
                     You can setup an online Nano payments with <a href="https://brainblocks.io/">BrainBlocks</a>.
 
                     <div>
-
+                    <br/>
+                    <h5>Additional</h5>
                         <a
                             href='https://nanolinks.info/'
                             target='_blank'
                             rel='noopener noreferrer'>
                             {`https://nanolinks.info/ `}
                         </a> 
-                        has information about the project.
+                        has information about Nano projects worldwide.
                     </div>
                     <br/>
-                    <h3>Let’s Get Social</h3>
+                    <h3>What's a Nano node?</h3>
+                     Nano nodes broadcast transactions to the Nano network and keep the network secure by voting on transactions. They store and validate your transactions. Our nodes are physically located in data centers around the world.
+                     <br/>
+                     <a href="https://github.com/clemahieu/raiblocks">You can also run a node yourself.</a>
+                    <br/>
+                    <br/>
+
+                    <h3>Let’s get social</h3>
                     <div>
                         Nano has one of the largest and most active communities of any cryptocurrency. If you’d like to get involved with the project or simply learn more, please join us on any of our multiple platforms.
                     </div>
