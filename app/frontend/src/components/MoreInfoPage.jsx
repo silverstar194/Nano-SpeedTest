@@ -9,25 +9,50 @@ class MoreInfoPage extends Component {
             <div className='MoreInfoPage'>
                 <Header/>
                 <Ad/>
+                <br/>
                 <div className='container'>
-                    <h2 className='page-header text-center'>
-                        {`What’s `}
-                        <a
-                            href='https://nano.org'
+                    <h2>
+                        What’s Nano?
+                    </h2>
+                     Official site &nbsp;
+                         <a
+                            href=''
                             target='_blank'
                             rel='noopener noreferrer'>
-                            Nano
+                            https://nano.org
                         </a>
-                        ?
-                    </h2>
                     <div>
-                        Created in 2015, Nano is a digital currency focuses on fast transaction speeds, no fees and high throughput. Unlike traditional cryptocurrencies which use a single network-wide blockchain, Nano utilizes a unique block-lattice design, in which each account has its own blockchain. 
-                        <p/>
                         Nano is built for efficiency. The network utilizes minimal resources, resulting in the fastest transactions of any currency, while not sacrificing security. Lightweight, optimized nodes are run throughout the world to confirm transactions and require no mining, making Nano perfect for everyday transactions, no matter how large or small.
-                    </div>
+                      <br/>
+                      <br/>
+                      <h5>What's different about Nano?</h5>
+                      <ul>
+                        <li><b>No Fees. Ever.</b></li>
+                        Send $.01 or $1,000,000 worldwide without paying a cent in transaction fees. Keep every cent you earn.
+                        <li><b>It's fast.</b></li>
+                        Payments are finalized in seconds with no rollbacks giving you financial confidence.
+                        <li><b>It'll grow.</b></li>
+                        The protocol is incredibly lightweight and will scale to thousands of transactions per second.
+                        <li><b>It's way greener.</b></li>
+                        There is no 'mining'. One transaction takes only 0.001kWh. That's the equivalent of 1/13,000 the energy it takes to toast a slice of bread.
+                        <br/>
+                        Other currencies consume thousands of times more energy.
+                       </ul>
 
-                    <h3 className='page-header text-center'>How To Get Started</h3>
+                      <a href="/" target='_blank' class="btn btn-success">Send a transaction and try it yourself</a>
+
+
+                    </div>
+                    <br/>
+
+                    <h3>How to start using Nano</h3>
+                     <h5>Buy some Nano</h5>
+                     You can find a list of exchanges on <a href="https://coinmarketcap.com/currencies/nano/">CoinMarketCap</a>.
+                    <h5>Accept Nano as a merchant</h5>
+                    You can setup an online Nano payments with <a href="https://brainblocks.io/">BrainBlocks</a>.
+
                     <div>
+
                         <a
                             href='https://nanolinks.info/'
                             target='_blank'
@@ -36,8 +61,8 @@ class MoreInfoPage extends Component {
                         </a> 
                         has information about the project.
                     </div>
-
-                    <h3 className='page-header text-center'>Let’s Get Social</h3>
+                    <br/>
+                    <h3>Let’s Get Social</h3>
                     <div>
                         Nano has one of the largest and most active communities of any cryptocurrency. If you’d like to get involved with the project or simply learn more, please join us on any of our multiple platforms.
                     </div>
@@ -60,11 +85,13 @@ class MoreInfoPage extends Component {
                             rel='noopener noreferrer'>
                             Discord Trade
                         </a> </li>
+
                         <li><a
                             href='https://twitter.com/nano'
                             target='_blank'
                             rel='noopener noreferrer'>
                             Twitter
+                            <i ></i>
                         </a> </li>
                         <li><a
                             href='https://www.facebook.com/nanofoundation/'
