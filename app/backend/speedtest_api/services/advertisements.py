@@ -36,7 +36,7 @@ def get_advertisements():
     """
     return models.Advertisement.objects.all()
 
-def create_advertisement(title, description, URL, company, email, tokens):
+def create_advertisement(title, description, URL, company, email, tokens, enabled):
     """
     Creates a new ad in database.
 
@@ -53,7 +53,8 @@ def create_advertisement(title, description, URL, company, email, tokens):
                                              URL=URL,
                                              company=company,
                                              email=email,
-                                             tokens=tokens)
+                                             tokens=tokens,
+                                             enabled=enabled)
     return ad
 
 def email_admin_with_new_ad(ad):

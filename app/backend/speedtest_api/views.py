@@ -209,8 +209,7 @@ def add_advertisement(request):
     except Exception:
         return JsonResponse({'message': "Tokens must be integer value."}, status=400)
 
-
-    ad = advertisements.create_advertisement(title, description, URL, company, email, tokens)
+    ad = advertisements.create_advertisement(title, description, URL, company, email, tokens, False)
 
     advertisements.email_admin_with_new_ad(ad)
 
