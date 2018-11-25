@@ -17,6 +17,7 @@ class SpeedtestApiConfig(AppConfig):
         from .services._pow import POWService
         from .services.wallets import get_wallets, WalletNotFoundException
 
+
         logger.info('Starting check that nodes are up...')
         ## Check that all nodes are up
         nodes = get_nodes()
