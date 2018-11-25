@@ -128,7 +128,7 @@ class MoreInfoPage extends Component {
                     We time delta between 1 and 4 is the time you see displayed. This represents the time is takes to send AND pocket a transaction.
                     Transactions are techinally final and confirmed after step 2 or less then 10 seconds.
                     <br/>
-                    <a href="https://nano.org/en/whitepaper">Learn more about Nano in the whitepaper</a>
+                    <a href="https://nano.org/en/whitepaper">Learn more about Nano in the whitepaper.</a>
 
                    <br/>
                    <br/>
