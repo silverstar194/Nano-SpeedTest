@@ -15,11 +15,11 @@ class MoreInfoPage extends Component {
                         What’s Nano?
                     </h2>
                     <i> Official Nano site&nbsp;</i>
-                         <a
-                            href=''
+                        <a
+                            href='https://nano.org'
                             target='_blank'
                             rel='noopener noreferrer'>
-                            <i>  https://nano.org</i>
+                            <i>https://nano.org</i>
                         </a>
                     <div>
                         Nano is built for efficiency. The network utilizes minimal resources, resulting in the fastest transactions of any currency, while not sacrificing security. Lightweight, optimized nodes are run throughout the world to confirm transactions and require no mining, making Nano perfect for everyday transactions, no matter how large or small.
@@ -67,9 +67,8 @@ class MoreInfoPage extends Component {
                             href='https://nanolinks.info/'
                             target='_blank'
                             rel='noopener noreferrer'>
-                            {`https://nanolinks.info/ `}
-                        </a>
-                        has information about Nano projects worldwide.
+                            https://nanolinks.info/
+                        </a> has information about Nano projects worldwide.
                     </div>
                     <br/>
 
