@@ -274,7 +274,7 @@ def get_transaction_statistics(request):
         temp_transaction = convert_transaction_to_dict(transaction)
         transactions_array.append(temp_transaction)
 
-    average_delta = Transaction.objects.all().aggregate(average_difference=Avg(F('end_receive_timestamp') - F('start_send_timestamp')))['average_difference']
+    average_delta = Transaction.objects.all().aggregate(average_difference=Avg(F('end_send_timestamp') - F('start_send_timestamp')))['average_difference']
 
     transaction_count = Transaction.objects.filter(end_receive_timestamp__gte=0, start_send_timestamp__gte=0).count()
 

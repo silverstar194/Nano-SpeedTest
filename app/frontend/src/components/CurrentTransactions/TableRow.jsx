@@ -5,7 +5,7 @@ const TableRow = ({
     origin,
     destination,
     startSendTimestamp,
-    endReceiveTimestamp,
+    endSendTimestamp,
     error,
     completed,
     amount,
@@ -27,7 +27,7 @@ const TableRow = ({
                         <td>NO DATA</td>
                         <td>NO DATA</td>
                     </Fragment> : <Fragment>
-                        <td>{(endReceiveTimestamp - startSendTimestamp)/1000} Seconds</td>
+                        <td>{(endSendTimestamp - startSendTimestamp)/1000} Seconds</td>
                         <td>Completed</td>
                         <td className='block-col'>
                             <a
@@ -65,7 +65,7 @@ TableRow.propTypes = {
     time: PropTypes.number,
     amount: PropTypes.string,
     completed: PropTypes.bool,
-    endReceiveTimestamp: PropTypes.number,
+    endSendTimestamp: PropTypes.number,
     startSendTimestamp: PropTypes.number,
     transactionHashReceiving: PropTypes.string.isRequired,
     transactionHashSending: PropTypes.string.isRequired
