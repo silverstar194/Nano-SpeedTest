@@ -3,6 +3,11 @@ import Header from './Header';
 import Footer from './Footer';
 import '../styles/HomePage.css';
 import Ad from './Ad';
+import { Link } from 'react-router-dom';
+import { switchTab } from '../actions/navigation';
+import { connect } from 'react-redux';
+
+
 
 class MoreInfoPage extends Component {
     render() {
@@ -39,10 +44,7 @@ class MoreInfoPage extends Component {
                         <br/>
                         Other currencies consume thousands of times more energy.
                        </ul>
-
-                      <a href='/' className='btn btn-success'>Send a transaction and try it yourself</a>
-
-
+                        <Link className='btn btn-success' to='/' onClick={this.props.switchToHomeview}>Send a transaction and try it yourself</Link>
                     </div>
                     <br/>
 
@@ -157,4 +159,12 @@ class MoreInfoPage extends Component {
     }
 }
 
-export default MoreInfoPage;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        switchToHomeview() {
+            dispatch(switchTab('/')); // Update current active tab
+        }
+    };
+};
+
+export default connect(null, mapDispatchToProps)(MoreInfoPage);
