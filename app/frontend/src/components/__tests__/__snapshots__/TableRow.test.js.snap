@@ -4,18 +4,16 @@ exports[`renders snapshot correctly 1`] = `
 <tr
   className=""
 >
-  <th
-    scope="row"
-  >
-    0
-  </th>
-  <td>
-    123
-  </td>
   <td />
   <td />
   <td>
      nano
+  </td>
+  <td>
+    Pending...
+  </td>
+  <td>
+    Pending...
   </td>
   <td>
     Pending...

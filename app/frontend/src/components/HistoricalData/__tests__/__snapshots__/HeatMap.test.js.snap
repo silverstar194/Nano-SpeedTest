@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders snapshot correctly 1`] = `
+<img
+  alt="Google Map Showing Locations of Nodes"
+  className="GoogleHeatMap"
+  src="https://maps.googleapis.com/maps/api/staticmap?size=1200x600&scale=2&markers=size:small|123,456&key=AIzaSyAovwwttuLBsvolc97QUc5pejsbwfLPPZs"
+/>
+`;
