@@ -148,6 +148,12 @@ class MoreInfoPage extends Component {
                             rel='noopener noreferrer'>You can also run a node yourself.</a>
                         <br/>
                          <br/>
+
+                  <h5>Found a bug?</h5>
+                        Excellent. <a href="mailto:iliketoemail@ymail.com?Subject=Bug Report: NanoSpeed" target="_top">Send us a report.</a> We'll fix it ASAP.
+                   <br/>
+                   <br/>
+
               </div>
             </div>
         );
