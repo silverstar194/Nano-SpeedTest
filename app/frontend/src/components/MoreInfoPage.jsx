@@ -15,7 +15,6 @@ class MoreInfoPage extends Component {
                         What’s Nano?
                     </h2>
                     <i> Official Nano site&nbsp;</i>
-
                          <a
                             href=''
                             target='_blank'
@@ -40,7 +39,7 @@ class MoreInfoPage extends Component {
                         Other currencies consume thousands of times more energy.
                        </ul>
 
-                      <a href="/" target='_blank' class="btn btn-success">Send a transaction and try it yourself</a>
+                      <a href='/' class='btn btn-success'>Send a transaction and try it yourself</a>
 
 
                     </div>
@@ -48,12 +47,19 @@ class MoreInfoPage extends Component {
 
                     <h3>How to start using Nano</h3>
                      <h5>Buy some Nano</h5>
-                     You can find a list of exchanges on <a href="https://coinmarketcap.com/currencies/nano/">CoinMarketCap</a>.
+                     You can find a list of exchanges on <a
+                        href='https://coinmarketcap.com/currencies/nano/'
+                        target='_blank'
+                        rel='noopener noreferrer'>CoinMarketCap</a>.
                      <br/>
                       <br/>
                     <h5>Accept Nano as a merchant</h5>
-                    You can setup an online Nano payments with <a href="https://brainblocks.io/">BrainBlocks</a>.
-
+                    You can setup an online Nano payments with <a
+                            href='https://brainblocks.io/'
+                            target='_blank'
+                            rel='noopener noreferrer'>
+                            BrainBlocks
+                        </a>.
                     <div>
                     <br/>
                     <h5>Additional</h5>
@@ -62,7 +68,7 @@ class MoreInfoPage extends Component {
                             target='_blank'
                             rel='noopener noreferrer'>
                             {`https://nanolinks.info/ `}
-                        </a> 
+                        </a>
                         has information about Nano projects worldwide.
                     </div>
                     <br/>
@@ -120,22 +126,27 @@ class MoreInfoPage extends Component {
                     <h5>Technically, what do you record as the time? Isn't the network decentralized?</h5>
                     Yes, the Nano network is decentralized so not all parts see transactions at the same time. We record four times:
                     <ol>
-                        <li>Time we boardcast send block at location #1</li>
+                        <li>Time we broadcast send block at location #1</li>
                         <li>Time we see send block at location #2</li>
-                        <li>Time we boardcast receive block at location #2</li>
+                        <li>Time we broadcast receive block at location #2</li>
                         <li>Time we see the receive block back at location #1</li>
                     </ol>
                     We time delta between 1 and 4 is the time you see displayed. This represents the time is takes to send AND pocket a transaction.
-                    Transactions are techinally final and confirmed after step 2 or less then 10 seconds.
+                    Transactions are technically final and confirmed after step 2 or less then 10 seconds.
                     <br/>
-                    <a href="https://nano.org/en/whitepaper">Learn more about Nano in the whitepaper.</a>
-
+                    <a
+                        href='https://nano.org/en/whitepaper'
+                        target='_blank'
+                        rel='noopener noreferrer'>Learn more about Nano in the whitepaper.</a>
                    <br/>
                    <br/>
                    <h5>What's a Nano node?</h5>
                         Nano nodes broadcast transactions to the Nano network and keep the network secure by voting on transactions. They store and validate your transactions. Our nodes are physically located in data centers around the world.
                         <br/>
-                        <a href="https://github.com/clemahieu/raiblocks">You can also run a node yourself.</a>
+                        <a
+                            href='https://github.com/clemahieu/raiblocks'
+                            target='_blank'
+                            rel='noopener noreferrer'>You can also run a node yourself.</a>
                         <br/>
                          <br/>
               </div>
