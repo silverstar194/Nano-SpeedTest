@@ -4,6 +4,7 @@ from .models.account import Account
 from .models.node import Node
 from .models.transaction import Transaction
 from .models.wallet import Wallet
+from .models.advertisement import Advertisement
 
 class AccountAdmin(admin.ModelAdmin):
     pass
@@ -20,3 +21,7 @@ admin.site.register(Transaction, TransactionAdmin)
 class WalletAdmin(admin.ModelAdmin):
     pass
 admin.site.register(Wallet, WalletAdmin)
+
+class AdvertisementAdmin(admin.ModelAdmin):
+    pass
+admin.site.register(Advertisement, AdvertisementAdmin)

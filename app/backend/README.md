@@ -30,6 +30,7 @@ $ pip install requests  # Used for sending HTTP Requests
 $ pip install nano-python  # RPC wrapper for Nano
 $ pip install mysqlclient  # We are using a MySQL database
 $ pip install django-ipware  # Used for getting IP from REST request
+$ pip install sendgrid # Used for email service
 ```
 
 ## Environment Variable Setup
@@ -44,6 +45,8 @@ In order to run the Django server, the following environment variables need to e
 * `NANO_ST__DB__USER`
 * `NANO_ST__DB__PASSWORD`
 * `NANO_ST__DB__HOST`
+* `SENDGRID__API__KEY`
+* `ADMIN__EMAIL`
 
 ## Running the Server
 
