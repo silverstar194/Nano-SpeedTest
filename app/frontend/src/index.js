@@ -12,13 +12,16 @@ import transactions from './reducers/transactions';
 import pastResults from './reducers/pastResults';
 import nodes from 'reducers/nodes';
 import { reducer as formReducer } from 'redux-form';
+import ads from 'reducers/ads';
 
 import rootEpic from './epics/table';
-import transactionsMiddleware from './transactionsMiddleware';
+import transactionsMiddleware from './middleware/transactionsMiddleware';
+import adLoader from './middleware/adLoader';
 
 import {addNodes} from 'actions/nodes';
 import {addPastResults} from 'actions/pastResults';
 import {fetchWrapper, fetchPastResults} from 'util/helpers';
+import fetchAndUpdateAd from 'util/fetchAndUpdateAd';
 
 
 // TODO - persist state so when user refreshes page, it doesn't delete state (bug: sets active tab to home, stays on
@@ -41,17 +44,20 @@ const store = createStore(
         transactions,
         pastResults,
         nodes,
-        form: formReducer
+        form: formReducer,
+        ads
     }),
     initialState,
     composeEnhancers(
-        applyMiddleware(epicMiddleware, transactionsMiddleware)
+        applyMiddleware(epicMiddleware, transactionsMiddleware, adLoader)
     )
 );
 
 // Runs our epic (requires a 'root' epic and makes us import from one "root epics" file in order to work.  Just
 // importing from epics/table rn since it is our only one so far)
 epicMiddleware.run(rootEpic);
+
+fetchAndUpdateAd(store);
 
 fetchWrapper('http://127.0.0.1:8000/nodes/list', {
     method: 'GET'

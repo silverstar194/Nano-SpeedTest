@@ -1,13 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import '../styles/Ad.css';
 
-export default () => {
+const Ad = ({title, message, url}) => {
     return (
         <div className='container'>
             <div className='jumbotron'>
                 <div id='ad-content'>
-                    <a href='https://nano21.net' className='row'>
-                        <b>♠ Nano21.net </b>&nbsp; | 20 Nano Give-Away for testers! | Nano Blackjack Casino
+                    <a href={url} target='_blank' rel='noopener noreferrer' className='row'>
+                        <b>{title}</b>&nbsp;{message}
                     </a>
                     <p className='row'>COMMUNITY AD</p>
                 </div>
@@ -16,3 +18,16 @@ export default () => {
     );
 };
 
+const mapStateToProps = (state) => {
+	return {
+       ...state.ads.currentAd
+	};
+};
+
+Ad.propTypes = {
+    title: PropTypes.string.isRequired,
+    message: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired
+};
+
+export default connect (mapStateToProps)(Ad);
