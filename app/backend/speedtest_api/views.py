@@ -1,5 +1,7 @@
 from decimal import *
 import json
+from threading import Thread
+from queue import Queue
 
 from django.db.models import Avg
 from django.db.models import F
@@ -122,7 +124,6 @@ def send_batch_transactions(request):
 
     batch_id = body['id']
     batch = batches.get_batch(batch_id)
-    transaction_array = []
 
     if not batch:
         return JsonResponse({'message': 'Batch ' + str(batch_id) + ' not found.'}, status=404)
@@ -130,19 +131,26 @@ def send_batch_transactions(request):
     else:
         batch_transactions = transactions.get_transactions(enabled=True, batch=batch)
 
+        transactions_queue = Queue()
+        all_threads = []
         for transaction in batch_transactions:
             if transaction.start_send_timestamp or transaction.end_receive_timestamp:
                 return JsonResponse({'message': "This batch has already been sent."}, status=405)
 
             try:
-                sent_transaction = transactions.send_transaction(transaction)
-                transaction_array.append(convert_transaction_to_dict(sent_transaction))
+                thread = Thread(target=send_transaction_async, args=(transaction, transactions_queue))
+                thread.start()
+                all_threads.append(thread)
             except transactions.InvalidPOWException as e:
                 return JsonResponse({'message': "The transaction POW was invalid. Please try again."}, status=400)
 
+        ## Wait on all transaction threads to complete
+        for t in all_threads:
+            t.join()
+
         sent_batch = {
             'id': batch_id,
-            'transactions': transaction_array
+            'transactions': list(transactions_queue.queue),
         }
 
         return JsonResponse(sent_batch, status=200)
@@ -161,14 +169,63 @@ def get_random_advertisement(request):
 
     if random_ad:
         ad = {
+            "ad":{
             'title': random_ad.title,
-            'message': random_ad.message,
+            'message': random_ad.description,
             'url': random_ad.URL
+            }
         }
 
         return JsonResponse(ad, status=200)
     else:
         return JsonResponse({'message': "No advertisements were found."}, status=200)
+
+@api_view(['POST'])
+def add_advertisement(request):
+    """
+    Post information for a new advertisement
+
+    @param request The REST request to the endpoint
+    @return JsonResponse The status of ad addition
+
+    """
+    body = json.loads(request.body)
+    if 'ad' not in body:
+        return JsonResponse({'message': "Please provide an ad."}, status=400)
+
+    ad = body['ad']
+    if not ('description' in ad and 'URL' in ad and 'title' in ad and 'email' in ad and 'tokens' in ad):
+        return JsonResponse({'message': "Please provide all information for an ad."}, status=400)
+
+    description = ad['description']
+    URL = ad['URL']
+    title = ad['title']
+    company = ad['company']
+    email = ad['email']
+
+    try:
+        tokens = int(ad['tokens'])
+    except Exception:
+        return JsonResponse({'message': "Tokens must be integer value."}, status=400)
+
+    ad = advertisements.create_advertisement(title, description, URL, company, email, tokens, False)
+
+    advertisements.email_admin_with_new_ad(ad)
+
+    return JsonResponse({'message': "Success"}, status=200)
+
+@api_view(['GET'])
+def advertisement_information(request):
+    """
+    Get information about creating a new advertisement
+
+    @param request The REST request to the endpoint
+    @return JsonResponse The status of ad addition
+
+    """
+    data = {'current_cost_per_slot': 2}
+
+    return JsonResponse({'data': data}, status=200)
 
 
 @api_view(['GET'])
@@ -273,3 +330,14 @@ def convert_transaction_to_dict(transaction):
     }
 
     return converted_transaction
+
+def send_transaction_async(transaction, out_queue):
+    """
+    Private helper method to allow async transactions
+
+    @param transaction The transaction database query object
+    @param out_queue Queue to store transaction once finished
+
+    """
+    tranaction_async = transactions.send_transaction(transaction)
+    out_queue.put(convert_transaction_to_dict(tranaction_async))

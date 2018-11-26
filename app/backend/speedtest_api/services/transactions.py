@@ -55,7 +55,7 @@ def new_transaction_random(batch):
     @return: New transaction object
     """
 
-    accounts_list = get_accounts()
+    accounts_list = get_accounts(in_use=False)
 
     if len(accounts_list) == 0:
         raise NoAccountsException()
@@ -67,7 +67,7 @@ def new_transaction_random(batch):
     for account in accounts_list:
         if account.wallet.node.id != origin.wallet.node.id:
             account_destinations.append(account)
-    
+
     if len(account_destinations) == 0:
         raise NoAccountsException()
 
@@ -81,7 +81,6 @@ def new_transaction_random(batch):
 def new_transaction_nodes(origin_node, destination_node, batch):
     """
     Create a transaction from the given properties.
-    TODO: Locks the accounts in use to prevent other transactions from using these accounts.
 
     @param origin_node: Node source
     @param destination_node: Node receiver
@@ -89,8 +88,8 @@ def new_transaction_nodes(origin_node, destination_node, batch):
     @return: New transaction object
     """
 
-    origin_accounts_list = get_accounts(node=origin_node)
-    destination_accounts_list = get_accounts(node=destination_node)
+    origin_accounts_list = get_accounts(node=origin_node, in_use=False)
+    destination_accounts_list = get_accounts(node=destination_node, in_use=False)
 
     if len(origin_accounts_list) == 0:
         raise NoAccountsException(origin_node)
@@ -113,7 +112,7 @@ def new_transaction_nodes(origin_node, destination_node, batch):
 def new_transaction(origin_account, destination_account, amount, batch):
     """
     Create a transaction from the given properties.
-    TODO: Locks the accounts in use to prevent other transactions from using these accounts.
+    We must lock accounts on creation of transaction between them.
 
     @param origin_account: Account source
     @param destination_account: Account receiver
@@ -122,6 +121,9 @@ def new_transaction(origin_account, destination_account, amount, batch):
     @return: New transaction object
     """
 
+    if amount < 0:
+        raise ValueError("Amount sent must be positive.")
+
     transaction = models.Transaction(
         origin=origin_account,
         destination=destination_account,
@@ -129,7 +131,10 @@ def new_transaction(origin_account, destination_account, amount, batch):
         batch=batch
     )
 
-    # TODO: Lock the accounts
+    ##Lock origin and destination accounts
+    ##Unlock accounts
+    origin_account.lock()
+    destination_account.lock()
 
     transaction.save()
     return transaction
@@ -137,6 +142,7 @@ def new_transaction(origin_account, destination_account, amount, batch):
 def send_transaction(transaction):
     """
     Complete a transaction on the Nano network while timing results.
+    We must unlock accounts on any failure or at completion of sending.
 
     @param transaction: Transaction to execute
     @return: Transaction object with new information
@@ -158,35 +164,55 @@ def send_transaction(transaction):
         transaction.origin.save()
         transaction.save()
 
+        ##Unlock accounts
+        transaction.origin.unlock()
+        transaction.destination.unlock()
+
         raise AccountBalanceMismatchException(
             balance_actual=origin_balance, 
             balance_db=transaction.origin.current_balance,
             account=transaction.origin.address
         )
-    elif (origin_balance - transaction.amount <= 0):
+    elif (origin_balance - transaction.amount < 0):
+        ##Unlock accounts
+        transaction.origin.unlock()
+        transaction.destination.unlock()
         raise InsufficientNanoException()
     
     # Make sure the wallet contains the account address
     if (not rpc_origin_node.wallet_contains(wallet=transaction.origin.wallet.wallet_id, account=transaction.origin.address)):
+        ##Unlock accounts
+        transaction.origin.unlock()
+        transaction.destination.unlock()
         raise AddressDoesNotExistException(
             wallet=transaction.origin.wallet,
             account=transaction.origin.address
         )
     
     if (not rpc_destination_node.wallet_contains(wallet=transaction.destination.wallet.wallet_id, account=transaction.destination.address)):
+        ##Unlock accounts
+        transaction.origin.unlock()
+        transaction.destination.unlock()
         raise AddressDoesNotExistException(
             wallet=transaction.destination.wallet,
             account=transaction.destination.address
         )
 
     # Make sure the POW is there (not in the POW regen queue)
-    if transaction.origin.POW is None:
+    if not transaction.origin.POW:
         try:
             frontier = rpc_origin_node.frontiers(account=transaction.origin.address, count=1)[transaction.origin.address]
             POWService.enqueue_account(address=transaction.origin.address, frontier=frontier)
+            logger.info('Generated PoW during sending for: %s' % transaction.origin.address)
         except Exception as e:
+            ##Unlock accounts
+            transaction.origin.unlock()
+            transaction.destination.unlock()
             logger.error('Error adding address, frontier pair to POWService: %s' % e)
 
+        ##Unlock accounts
+        transaction.origin.unlock()
+        transaction.destination.unlock()
         logger.warning('Transaction origin POW is invalid, transaction.id: %s' % str(transaction.id))
         raise InvalidPOWException()
     
@@ -210,18 +236,26 @@ def send_transaction(transaction):
             id=transaction.id
         )
 
+
         # Update the balances and POW
         transaction.origin.current_balance = transaction.origin.current_balance - transaction.amount
         transaction.destination.current_balance = transaction.destination.current_balance + transaction.amount
         transaction.origin.POW = None
+
     except nano.rpc.RPCException as e:
         logger.error(e)
+        ##Unlock accounts
+        transaction.origin.unlock()
+        transaction.destination.unlock()
         raise nano.rpc.RPCException()
     
     # Handover control to the timing service (expecting the timestamp to be set on return)
     try:
         time_transaction_send(transaction)
     except Exception as e:
+        ##Unlock accounts
+        transaction.origin.unlock()
+        transaction.destination.unlock()
         logger.error('Transaction timing_send failed, transaction.id: %s, error: %s' % (str(transaction.id), str(e)))
 
     transaction.origin.save()
@@ -238,6 +272,9 @@ def send_transaction(transaction):
             incoming_blocks = rpc_destination_node.pending(account=transaction.destination.address)
         except nano.rpc.RPCException:
             logger.error('Transaction send failure, transaction.id: %s' % str(transaction.id))
+            ##Unlock accounts
+            transaction.origin.unlock()
+            transaction.destination.unlock()
             raise nano.rpc.RPCException()
         
         max_retries = max_retries - 1
@@ -245,16 +282,24 @@ def send_transaction(transaction):
         time.sleep(0.25)
 
     # We need to set POW to None because it will be no longer valid as the node will eventually accept the block(s) (if they are unopened?)
-    if incoming_blocks is None or len(incoming_blocks) == 0:
+    if not incoming_blocks or not len(incoming_blocks):
         transaction.destination.POW = None
         transaction.destination.save()
         transaction.save()
         logger.error('No Incoming blocks, transaction.id: %s' % str(transaction.id))
+
+        ##Unlock accounts
+        transaction.origin.unlock()
+        transaction.destination.unlock()
         raise NoIncomingBlocksException(transaction.destination.address)
     elif len(incoming_blocks) > 1:
         transaction.destination.POW = None
         transaction.destination.save()
         transaction.save()
+
+        ##Unlock accounts
+        transaction.origin.unlock()
+        transaction.destination.unlock()
         raise TooManyIncomingBlocksException(transaction.destination.address)
 
     for block_hash in incoming_blocks:
@@ -268,12 +313,18 @@ def send_transaction(transaction):
                 work=transaction.destination.POW
             )
         except nano.rpc.RPCException:
+            ##Unlock accounts
+            transaction.origin.unlock()
+            transaction.destination.unlock()
             raise nano.rpc.RPCException()
     
     # Handover control to the timing service (expecting the timestamp to be set on return)
     try:
         time_transaction_receive(transaction)
     except Exception as e:
+        ##Unlock accounts
+        transaction.origin.unlock()
+        transaction.destination.unlock()
         logger.error('Transaction timing_receive failed, transaction.id: %s, error: %s' % (str(transaction.id), str(e)))
 
     transaction.destination.POW = None
@@ -285,7 +336,44 @@ def send_transaction(transaction):
     POWService.enqueue_account(address=transaction.origin.address, frontier=transaction.transaction_hash_sending)
     POWService.enqueue_account(address=transaction.destination.address, frontier=transaction.transaction_hash_receiving)
 
+    ##Unlock accounts
+    transaction.origin.unlock()
+    transaction.destination.unlock()
+
     return transaction
+
+
+def simple_send(from_account, to_address, amount):
+    """
+    Send funds from managed account to external/new account. ONLY send block will be generated and sent. No receive block or timing is handled.
+
+    @param from_account: Managed account to send funds from
+    @param to_address: Account to receive funds
+    @param amount: nano to send in RAW
+    @return: hash of send block
+    """
+    from_account.lock()
+    transaction_hash_sending = None
+    try:
+        rpc_origin_node = nano.rpc.Client(from_account.wallet.node.URL)
+        # No dPoW is used. PoW will be generated on nodes instead.
+        transaction_hash_sending = rpc_origin_node.send(
+            wallet=from_account.wallet.wallet_id,
+            source=from_account.address,
+            destination=to_address,
+            amount=amount
+        )
+
+        POWService.enqueue_account(address=from_account.address, frontier=transaction_hash_sending)
+        from_account.current_balance = from_account.current_balance - amount
+        from_account.save()
+    except Exception as e:
+        logger.error("Error in simple_send account %s to account %s", from_account.address, to_address)
+
+    from_account.unlock()
+
+    return transaction_hash_sending
+
 
 def get_transactions(enabled=True, batch=None):
     """

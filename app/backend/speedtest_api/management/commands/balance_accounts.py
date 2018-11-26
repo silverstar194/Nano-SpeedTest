@@ -15,6 +15,8 @@ class BalancingException(Exception):
         Exception.__init__(self, "Error occurred in the balance process.")
 
 class Command(BaseCommand):
+    help = "Balance all accounts in the database"
+
     def handle(self, *args, **options):
         """
         Balance all accounts in the database
@@ -94,7 +96,7 @@ class Command(BaseCommand):
             if values[upper] == mean:
                 del values[upper]
                 del accounts[upper]
-                upper = upper - 1
+                continue
             
             found_upper = accounts[upper].POW is not None
         
