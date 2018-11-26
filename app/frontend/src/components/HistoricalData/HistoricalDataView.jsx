@@ -7,11 +7,8 @@ import Ad from 'components/Ad';
 import PastResultsTable from './PastResultsTable';
 import ScatterView from './ScatterView';
 import HeatMap from './HeatMap';
-
 import {addPastResults} from 'actions/pastResults';
 import {fetchPastResults} from 'util/helpers';
-
-
 
 class HistoricalDataView extends React.Component {
     componentDidMount() {
@@ -25,10 +22,13 @@ class HistoricalDataView extends React.Component {
     render() {
         const {pastTransactions, totalTransactions, globalAverage, nodeLocations} = this.props;
         const plotData = [];
-        pastTransactions.forEach((transaction, i) => {
+        pastTransactions.sort((a,b) => a.endReceiveTimestamp - b.endReceiveTimestamp)
+        .forEach((transaction, i) => {
             plotData.push({
-                x: transaction.endReceiveTimestamp,
-                y: transaction.elapsedTime});
+                x: i,
+                date: transaction.endReceiveTimestamp,
+                y: transaction.elapsedTime
+            });
         });
 
         return (
