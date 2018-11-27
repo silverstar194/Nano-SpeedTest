@@ -16,34 +16,36 @@ import { reducer as formReducer } from 'redux-form';
 import rootEpic from './epics/table';
 import transactionsMiddleware from './transactionsMiddleware';
 
-import {addNodes} from 'actions/nodes';
-import {addPastResults} from 'actions/pastResults';
+import { addNodes } from 'actions/nodes';
+import { addPastResults } from 'actions/pastResults';
 
-import {fetchWrapper} from 'util/helpers';
+import { fetchWrapper } from 'util/helpers';
 
 
-import {connect } from 'react-redux';
 import createHistory from 'history/createBrowserHistory';
-import {
-  ConnectedRouter,
-  routerReducer,
-  routerMiddleware,
-  push,
-  LOCATION_CHANGE,
-} from 'react-router-redux';
+import { routerMiddleware, routerReducer } from 'react-router-redux';
 import { createMiddleware } from 'redux-beacon';
-import GoogleAnalytics, { trackPageView } from '@redux-beacon/google-analytics';
-
+import GoogleAnalytics, { trackEvent } from '@redux-beacon/google-analytics';
 
 
 const history = createHistory();
 
 // Redux Beacon --->
 const eventsMap = {
-  [LOCATION_CHANGE]: trackPageView(action => ({
-    page: action.payload.pathname,
-    title:'Test'
-  })),
+    'SWITCH_TAB': trackEvent(action => ({
+        category: "tabs",
+        action: "Active tab changed",
+    })),
+
+    'FETCH_TRANSACTION': trackEvent(action => ({
+        category: "transactions",
+        action: "Go button clicked",
+    })),
+
+    'ADV_SETTINGS_OPENED': trackEvent(action => ({
+        category: "advSettings",
+        action: "Advanced settings modal opened",
+    })),
 };
 
 const gaMiddleware = createMiddleware(eventsMap, GoogleAnalytics());
@@ -75,8 +77,7 @@ const store = createStore(
     }),
     initialState,
     composeEnhancers(
-        applyMiddleware(epicMiddleware, transactionsMiddleware),
-        applyMiddleware(gaMiddleware, routerMiddleware(history)),
+        applyMiddleware(epicMiddleware, transactionsMiddleware, gaMiddleware, routerMiddleware(history))
     )
 );
 
@@ -96,18 +97,18 @@ fetchWrapper('http://127.0.0.1:8000/nodes/list', {
 fetchWrapper('http://127.0.0.1:8000/transactions/statistics?count=500', {
     method: 'GET'
 }).then((data) => {
-	const transactions = data.transactions.filter((transaction) => {
+    const transactions = data.transactions.filter((transaction) => {
         return transaction.endReceiveTimestamp && transaction.endReceiveTimestamp - transaction.startSendTimestamp > 0;
     });
-	transactions.forEach((transaction) => {
-		transaction.elapsedTime = transaction.endReceiveTimestamp - transaction.startSendTimestamp;
-	});
-	const average = data.average/1000;
-	store.dispatch(addPastResults({
-		pastTransactions: transactions,
-		totalTransactions: data.count,
-		globalAverage: average
-	}));
+    transactions.forEach((transaction) => {
+        transaction.elapsedTime = transaction.endReceiveTimestamp - transaction.startSendTimestamp;
+    });
+    const average = data.average / 1000;
+    store.dispatch(addPastResults({
+        pastTransactions: transactions,
+        totalTransactions: data.count,
+        globalAverage: average
+    }));
 }).catch((err) => {
     //TODO handle error
     console.warn('TODO Error in fetching stats');

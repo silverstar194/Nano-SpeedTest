@@ -2054,3 +2054,539 @@ Generated POW: a66adaa346dd01ed for account xrb_3nzyehycjadzdbgcu7eh3ab6uob86w3h
 (0.070) SELECT `speedtest_api_account`.`id`, `speedtest_api_account`.`wallet_id`, `speedtest_api_account`.`address`, `speedtest_api_account`.`current_balance`, `speedtest_api_account`.`POW` FROM `speedtest_api_account` WHERE `speedtest_api_account`.`address` = 'xrb_3h3twmn94mhh6oanknd3x6ifuimtazfw5mwj9rthg4iqe9g1mrwkojaqj6g9'; args=('xrb_3h3twmn94mhh6oanknd3x6ifuimtazfw5mwj9rthg4iqe9g1mrwkojaqj6g9',)
 Generated POW: f0a0326838b44f79 for account xrb_3h3twmn94mhh6oanknd3x6ifuimtazfw5mwj9rthg4iqe9g1mrwkojaqj6g9
 (0.056) UPDATE `speedtest_api_account` SET `wallet_id` = 17, `address` = 'xrb_3h3twmn94mhh6oanknd3x6ifuimtazfw5mwj9rthg4iqe9g1mrwkojaqj6g9', `current_balance` = '1274664990000000000000000000', `POW` = 'f0a0326838b44f79' WHERE `speedtest_api_account`.`id` = 51; args=(17, 'xrb_3h3twmn94mhh6oanknd3x6ifuimtazfw5mwj9rthg4iqe9g1mrwkojaqj6g9', '1274664990000000000000000000', 'f0a0326838b44f79', 51)
+Starting POWService and running POW_accounts()...
+Starting PoW thread.
+(0.058) SELECT @@SQL_AUTO_IS_NULL; args=None
+(0.057) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
+(0.066) SELECT `speedtest_api_account`.`id`, `speedtest_api_account`.`wallet_id`, `speedtest_api_account`.`address`, `speedtest_api_account`.`current_balance`, `speedtest_api_account`.`POW`, `speedtest_api_account`.`in_use` FROM `speedtest_api_account` INNER JOIN `speedtest_api_wallet` ON (`speedtest_api_account`.`wallet_id` = `speedtest_api_wallet`.`id`) INNER JOIN `speedtest_api_node` ON (`speedtest_api_wallet`.`node_id` = `speedtest_api_node`.`id`) WHERE `speedtest_api_node`.`enabled` = 1; args=(True,)
+(0.064) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.069) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.060) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.061) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.065) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.060) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.063) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.058) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.059) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.063) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.064) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.064) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.070) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.079) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.068) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.065) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.061) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.065) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.065) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.064) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+Syncing account balances...
+(0.060) SELECT `speedtest_api_account`.`id`, `speedtest_api_account`.`wallet_id`, `speedtest_api_account`.`address`, `speedtest_api_account`.`current_balance`, `speedtest_api_account`.`POW`, `speedtest_api_account`.`in_use` FROM `speedtest_api_account` INNER JOIN `speedtest_api_wallet` ON (`speedtest_api_account`.`wallet_id` = `speedtest_api_wallet`.`id`) INNER JOIN `speedtest_api_node` ON (`speedtest_api_wallet`.`node_id` = `speedtest_api_node`.`id`) WHERE `speedtest_api_node`.`enabled` = 1; args=(True,)
+(0.057) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.068) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.061) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.059) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.075) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.056) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.063) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.064) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.058) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.059) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.061) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.055) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.059) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.060) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.059) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.063) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.066) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.062) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.064) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.064) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+Starting node, wallet and account validation...
+(0.081) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` INNER JOIN `speedtest_api_node` ON (`speedtest_api_wallet`.`node_id` = `speedtest_api_node`.`id`) WHERE `speedtest_api_node`.`enabled` = 1; args=(True,)
+(0.063) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.059) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+Nodes and wallets validated...
+(0.060) SELECT `speedtest_api_account`.`id`, `speedtest_api_account`.`wallet_id`, `speedtest_api_account`.`address`, `speedtest_api_account`.`current_balance`, `speedtest_api_account`.`POW`, `speedtest_api_account`.`in_use` FROM `speedtest_api_account` INNER JOIN `speedtest_api_wallet` ON (`speedtest_api_account`.`wallet_id` = `speedtest_api_wallet`.`id`) INNER JOIN `speedtest_api_node` ON (`speedtest_api_wallet`.`node_id` = `speedtest_api_node`.`id`) WHERE `speedtest_api_node`.`enabled` = 1; args=(True,)
+(0.061) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.058) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.058) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.061) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.067) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.064) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.065) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.065) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.058) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.060) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.061) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.064) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.061) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.060) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.065) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.067) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.065) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.068) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.057) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.062) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+Accounts validated...
+Balances validated...
+Starting POWService and running POW_accounts()...
+Starting PoW thread.
+(0.057) SELECT @@SQL_AUTO_IS_NULL; args=None
+(0.083) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
+(0.064) SELECT `speedtest_api_account`.`id`, `speedtest_api_account`.`wallet_id`, `speedtest_api_account`.`address`, `speedtest_api_account`.`current_balance`, `speedtest_api_account`.`POW`, `speedtest_api_account`.`in_use` FROM `speedtest_api_account` INNER JOIN `speedtest_api_wallet` ON (`speedtest_api_account`.`wallet_id` = `speedtest_api_wallet`.`id`) INNER JOIN `speedtest_api_node` ON (`speedtest_api_wallet`.`node_id` = `speedtest_api_node`.`id`) WHERE `speedtest_api_node`.`enabled` = 1; args=(True,)
+(0.059) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.069) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.067) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.061) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.076) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.070) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.069) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.067) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.068) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.063) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.066) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.061) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.059) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.061) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.067) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.062) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.063) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.065) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.060) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.056) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+Syncing account balances...
+(0.067) SELECT `speedtest_api_account`.`id`, `speedtest_api_account`.`wallet_id`, `speedtest_api_account`.`address`, `speedtest_api_account`.`current_balance`, `speedtest_api_account`.`POW`, `speedtest_api_account`.`in_use` FROM `speedtest_api_account` INNER JOIN `speedtest_api_wallet` ON (`speedtest_api_account`.`wallet_id` = `speedtest_api_wallet`.`id`) INNER JOIN `speedtest_api_node` ON (`speedtest_api_wallet`.`node_id` = `speedtest_api_node`.`id`) WHERE `speedtest_api_node`.`enabled` = 1; args=(True,)
+(0.069) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.067) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.063) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.069) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.057) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.059) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.070) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.057) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.068) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.083) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.064) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.068) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.057) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.064) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.062) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.065) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.056) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.056) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.063) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.060) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+Starting node, wallet and account validation...
+(0.065) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` INNER JOIN `speedtest_api_node` ON (`speedtest_api_wallet`.`node_id` = `speedtest_api_node`.`id`) WHERE `speedtest_api_node`.`enabled` = 1; args=(True,)
+(0.069) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.063) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+Nodes and wallets validated...
+(0.065) SELECT `speedtest_api_account`.`id`, `speedtest_api_account`.`wallet_id`, `speedtest_api_account`.`address`, `speedtest_api_account`.`current_balance`, `speedtest_api_account`.`POW`, `speedtest_api_account`.`in_use` FROM `speedtest_api_account` INNER JOIN `speedtest_api_wallet` ON (`speedtest_api_account`.`wallet_id` = `speedtest_api_wallet`.`id`) INNER JOIN `speedtest_api_node` ON (`speedtest_api_wallet`.`node_id` = `speedtest_api_node`.`id`) WHERE `speedtest_api_node`.`enabled` = 1; args=(True,)
+(0.064) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.060) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.061) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.069) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.058) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.070) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.070) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.064) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.064) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.065) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.059) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.064) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.068) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.064) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.063) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.059) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.061) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.063) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.063) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.063) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+Accounts validated...
+Balances validated...
+Starting POWService and running POW_accounts()...
+Starting PoW thread.
+(0.060) SELECT @@SQL_AUTO_IS_NULL; args=None
+(0.053) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
+(0.061) SELECT `speedtest_api_account`.`id`, `speedtest_api_account`.`wallet_id`, `speedtest_api_account`.`address`, `speedtest_api_account`.`current_balance`, `speedtest_api_account`.`POW`, `speedtest_api_account`.`in_use` FROM `speedtest_api_account` INNER JOIN `speedtest_api_wallet` ON (`speedtest_api_account`.`wallet_id` = `speedtest_api_wallet`.`id`) INNER JOIN `speedtest_api_node` ON (`speedtest_api_wallet`.`node_id` = `speedtest_api_node`.`id`) WHERE `speedtest_api_node`.`enabled` = 1; args=(True,)
+(0.062) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.055) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.062) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.068) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.062) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.062) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.068) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.063) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.062) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.059) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.063) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.061) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.065) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.066) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.061) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.061) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.055) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.057) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.074) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.070) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+Syncing account balances...
+(0.058) SELECT `speedtest_api_account`.`id`, `speedtest_api_account`.`wallet_id`, `speedtest_api_account`.`address`, `speedtest_api_account`.`current_balance`, `speedtest_api_account`.`POW`, `speedtest_api_account`.`in_use` FROM `speedtest_api_account` INNER JOIN `speedtest_api_wallet` ON (`speedtest_api_account`.`wallet_id` = `speedtest_api_wallet`.`id`) INNER JOIN `speedtest_api_node` ON (`speedtest_api_wallet`.`node_id` = `speedtest_api_node`.`id`) WHERE `speedtest_api_node`.`enabled` = 1; args=(True,)
+(0.060) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.058) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.062) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.058) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.072) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.060) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.061) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.060) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.068) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.055) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.062) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.061) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.063) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.059) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.057) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.059) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.059) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.061) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.058) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.067) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+Starting node, wallet and account validation...
+(0.069) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` INNER JOIN `speedtest_api_node` ON (`speedtest_api_wallet`.`node_id` = `speedtest_api_node`.`id`) WHERE `speedtest_api_node`.`enabled` = 1; args=(True,)
+(0.070) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.055) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+Nodes and wallets validated...
+(0.057) SELECT `speedtest_api_account`.`id`, `speedtest_api_account`.`wallet_id`, `speedtest_api_account`.`address`, `speedtest_api_account`.`current_balance`, `speedtest_api_account`.`POW`, `speedtest_api_account`.`in_use` FROM `speedtest_api_account` INNER JOIN `speedtest_api_wallet` ON (`speedtest_api_account`.`wallet_id` = `speedtest_api_wallet`.`id`) INNER JOIN `speedtest_api_node` ON (`speedtest_api_wallet`.`node_id` = `speedtest_api_node`.`id`) WHERE `speedtest_api_node`.`enabled` = 1; args=(True,)
+(0.059) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.071) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.058) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.056) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.062) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.062) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.060) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.058) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.080) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.062) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.058) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.065) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.060) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.061) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.061) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.064) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.056) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.068) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.057) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.057) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+Accounts validated...
+Balances validated...
+Starting POWService and running POW_accounts()...
+Starting PoW thread.
+(0.055) SELECT @@SQL_AUTO_IS_NULL; args=None
+(0.060) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
+(0.062) SELECT `speedtest_api_account`.`id`, `speedtest_api_account`.`wallet_id`, `speedtest_api_account`.`address`, `speedtest_api_account`.`current_balance`, `speedtest_api_account`.`POW`, `speedtest_api_account`.`in_use` FROM `speedtest_api_account` INNER JOIN `speedtest_api_wallet` ON (`speedtest_api_account`.`wallet_id` = `speedtest_api_wallet`.`id`) INNER JOIN `speedtest_api_node` ON (`speedtest_api_wallet`.`node_id` = `speedtest_api_node`.`id`) WHERE `speedtest_api_node`.`enabled` = 1; args=(True,)
+(0.059) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.060) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.058) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.063) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.070) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.061) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.065) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.058) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.062) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.063) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.070) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.061) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.063) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.061) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.059) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.070) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.067) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.081) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.063) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.061) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+Syncing account balances...
+(0.063) SELECT `speedtest_api_account`.`id`, `speedtest_api_account`.`wallet_id`, `speedtest_api_account`.`address`, `speedtest_api_account`.`current_balance`, `speedtest_api_account`.`POW`, `speedtest_api_account`.`in_use` FROM `speedtest_api_account` INNER JOIN `speedtest_api_wallet` ON (`speedtest_api_account`.`wallet_id` = `speedtest_api_wallet`.`id`) INNER JOIN `speedtest_api_node` ON (`speedtest_api_wallet`.`node_id` = `speedtest_api_node`.`id`) WHERE `speedtest_api_node`.`enabled` = 1; args=(True,)
+(0.060) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.062) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.065) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.063) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.061) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.062) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.058) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.062) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.059) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.067) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.071) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.060) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.058) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.064) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.072) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.068) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.063) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.061) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.062) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.066) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+Starting node, wallet and account validation...
+(0.062) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` INNER JOIN `speedtest_api_node` ON (`speedtest_api_wallet`.`node_id` = `speedtest_api_node`.`id`) WHERE `speedtest_api_node`.`enabled` = 1; args=(True,)
+(0.066) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.067) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+Nodes and wallets validated...
+(0.060) SELECT `speedtest_api_account`.`id`, `speedtest_api_account`.`wallet_id`, `speedtest_api_account`.`address`, `speedtest_api_account`.`current_balance`, `speedtest_api_account`.`POW`, `speedtest_api_account`.`in_use` FROM `speedtest_api_account` INNER JOIN `speedtest_api_wallet` ON (`speedtest_api_account`.`wallet_id` = `speedtest_api_wallet`.`id`) INNER JOIN `speedtest_api_node` ON (`speedtest_api_wallet`.`node_id` = `speedtest_api_node`.`id`) WHERE `speedtest_api_node`.`enabled` = 1; args=(True,)
+(0.068) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.063) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.069) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.070) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.063) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.057) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.073) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.060) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.059) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.064) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.066) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.064) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.060) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.065) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.063) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.066) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.073) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.062) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.061) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.065) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+Accounts validated...
+Balances validated...
+(0.055) SELECT @@SQL_AUTO_IS_NULL; args=None
+(0.062) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
+(0.068) SHOW FULL TABLES; args=None
+(0.068) SELECT `django_migrations`.`app`, `django_migrations`.`name` FROM `django_migrations`; args=()
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 111, in _get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/usr/local/lib/python3.7/site-packages/django/urls/resolvers.py", line 520, in resolve
+    raise Resolver404({'tried': tried, 'path': new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <module 'django.contrib.admindocs.urls' from '/usr/local/lib/python3.7/site-packages/django/contrib/admindocs/urls.py'> (None:None) 'admin/doc/'>], [<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLPattern 'transactions/send'>], [<URLPattern 'transactions'>], [<URLPattern 'advertisements/random'>], [<URLPattern 'nodes/list'>], [<URLPattern 'transactions/statistics'>]], 'path': ''}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 829, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 837, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 850, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <module 'django.contrib.admindocs.urls' from '/usr/local/lib/python3.7/site-packages/django/contrib/admindocs/urls.py'> (None:None) 'admin/doc/'>
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 111, in _get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/usr/local/lib/python3.7/site-packages/django/urls/resolvers.py", line 520, in resolve
+    raise Resolver404({'tried': tried, 'path': new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <module 'django.contrib.admindocs.urls' from '/usr/local/lib/python3.7/site-packages/django/contrib/admindocs/urls.py'> (None:None) 'admin/doc/'>], [<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLPattern 'transactions/send'>], [<URLPattern 'transactions'>], [<URLPattern 'advertisements/random'>], [<URLPattern 'nodes/list'>], [<URLPattern 'transactions/statistics'>]], 'path': ''}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 829, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 837, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 850, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <URLPattern list> (admin:admin) 'admin/'>
+Not Found: /
+"GET / HTTP/1.1" 404 2615
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 111, in _get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/usr/local/lib/python3.7/site-packages/django/urls/resolvers.py", line 520, in resolve
+    raise Resolver404({'tried': tried, 'path': new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <module 'django.contrib.admindocs.urls' from '/usr/local/lib/python3.7/site-packages/django/contrib/admindocs/urls.py'> (None:None) 'admin/doc/'>], [<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLPattern 'transactions/send'>], [<URLPattern 'transactions'>], [<URLPattern 'advertisements/random'>], [<URLPattern 'nodes/list'>], [<URLPattern 'transactions/statistics'>]], 'path': 'favicon.ico'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 829, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 837, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 850, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <module 'django.contrib.admindocs.urls' from '/usr/local/lib/python3.7/site-packages/django/contrib/admindocs/urls.py'> (None:None) 'admin/doc/'>
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 111, in _get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/usr/local/lib/python3.7/site-packages/django/urls/resolvers.py", line 520, in resolve
+    raise Resolver404({'tried': tried, 'path': new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <module 'django.contrib.admindocs.urls' from '/usr/local/lib/python3.7/site-packages/django/contrib/admindocs/urls.py'> (None:None) 'admin/doc/'>], [<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLPattern 'transactions/send'>], [<URLPattern 'transactions'>], [<URLPattern 'advertisements/random'>], [<URLPattern 'nodes/list'>], [<URLPattern 'transactions/statistics'>]], 'path': 'favicon.ico'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 829, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 837, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 850, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <URLPattern list> (admin:admin) 'admin/'>
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 2666
+(0.058) SELECT @@SQL_AUTO_IS_NULL; args=None
+(0.058) SELECT @@SQL_AUTO_IS_NULL; args=None
+(0.060) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
+(0.069) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
+(0.057) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`enabled` = 1; args=(True,)
+"GET /nodes/list HTTP/1.1" 200 187
+(0.065) SELECT `speedtest_api_transaction`.`id`, `speedtest_api_transaction`.`origin_id`, `speedtest_api_transaction`.`destination_id`, `speedtest_api_transaction`.`batch_id`, `speedtest_api_transaction`.`start_send_timestamp`, `speedtest_api_transaction`.`end_send_timestamp`, `speedtest_api_transaction`.`start_receive_timestamp`, `speedtest_api_transaction`.`end_receive_timestamp`, `speedtest_api_transaction`.`amount`, `speedtest_api_transaction`.`transaction_hash_sending`, `speedtest_api_transaction`.`transaction_hash_receiving`, `speedtest_api_account`.`id`, `speedtest_api_account`.`wallet_id`, `speedtest_api_account`.`address`, `speedtest_api_account`.`current_balance`, `speedtest_api_account`.`POW`, `speedtest_api_account`.`in_use`, `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id`, `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled`, T5.`id`, T5.`wallet_id`, T5.`address`, T5.`current_balance`, T5.`POW`, T5.`in_use`, T6.`id`, T6.`node_id`, T6.`wallet_id`, T7.`id`, T7.`URL`, T7.`latitude`, T7.`longitude`, T7.`location_name`, T7.`enabled`, `speedtest_api_batch`.`id`, `speedtest_api_batch`.`initiated_by`, `speedtest_api_batch`.`createdAt` FROM `speedtest_api_transaction` INNER JOIN `speedtest_api_account` ON (`speedtest_api_transaction`.`origin_id` = `speedtest_api_account`.`id`) INNER JOIN `speedtest_api_wallet` ON (`speedtest_api_account`.`wallet_id` = `speedtest_api_wallet`.`id`) INNER JOIN `speedtest_api_node` ON (`speedtest_api_wallet`.`node_id` = `speedtest_api_node`.`id`) INNER JOIN `speedtest_api_account` T5 ON (`speedtest_api_transaction`.`destination_id` = T5.`id`) INNER JOIN `speedtest_api_wallet` T6 ON (T5.`wallet_id` = T6.`id`) INNER JOIN `speedtest_api_node` T7 ON (T6.`node_id` = T7.`id`) INNER JOIN `speedtest_api_batch` ON (`speedtest_api_transaction`.`batch_id` = `speedtest_api_batch`.`id`)  LIMIT 500; args=()
+(0.066) SELECT AVG((`speedtest_api_transaction`.`end_receive_timestamp` - `speedtest_api_transaction`.`start_send_timestamp`)) AS `average_difference` FROM `speedtest_api_transaction`; args=()
+(0.059) SELECT COUNT(*) AS `__count` FROM `speedtest_api_transaction` WHERE (`speedtest_api_transaction`.`end_receive_timestamp` >= 0 AND `speedtest_api_transaction`.`start_send_timestamp` >= 0); args=(0, 0)
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 4550
+(0.059) SELECT @@SQL_AUTO_IS_NULL; args=None
+(0.058) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
+(0.054) INSERT INTO `speedtest_api_batch` (`initiated_by`, `createdAt`) VALUES ('127.0.0.1', '2018-11-27 04:06:01.008500'); args=['127.0.0.1', '2018-11-27 04:06:01.008500']
+(0.063) SELECT `speedtest_api_account`.`id`, `speedtest_api_account`.`wallet_id`, `speedtest_api_account`.`address`, `speedtest_api_account`.`current_balance`, `speedtest_api_account`.`POW`, `speedtest_api_account`.`in_use` FROM `speedtest_api_account` INNER JOIN `speedtest_api_wallet` ON (`speedtest_api_account`.`wallet_id` = `speedtest_api_wallet`.`id`) INNER JOIN `speedtest_api_node` ON (`speedtest_api_wallet`.`node_id` = `speedtest_api_node`.`id`) WHERE (`speedtest_api_node`.`enabled` = 1 AND `speedtest_api_account`.`in_use` = 0); args=(True, False)
+(0.082) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.054) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.059) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.063) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.062) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.064) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.056) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.075) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.057) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.059) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.059) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.073) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.057) UPDATE `speedtest_api_account` SET `wallet_id` = 44, `address` = 'xrb_3e8b88adirydmwe5esjzr9n1d19fyb5mx3s8nkto3ueqejmpakmfxc58eqfk', `current_balance` = '1277999600000000000000000000', `POW` = '5fd40cd88f9eba3f', `in_use` = 1 WHERE `speedtest_api_account`.`id` = 115; args=(44, 'xrb_3e8b88adirydmwe5esjzr9n1d19fyb5mx3s8nkto3ueqejmpakmfxc58eqfk', '1277999600000000000000000000', '5fd40cd88f9eba3f', True, 115)
+(0.063) UPDATE `speedtest_api_account` SET `wallet_id` = 45, `address` = 'xrb_1aebkju9zp8pdteeseaj8k3h3ytpqysdoh91c86fmpu7ki885ux6qp353om7', `current_balance` = '1278002100000000000000000000', `POW` = '59f4933f73240a5b', `in_use` = 1 WHERE `speedtest_api_account`.`id` = 120; args=(45, 'xrb_1aebkju9zp8pdteeseaj8k3h3ytpqysdoh91c86fmpu7ki885ux6qp353om7', '1278002100000000000000000000', '59f4933f73240a5b', True, 120)
+(0.059) INSERT INTO `speedtest_api_transaction` (`origin_id`, `destination_id`, `batch_id`, `start_send_timestamp`, `end_send_timestamp`, `start_receive_timestamp`, `end_receive_timestamp`, `amount`, `transaction_hash_sending`, `transaction_hash_receiving`) VALUES (115, 120, 344, NULL, NULL, NULL, NULL, '900000000000000000000', '', ''); args=[115, 120, 344, None, None, None, None, '900000000000000000000', '', '']
+"POST /transactions HTTP/1.1" 200 447
+(0.061) SELECT @@SQL_AUTO_IS_NULL; args=None
+(0.056) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
+(0.064) SELECT `speedtest_api_batch`.`id`, `speedtest_api_batch`.`initiated_by`, `speedtest_api_batch`.`createdAt` FROM `speedtest_api_batch` WHERE `speedtest_api_batch`.`id` = 344; args=(344,)
+(0.059) SELECT `speedtest_api_transaction`.`id`, `speedtest_api_transaction`.`origin_id`, `speedtest_api_transaction`.`destination_id`, `speedtest_api_transaction`.`batch_id`, `speedtest_api_transaction`.`start_send_timestamp`, `speedtest_api_transaction`.`end_send_timestamp`, `speedtest_api_transaction`.`start_receive_timestamp`, `speedtest_api_transaction`.`end_receive_timestamp`, `speedtest_api_transaction`.`amount`, `speedtest_api_transaction`.`transaction_hash_sending`, `speedtest_api_transaction`.`transaction_hash_receiving` FROM `speedtest_api_transaction` WHERE `speedtest_api_transaction`.`batch_id` = 344; args=(344,)
+(0.057) SELECT @@SQL_AUTO_IS_NULL; args=None
+(0.069) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
+(0.064) SELECT `speedtest_api_account`.`id`, `speedtest_api_account`.`wallet_id`, `speedtest_api_account`.`address`, `speedtest_api_account`.`current_balance`, `speedtest_api_account`.`POW`, `speedtest_api_account`.`in_use` FROM `speedtest_api_account` WHERE `speedtest_api_account`.`id` = 115; args=(115,)
+(0.063) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 44; args=(44,)
+(0.059) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 26; args=(26,)
+(0.058) SELECT `speedtest_api_account`.`id`, `speedtest_api_account`.`wallet_id`, `speedtest_api_account`.`address`, `speedtest_api_account`.`current_balance`, `speedtest_api_account`.`POW`, `speedtest_api_account`.`in_use` FROM `speedtest_api_account` WHERE `speedtest_api_account`.`id` = 120; args=(120,)
+(0.069) SELECT `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id` FROM `speedtest_api_wallet` WHERE `speedtest_api_wallet`.`id` = 45; args=(45,)
+(0.061) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`id` = 27; args=(27,)
+(0.061) UPDATE `speedtest_api_transaction` SET `origin_id` = 115, `destination_id` = 120, `batch_id` = 344, `start_send_timestamp` = 1543291566652, `end_send_timestamp` = 1543291567000, `start_receive_timestamp` = NULL, `end_receive_timestamp` = NULL, `amount` = '900000000000000000000', `transaction_hash_sending` = 'A0CE7C07691B1398E3AF01B4984B81CBD50067034E17BA34A5E70CA6021FEBF7', `transaction_hash_receiving` = '' WHERE `speedtest_api_transaction`.`id` = 601; args=(115, 120, 344, 1543291566652, 1543291567000, '900000000000000000000', 'A0CE7C07691B1398E3AF01B4984B81CBD50067034E17BA34A5E70CA6021FEBF7', '', 601)
+(0.062) UPDATE `speedtest_api_account` SET `wallet_id` = 44, `address` = 'xrb_3e8b88adirydmwe5esjzr9n1d19fyb5mx3s8nkto3ueqejmpakmfxc58eqfk', `current_balance` = '1277998700000000000000000000', `POW` = NULL, `in_use` = 1 WHERE `speedtest_api_account`.`id` = 115; args=(44, 'xrb_3e8b88adirydmwe5esjzr9n1d19fyb5mx3s8nkto3ueqejmpakmfxc58eqfk', '1277998700000000000000000000', True, 115)
+(0.062) UPDATE `speedtest_api_account` SET `wallet_id` = 45, `address` = 'xrb_1aebkju9zp8pdteeseaj8k3h3ytpqysdoh91c86fmpu7ki885ux6qp353om7', `current_balance` = '1278003000000000000000000000', `POW` = '59f4933f73240a5b', `in_use` = 1 WHERE `speedtest_api_account`.`id` = 120; args=(45, 'xrb_1aebkju9zp8pdteeseaj8k3h3ytpqysdoh91c86fmpu7ki885ux6qp353om7', '1278003000000000000000000000', '59f4933f73240a5b', True, 120)
+(0.064) UPDATE `speedtest_api_transaction` SET `origin_id` = 115, `destination_id` = 120, `batch_id` = 344, `start_send_timestamp` = 1543291566652, `end_send_timestamp` = 1543291567000, `start_receive_timestamp` = NULL, `end_receive_timestamp` = NULL, `amount` = '900000000000000000000', `transaction_hash_sending` = 'A0CE7C07691B1398E3AF01B4984B81CBD50067034E17BA34A5E70CA6021FEBF7', `transaction_hash_receiving` = '' WHERE `speedtest_api_transaction`.`id` = 601; args=(115, 120, 344, 1543291566652, 1543291567000, '900000000000000000000', 'A0CE7C07691B1398E3AF01B4984B81CBD50067034E17BA34A5E70CA6021FEBF7', '', 601)
+(0.066) UPDATE `speedtest_api_transaction` SET `origin_id` = 115, `destination_id` = 120, `batch_id` = 344, `start_send_timestamp` = 1543291566652, `end_send_timestamp` = 1543291567000, `start_receive_timestamp` = 1543291601073, `end_receive_timestamp` = 1543291601000, `amount` = '900000000000000000000', `transaction_hash_sending` = 'A0CE7C07691B1398E3AF01B4984B81CBD50067034E17BA34A5E70CA6021FEBF7', `transaction_hash_receiving` = 'FA41118F22A47215C5EF61DA438BA1B53A61710B40B3B88AB23C77732B57BABA' WHERE `speedtest_api_transaction`.`id` = 601; args=(115, 120, 344, 1543291566652, 1543291567000, 1543291601073, 1543291601000, '900000000000000000000', 'A0CE7C07691B1398E3AF01B4984B81CBD50067034E17BA34A5E70CA6021FEBF7', 'FA41118F22A47215C5EF61DA438BA1B53A61710B40B3B88AB23C77732B57BABA', 601)
+(0.061) UPDATE `speedtest_api_account` SET `wallet_id` = 45, `address` = 'xrb_1aebkju9zp8pdteeseaj8k3h3ytpqysdoh91c86fmpu7ki885ux6qp353om7', `current_balance` = '1278003000000000000000000000', `POW` = NULL, `in_use` = 1 WHERE `speedtest_api_account`.`id` = 120; args=(45, 'xrb_1aebkju9zp8pdteeseaj8k3h3ytpqysdoh91c86fmpu7ki885ux6qp353om7', '1278003000000000000000000000', True, 120)
+(0.062) UPDATE `speedtest_api_transaction` SET `origin_id` = 115, `destination_id` = 120, `batch_id` = 344, `start_send_timestamp` = 1543291566652, `end_send_timestamp` = 1543291567000, `start_receive_timestamp` = 1543291601073, `end_receive_timestamp` = 1543291601000, `amount` = '900000000000000000000', `transaction_hash_sending` = 'A0CE7C07691B1398E3AF01B4984B81CBD50067034E17BA34A5E70CA6021FEBF7', `transaction_hash_receiving` = 'FA41118F22A47215C5EF61DA438BA1B53A61710B40B3B88AB23C77732B57BABA' WHERE `speedtest_api_transaction`.`id` = 601; args=(115, 120, 344, 1543291566652, 1543291567000, 1543291601073, 1543291601000, '900000000000000000000', 'A0CE7C07691B1398E3AF01B4984B81CBD50067034E17BA34A5E70CA6021FEBF7', 'FA41118F22A47215C5EF61DA438BA1B53A61710B40B3B88AB23C77732B57BABA', 601)
+(0.069) UPDATE `speedtest_api_account` SET `wallet_id` = 44, `address` = 'xrb_3e8b88adirydmwe5esjzr9n1d19fyb5mx3s8nkto3ueqejmpakmfxc58eqfk', `current_balance` = '1277998700000000000000000000', `POW` = NULL, `in_use` = 0 WHERE `speedtest_api_account`.`id` = 115; args=(44, 'xrb_3e8b88adirydmwe5esjzr9n1d19fyb5mx3s8nkto3ueqejmpakmfxc58eqfk', '1277998700000000000000000000', False, 115)
+(0.066) UPDATE `speedtest_api_account` SET `wallet_id` = 45, `address` = 'xrb_1aebkju9zp8pdteeseaj8k3h3ytpqysdoh91c86fmpu7ki885ux6qp353om7', `current_balance` = '1278003000000000000000000000', `POW` = NULL, `in_use` = 0 WHERE `speedtest_api_account`.`id` = 120; args=(45, 'xrb_1aebkju9zp8pdteeseaj8k3h3ytpqysdoh91c86fmpu7ki885ux6qp353om7', '1278003000000000000000000000', False, 120)
+"POST /transactions/send HTTP/1.1" 200 611
+(0.060) SELECT @@SQL_AUTO_IS_NULL; args=None
+(0.066) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
+(0.057) SELECT `speedtest_api_account`.`id`, `speedtest_api_account`.`wallet_id`, `speedtest_api_account`.`address`, `speedtest_api_account`.`current_balance`, `speedtest_api_account`.`POW`, `speedtest_api_account`.`in_use` FROM `speedtest_api_account` WHERE `speedtest_api_account`.`address` = 'xrb_3e8b88adirydmwe5esjzr9n1d19fyb5mx3s8nkto3ueqejmpakmfxc58eqfk'; args=('xrb_3e8b88adirydmwe5esjzr9n1d19fyb5mx3s8nkto3ueqejmpakmfxc58eqfk',)
+Generated POW: fd36d73bee75ebf5 for account xrb_3e8b88adirydmwe5esjzr9n1d19fyb5mx3s8nkto3ueqejmpakmfxc58eqfk
+(0.056) UPDATE `speedtest_api_account` SET `wallet_id` = 44, `address` = 'xrb_3e8b88adirydmwe5esjzr9n1d19fyb5mx3s8nkto3ueqejmpakmfxc58eqfk', `current_balance` = '1277998700000000000000000000', `POW` = 'fd36d73bee75ebf5', `in_use` = 0 WHERE `speedtest_api_account`.`id` = 115; args=(44, 'xrb_3e8b88adirydmwe5esjzr9n1d19fyb5mx3s8nkto3ueqejmpakmfxc58eqfk', '1277998700000000000000000000', 'fd36d73bee75ebf5', False, 115)
+(0.058) SELECT `speedtest_api_account`.`id`, `speedtest_api_account`.`wallet_id`, `speedtest_api_account`.`address`, `speedtest_api_account`.`current_balance`, `speedtest_api_account`.`POW`, `speedtest_api_account`.`in_use` FROM `speedtest_api_account` WHERE `speedtest_api_account`.`address` = 'xrb_1aebkju9zp8pdteeseaj8k3h3ytpqysdoh91c86fmpu7ki885ux6qp353om7'; args=('xrb_1aebkju9zp8pdteeseaj8k3h3ytpqysdoh91c86fmpu7ki885ux6qp353om7',)
+Generated POW: 784d7760e09707bb for account xrb_1aebkju9zp8pdteeseaj8k3h3ytpqysdoh91c86fmpu7ki885ux6qp353om7
+(0.060) UPDATE `speedtest_api_account` SET `wallet_id` = 45, `address` = 'xrb_1aebkju9zp8pdteeseaj8k3h3ytpqysdoh91c86fmpu7ki885ux6qp353om7', `current_balance` = '1278003000000000000000000000', `POW` = '784d7760e09707bb', `in_use` = 0 WHERE `speedtest_api_account`.`id` = 120; args=(45, 'xrb_1aebkju9zp8pdteeseaj8k3h3ytpqysdoh91c86fmpu7ki885ux6qp353om7', '1278003000000000000000000000', '784d7760e09707bb', False, 120)
+(0.055) SELECT @@SQL_AUTO_IS_NULL; args=None
+(0.064) SELECT @@SQL_AUTO_IS_NULL; args=None
+(0.054) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
+(0.073) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
+(0.058) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`enabled` = 1; args=(True,)
+"GET /nodes/list HTTP/1.1" 200 187
+(0.069) SELECT `speedtest_api_transaction`.`id`, `speedtest_api_transaction`.`origin_id`, `speedtest_api_transaction`.`destination_id`, `speedtest_api_transaction`.`batch_id`, `speedtest_api_transaction`.`start_send_timestamp`, `speedtest_api_transaction`.`end_send_timestamp`, `speedtest_api_transaction`.`start_receive_timestamp`, `speedtest_api_transaction`.`end_receive_timestamp`, `speedtest_api_transaction`.`amount`, `speedtest_api_transaction`.`transaction_hash_sending`, `speedtest_api_transaction`.`transaction_hash_receiving`, `speedtest_api_account`.`id`, `speedtest_api_account`.`wallet_id`, `speedtest_api_account`.`address`, `speedtest_api_account`.`current_balance`, `speedtest_api_account`.`POW`, `speedtest_api_account`.`in_use`, `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id`, `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled`, T5.`id`, T5.`wallet_id`, T5.`address`, T5.`current_balance`, T5.`POW`, T5.`in_use`, T6.`id`, T6.`node_id`, T6.`wallet_id`, T7.`id`, T7.`URL`, T7.`latitude`, T7.`longitude`, T7.`location_name`, T7.`enabled`, `speedtest_api_batch`.`id`, `speedtest_api_batch`.`initiated_by`, `speedtest_api_batch`.`createdAt` FROM `speedtest_api_transaction` INNER JOIN `speedtest_api_account` ON (`speedtest_api_transaction`.`origin_id` = `speedtest_api_account`.`id`) INNER JOIN `speedtest_api_wallet` ON (`speedtest_api_account`.`wallet_id` = `speedtest_api_wallet`.`id`) INNER JOIN `speedtest_api_node` ON (`speedtest_api_wallet`.`node_id` = `speedtest_api_node`.`id`) INNER JOIN `speedtest_api_account` T5 ON (`speedtest_api_transaction`.`destination_id` = T5.`id`) INNER JOIN `speedtest_api_wallet` T6 ON (T5.`wallet_id` = T6.`id`) INNER JOIN `speedtest_api_node` T7 ON (T6.`node_id` = T7.`id`) INNER JOIN `speedtest_api_batch` ON (`speedtest_api_transaction`.`batch_id` = `speedtest_api_batch`.`id`)  LIMIT 500; args=()
+(0.058) SELECT AVG((`speedtest_api_transaction`.`end_receive_timestamp` - `speedtest_api_transaction`.`start_send_timestamp`)) AS `average_difference` FROM `speedtest_api_transaction`; args=()
+(0.063) SELECT COUNT(*) AS `__count` FROM `speedtest_api_transaction` WHERE (`speedtest_api_transaction`.`end_receive_timestamp` >= 0 AND `speedtest_api_transaction`.`start_send_timestamp` >= 0); args=(0, 0)
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 5132
+(0.058) SELECT @@SQL_AUTO_IS_NULL; args=None
+(0.060) SELECT @@SQL_AUTO_IS_NULL; args=None
+(0.062) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
+(0.067) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None
+(0.056) SELECT `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled` FROM `speedtest_api_node` WHERE `speedtest_api_node`.`enabled` = 1; args=(True,)
+"GET /nodes/list HTTP/1.1" 200 187
+(0.067) SELECT `speedtest_api_transaction`.`id`, `speedtest_api_transaction`.`origin_id`, `speedtest_api_transaction`.`destination_id`, `speedtest_api_transaction`.`batch_id`, `speedtest_api_transaction`.`start_send_timestamp`, `speedtest_api_transaction`.`end_send_timestamp`, `speedtest_api_transaction`.`start_receive_timestamp`, `speedtest_api_transaction`.`end_receive_timestamp`, `speedtest_api_transaction`.`amount`, `speedtest_api_transaction`.`transaction_hash_sending`, `speedtest_api_transaction`.`transaction_hash_receiving`, `speedtest_api_account`.`id`, `speedtest_api_account`.`wallet_id`, `speedtest_api_account`.`address`, `speedtest_api_account`.`current_balance`, `speedtest_api_account`.`POW`, `speedtest_api_account`.`in_use`, `speedtest_api_wallet`.`id`, `speedtest_api_wallet`.`node_id`, `speedtest_api_wallet`.`wallet_id`, `speedtest_api_node`.`id`, `speedtest_api_node`.`URL`, `speedtest_api_node`.`latitude`, `speedtest_api_node`.`longitude`, `speedtest_api_node`.`location_name`, `speedtest_api_node`.`enabled`, T5.`id`, T5.`wallet_id`, T5.`address`, T5.`current_balance`, T5.`POW`, T5.`in_use`, T6.`id`, T6.`node_id`, T6.`wallet_id`, T7.`id`, T7.`URL`, T7.`latitude`, T7.`longitude`, T7.`location_name`, T7.`enabled`, `speedtest_api_batch`.`id`, `speedtest_api_batch`.`initiated_by`, `speedtest_api_batch`.`createdAt` FROM `speedtest_api_transaction` INNER JOIN `speedtest_api_account` ON (`speedtest_api_transaction`.`origin_id` = `speedtest_api_account`.`id`) INNER JOIN `speedtest_api_wallet` ON (`speedtest_api_account`.`wallet_id` = `speedtest_api_wallet`.`id`) INNER JOIN `speedtest_api_node` ON (`speedtest_api_wallet`.`node_id` = `speedtest_api_node`.`id`) INNER JOIN `speedtest_api_account` T5 ON (`speedtest_api_transaction`.`destination_id` = T5.`id`) INNER JOIN `speedtest_api_wallet` T6 ON (T5.`wallet_id` = T6.`id`) INNER JOIN `speedtest_api_node` T7 ON (T6.`node_id` = T7.`id`) INNER JOIN `speedtest_api_batch` ON (`speedtest_api_transaction`.`batch_id` = `speedtest_api_batch`.`id`)  LIMIT 500; args=()
+(0.056) SELECT AVG((`speedtest_api_transaction`.`end_receive_timestamp` - `speedtest_api_transaction`.`start_send_timestamp`)) AS `average_difference` FROM `speedtest_api_transaction`; args=()
+(0.077) SELECT COUNT(*) AS `__count` FROM `speedtest_api_transaction` WHERE (`speedtest_api_transaction`.`end_receive_timestamp` >= 0 AND `speedtest_api_transaction`.`start_send_timestamp` >= 0); args=(0, 0)
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 5716
