@@ -67,7 +67,7 @@ def time_transaction_receive(transaction):
 		transaction.transaction_hash_receiving, 
 		transaction.start_receive_timestamp)
 	
-	transaction.end_receive_timestamp =	end_time
+	transaction.end_receive_timestamp = end_time
 	transaction.save()
 	return	end_time
 
@@ -83,7 +83,7 @@ def time_transaction_send(transaction):
 	 transaction.transaction_hash_sending,
 	 transaction.start_send_timestamp)
 	
-	transaction.end_send_timestamp =	end_time
+	transaction.end_send_timestamp = end_time
 	transaction.save()
 	return	end_time
 
