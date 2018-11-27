@@ -5,12 +5,12 @@ const TableRow = ({
     origin,
     destination,
     startSendTimestamp,
-    endSentTimestamp,
+    endSendTimestamp,
     amount,
     transactionHashReceiving,
     transactionHashSending
 }) => {
-    const date = new Date(endSentTimestamp).toLocaleDateString({/*Locale goes here - en-US for example */}, {
+    const date = new Date(endSendTimestamp).toLocaleDateString({/*Locale goes here - en-US for example */}, {
         day : 'numeric',
         month : 'short',
         year : 'numeric',
