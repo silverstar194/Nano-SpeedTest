@@ -62,7 +62,7 @@ def time_transaction_receive(transaction):
 	@return delta in seconds of how long it took to get the receiving block
 	@raise Exception for when we have missed the transaction
 	"""
-	end_time = transaction_general(transaction.destination.wallet.node.URL, 
+	end_time = transaction_general(transaction.origin.wallet.node.URL,
 		transaction.destination.address, 
 		transaction.transaction_hash_receiving, 
 		transaction.start_receive_timestamp)
@@ -78,7 +78,7 @@ def time_transaction_send(transaction):
 	@return delta in seconds of how long it took to get the sending block
 	@raise Exception for when we have missed the transaction
 	"""
-	end_time = transaction_general(transaction.origin.wallet.node.URL,
+	end_time = transaction_general(transaction.destination.wallet.node.URL,
 	 transaction.origin.address, 
 	 transaction.transaction_hash_sending,
 	 transaction.start_send_timestamp)
