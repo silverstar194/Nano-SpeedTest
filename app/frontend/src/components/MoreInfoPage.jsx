@@ -53,6 +53,15 @@ class MoreInfoPage extends Component {
                         rel='noopener noreferrer'>CoinMarketCap</a>.
                      <br/>
                       <br/>
+
+                     <h5>Places That Accept Nano</h5>
+                    Each day, merchants around the world are beginning to accept Nano.
+                    For a full list of businesses who currently accept Nano, visit  <a
+                        href='https://usenano.org/'
+                        target='_blank'
+                        rel='noopener noreferrer'>https://usenano.org/</a>.
+                    <br/>
+                    <br/>
                     <h5>Accept Nano as a merchant</h5>
                     You can setup an online Nano payments with <a
                             href='https://brainblocks.io/'
