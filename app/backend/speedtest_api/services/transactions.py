@@ -56,7 +56,7 @@ def new_transaction_random(batch):
     @return: New transaction object
     """
 
-    accounts_list = get_accounts()
+    accounts_list = get_accounts(in_use=False)
 
     if len(accounts_list) == 0:
         raise NoAccountsException()
@@ -237,12 +237,10 @@ def send_transaction(transaction):
             id=transaction.id
         )
 
-
         # Update the balances and POW
         transaction.origin.current_balance = transaction.origin.current_balance - transaction.amount
         transaction.destination.current_balance = transaction.destination.current_balance + transaction.amount
         transaction.origin.POW = None
-
     except nano.rpc.RPCException as e:
         logger.error(e)
         ##Unlock accounts
@@ -307,12 +305,6 @@ def time_receive_block_async(transaction):
     # Regenerate POW on the accounts
     POWService.enqueue_account(address=transaction.origin.address, frontier=transaction.transaction_hash_sending)
     POWService.enqueue_account(address=transaction.destination.address, frontier=transaction.transaction_hash_receiving)
-
-    ##Unlock accounts
-    transaction.origin.unlock()
-    transaction.destination.unlock()
-
-
 
 def simple_send(from_account, to_address, amount):
     """
