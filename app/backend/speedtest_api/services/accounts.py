@@ -107,4 +107,4 @@ def sync_accounts():
             # We reset the POW because if there is an issue here, that means the POW must have been changed
             account.POW = None
 
-            account.save()
+        account.unlock()
