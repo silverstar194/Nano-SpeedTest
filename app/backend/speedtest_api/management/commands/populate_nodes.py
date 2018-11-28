@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand, CommandError
 
 from ...models.account import Account
 from ...services.nodes import get_nodes
-from ...services.wallets import new_wallet, 
+from ...services.wallets import new_wallet, get_wallets
 from ...services._pow import POWService
 from ...services.accounts import sync_accounts, get_accounts, new_account
 from ...services.transactions import simple_send
@@ -47,7 +47,7 @@ class Command(BaseCommand):
             sync_accounts()
             funding_account = Account.objects.filter(address=funding_account.address)[0]
         # Distribute funds between accounts to open them
-        amount = funding_account.current_balance / (number_accounts_per_node * len(nodes_list))
+        amount = funding_account.current_balance / len(all_accounts)
         for account_init in all_accounts:
 
             # Already opened
