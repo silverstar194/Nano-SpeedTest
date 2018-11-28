@@ -103,6 +103,11 @@ class HomePage extends Component {
                         </div>
                     </div>
                     <div/>
+                    <div class="shadow-none p-3 mb-5 bg-light rounded">
+                    <h5>What is Nano?</h5>
+                    Nano is a next-generation cryptocurrency created by Colin LeMahieu for instant and free transactions.
+                    It's block-lattice structure enables decentralized transactions without loss of security, speed, or high costs.
+                    </div>
                 </div>
             </div>
         );

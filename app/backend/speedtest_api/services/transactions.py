@@ -55,7 +55,7 @@ def new_transaction_random(batch):
     @return: New transaction object
     """
 
-    accounts_list = get_accounts(in_use=False)
+    accounts_list = get_accounts()
 
     if len(accounts_list) == 0:
         raise NoAccountsException()

@@ -11,7 +11,6 @@ import {
 
 const xName = 'Date';
 const yName = 'Elapsed time';
-const numTicks = 7;
 
 const dateFormatterWithHMS = (tick) => (new Date(tick)).toLocaleDateString({}, {
     hour: 'numeric',
@@ -19,36 +18,18 @@ const dateFormatterWithHMS = (tick) => (new Date(tick)).toLocaleDateString({}, {
     second: 'numeric'
 });
 
-const dateFormatter = (tick) => (new Date(tick)).toLocaleDateString({}, {
-    hour: 'numeric'
-});
-
 const timeFormatter = (value) => parseInt(value/1000);
 const timeFormatterWithMilli = (value) => (value/1000).toFixed(3);
 
-const formatTooltip = (value, unit) => {
-    if (unit === xName) { // dates
-        return dateFormatterWithHMS(value);
-    } else { // elapsed time
+const formatTooltip = (value, unit, plotData) => {
+    if (unit === yName) { // dates
         return timeFormatterWithMilli(value) + ' Seconds';
+    } else { // if the unit is date it is really array index so need to convert the displayed value to a date
+        return dateFormatterWithHMS(plotData[value].date);
     }
-};
-
-const getMinX = (plotData) => {
-    return plotData.reduce((min, p) => p.x < min ? p.x : min, plotData[0].x);
-};
-const getMaxX = (plotData) => {
-    return plotData.reduce((max, p) => p.x > max ? p.x : max, plotData[0].x);
 };
 
 const ScatterView = ({plotData}) => {
-    const xDomain = [getMinX(plotData), getMaxX(plotData)];
-
-    const offset = (xDomain[1] - xDomain[0])/numTicks;
-    const ticks = [];
-    for (let i = 0; i < numTicks; i++) {
-        ticks.push(xDomain[0] + Math.round(i * offset));
-    }
 
     return (
         <ResponsiveContainer width='100%' height={500}>
@@ -57,11 +38,8 @@ const ScatterView = ({plotData}) => {
                     dataKey='x'
                     name={xName}
                     domain={['auto', 'auto']}
-                    scale='time'
                     type='number'
-                    // tick={false}
-                    ticks={ticks}
-                    tickFormatter={dateFormatter}
+                    tick={false}
                 />
                 <YAxis
                     label={{ value: 'Time in Seconds', angle: -90, position: 'insideLeft' }}
@@ -70,7 +48,7 @@ const ScatterView = ({plotData}) => {
                     name={yName}
                     tickFormatter={timeFormatter}
                 />
-                <Tooltip formatter={formatTooltip} cursor={{ strokeDasharray: '3 3' }} />
+                <Tooltip formatter={(value, unit) => formatTooltip(value, unit, plotData)} cursor={{ strokeDasharray: '3 3' }} />
                 <Legend />
                 <Scatter name='Transactions' data={plotData} fill='#8884d8' />
             </ScatterChart>

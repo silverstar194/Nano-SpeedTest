@@ -19,7 +19,7 @@ import transactionsMiddleware from './transactionsMiddleware';
 import { addNodes } from 'actions/nodes';
 import { addPastResults } from 'actions/pastResults';
 
-import { fetchWrapper } from 'util/helpers';
+import { fetchWrapper, fetchPastResults } from 'util/helpers';
 
 
 import createHistory from 'history/createBrowserHistory';
@@ -94,26 +94,10 @@ fetchWrapper('http://127.0.0.1:8000/nodes/list', {
     console.warn('TODO Error in fetching nodes');
 });
 
-fetchWrapper('http://127.0.0.1:8000/transactions/statistics?count=500', {
-    method: 'GET'
-}).then((data) => {
-    const transactions = data.transactions.filter((transaction) => {
-        return transaction.endReceiveTimestamp && transaction.endReceiveTimestamp - transaction.startSendTimestamp > 0;
-    });
-    transactions.forEach((transaction) => {
-        transaction.elapsedTime = transaction.endReceiveTimestamp - transaction.startSendTimestamp;
-    });
-    const average = data.average / 1000;
-    store.dispatch(addPastResults({
-        pastTransactions: transactions,
-        totalTransactions: data.count,
-        globalAverage: average
-    }));
-}).catch((err) => {
-    //TODO handle error
-    console.warn('TODO Error in fetching stats');
+fetchPastResults()
+.then((response) => {
+    store.dispatch(addPastResults({...response}));
 });
-
 
 const root = (
     <Provider store={store}>
