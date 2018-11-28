@@ -194,7 +194,7 @@ def add_advertisement(request):
         return JsonResponse({'message': "Please provide an ad."}, status=400)
 
     ad = body['ad']
-    if not ('description' in ad and 'URL' in ad and 'title' in ad and 'email' in ad and 'tokens' in ad):
+    if not ('description' in ad and 'URL' in ad and 'title' in ad and 'email' in ad and 'tokens' in ad and 'company' in ad):
         return JsonResponse({'message': "Please provide all information for an ad."}, status=400)
 
     description = ad['description']
