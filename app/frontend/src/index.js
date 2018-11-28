@@ -57,9 +57,10 @@ const store = createStore(
 // importing from epics/table rn since it is our only one so far)
 epicMiddleware.run(rootEpic);
 
+
 fetchAndUpdateAd(store);
 
-fetchWrapper('http://127.0.0.1:8000/nodes/list', {
+fetchWrapper('nodes/list', {
     method: 'GET'
 }).then((data) => {
     store.dispatch(addNodes(data.nodes));
