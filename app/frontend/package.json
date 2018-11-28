@@ -56,7 +56,8 @@
       "!<rootDir>/node_modules/",
       "!<rootDir>/src/index.js",
       "!<rootDir>/src/serviceWorker.js",
-      "!<rootDir>/src/NanoRouter.jsx"
+      "!<rootDir>/src/NanoRouter.jsx",
+      "!<rootDir>/src/transactionsMiddleware.js"
     ],
     "coverageReporters": [
       "text"
