@@ -6,10 +6,11 @@ import HistoricalDataView from './components/HistoricalData/HistoricalDataView';
 import MoreInfoPage from './components/MoreInfoPage';
 import NotFoundPage from './components/NotFoundPage';
 import BuildAd from './components/BuildAd';
+import ScrollToTop from 'components/ScrollToTop';
 
 export default() => (
     <BrowserRouter>
-        <div>
+        <ScrollToTop>
             <Switch>
                 <Route path='/' component={HomePage} exact={true} />
                 <Route path='/Stats' component={HistoricalDataView}/>
@@ -18,6 +19,6 @@ export default() => (
                 <Route path='/BuildAd' component={BuildAd}/>
                 <Route component={NotFoundPage}/>
             </Switch>
-        </div>
+        </ScrollToTop>
     </BrowserRouter>
 );

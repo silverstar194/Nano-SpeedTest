@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import EditableAd from './EditableAd';
-import PropTypes from 'prop-types';
 import { fetchWrapper } from 'util/helpers';
 import 'styles/AdBuild.css';
+import 'styles/Snackbar.css';
 
 const TITLE_MAX_LEN = 40;
 const DESCRIPTION_MAX_LEN = 120;
@@ -28,7 +28,9 @@ const initValues = {
     description: '',
     url: '',
     project: '',
-    email: ''
+    email: '',
+    showSpinner: false,
+    errors: {}
 };
 
 class BuildAd extends Component {
@@ -40,6 +42,7 @@ class BuildAd extends Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.onEditField = this.onEditField.bind(this);
         this.onRadioChange = this.onRadioChange.bind(this);
+        this.runToast = this.runToast.bind(this);
     }
     componentDidMount() {
         fetchWrapper('http://127.0.0.1:8000/advertisements/info')
@@ -49,16 +52,15 @@ class BuildAd extends Component {
             });
         });
     }
+    runToast(callback) {
+        this.setState({showToast: true});
+        setTimeout(() => {
+            this.setState({showToast: false});
+            if (callback) callback(); // trigger for when toast dismissed
+        }, 4000);
+    }
     onSubmit(event) {
-        const {title, description, url, project, email, selectedSlot} = this.state;
-        console.log(JSON.stringify({
-            title,
-            description,
-            url,
-            project,
-            email
-        }));
-        const errors = {};
+        const {title, description, url, project, email, selectedSlot, errors} = this.state;
         ['title', 'description', 'url', 'project', 'email'].forEach((key) => {
             const value = this.state[key];
             if (key === 'url') {
@@ -70,10 +72,11 @@ class BuildAd extends Component {
             const isError = !(value && value.length);
             errors[obj] = isError;
         });
-
-        if (Object.values(errors).includes(true)) {
-            this.setState({...errors});
+        if (Object.values(errors).includes(true)) { // if there is an invalid field
+            this.setState({errors});
+            this.runToast();
         } else {
+            this.setState({ showSpinner: true, wasSubmitted: true });
             fetchWrapper('http://127.0.0.1:8000/advertisements/add', {
                 method: 'POST',
                 body: JSON.stringify({
@@ -86,10 +89,27 @@ class BuildAd extends Component {
                         tokens: selectedSlot
                     }
                 })
-            });
-            this.setState({
-                ...errors,
-                ...initValues
+            }).then((response) => {
+                let callback = null;
+                if (response.message === 'Success') {
+                    this.setState({
+                        showSpinner: false,
+                        ...initValues
+                    });
+                    callback = () => this.setState({ wasSubmitted: false });
+                } else {
+                    this.setState({
+                        showSpinner: false,
+                        fetchError: true
+                    });
+                }
+                this.runToast(callback);
+            }).catch((err) => {
+                this.runToast();
+                this.setState({
+                    showSpinner: false,
+                    fetchError: true
+                });
             });
         }
         event.preventDefault();
@@ -102,38 +122,52 @@ class BuildAd extends Component {
         if (!target) return;
         const name = target.name;
         let input = target.value;
-        let isError = false;
+        const {errors} = this.state;
+        errors[name + 'Error'] = false;
+
         if (!input) {
             input = '';
-            isError = true;
+            errors[name + 'Error'] = true;
         }
 
-        if (name === 'title' && input.length > TITLE_MAX_LEN) { // max len 40
-            //TODO make sure valid input
-        } else if (name === 'description' && input.length > DESCRIPTION_MAX_LEN) { // max len 120
-            //TODO make sure valid input
-        } else if (name === 'url' && this.state.needsHTTP) {
-            let needsHTTP = false;
-            if (input.indexOf('https://') === -1 && input.indexOf('http://') === -1) {
-                needsHTTP = true;
-            }
-            this.setState({ needsHTTP });
+        if (name === 'title') { // max len 40
+            errors.titleTooLong = input.length > TITLE_MAX_LEN;
+        } else if (name === 'description') { // max len 120
+            errors.descriptionTooLong = input.length > DESCRIPTION_MAX_LEN;
+        } else if (name === 'url') {
+            errors.needsHTTP = input.indexOf('https://') === -1 && input.indexOf('http://') === -1;
         }
 
         this.setState({
             [name]: input,
-            [name + 'Error']: isError
+            ...errors
         });
     }
 
     render() {
-        let {title, description, url, project, email, selectedSlot} = this.state;
-
+        const {title, description, url, project, email, selectedSlot, errors} = this.state;
+        console.log(this.errors);
         return (
          <div className='AdBuild'>
                <Header/>
-
-               <div className='form-container'>
+                <div className={'snackbar' + (this.state.showToast ? ' show ' : '')}>
+                {
+                    this.state.wasSubmitted ? (
+                        this.state.fetchError ? <div className='message alert alert-danger'>Something went wrong while creating the Ad. Please try again</div>
+                        : <div className='message alert alert-success'>Your Ad has been saved!</div>
+                    ) : <div className='message alert alert-warning'>Incomplete Fields</div>
+                }
+                </div>
+                { this.state.showSpinner ?
+                    <div className='loading-container'>
+                        <div className='loader-container d-flex justify-content-center'>
+                            <div className='loader'></div>
+                        </div>
+                        <div>
+                            <p className='text-center'>Processing Request. Please Wait</p>
+                        </div>
+                    </div>
+                : <div className='form-container'>
                     <h3>Create Ad</h3>
                     <b>Live Preview</b>
                     <EditableAd
@@ -148,7 +182,7 @@ class BuildAd extends Component {
 
                       <div className='form-group'>
                         <label htmlFor='title'>Title</label>
-                        <small> (max. 40 chars)</small>
+                        <small> (max. {TITLE_MAX_LEN} chars)</small>
                         <input
                             type='text'
                             className='form-control'
@@ -157,14 +191,17 @@ class BuildAd extends Component {
                             onChange={this.onEditField}
                             placeholder='Enter title'
                         />
-                        {this.state.titleError && <div className='badge-warning'>
+                        {errors.titleError && <div className='badge-warning'>
                            Please enter a title
+                        </div>}
+                        {errors.titleTooLong && <div className='badge-warning'>
+                           {TITLE_MAX_LEN} Character Max
                         </div>}
                       </div>
 
                      <div className='form-group'>
                         <label>Description</label>
-                        <small> (max. 120 chars)</small>
+                        <small> (max. {DESCRIPTION_MAX_LEN} chars)</small>
                         <input
                             type='text'
                             name='description'
@@ -173,8 +210,11 @@ class BuildAd extends Component {
                             onChange={this.onEditField}
                             placeholder='Enter description'
                         />
-                        {this.state.descriptionError && <div className='badge-warning'>
+                        {errors.descriptionError && <div className='badge-warning'>
                            Please enter a description
+                        </div>}
+                        {errors.descriptionTooLong && <div className='badge-warning'>
+                           {DESCRIPTION_MAX_LEN} Character Max
                         </div>}
                       </div>
 
@@ -188,17 +228,17 @@ class BuildAd extends Component {
                             onChange={this.onEditField}
                             placeholder='Enter URL'>
                         </input>
-                        {this.state.urlError && <div className='badge-warning'>
+                        {errors.urlError && <div className='badge-warning'>
                            Please enter a URL
                         </div>}
-                        {this.state.needsHTTP && <div className='badge-warning'>
+                        {errors.needsHTTP && <div className='badge-warning'>
                            Make sure to include http:// or https://
                         </div>}
                       </div>
 
                       <h3>Timing & Pricing</h3>
-                      <p>Your ad will run from <b>{new Date().toLocaleDateString({}, dateOptions)}</b> to <b>{
-                            new Date(Date.now() + 1000 * 60 * 60 * 24 * 30).toLocaleDateString({}, dateOptions)
+                      <p>Your ad will run from <b>{new Date(Date.now()  + 1000 * 60 * 60 * 24 * 1).toLocaleDateString({}, dateOptions)}</b> to <b>{ // tomorrow
+                            new Date(Date.now() + 1000 * 60 * 60 * 24 * 31).toLocaleDateString({}, dateOptions) // 31 days later
                         }</b>
                       </p>
 
@@ -239,7 +279,7 @@ class BuildAd extends Component {
                                 onChange={this.onEditField}
                                 placeholder='Enter Project Name'
                             />
-                            {this.state.projectError && <div className='badge-warning'>
+                            {errors.projectError && <div className='badge-warning'>
                                 Please enter a Project Name
                             </div>}
                       </div>
@@ -254,7 +294,7 @@ class BuildAd extends Component {
                                 onChange={this.onEditField}
                                 placeholder='Enter Email'>
                             </input>
-                            {this.state.emailError && <div className='badge-warning'>
+                            {errors.emailError && <div className='badge-warning'>
                                 Please enter an email
                             </div>}
                       </div>
@@ -265,13 +305,11 @@ class BuildAd extends Component {
                       <button onClick={this.onSubmit} type='submit' className='btn btn-success'>Submit</button>
                     </form>
                 </div>
+                }
                 <Footer/>
           </div>
         );
     }
 }
-
-BuildAd.propTypes = {
-};
 
 export default BuildAd;

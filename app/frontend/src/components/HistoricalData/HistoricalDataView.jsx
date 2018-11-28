@@ -105,6 +105,7 @@ const mapDispatchToProps = (dispatch) => {
 	  	}
 	};
 };
+
 HistoricalDataView.propTypes = {
     pastTransactions: PropTypes.array.isRequired,
     totalTransactions: PropTypes.number,
