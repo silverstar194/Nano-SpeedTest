@@ -76,7 +76,7 @@ class POWService:
     def _run(cls):
         try:
             while cls._running:
-                # Multi-thread this worker (check if our POW generation time must be less than transaction period)
+                # Multi-thread this worker (our POW generation time must be less than transaction period)
                 while not cls._pow_queue.empty():
                     try:
                         address, frontier = cls._pow_queue.get()
