@@ -80,8 +80,8 @@ class PastResultsTable extends React.Component {
                     </tr>
                     </thead>
                     <tbody>
-                    { tableData && //TODO remove reverse
-                        tableData.sort((a,b) => b.endReceiveTimestamp - a.endReceiveTimestamp)
+                    { tableData &&
+                        tableData.sort((a,b) => b.endSendTimestamp - a.endSendTimestamp)
                         .slice(startIndex, end).map((transactionData) => {
                             return <PastResultsTableRow key={uuid(transactionData.id)} {...transactionData}/>;
                         })

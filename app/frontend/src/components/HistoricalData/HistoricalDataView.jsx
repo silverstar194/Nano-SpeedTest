@@ -23,11 +23,11 @@ class HistoricalDataView extends React.Component {
     render() {
         const {pastTransactions, totalTransactions, globalAverage, nodeLocations} = this.props;
         const plotData = [];
-        pastTransactions.sort((a,b) => a.endReceiveTimestamp - b.endReceiveTimestamp)
+        pastTransactions.sort((a,b) => a.endSendTimestamp - b.endSendTimestamp)
         .forEach((transaction, i) => {
             plotData.push({
                 x: i,
-                date: transaction.endReceiveTimestamp,
+                date: transaction.endSendTimestamp,
                 y: transaction.elapsedTime
             });
         });
