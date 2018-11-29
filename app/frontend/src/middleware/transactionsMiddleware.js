@@ -1,13 +1,13 @@
 import {
     setTransactionFetchStatus,
     setTimingFetchStatus,
-} from './actions/transactions';
+} from '../actions/transactions';
 
 import {
     FETCH_TRANSACTION,
     ADD_TRANSACTIONS,
     ADD_TIMING_DATA
-} from './actions/table';
+} from '../actions/table';
 
 import {appendPastResults} from 'actions/pastResults';
 

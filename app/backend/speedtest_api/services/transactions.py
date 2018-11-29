@@ -2,6 +2,7 @@ import logging
 import random
 import requests
 import time
+import threading
 from decimal import *
 
 from django.conf import settings as settings
@@ -55,7 +56,7 @@ def new_transaction_random(batch):
     @return: New transaction object
     """
 
-    accounts_list = get_accounts()
+    accounts_list = get_accounts(in_use=False)
 
     if len(accounts_list) == 0:
         raise NoAccountsException()
@@ -236,12 +237,10 @@ def send_transaction(transaction):
             id=transaction.id
         )
 
-
         # Update the balances and POW
         transaction.origin.current_balance = transaction.origin.current_balance - transaction.amount
         transaction.destination.current_balance = transaction.destination.current_balance + transaction.amount
         transaction.origin.POW = None
-
     except nano.rpc.RPCException as e:
         logger.error(e)
         ##Unlock accounts
@@ -262,62 +261,32 @@ def send_transaction(transaction):
     transaction.destination.save()
     transaction.save()
 
-    max_retries = 120
-    incoming_blocks = None
-
-    while (incoming_blocks is None or len(incoming_blocks) == 0) and max_retries > 0:
-        rpc_origin_node.republish(hash=transaction.transaction_hash_sending)
-        try:
-            rpc_destination_node.search_pending_all()
-            incoming_blocks = rpc_destination_node.pending(account=transaction.destination.address)
-        except nano.rpc.RPCException:
-            logger.error('Transaction send failure, transaction.id: %s' % str(transaction.id))
-            ##Unlock accounts
-            transaction.origin.unlock()
-            transaction.destination.unlock()
-            raise nano.rpc.RPCException()
-        
-        max_retries = max_retries - 1
-
-        time.sleep(0.25)
-
-    # We need to set POW to None because it will be no longer valid as the node will eventually accept the block(s) (if they are unopened?)
-    if not incoming_blocks or not len(incoming_blocks):
-        transaction.destination.POW = None
-        transaction.destination.save()
-        transaction.save()
-        logger.error('No Incoming blocks, transaction.id: %s' % str(transaction.id))
-
-        ##Unlock accounts
-        transaction.origin.unlock()
-        transaction.destination.unlock()
-        raise NoIncomingBlocksException(transaction.destination.address)
-    elif len(incoming_blocks) > 1:
-        transaction.destination.POW = None
-        transaction.destination.save()
-        transaction.save()
-
-        ##Unlock accounts
-        transaction.origin.unlock()
-        transaction.destination.unlock()
-        raise TooManyIncomingBlocksException(transaction.destination.address)
+    incoming_blocks = [transaction.transaction_hash_sending]
 
     for block_hash in incoming_blocks:
         transaction.start_receive_timestamp = int(round(time.time() * 1000))
-
         try:
             transaction.transaction_hash_receiving = rpc_destination_node.receive(
-                wallet=transaction.destination.wallet.wallet_id,
-                account=transaction.destination.address,
-                block=block_hash,
-                work=transaction.destination.POW
+            wallet=transaction.destination.wallet.wallet_id,
+            account=transaction.destination.address,
+            block=block_hash,
+            work=transaction.destination.POW,
             )
+            transaction.save()
         except nano.rpc.RPCException:
             ##Unlock accounts
             transaction.origin.unlock()
             transaction.destination.unlock()
             raise nano.rpc.RPCException()
-    
+
+    # Return as soon as transaction_hash_receiving is available
+    # Finish work on 2nd thread
+    t = threading.Thread(target=time_receive_block_async, args=(transaction,))
+    t.start()
+
+    return transaction
+
+def time_receive_block_async(transaction):
     # Handover control to the timing service (expecting the timestamp to be set on return)
     try:
         time_transaction_receive(transaction)
@@ -327,6 +296,7 @@ def send_transaction(transaction):
         transaction.destination.unlock()
         logger.error('Transaction timing_receive failed, transaction.id: %s, error: %s' % (str(transaction.id), str(e)))
 
+
     transaction.destination.POW = None
 
     transaction.destination.save()
@@ -335,13 +305,6 @@ def send_transaction(transaction):
     # Regenerate POW on the accounts
     POWService.enqueue_account(address=transaction.origin.address, frontier=transaction.transaction_hash_sending)
     POWService.enqueue_account(address=transaction.destination.address, frontier=transaction.transaction_hash_receiving)
-
-    ##Unlock accounts
-    transaction.origin.unlock()
-    transaction.destination.unlock()
-
-    return transaction
-
 
 def simple_send(from_account, to_address, amount):
     """

@@ -92,5 +92,3 @@ def email_admin_with_new_ad(ad):
         logger.error("Error occurred sending email with sendgrid %s " % str(e))
 
     logger.info("Email sent to %s to_email regarding %s " % (from_email, ad.company))
-
-    return response

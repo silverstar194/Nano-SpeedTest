@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from './Header';
+import Footer from './Footer';
 import PropTypes from 'prop-types';
 import 'styles/UserResultsPage.css';
 
@@ -27,6 +28,7 @@ const UserStatsPage = ({table, pastTransactions, isFetchingTransaction, isFetchi
                     </div>
                 </div>
             </div>
+             <Footer/>
         </div>
     );
 };

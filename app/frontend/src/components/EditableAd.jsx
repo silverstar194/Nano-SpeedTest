@@ -1,15 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
 import '../styles/Ad.css';
 
-const Ad = ({title, message, url}) => {
+const EditableAd = ({title, description, url}) => {
     return (
         <div className='container'>
             <div className='jumbotron'>
                 <div id='ad-content'>
                     <a href={url} target='_blank' rel='noopener noreferrer' className='row'>
-                        <b>{title}</b>&nbsp;{message}
+                        <b>{title}</b>&nbsp;{description}
                     </a>
                     <p className='row'>COMMUNITY AD</p>
                 </div>
@@ -18,16 +17,12 @@ const Ad = ({title, message, url}) => {
     );
 };
 
-const mapStateToProps = (state) => {
-	return {
-       ...state.ads.currentAd
-	};
+
+
+EditableAd.propTypes = {
+    title: PropTypes.string,
+    description: PropTypes.string,
+    url: PropTypes.string
 };
 
-Ad.propTypes = {
-    title: PropTypes.string.isRequired,
-    message: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired
-};
-
-export default connect (mapStateToProps)(Ad);
+export default EditableAd;

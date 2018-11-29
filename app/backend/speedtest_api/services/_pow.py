@@ -76,6 +76,7 @@ class POWService:
     def _run(cls):
         try:
             while cls._running:
+                # Multi-thread this worker (our POW generation time must be less than transaction period)
                 while not cls._pow_queue.empty():
                     try:
                         address, frontier = cls._pow_queue.get()
@@ -85,12 +86,13 @@ class POWService:
 
                         logger.info('Generated POW: %s for account %s' % (account.POW, account.address))
 
-                        account.save()
+                        # Also calls save()
+                        account.unlock()
                     except Exception as e:
                         logger.error('Exception in POW thread: ' + e)
                 
                 # Run this every second
-                time.sleep(10)
+                time.sleep(1)
         except Exception as e:
             logger.error(e)
             print(e)

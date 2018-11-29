@@ -194,7 +194,7 @@ def add_advertisement(request):
         return JsonResponse({'message': "Please provide an ad."}, status=400)
 
     ad = body['ad']
-    if not ('description' in ad and 'URL' in ad and 'title' in ad and 'email' in ad and 'tokens' in ad):
+    if not ('description' in ad and 'URL' in ad and 'title' in ad and 'email' in ad and 'tokens' in ad and 'company' in ad):
         return JsonResponse({'message': "Please provide all information for an ad."}, status=400)
 
     description = ad['description']
@@ -274,7 +274,7 @@ def get_transaction_statistics(request):
         temp_transaction = convert_transaction_to_dict(transaction)
         transactions_array.append(temp_transaction)
 
-    average_delta = Transaction.objects.all().aggregate(average_difference=Avg(F('end_receive_timestamp') - F('start_send_timestamp')))['average_difference']
+    average_delta = Transaction.objects.all().aggregate(average_difference=Avg(F('end_send_timestamp') - F('start_send_timestamp')))['average_difference']
 
     transaction_count = Transaction.objects.filter(end_receive_timestamp__gte=0, start_send_timestamp__gte=0).count()
 

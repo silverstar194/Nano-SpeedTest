@@ -1,7 +1,13 @@
 import React, {Component} from 'react';
 import Header from './Header';
+import Footer from './Footer';
 import '../styles/HomePage.css';
 import Ad from './Ad';
+import { Link } from 'react-router-dom';
+import { switchTab } from '../actions/navigation';
+import { connect } from 'react-redux';
+
+
 
 class MoreInfoPage extends Component {
     render() {
@@ -38,10 +44,7 @@ class MoreInfoPage extends Component {
                         <br/>
                         Other currencies consume thousands of times more energy.
                        </ul>
-
-                      <a href='/' class='btn btn-success'>Send a transaction and try it yourself</a>
-
-
+                        <Link className='btn btn-success' to='/' onClick={this.props.switchToHomeview}>Send a transaction and try it yourself</Link>
                     </div>
                     <br/>
 
@@ -53,6 +56,15 @@ class MoreInfoPage extends Component {
                         rel='noopener noreferrer'>CoinMarketCap</a>.
                      <br/>
                       <br/>
+
+                     <h5>Places That Accept Nano</h5>
+                    Each day, merchants around the world are beginning to accept Nano.
+                    For a full list of businesses who currently accept Nano, visit  <a
+                        href='https://usenano.org/'
+                        target='_blank'
+                        rel='noopener noreferrer'>https://usenano.org/</a>.
+                    <br/>
+                    <br/>
                     <h5>Accept Nano as a merchant</h5>
                     You can setup an online Nano payments with <a
                             href='https://brainblocks.io/'
@@ -147,11 +159,25 @@ class MoreInfoPage extends Component {
                             target='_blank'
                             rel='noopener noreferrer'>You can also run a node yourself.</a>
                         <br/>
-                         <br/>
+                        <br/>
+       
+                  <h5>Found a bug?</h5>
+                        Excellent. <a href="mailto:iliketoemail@ymail.com?Subject=Bug Report: NanoSpeed" target="_top">Send us a report.</a> We'll fix it ASAP.
+                   <br/>
+                   <br/>
               </div>
+              <Footer/>
             </div>
         );
     }
 }
 
-export default MoreInfoPage;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        switchToHomeview() {
+            dispatch(switchTab('/')); // Update current active tab
+        }
+    };
+};
+
+export default connect(null, mapDispatchToProps)(MoreInfoPage);
