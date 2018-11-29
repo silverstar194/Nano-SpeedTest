@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand, CommandError
 
 from ...models.account import Account
 from ...services.nodes import get_nodes
-from ...services.wallets import new_wallet
+from ...services.wallets import new_wallet, get_wallets
 from ...services._pow import POWService
 from ...services.accounts import sync_accounts, get_accounts, new_account
 from ...services.transactions import simple_send
@@ -25,8 +25,16 @@ class Command(BaseCommand):
         number_accounts_per_node = 5
 
         nodes_list = get_nodes()
+        wallets_list = get_wallets()
         for node in nodes_list:
-            wallet = new_wallet(node=node)
+            wallet = None
+            
+            for wallet_check in wallets_list:
+                if wallet_check.node.id == node.id:
+                    wallet = wallet_check
+
+            if wallet is None:
+                wallet = new_wallet(node=node)
 
             for i in range(number_accounts_per_node):
                 new_account(wallet=wallet)
@@ -39,7 +47,7 @@ class Command(BaseCommand):
             sync_accounts()
             funding_account = Account.objects.filter(address=funding_account.address)[0]
         # Distribute funds between accounts to open them
-        amount = funding_account.current_balance / (number_accounts_per_node * len(nodes_list))
+        amount = funding_account.current_balance / len(all_accounts)
         for account_init in all_accounts:
 
             # Already opened

@@ -18,11 +18,41 @@ import rootEpic from './epics/table';
 import transactionsMiddleware from './middleware/transactionsMiddleware';
 import adLoader from './middleware/adLoader';
 
-import {addNodes} from 'actions/nodes';
-import {addPastResults} from 'actions/pastResults';
-import {fetchWrapper, fetchPastResults} from 'util/helpers';
 import fetchAndUpdateAd from 'util/fetchAndUpdateAd';
+import { addNodes } from 'actions/nodes';
+import { addPastResults } from 'actions/pastResults';
 
+import { fetchWrapper, fetchPastResults } from 'util/helpers';
+
+
+import createHistory from 'history/createBrowserHistory';
+import { routerMiddleware, routerReducer } from 'react-router-redux';
+import { createMiddleware } from 'redux-beacon';
+import GoogleAnalytics, { trackEvent } from '@redux-beacon/google-analytics';
+
+
+const history = createHistory();
+
+// Redux Beacon --->
+const eventsMap = {
+    'SWITCH_TAB': trackEvent(action => ({
+        category: "tabs",
+        action: "Active tab changed",
+    })),
+
+    'FETCH_TRANSACTION': trackEvent(action => ({
+        category: "transactions",
+        action: "Go button clicked",
+    })),
+
+    'ADV_SETTINGS_OPENED': trackEvent(action => ({
+        category: "advSettings",
+        action: "Advanced settings modal opened",
+    })),
+};
+
+const gaMiddleware = createMiddleware(eventsMap, GoogleAnalytics());
+// <--- Redux Beacon
 
 // TODO - persist state so when user refreshes page, it doesn't delete state (bug: sets active tab to home, stays on
 // curr)
@@ -45,11 +75,12 @@ const store = createStore(
         pastResults,
         nodes,
         form: formReducer,
+        routerReducer,
         ads
     }),
     initialState,
     composeEnhancers(
-        applyMiddleware(epicMiddleware, transactionsMiddleware, adLoader)
+        applyMiddleware(epicMiddleware, transactionsMiddleware, adLoader, gaMiddleware, routerMiddleware(history))
     )
 );
 
