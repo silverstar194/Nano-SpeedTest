@@ -12,10 +12,13 @@ import transactions from './reducers/transactions';
 import pastResults from './reducers/pastResults';
 import nodes from 'reducers/nodes';
 import { reducer as formReducer } from 'redux-form';
+import ads from 'reducers/ads';
 
 import rootEpic from './epics/table';
-import transactionsMiddleware from './transactionsMiddleware';
+import transactionsMiddleware from './middleware/transactionsMiddleware';
+import adLoader from './middleware/adLoader';
 
+import fetchAndUpdateAd from 'util/fetchAndUpdateAd';
 import { addNodes } from 'actions/nodes';
 import { addPastResults } from 'actions/pastResults';
 
@@ -51,7 +54,6 @@ const eventsMap = {
 const gaMiddleware = createMiddleware(eventsMap, GoogleAnalytics());
 // <--- Redux Beacon
 
-
 // TODO - persist state so when user refreshes page, it doesn't delete state (bug: sets active tab to home, stays on
 // curr)
 const initialState = {
@@ -73,17 +75,21 @@ const store = createStore(
         pastResults,
         nodes,
         form: formReducer,
-        routerReducer
+        routerReducer,
+        ads
     }),
     initialState,
     composeEnhancers(
-        applyMiddleware(epicMiddleware, transactionsMiddleware, gaMiddleware, routerMiddleware(history))
+        applyMiddleware(epicMiddleware, transactionsMiddleware, adLoader, gaMiddleware, routerMiddleware(history))
     )
 );
 
 // Runs our epic (requires a 'root' epic and makes us import from one "root epics" file in order to work.  Just
 // importing from epics/table rn since it is our only one so far)
 epicMiddleware.run(rootEpic);
+
+
+fetchAndUpdateAd(store);
 
 fetchWrapper('nodes/list', {
     method: 'GET'

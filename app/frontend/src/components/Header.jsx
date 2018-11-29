@@ -11,6 +11,7 @@ const Header = ({activeTab, onSwitchTab}) => {
 			<HeaderItem activeTab={activeTab} onSwitchTab={onSwitchTab} to='Results' text='Your Results' tabName='Results'/>
 			<HeaderItem activeTab={activeTab} onSwitchTab={onSwitchTab} to='Stats' text='Global Statistics' tabName='Stats'/>
 			<HeaderItem activeTab={activeTab} onSwitchTab={onSwitchTab} to='Info' text='More Info' tabName='Info'/>
+			<HeaderItem activeTab={activeTab} onSwitchTab={onSwitchTab} to='BuildAd' text='Advertise' tabName='BuildAd'/>
 		</div>
 	);
 };
