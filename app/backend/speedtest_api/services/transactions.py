@@ -303,8 +303,8 @@ def time_receive_block_async(transaction):
     transaction.save()
 
     # Regenerate POW on the accounts
-    POWService.enqueue_account(address=transaction.origin.address, frontier=transaction.transaction_hash_sending)
-    POWService.enqueue_account(address=transaction.destination.address, frontier=transaction.transaction_hash_receiving)
+    POWService.enqueue_account(address=transaction.origin.address, frontier=transaction.transaction_hash_sending, wait=True)
+    POWService.enqueue_account(address=transaction.destination.address, frontier=transaction.transaction_hash_receiving, wait=True)
 
 def simple_send(from_account, to_address, amount):
     """
