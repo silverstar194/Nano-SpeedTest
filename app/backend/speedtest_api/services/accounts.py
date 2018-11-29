@@ -1,4 +1,5 @@
 import logging
+from multiprocessing.pool import ThreadPool
 
 from django.conf import settings as settings
 import nano
@@ -85,26 +86,33 @@ def sync_accounts():
 
     accounts_list = get_accounts()
 
+    thread_pool = ThreadPool(processes=5)
     for account in accounts_list:
-        rpc = nano.rpc.Client(account.wallet.node.URL)
+        print("balance")
+        thread_pool.apply_async(check_account_async, (account,))
+    thread_pool.close()
 
-        try:
-            rpc.search_pending_all()
-            incoming_blocks = rpc.pending(account=account.address)
-            for block_hash in incoming_blocks:
-                rpc.receive(wallet=account.wallet.wallet_id, account=account.address, block=block_hash)
-                account.POW = None
-                account.save()
-                logger.warning('Received block: %s' % block_hash)
-        except Exception as e:
-            logger.error('Error trying to receive blocks (for %s): %s' % (account.address, e))
 
-        new_balance = rpc.account_balance(account=account.address)['balance']
+def check_account_async(account):
+    rpc = nano.rpc.Client(account.wallet.node.URL)
 
-        if new_balance != account.current_balance:
-            account.current_balance = new_balance
-            
-            # We reset the POW because if there is an issue here, that means the POW must have been changed
+    try:
+        rpc.search_pending_all()
+        incoming_blocks = rpc.pending(account=account.address)
+        for block_hash in incoming_blocks:
+            rpc.receive(wallet=account.wallet.wallet_id, account=account.address, block=block_hash)
             account.POW = None
+            account.save()
+            logger.warning('Received block: %s' % block_hash)
+    except Exception as e:
+        logger.error('Error trying to receive blocks (for %s): %s' % (account.address, e))
 
-        account.unlock()
+    new_balance = rpc.account_balance(account=account.address)['balance']
+
+    if new_balance != account.current_balance:
+        account.current_balance = new_balance
+
+        # We reset the POW because if there is an issue here, that means the POW must have been changed
+        account.POW = None
+
+    account.unlock()
