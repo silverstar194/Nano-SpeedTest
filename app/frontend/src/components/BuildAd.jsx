@@ -45,7 +45,7 @@ class BuildAd extends Component {
         this.runToast = this.runToast.bind(this);
     }
     componentDidMount() {
-        fetchWrapper('advertisements/info')
+        fetchWrapper('header/info')
         .then((response) => {
             this.setState({
                 costPerSlot: response.data.current_cost_per_slot
@@ -77,7 +77,7 @@ class BuildAd extends Component {
             this.runToast();
         } else {
             this.setState({ showSpinner: true, wasSubmitted: true });
-            fetchWrapper('advertisements/add', {
+            fetchWrapper('header/add', {
                 method: 'POST',
                 body: JSON.stringify({
                     ad : {
