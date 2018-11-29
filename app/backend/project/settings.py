@@ -61,7 +61,7 @@ MIDDLEWARE = [
 ]
 
 CRONJOBS = [
-    ('*/5 * * * *', 'django.core.management.balance_accounts', ['clearsessions']),
+    ('*/59 * * * *', 'django.core.management.balance_accounts'),
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
