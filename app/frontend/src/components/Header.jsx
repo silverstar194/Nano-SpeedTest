@@ -7,11 +7,11 @@ import { switchTab } from '../actions/navigation';
 const Header = ({activeTab, onSwitchTab}) => {
 	return (
 		<div className='nav nav-tabs'>
-			<HeaderItem activeTab={activeTab} onSwitchTab={onSwitchTab} to='' text='Speed Test' tabName=''/>
-			<HeaderItem activeTab={activeTab} onSwitchTab={onSwitchTab} to='Results' text='Your Results' tabName='Results'/>
-			<HeaderItem activeTab={activeTab} onSwitchTab={onSwitchTab} to='Stats' text='Global Statistics' tabName='Stats'/>
-			<HeaderItem activeTab={activeTab} onSwitchTab={onSwitchTab} to='Info' text='More Info' tabName='Info'/>
-			<HeaderItem activeTab={activeTab} onSwitchTab={onSwitchTab} to='BuildAd' text='Advertise' tabName='BuildAd'/>
+			<HeaderItem ad='false' activeTab={activeTab} onSwitchTab={onSwitchTab} to='' text='Speed Test' tabName=''/>
+			<HeaderItem ad='false' activeTab={activeTab} onSwitchTab={onSwitchTab} to='Results' text='Your Results' tabName='Results'/>
+			<HeaderItem ad='false' activeTab={activeTab} onSwitchTab={onSwitchTab} to='Stats' text='Global Statistics' tabName='Stats'/>
+			<HeaderItem ad='false' activeTab={activeTab} onSwitchTab={onSwitchTab} to='Info' text='More Info' tabName='Info'/>
+			<HeaderItem ad='true' activeTab={activeTab} onSwitchTab={onSwitchTab} to='BuildAd' text='Advertise' tabName='BuildAd'/>
 		</div>
 	);
 };
