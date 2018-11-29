@@ -39,7 +39,7 @@ class MoreInfoPage extends Component {
                         Other currencies consume thousands of times more energy.
                        </ul>
 
-                      <a href='/' class='btn btn-success'>Send a transaction and try it yourself</a>
+                      <a href='/' className='btn btn-success'>Send a transaction and try it yourself</a>
 
 
                     </div>

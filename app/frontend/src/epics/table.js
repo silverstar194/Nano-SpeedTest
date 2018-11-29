@@ -7,7 +7,7 @@ import { convertCoordsToString, fetchWrapper } from 'util/helpers';
 export const fetchTransaction = action$ => action$.pipe(
     ofType(FETCH_TRANSACTION),
     mergeMap(action =>
-        fetchWrapper('http://127.0.0.1:8000/transactions', {
+        fetchWrapper('transactions', {
             method: 'POST',
             body: JSON.stringify(action.transactionParams)
         }).then((data) => {
@@ -32,7 +32,7 @@ export const fetchTransaction = action$ => action$.pipe(
 export const fetchTransactionTiming = action$ => action$.pipe(
     ofType(ADD_TRANSACTIONS),
     mergeMap(action =>
-        fetchWrapper('http://127.0.0.1:8000/transactions/send', {
+        fetchWrapper('transactions/send', {
             method: 'POST',
             body: JSON.stringify({
                 id: action.batchId
