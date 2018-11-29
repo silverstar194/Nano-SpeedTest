@@ -35,19 +35,19 @@ const history = createHistory();
 
 // Redux Beacon --->
 const eventsMap = {
-    'SWITCH_TAB': trackEvent(action => ({
-        category: "tabs",
-        action: "Active tab changed",
+    SWITCH_TAB: trackEvent(action => ({
+        category: 'tabs',
+        action: 'Active tab changed',
     })),
 
-    'FETCH_TRANSACTION': trackEvent(action => ({
-        category: "transactions",
-        action: "Go button clicked",
+    FETCH_TRANSACTION: trackEvent(action => ({
+        category: 'transactions',
+        action: 'Go button clicked',
     })),
 
-    'ADV_SETTINGS_OPENED': trackEvent(action => ({
-        category: "advSettings",
-        action: "Advanced settings modal opened",
+    ADV_SETTINGS_OPENED: trackEvent(action => ({
+        category: 'advSettings',
+        action: 'Advanced settings modal opened',
     })),
 };
 
@@ -84,7 +84,7 @@ const store = createStore(
     )
 );
 
-// Runs our epic (requires a 'root' epic and makes us import from one "root epics" file in order to work.  Just
+// Runs our epic (requires a 'root' epic and makes us import from one 'root epics' file in order to work.  Just
 // importing from epics/table rn since it is our only one so far)
 epicMiddleware.run(rootEpic);
 
@@ -96,13 +96,15 @@ fetchWrapper('nodes/list', {
 }).then((data) => {
     store.dispatch(addNodes(data.nodes));
 }).catch((err) => {
-    //TODO handle error
-    console.warn('TODO Error in fetching nodes');
+    console.warn('Error while fetching nodes');
+    store.dispatch({ type: 'ERROR', message: 'Error while fetching nodes'});
 });
 
 fetchPastResults()
 .then((response) => {
     store.dispatch(addPastResults({...response}));
+}).catch((err) => {
+    console.warn('Error fetching past results');
 });
 
 const root = (

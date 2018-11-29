@@ -36,5 +36,6 @@ export const fetchPastResults = () => {
     }).catch((err) => {
         //TODO handle error
         console.warn('TODO Error in fetching stats');
+        throw err;
     });
-}
+};
