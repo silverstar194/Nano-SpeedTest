@@ -146,7 +146,6 @@ class BuildAd extends Component {
 
     render() {
         const {title, description, url, project, email, selectedSlot, errors} = this.state;
-        console.log(this.errors);
         return (
          <div className='AdBuild'>
                <Header/>
