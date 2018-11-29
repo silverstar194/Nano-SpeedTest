@@ -79,7 +79,9 @@ class POWService:
                 # Multi-thread this worker (our POW generation time must be less than transaction period)
                 while not cls._pow_queue.empty():
                     try:
-                        address, frontier = cls._pow_queue.get()
+                        address, frontier, wait = cls._pow_queue.get()
+                        if wait:
+                            time.sleep(45) ## Allow frontier block to clear before PoW is usable
 
                         account = get_account(address=address)
                         account.POW = cls.get_pow(address=address, hash=frontier)
@@ -90,15 +92,17 @@ class POWService:
                         account.unlock()
                     except Exception as e:
                         logger.error('Exception in POW thread: ' + e)
+                        account.unlock() ## Prevent leaks
                 
                 # Run this every second
                 time.sleep(1)
         except Exception as e:
             logger.error(e)
+            account.unlock()  ## Prevent leaks
             print(e)
 
     @classmethod
-    def enqueue_account(cls, address, frontier):
+    def enqueue_account(cls, address, frontier, wait=False):
         """
         Add an address, hash pair to the queue for POW generation (this will update the account object)
 
@@ -106,7 +110,7 @@ class POWService:
         @param frontier: Frontier block to generate valid POW
         """
 
-        cls._pow_queue.put((address, frontier))
+        cls._pow_queue.put((address, frontier, wait))
     
     @classmethod
     def start(cls, daemon=True):

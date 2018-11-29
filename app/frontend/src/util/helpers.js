@@ -22,10 +22,10 @@ export const fetchPastResults = () => {
         method: 'GET'
     }).then((data) => {
         const transactions = data.transactions.filter((transaction) => {
-            return transaction.endReceiveTimestamp && transaction.endReceiveTimestamp - transaction.startSendTimestamp > 0;
+            return transaction.endSendTimestamp && transaction.endSendTimestamp - transaction.startSendTimestamp > 0;
         });
         transactions.forEach((transaction) => {
-            transaction.elapsedTime = transaction.endReceiveTimestamp - transaction.startSendTimestamp;
+            transaction.elapsedTime = transaction.endSendTimestamp - transaction.startSendTimestamp;
         });
         const average = data.average/1000;
         return {

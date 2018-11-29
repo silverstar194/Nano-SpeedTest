@@ -31,7 +31,7 @@ const TableRow = ({
                         <td>Completed</td>
                         <td className='block-col'>
                             <a
-                                href={`https:www.nanode.co/block/${transactionHashSending}`}
+                                href={`https://www.nanode.co/block/${transactionHashSending}`}
                                 target='_blank'
                                 rel='noopener noreferrer'>
                                 {transactionHashSending}
@@ -39,7 +39,7 @@ const TableRow = ({
                         </td>
                         <td className='block-col'>
                             <a
-                                href={`https:www.nanode.co/block/${transactionHashReceiving}`}
+                                href={`https://www.nanode.co/block/${transactionHashReceiving}`}
                                 target='_blank'
                                 rel='noopener noreferrer'>
                                 {transactionHashReceiving}
