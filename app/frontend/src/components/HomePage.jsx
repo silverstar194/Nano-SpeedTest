@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { switchTab } from '../actions/navigation';
 import { fetchTransaction } from '../actions/table';
 import '../styles/HomePage.css';
+import { openAdvSettings } from '../actions/advancedModal';
 
 class HomePage extends Component {
     // component specific state -- don't need to add to redux store
@@ -15,7 +16,8 @@ class HomePage extends Component {
     };
 
     onAdvancedClick = () => {
-      this.setState(() => ({modalOpen: true}));
+        this.props.onAdvPressed();
+        this.setState(() => ({ modalOpen: true }));
     };
 
     onClick = () => {
@@ -32,43 +34,45 @@ class HomePage extends Component {
         // multiple transactions
         const numTransactions = hasFormData && hasFormData.values.numTransactions ? hasFormData.values.numTransactions : false;
 
-        this.props.onGoPressed(origin, dest, numTransactions); // Update current active tab and dispatch action to get transaction data
+        this.props.onGoPressed(origin, dest, numTransactions); // Update current active tab and dispatch action to get
+                                                               // transaction data
     };
 
     handleLocationSettings = (e) => {
         // don't reload page on form submit from modal
         e.preventDefault();
-        this.setState(() => ({modalOpen: false}));
+        this.setState(() => ({ modalOpen: false }));
     };
 
     handleMultiSettings = (e) => {
         // don't reload page on form submit from modal
         e.preventDefault();
-        this.setState(() => ({modalOpen: false}));
+        this.setState(() => ({ modalOpen: false }));
     };
 
     handleCancel = () => {
-        this.setState(() => ({modalOpen: false}));
+        this.setState(() => ({ modalOpen: false }));
     };
 
     nodeIdToLocation = (nodeId, nodes) => {
         return nodes[nodeId].location;
-    }
+    };
 
     drawMessage(advSettingsForm, nodes) {
-        const {values} = (advSettingsForm && advSettingsForm.advSettings) || {};
+        const { values } = (advSettingsForm && advSettingsForm.advSettings) || {};
         if (values) {
             if (values.numTransactions) { // multi transaction message
                 return <h3 className='greeting'>Hit GO to send {values.numTransactions} Transactions!</h3>;
             } else if (values.origin && values.destination) { // two city message
-                return <h3 className='greeting'>Hit GO to send Nano from {this.nodeIdToLocation(values.origin, nodes)} to {this.nodeIdToLocation(values.destination, nodes)}!</h3>;
+                return <h3 className='greeting'>Hit GO to send Nano from {this.nodeIdToLocation(values.origin, nodes)}
+                    to {this.nodeIdToLocation(values.destination, nodes)}!</h3>;
             }
         }
         return <h3 className='greeting'>Hit GO to send Nano between two random nodes!</h3>; // show random message
     }
 
     render() {
-        const {advSettingsForm, nodes} = this.props;
+        const { advSettingsForm, nodes } = this.props;
         return (
             <div className='HomePage'>
                 <Header/>
@@ -79,7 +83,7 @@ class HomePage extends Component {
                     handleMultiSettings={this.handleMultiSettings}
                     handleCancel={this.handleCancel}
                     nodes={nodes}
-                    settings= {advSettingsForm}
+                    settings={advSettingsForm}
                 />
                 <h1 className='greeting page-header text-center'>Welcome to NanoSpeed.live!</h1>
                 <div className='container'>
@@ -91,13 +95,15 @@ class HomePage extends Component {
                                 Go
                             </button>
                             <br/>
-                            <button id='advanced-btn' type='button' className='btn btn-primary' onClick={this.onAdvancedClick}>Advanced</button>
-                            <br />
+                            <button id='advanced-btn' type='button' className='btn btn-primary'
+                                    onClick={this.onAdvancedClick}>Advanced
+                            </button>
+                            <br/>
                             <p className='greeting'>Run your live test now.</p>
                         </div>
                     </div>
                     <div/>
-                    <div class="shadow-none p-3 mb-5 bg-light rounded">
+                    <div className="shadow-none p-3 mb-5 bg-light rounded">
                     <h5>What is Nano?</h5>
                     Nano is a next-generation cryptocurrency created by Colin LeMahieu for instant and free transactions.
                     It's block-lattice structure enables decentralized transactions without loss of security, speed, or high costs.
@@ -107,6 +113,7 @@ class HomePage extends Component {
         );
     }
 }
+
 const mapStateToProps = (state) => {
     return {
         advSettingsForm: state.form,
@@ -137,6 +144,9 @@ const mapDispatchToProps = (dispatch) => {
                 }));
             }
             dispatch(switchTab('Results')); // Update current active tab
+        },
+        onAdvPressed() {
+            dispatch(openAdvSettings());
         }
     };
 };
