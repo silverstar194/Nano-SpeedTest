@@ -19,7 +19,7 @@ const errorMessage = (mostRecent, isFetchingTransaction) =>
     (mostRecent && mostRecent.error && !isFetchingTransaction) ?
         <div className='alert alert-danger' role='alert'>
             Something went wrong while trying to get the transaction.
-            This is most likely an issue with our servers and not the Nano transaction
+            This is an issue with our servers and not the Nano network. Hold tight and try again.
         </div>
         : null;
 
@@ -44,7 +44,7 @@ const CurrentTransactionsView = ({table, isFetchingTiming, isFetchingTransaction
                         { isFetchingTiming &&
                             <Fragment>
                                 <p/>
-                                This can take upwards of 30 seconds so please be patient!
+                                This can take up to 30 seconds hold tight.
                             </Fragment>
                         }
                         </h2>

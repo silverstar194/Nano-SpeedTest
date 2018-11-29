@@ -86,6 +86,8 @@ class Command(BaseCommand):
                 logger.warning('Account is unopened: %s' % accounts[lower].address)
                 break
 
+            accounts[lower].refresh_from_db()
+
             found_lower = accounts[lower].POW is not None
 
         while not found_upper:
@@ -97,6 +99,8 @@ class Command(BaseCommand):
                 del values[upper]
                 del accounts[upper]
                 continue
+
+            accounts[upper].refresh_from_db()
             
             found_upper = accounts[upper].POW is not None
         
