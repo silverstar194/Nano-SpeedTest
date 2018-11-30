@@ -62,6 +62,7 @@ MIDDLEWARE = [
 
 CRONJOBS = [
     ('0 * * * *', 'django.core.management.balance_accounts'),
+    ('*/5 * * * *', 'speedtest_api.cron.node_status_job'),
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
