@@ -36,13 +36,15 @@ class HistoricalDataView extends React.Component {
             <div className='HistoricalData'>
                 <Header/>
                 <Ad />
+
                 <div className='container-fluid'>
                         <div className='row form-group'>
-                        <h2 className='map-header text-center'>
+                        <div className='container-fluid'>
+                        <h2 className='map-header'>
                             Some Stats
                         </h2>
-                        <div className='container-fluid'>
                             <div className='row form-group'>
+
                                 <div className='col-auto'>
                                     <h3 className='map-header'>
                                         Total Transactions Sent: {totalTransactions}
