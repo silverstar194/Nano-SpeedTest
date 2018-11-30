@@ -25,11 +25,6 @@ const transactionsMiddleware = store => next => action => {
             store.dispatch(setTimingFetchStatus(false));
             store.dispatch(appendPastResults(action.timingData));
             break;
-        case 'ERROR':
-            store.dispatch(setTransactionFetchStatus(false));
-            store.dispatch(setTimingFetchStatus(false));
-            // TODO make toast message and dispatch
-            break;
         default:
             break;
     }

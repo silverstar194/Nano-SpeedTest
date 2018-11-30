@@ -1,8 +1,18 @@
+.toast__padding {
+	padding: .5rem;
+	background-color: #333;
+    color: #fff;
+    text-align: center;
+	border-radius: 18px;
+	list-style-type: none;
+}
+
 .toast {
     align-items: flex-start;
     border-radius: 8px;
     display: flex;
-    padding: 16px;
+	padding: 1rem;
+	margin-bottom: 0;
     -webkit-animation: fadein 0.5s;
     animation: fadein 0.5s;
 }
@@ -13,9 +23,7 @@
 
 .toast__content {
     flex: 1 1 auto;
-    margin: 0 12px 0 0;
-    /* overflow: hidden; */
-    /* text-overflow: ellipsis; */
+    margin: 0 .5rem 0 0;
 }
 
 .toast__dismiss {
@@ -28,14 +36,14 @@
     display: block;
     flex: 0 0 auto;
     font: inherit;
-    padding: 0;
+	padding: 0;
 }
 
 .toasts {
     bottom: 5%;
     position: fixed;
-	right: 5%;
-	max-width: 35%;
+	left: 25%;
+	right: 25%;
 }
 
 @-webkit-keyframes fadein {

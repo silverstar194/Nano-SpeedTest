@@ -3,13 +3,15 @@ import React, { Component } from 'react';
 
 class Toast extends Component {
 	render() {
-		const {status} = this.props;
+		const {status, text, onDismissClick} = this.props;
 		return (
-			<li className={`toast alert alert-${status}`}>
-				<p className='toast__content'>{this.props.text}</p>
-				<button className='toast__dismiss' onClick={this.props.onDismissClick}>
-				x
-				</button>
+			<li className={'toast__padding'}>
+				<div className={`toast alert alert-${status}`}>
+					<p className='toast__content'>{text}</p>
+					<button className='toast__dismiss' onClick={onDismissClick}>
+					X
+					</button>
+					</div>
 			</li>
 		);
 	}
@@ -20,8 +22,8 @@ class Toast extends Component {
 }
 
 Toast.propTypes = {
-	// color: PropTypes.string.isRequired,
 	onDismissClick: PropTypes.func.isRequired,
+	status: PropTypes.string.isRequired,
 	text: PropTypes.string.isRequired
 };
 

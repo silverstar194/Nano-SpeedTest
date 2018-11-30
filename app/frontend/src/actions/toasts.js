@@ -6,8 +6,11 @@ let toastId = 0;
 export const addToast = (toast) => {
     return {
         type: ADD_TOAST,
-        ...toast,
-        id: toastId++
+        toast: {
+            autoDismiss: true,
+            ...toast,
+            id: toastId++
+        }
     };
 };
 

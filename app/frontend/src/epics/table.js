@@ -2,6 +2,9 @@ import { combineEpics, ofType } from 'redux-observable';
 import { mergeMap } from 'rxjs/operators';
 import { ADD_TRANSACTIONS, ADD_TIMING_DATA, FETCH_TRANSACTION } from 'actions/table';
 import { convertCoordsToString, fetchWrapper } from 'util/helpers';
+import { makeToast } from 'util/toasts';
+import {
+    setTransactionFetchStatus} from 'actions/transactions';
 
 //TODO going to need better error handling if rejected or times out
 export const fetchTransaction = action$ => action$.pipe(
@@ -23,7 +26,11 @@ export const fetchTransaction = action$ => action$.pipe(
             return { type: ADD_TRANSACTIONS, transactionData, batchId: data.id };
         }).catch((err) => {
             console.warn('Error: Failed to Create Transaction');
-            return { type: 'ERROR', message: 'Failed to Create Transaction'};
+            makeToast({
+                text: 'Something went wrong while creating the transaction',
+                status: 'danger'
+            });
+            return setTransactionFetchStatus(false);
         })
     )
 );
@@ -38,11 +45,19 @@ export const fetchTransactionTiming = action$ => action$.pipe(
                 id: action.batchId
             })
         }).then((parsedResponse) => {
+            makeToast({
+                text: 'Transaction Complete',
+                status: 'success'
+            });
             return { type: ADD_TIMING_DATA, timingData: parsedResponse.transactions};
         }).catch((err) => {
             console.warn('Error in Fetching Timing Data');
             action.transactionData.forEach((trans) => {
                 trans.error = true;
+            });
+            makeToast({
+                text: 'Something went wrong while fetching the transaction from our server',
+                status: 'danger'
             });
             return { type: ADD_TIMING_DATA, timingData: action.transactionData};
         })

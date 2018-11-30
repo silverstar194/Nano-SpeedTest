@@ -24,6 +24,7 @@ import { addNodes } from 'actions/nodes';
 import { addPastResults } from 'actions/pastResults';
 
 import { fetchWrapper, fetchPastResults } from 'util/helpers';
+import { initToastStore, makeToast } from 'util/toasts';
 
 
 import createHistory from 'history/createBrowserHistory';
@@ -90,6 +91,7 @@ const store = createStore(
 // importing from epics/table rn since it is our only one so far)
 epicMiddleware.run(rootEpic);
 
+initToastStore(store);
 
 fetchAndUpdateAd(store);
 
@@ -99,7 +101,10 @@ fetchWrapper('nodes/list', {
     store.dispatch(addNodes(data.nodes));
 }).catch((err) => {
     console.warn('Error while fetching nodes');
-    store.dispatch({ type: 'ERROR', message: 'Error while fetching nodes'});
+    makeToast({
+        text: 'Having Trouble Communicating with the Server',
+        status: 'danger'
+    });
 });
 
 fetchPastResults()
@@ -107,6 +112,10 @@ fetchPastResults()
     store.dispatch(addPastResults({...response}));
 }).catch((err) => {
     console.warn('Error fetching past results');
+    makeToast({
+        text: 'Having Trouble Communicating with the Server',
+        status: 'danger'
+    });
 });
 
 const root = (

@@ -19,8 +19,8 @@ const Toasts = ({ removeToastClicked, toasts }) => {
 };
 
 Toasts.propTypes = {
-    removeToast: PropTypes.func.isRequired,
-    toasts: PropTypes.object.isRequired
+    removeToastClicked: PropTypes.func.isRequired,
+    toasts: PropTypes.array.isRequired
 };
 
 const mapDispatchToProps = dispatch => {

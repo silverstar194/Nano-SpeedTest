@@ -1,3 +1,5 @@
+import { makeToast } from 'util/toasts';
+
 export const convertCoordsToString = (location) => {
     return `${location.latitude},${location.longitude}`;
 };
@@ -34,8 +36,11 @@ export const fetchPastResults = () => {
             globalAverage: average
         };
     }).catch((err) => {
-        //TODO handle error
-        console.warn('TODO Error in fetching stats');
+        console.warn('Error while fetching statistics');
+        makeToast({
+            text: `Couldn't fetch stats`,
+            status: 'danger'
+        });
         throw err;
     });
 };
