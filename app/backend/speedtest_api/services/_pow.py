@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 class POWService:
     _pow_queue = queue.Queue()
     _running = False
-    thread_pool = ThreadPool(processes=5)
+    thread_pool = None
     loop = None
     thread = None
 
@@ -41,12 +41,14 @@ class POWService:
         rpc_node = nano.rpc.Client(account.wallet.node.URL)
         POW = None
 
-        for i in range(3):
+        for i in range(10):
             try:
                 POW = rpc_node.work_generate(hash)
                 break
             except Exception as e:
                 logger.error('Node work_generate error: %s' % e)
+            
+            time.sleep(5)
             
         if POW is None:
             raise Exception()
@@ -78,7 +80,8 @@ class POWService:
     def threaded_PoW_worker(cls, address, frontier, wait):
         try:
             if wait:
-                time.sleep(40)  ## Allow frontier block to clear before PoW is usable
+                pass
+                #time.sleep(40)  ## Allow frontier block to clear before PoW is usable
 
             account = get_account(address=address)
             account.POW = cls.get_pow(address=address, hash=frontier)
@@ -98,9 +101,8 @@ class POWService:
             while cls._running:
                 # Multi-thread this worker (our POW generation time must be less than transaction period)
                 while not cls._pow_queue.empty():
-                    print("thread pow")
                     address, frontier, wait = cls._pow_queue.get()
-                    cls.thread_pool.apply_async(cls.threaded_PoW_worker, args=(cls, address, frontier, wait,))
+                    cls.thread_pool.apply_async(cls.threaded_PoW_worker, args=(address, frontier, wait,))
                 # Run this every second
                 time.sleep(1)
         except Exception as e:
@@ -119,8 +121,6 @@ class POWService:
 
         cls._pow_queue.put((address, frontier, wait))
 
-
-
     @classmethod
     def start(cls, daemon=True):
         """
@@ -135,6 +135,7 @@ class POWService:
 
             logger.info('Starting PoW thread.')
 
+            cls.thread_pool = ThreadPool(processes=10)
             cls.thread = threading.Thread(target=cls._run)
             cls.thread.daemon = daemon
             cls.thread.start()
@@ -178,13 +179,13 @@ class POWService:
 
         accounts_list = get_accounts()
 
-        thread_pool = ThreadPool(processes=5)
         for account in accounts_list:
-            print("geting POW")
-            thread_pool.apply_async(cls.POW_account_thread_asyc, (account,))
-
+            cls.thread_pool.apply_async(cls.POW_account_thread_asyc, (account,))
+        
         # If we are running this from the command, don't stop the main thread until we are done
         if not daemon:
+            cls.thread_pool.join()
+
             while not cls._pow_queue.empty():
                 time.sleep(1)
             
