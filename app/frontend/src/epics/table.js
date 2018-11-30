@@ -3,8 +3,7 @@ import { mergeMap } from 'rxjs/operators';
 import { ADD_TRANSACTIONS, ADD_TIMING_DATA, FETCH_TRANSACTION } from 'actions/table';
 import { convertCoordsToString, fetchWrapper } from 'util/helpers';
 import { makeToast } from 'util/toasts';
-import {
-    setTransactionFetchStatus} from 'actions/transactions';
+import { setTransactionFetchStatus } from 'actions/transactions';
 
 //TODO going to need better error handling if rejected or times out
 export const fetchTransaction = action$ => action$.pipe(

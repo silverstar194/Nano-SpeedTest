@@ -36,9 +36,9 @@ export const fetchPastResults = () => {
             globalAverage: average
         };
     }).catch((err) => {
-        console.warn('Error while fetching statistics');
+        console.warn('Error fetching past results data');
         makeToast({
-            text: `Couldn't fetch stats`,
+            text: 'Having Trouble Communicating with the Server',
             status: 'danger'
         });
         throw err;

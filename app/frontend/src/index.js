@@ -110,12 +110,6 @@ fetchWrapper('nodes/list', {
 fetchPastResults()
 .then((response) => {
     store.dispatch(addPastResults({...response}));
-}).catch((err) => {
-    console.warn('Error fetching past results');
-    makeToast({
-        text: 'Having Trouble Communicating with the Server',
-        status: 'danger'
-    });
 });
 
 const root = (

@@ -18,8 +18,6 @@ class HistoricalDataView extends React.Component {
             this.props.fetchedPastData({
                 ...response
             });
-        }).catch((err) => {
-            console.warn('Error fetching past results');
         });
     }
     render() {
