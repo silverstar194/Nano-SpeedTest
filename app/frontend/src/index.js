@@ -13,6 +13,7 @@ import pastResults from './reducers/pastResults';
 import nodes from 'reducers/nodes';
 import { reducer as formReducer } from 'redux-form';
 import ads from 'reducers/ads';
+import toasts from 'reducers/toasts';
 
 import rootEpic from './epics/table';
 import transactionsMiddleware from './middleware/transactionsMiddleware';
@@ -76,7 +77,8 @@ const store = createStore(
         nodes,
         form: formReducer,
         routerReducer,
-        ads
+        ads,
+        toasts
     }),
     initialState,
     composeEnhancers(

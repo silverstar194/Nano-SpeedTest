@@ -4,7 +4,7 @@ import Footer from './Footer';
 import EditableAd from './EditableAd';
 import { fetchWrapper } from 'util/helpers';
 import 'styles/AdBuild.css';
-import 'styles/Snackbar.css';
+import 'styles/Toast.css';
 
 const TITLE_MAX_LEN = 40;
 const DESCRIPTION_MAX_LEN = 120;
@@ -149,7 +149,7 @@ class BuildAd extends Component {
         return (
          <div className='AdBuild'>
                <Header/>
-                <div className={'snackbar' + (this.state.showToast ? ' show ' : '')}>
+                <div className={'toast' + (this.state.showToast ? ' show ' : '')}>
                 {
                     this.state.wasSubmitted ? (
                         this.state.fetchError ? <div className='message alert alert-danger'>Something went wrong while creating the Ad. Please try again</div>

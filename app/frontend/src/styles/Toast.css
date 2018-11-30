@@ -1,4 +1,4 @@
-.snackbar {
+/* .toast {
     visibility: hidden;
     min-width: 250px;
     background-color: #333;
@@ -14,7 +14,7 @@
     font-size: 17px;
 }
 
-.snackbar.show {
+.toast.show {
     visibility: visible;
     -webkit-animation: fadein 0.5s, fadeout 0.5s 3.5s;
     animation: fadein 0.5s, fadeout 0.5s 3.5s;
@@ -42,4 +42,4 @@
 @keyframes fadeout {
     from {bottom: 30px; opacity: 1;}
     to {bottom: 0; opacity: 0;}
-}
+} */
