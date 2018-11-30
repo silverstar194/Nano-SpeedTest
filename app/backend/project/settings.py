@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.admindocs',
     'corsheaders',
     'speedtest_api',
-    'django_crontab'
+    'django_crontab',
 ]
 
 MIDDLEWARE = [

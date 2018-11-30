@@ -42,3 +42,5 @@ def node_status_job():
                 sg.client.mail.send.post(request_body=mail.get())
             except Exception as e:
                 logger.error("Error occurred sending email with sendgrid %s " % str(e))
+
+            logger.info("Email sent to %s regarding crashed node %s in %s " % (to_email, node.id, node.location_name))
