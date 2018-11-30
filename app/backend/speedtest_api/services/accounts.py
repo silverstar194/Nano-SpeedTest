@@ -88,7 +88,6 @@ def sync_accounts():
 
     thread_pool = ThreadPool(processes=5)
     for account in accounts_list:
-        print("balance")
         thread_pool.apply_async(check_account_async, (account,))
     thread_pool.close()
 
