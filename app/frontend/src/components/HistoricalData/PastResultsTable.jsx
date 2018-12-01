@@ -5,7 +5,6 @@ import uuid from 'uuid';
 import 'styles/PastResults.css';
 
 const viewItems = 25;
-//TODO switch to HASHes
 
 class PastResultsTable extends React.Component {
     constructor(props) {
