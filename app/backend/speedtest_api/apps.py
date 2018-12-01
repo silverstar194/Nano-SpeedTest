@@ -21,8 +21,7 @@ class SpeedtestApiConfig(AppConfig):
         logger.info('Starting check that nodes are up...')
         ## Check that all nodes are up
         nodes = get_nodes()
-        for node in nodes:
-            self.thread_pool.apply_async(self.check_node_async, (node,))
+        self.thread_pool.apply_async(self.check_node_async, nodes)
 
         logger.info('Starting POWService and running POW_accounts()...')
         POWService.start()
@@ -36,19 +35,19 @@ class SpeedtestApiConfig(AppConfig):
 
         # Check to see if the node contains the wallets
         enabled_wallets = get_wallets()
-        for wallet in enabled_wallets:
-            self.thread_pool.apply_async(self.check_wallet_async, (wallet,))
+        self.thread_pool.apply_async(self.check_wallet_async, enabled_wallets)
 
         logger.info('Nodes and wallets validated...')
 
         # Check to see if the accounts are contained in the wallets
         enabled_accounts = get_accounts()
-        for account in enabled_accounts:
-            self.thread_pool.apply_async(self.check_account_async, (account,))
+        self.thread_pool.apply_async(self.check_account_async, enabled_accounts)
 
         logger.info('Accounts validated...')
         logger.info('Balances validated...')
         self.thread_pool.close()
+        self.thread_pool.join()
+
 
 
     def check_node_async(self, node):

@@ -86,10 +86,10 @@ def sync_accounts():
 
     accounts_list = get_accounts()
 
-    thread_pool = ThreadPool(processes=5)
-    for account in accounts_list:
-        thread_pool.apply_async(check_account_async, (account,))
+    thread_pool = ThreadPool(processes=10)
+    thread_pool.apply_async(check_account_async, accounts_list)
     thread_pool.close()
+    thread_pool.join()
 
 
 def check_account_async(account):
