@@ -3,8 +3,8 @@ import Header from './Header';
 import Footer from './Footer';
 import EditableAd from './EditableAd';
 import { fetchWrapper } from 'util/helpers';
+import { makeToast } from 'util/toasts';
 import 'styles/AdBuild.css';
-import 'styles/Snackbar.css';
 
 const TITLE_MAX_LEN = 40;
 const DESCRIPTION_MAX_LEN = 120;
@@ -42,7 +42,6 @@ class BuildAd extends Component {
         this.onSubmit = this.onSubmit.bind(this);
         this.onEditField = this.onEditField.bind(this);
         this.onRadioChange = this.onRadioChange.bind(this);
-        this.runToast = this.runToast.bind(this);
     }
     componentDidMount() {
         fetchWrapper('header/info')
@@ -50,14 +49,12 @@ class BuildAd extends Component {
             this.setState({
                 costPerSlot: response.data.current_cost_per_slot
             });
+        }).catch((err) => {
+            makeToast({
+                text: `Can't receive Ad pricing`,
+                status: 'danger'
+            });
         });
-    }
-    runToast(callback) {
-        this.setState({showToast: true});
-        setTimeout(() => {
-            this.setState({showToast: false});
-            if (callback) callback(); // trigger for when toast dismissed
-        }, 4000);
     }
     onSubmit(event) {
         const {title, description, url, project, email, selectedSlot, errors} = this.state;
@@ -74,7 +71,10 @@ class BuildAd extends Component {
         });
         if (Object.values(errors).includes(true)) { // if there is an invalid field
             this.setState({errors});
-            this.runToast();
+            makeToast({
+                text: 'Invalid Fields',
+                status: 'warning'
+            });
         } else {
             this.setState({ showSpinner: true, wasSubmitted: true });
             fetchWrapper('header/add', {
@@ -90,22 +90,30 @@ class BuildAd extends Component {
                     }
                 })
             }).then((response) => {
-                let callback = null;
                 if (response.message === 'Success') {
                     this.setState({
                         showSpinner: false,
                         ...initValues
                     });
-                    callback = () => this.setState({ wasSubmitted: false });
+                    makeToast({
+                        text: 'Your Ad has been saved!',
+                        status: 'success'
+                    });
                 } else {
                     this.setState({
                         showSpinner: false,
                         fetchError: true
                     });
+                    makeToast({
+                        text: 'Something went wrong while creating the Ad. Please try again',
+                        status: 'danger'
+                    });
                 }
-                this.runToast(callback);
             }).catch((err) => {
-                this.runToast();
+                makeToast({
+                    text: 'Something went wrong while creating the Ad. Please try again',
+                    status: 'danger'
+                });
                 this.setState({
                     showSpinner: false,
                     fetchError: true
@@ -149,14 +157,6 @@ class BuildAd extends Component {
         return (
          <div className='AdBuild'>
                <Header/>
-                <div className={'snackbar' + (this.state.showToast ? ' show ' : '')}>
-                {
-                    this.state.wasSubmitted ? (
-                        this.state.fetchError ? <div className='message alert alert-danger'>Something went wrong while creating the Ad. Please try again</div>
-                        : <div className='message alert alert-success'>Your Ad has been saved!</div>
-                    ) : <div className='message alert alert-warning'>Incomplete Fields</div>
-                }
-                </div>
                 { this.state.showSpinner ?
                     <div className='loading-container'>
                         <div className='loader-container d-flex justify-content-center'>
@@ -242,7 +242,7 @@ class BuildAd extends Component {
                       </p>
 
                       <h4>Ad Slots</h4>
-                      <p>Each Slot represents 5% of all Nanode impressions for the month and are available on a first-come, first-served basis.</p>
+                      <p>Each Slot represents 5% of all nanospeed.live impressions for the month and are available on a first-come, first-served basis.</p>
 
                          <div className='form-group'>
                               <div className='col-sm-10'>

@@ -7,6 +7,7 @@ import MoreInfoPage from './components/MoreInfoPage';
 import NotFoundPage from './components/NotFoundPage';
 import BuildAd from './components/BuildAd';
 import ScrollToTop from 'components/ScrollToTop';
+import Toasts from 'components/Notifications/Toasts';
 
 export default() => (
     <BrowserRouter>
@@ -19,6 +20,7 @@ export default() => (
                 <Route path='/BuildAd' component={BuildAd}/>
                 <Route component={NotFoundPage}/>
             </Switch>
+            <Toasts />
         </ScrollToTop>
     </BrowserRouter>
 );

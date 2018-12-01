@@ -13,6 +13,7 @@ import pastResults from './reducers/pastResults';
 import nodes from 'reducers/nodes';
 import { reducer as formReducer } from 'redux-form';
 import ads from 'reducers/ads';
+import toasts from 'reducers/toasts';
 
 import rootEpic from './epics/table';
 import transactionsMiddleware from './middleware/transactionsMiddleware';
@@ -23,6 +24,7 @@ import { addNodes } from 'actions/nodes';
 import { addPastResults } from 'actions/pastResults';
 
 import { fetchWrapper, fetchPastResults } from 'util/helpers';
+import { initToastStore, makeToast } from 'util/toasts';
 
 
 import createHistory from 'history/createBrowserHistory';
@@ -35,19 +37,19 @@ const history = createHistory();
 
 // Redux Beacon --->
 const eventsMap = {
-    'SWITCH_TAB': trackEvent(action => ({
-        category: "tabs",
-        action: "Active tab changed",
+    SWITCH_TAB: trackEvent(action => ({
+        category: 'tabs',
+        action: 'Active tab changed',
     })),
 
-    'FETCH_TRANSACTION': trackEvent(action => ({
-        category: "transactions",
-        action: "Go button clicked",
+    FETCH_TRANSACTION: trackEvent(action => ({
+        category: 'transactions',
+        action: 'Go button clicked',
     })),
 
-    'ADV_SETTINGS_OPENED': trackEvent(action => ({
-        category: "advSettings",
-        action: "Advanced settings modal opened",
+    ADV_SETTINGS_OPENED: trackEvent(action => ({
+        category: 'advSettings',
+        action: 'Advanced settings modal opened',
     })),
 };
 
@@ -76,7 +78,8 @@ const store = createStore(
         nodes,
         form: formReducer,
         routerReducer,
-        ads
+        ads,
+        toasts
     }),
     initialState,
     composeEnhancers(
@@ -84,10 +87,11 @@ const store = createStore(
     )
 );
 
-// Runs our epic (requires a 'root' epic and makes us import from one "root epics" file in order to work.  Just
+// Runs our epic (requires a 'root' epic and makes us import from one 'root epics' file in order to work.  Just
 // importing from epics/table rn since it is our only one so far)
 epicMiddleware.run(rootEpic);
 
+initToastStore(store);
 
 fetchAndUpdateAd(store);
 
@@ -96,8 +100,11 @@ fetchWrapper('nodes/list', {
 }).then((data) => {
     store.dispatch(addNodes(data.nodes));
 }).catch((err) => {
-    //TODO handle error
-    console.warn('TODO Error in fetching nodes');
+    console.warn('Error while fetching nodes');
+    makeToast({
+        text: 'Having Trouble Communicating with the Server',
+        status: 'danger'
+    });
 });
 
 fetchPastResults()
