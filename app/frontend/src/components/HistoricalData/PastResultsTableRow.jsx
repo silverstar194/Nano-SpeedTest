@@ -25,7 +25,7 @@ const TableRow = ({
             <td>{amount} nano</td>
             <td>{(endSendTimestamp - startSendTimestamp)/1000} Seconds</td>
             <td>{date}</td>
-            <td className='block-col'>
+            <td className='block-col text-ellipsis'>
                 <a
                     href={`https://www.nanode.co/block/${transactionHashSending}`}
                     target='_blank'
@@ -33,7 +33,7 @@ const TableRow = ({
                     {transactionHashSending}
                 </a>
             </td>
-            <td className='block-col'>
+            <td className='block-col text-ellipsis'>
                 <a
                     href={`https://www.nanode.co/block/${transactionHashReceiving}`}
                     target='_blank'
