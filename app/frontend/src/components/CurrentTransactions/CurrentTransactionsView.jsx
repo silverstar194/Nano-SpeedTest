@@ -28,19 +28,7 @@ const errorMessage = (mostRecent, isFetchingTransaction) =>
 
 class CurrentTransactionsView extends Component {
     handleRerun = () => {
-        // table is not always in correct order (pending is last, then goes to first once completed),
-        // so we need to check if we have pending transactions (index 0 has null timestamps), else grab last
-
-        let rerunOriginId;
-        let rerunDestId;
-        if (this.props.table[this.props.table.length - 1].startSendTimestamp) {
-            rerunOriginId = this.props.table[0].origin.id.toString();
-            rerunDestId = this.props.table[0].destination.id.toString();
-        } else {
-            rerunOriginId = this.props.table[this.props.table.length - 1].origin.id.toString();
-            rerunDestId = this.props.table[this.props.table.length - 1].destination.id.toString();
-        }
-       this.props.onRerun(rerunOriginId, rerunDestId)
+       this.props.onRerun(this.props.mostRecent.origin, this.props.mostRecent.destination);
     };
 
     render() {
@@ -88,7 +76,11 @@ class CurrentTransactionsView extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        transactionsInTable: state.table
+        table: state.table.tableEntries,
+        mostRecent: {
+            origin: state.table.mostRecentLocations.origin,
+            destination: state.table.mostRecentLocations.destination
+        }
     };
 };
 

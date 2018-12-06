@@ -35,7 +35,7 @@ const UserStatsPage = ({table, pastTransactions, isFetchingTransaction, isFetchi
 
 const mapStateToProps = (state) => {
     return {
-        table: state.table,
+        table: state.table.tableEntries,
         pastTransactions: state.pastResults.pastTransactions,
         isFetchingTransaction: state.transactions.isFetchingTransaction,
         isFetchingTiming: state.transactions.isFetchingTiming
