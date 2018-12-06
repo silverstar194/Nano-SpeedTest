@@ -1,4 +1,5 @@
 import { ADD_ALL_PAST_RESULTS, APPEND_PAST_RESULTS } from 'actions/pastResults';
+import {clone} from 'util/helpers';
 
 export const INITIAL_STATE = {
     pastTransactions: []
@@ -12,12 +13,11 @@ export default (state = INITIAL_STATE, action) => {
             newState.globalAverage = action.globalAverage;
 
             // use the old state value if nothing has updated to prevent re-render
-            newState.pastTransactions = (action.pastTransactions.length === state.pastTransactions.length)
-                ? state.pastTransactions : action.pastTransactions;
+            newState.pastTransactions = action.pastTransactions || state.pastTransactions;
 
             return {...newState};
         case APPEND_PAST_RESULTS:
-            const pastTransactions = state.pastTransactions;
+            const pastTransactions = clone(state.pastTransactions);
             action.newResults.forEach((res) => {
                 pastTransactions.push(res);
             });
