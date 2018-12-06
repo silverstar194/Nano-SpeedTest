@@ -5,7 +5,7 @@ import { Field, reduxForm } from 'redux-form';
 class LocationDropdowns extends Component {
 
     render() {
-        const { handleHomeLocationsChange, nodes, homeDropdownsForm } = this.props;
+        const { nodes, homeDropdownsForm } = this.props;
         return (
             <div>
                 <form>

@@ -43,7 +43,6 @@ class HomePage extends Component {
         let finalDest = destHomepage ? destHomepage: destAdv;
 
 
-
         // multiple transactions
         const numTransactions = hasAdvFormData && hasAdvFormData.values.numTransactions ? hasAdvFormData.values.numTransactions : false;
 
@@ -105,7 +104,6 @@ class HomePage extends Component {
                             {this.drawMessage(advSettingsForm, nodes)}
 
                             <LocationDropdowns
-                                handleHomeLocationChange={() => {}}
                                 nodes={nodes}
                                 homeDropdownsForm={homeDropdownsForm}
                             />
