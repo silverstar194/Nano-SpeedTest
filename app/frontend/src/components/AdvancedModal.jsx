@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
-import { Field, reduxForm} from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
 
 // Need to make this a class component so it can have some local state
 class AdvancedModal extends Component {
@@ -36,7 +36,7 @@ class AdvancedModal extends Component {
     };
 
     render() {
-        const {open, handleLocationSettings, handleCancel, handleMultiSettings, nodes, settings} = this.props;
+        const { open, handleLocationSettings, handleCancel, handleMultiSettings, nodes, settings } = this.props;
         return (
             <Modal
                 appElement={document.getElementById('root')}
@@ -99,7 +99,14 @@ class AdvancedModal extends Component {
                                     <Field name='origin' component='select'>
                                         <option></option>
                                         {
-                                            nodes && Object.keys(nodes).map(nodeKey => {
+                                            nodes && Object.keys(nodes).filter((nodeId) => {
+                                                if (settings && settings.advSettings && settings.advSettings.values //grab the origin nodes value and don't show it
+                                                    && settings.advSettings.values.destination) {
+                                                    return settings.advSettings.values.destination !== nodeId;
+                                                } else {
+                                                    return true;
+                                                }
+                                            }).map(nodeKey => {
                                                 return <option
                                                     key={nodeKey}
                                                     value={nodes[nodeKey].id}
@@ -123,12 +130,12 @@ class AdvancedModal extends Component {
                                                     return true;
                                                 }
                                             })
-                                            .map(nodeKey => {
-                                                return <option
-                                                    key={nodeKey}
-                                                    value={nodes[nodeKey].id}
-                                                >{nodes[nodeKey].location}</option>;
-                                            })
+                                                .map(nodeKey => {
+                                                    return <option
+                                                        key={nodeKey}
+                                                        value={nodes[nodeKey].id}
+                                                    >{nodes[nodeKey].location}</option>;
+                                                })
                                         }
                                     </Field>
                                 </div>
@@ -152,10 +159,12 @@ class AdvancedModal extends Component {
                             <p>Select to send either 2 or 3 random transactions for your test.</p>
                             <div>
                                 <div>
-                                    <label><Field name='numTransactions' component='input' type='radio' value='2'/> 2 Random Transactions</label>
+                                    <label><Field name='numTransactions' component='input' type='radio' value='2'/> 2
+                                        Random Transactions</label>
                                 </div>
                                 <div>
-                                    <label><Field name='numTransactions' component='input' type='radio' value='3'/> 3 Random Transactions</label>
+                                    <label><Field name='numTransactions' component='input' type='radio' value='3'/> 3
+                                        Random Transactions</label>
                                 </div>
                             </div>
                             <div>

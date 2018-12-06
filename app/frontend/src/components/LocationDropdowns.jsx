@@ -6,7 +6,10 @@ import '../styles/LocationDropdowns.css'
 class LocationDropdowns extends Component {
 
     render() {
-        const { nodes, homeDropdownsForm } = this.props;
+        const { nodes, homeDropdownsForm, modalSettings} = this.props;
+        let hasBothValuesInModal = modalSettings && modalSettings.values && modalSettings.values.origin && modalSettings.values.destination;
+        let modalSettingsForHome = hasBothValuesInModal ? modalSettings.values : false;
+        console.log(modalSettingsForHome);
         return (
             <div>
                 <form>
@@ -14,7 +17,13 @@ class LocationDropdowns extends Component {
                     <Field name='origin' component='select'>
                         <option></option>
                         {
-                            nodes && Object.keys(nodes).map(nodeKey => {
+                            nodes && Object.keys(nodes).filter((nodeId) => {
+                                if (homeDropdownsForm && homeDropdownsForm.values && homeDropdownsForm.values.destination) {
+                                    return homeDropdownsForm.values.destination !== nodeId;
+                                } else {
+                                    return true;
+                                }
+                            }).map(nodeKey => {
                                 return <option
                                     key={nodeKey}
                                     value={nodes[nodeKey].id}
