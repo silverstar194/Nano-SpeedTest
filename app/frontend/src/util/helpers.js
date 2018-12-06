@@ -1,5 +1,7 @@
 import { makeToast } from 'util/toasts';
 
+export const clone = (input) => JSON.parse(JSON.stringify(input));
+
 export const convertCoordsToString = (location) => {
     return `${location.latitude},${location.longitude}`;
 };

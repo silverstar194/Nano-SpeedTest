@@ -9,11 +9,10 @@ const viewItems = 25;
 class PastResultsTable extends React.Component {
     constructor(props) {
         super(props);
-        const disableNext = (viewItems >= props.tableData.length);
         this.state = {
             startIndex: 0,
             disablePrev: true,
-            disableNext
+            disableNext: false
         };
         this.checkDisabled = this.checkDisabled.bind(this);
         this.nextPage = this.nextPage.bind(this);
