@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
+import '../styles/LocationDropdowns.css'
 
 // Need to make this a class component so it can have some local state
 class LocationDropdowns extends Component {
@@ -9,7 +10,7 @@ class LocationDropdowns extends Component {
         return (
             <div>
                 <form>
-                    <label>Origin</label>
+                    <label className='label'>Origin</label>
                     <Field name='origin' component='select'>
                         <option></option>
                         {
@@ -21,13 +22,13 @@ class LocationDropdowns extends Component {
                             })
                         }
                     </Field>
-                    <label>Destination</label>
+                    <label className='label'>Destination</label>
                     <Field name='destination' component='select'>
                         <option></option>
                         {
                             nodes && Object.keys(nodes).filter((nodeId) => {
-                                if (homeDropdownsForm) {
-                                    return homeDropdownsForm !== nodeId;
+                                if (homeDropdownsForm &&homeDropdownsForm.values && homeDropdownsForm.values.origin) {
+                                    return homeDropdownsForm.values.origin !== nodeId;
                                 } else {
                                     return true;
                                 }
