@@ -9,6 +9,7 @@ import { switchTab } from '../actions/navigation';
 import { fetchTransaction } from '../actions/table';
 import '../styles/HomePage.css';
 import { openAdvSettings } from '../actions/advancedModal';
+import LocationDropdowns from './LocationDropdowns';
 
 class HomePage extends Component {
     // component specific state -- don't need to add to redux store
@@ -27,15 +28,26 @@ class HomePage extends Component {
 
         // check if user selected locations to send to and from.  Make null (random) if it is NOT the case
         // that they selected two different valid locations
-        const hasFormData = this.props.advSettingsForm.advSettings;
-        const notSame = !!hasFormData ? hasFormData.values.origin !== hasFormData.values.destination : false;
-        const origin = !!hasFormData && notSame ? hasFormData.values.origin : null;
-        const dest = !!hasFormData && notSame ? hasFormData.values.destination : null;
+        const hasAdvFormData = this.props.advSettingsForm.advSettings;
+        const notSameAdv = !!hasAdvFormData ? hasAdvFormData.values.origin !== hasAdvFormData.values.destination : false;
+        const originAdv = !!hasAdvFormData && notSameAdv ? hasAdvFormData.values.origin : null;
+        const destAdv = !!hasAdvFormData && notSameAdv ? hasAdvFormData.values.destination : null;
+
+        // ALSO check if the "to" and "from" on homepage.  These values should overwrite those in the advanced settings
+        const hasHomepageFormData = this.props.homeDropdownsForm;
+        const notSameHomepage = !!hasHomepageFormData ? hasHomepageFormData.values.origin !== hasHomepageFormData.values.destination : false;
+        const originHomepage = !!hasHomepageFormData && notSameHomepage ? hasHomepageFormData.values.origin : null;
+        const destHomepage = !!hasHomepageFormData && notSameHomepage ? hasHomepageFormData.values.destination : null;
+
+        let finalOrigin = originHomepage ? originHomepage : originAdv;
+        let finalDest = destHomepage ? destHomepage: destAdv;
+
+
 
         // multiple transactions
-        const numTransactions = hasFormData && hasFormData.values.numTransactions ? hasFormData.values.numTransactions : false;
+        const numTransactions = hasAdvFormData && hasAdvFormData.values.numTransactions ? hasAdvFormData.values.numTransactions : false;
 
-        this.props.onGoPressed(origin, dest, numTransactions); // Update current active tab and dispatch action to get
+        this.props.onGoPressed(finalOrigin, finalDest, numTransactions); // Update current active tab and dispatch action to get
                                                                // transaction data
     };
 
@@ -66,14 +78,14 @@ class HomePage extends Component {
                 return <h3 className='greeting'>Hit GO to send {values.numTransactions} Transactions!</h3>;
             } else if (values.origin && values.destination) { // two city message
                 return <h3 className='greeting'>Hit GO to send Nano from {this.nodeIdToLocation(values.origin, nodes)}
-                    to {this.nodeIdToLocation(values.destination, nodes)}!</h3>;
+                &nbsp;to {this.nodeIdToLocation(values.destination, nodes)}!</h3>;
             }
         }
-        return <h3 className='greeting'>Hit GO to send Nano between two random nodes!</h3>; // show random message
+        return <h4 className='greeting'>Hit GO to send Nano between two random nodes or choose an origin and destination below!</h4>;
     }
 
     render() {
-        const { advSettingsForm, nodes } = this.props;
+        const { advSettingsForm, nodes, homeDropdownsForm } = this.props;
         return (
             <div className='HomePage'>
                 <Header/>
@@ -92,10 +104,17 @@ class HomePage extends Component {
                         <div className='col-md-12 text-center'>
                             {this.drawMessage(advSettingsForm, nodes)}
 
+                            <LocationDropdowns
+                                handleHomeLocationChange={() => {}}
+                                nodes={nodes}
+                                homeDropdownsForm={homeDropdownsForm}
+                            />
+
                             <button type='button' className='btn btn-success btn-circle btn-xl' onClick={this.onClick}>
                                 Go
                             </button>
                             <br/>
+
                             <button id='advanced-btn' type='button' className='btn btn-primary'
                                     onClick={this.onAdvancedClick}>Advanced
                             </button>
@@ -118,6 +137,7 @@ class HomePage extends Component {
 
 const mapStateToProps = (state) => {
     return {
+        homeDropdownsForm: state.form.homepageLocations,
         advSettingsForm: state.form,
         nodes: state.nodes
     };
@@ -156,6 +176,7 @@ const mapDispatchToProps = (dispatch) => {
 HomePage.propTypes = {
     history: PropTypes.object.isRequired,
     onGoPressed: PropTypes.func.isRequired,
+    homeDropdownsForm: PropTypes.object,
     advSettingsForm: PropTypes.object,
     nodes: PropTypes.object
 };

@@ -181,7 +181,6 @@ class AdvancedModal extends Component {
 
 // Allows form to communicate with store
 AdvancedModal = reduxForm({
-    // a unique name for the form
     form: 'advSettings'
 })(AdvancedModal);
 
