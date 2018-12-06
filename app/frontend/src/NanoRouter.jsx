@@ -8,10 +8,13 @@ import NotFoundPage from './components/NotFoundPage';
 import BuildAd from './components/BuildAd';
 import ScrollToTop from 'components/ScrollToTop';
 import Toasts from 'components/Notifications/Toasts';
+import Header from 'components/Header';
+import Footer from 'components/Footer';
 
 export default() => (
     <BrowserRouter>
         <ScrollToTop>
+            <Header />
             <Switch>
                 <Route path='/' component={HomePage} exact={true} />
                 <Route path='/Stats' component={HistoricalDataView}/>
@@ -21,6 +24,7 @@ export default() => (
                 <Route component={NotFoundPage}/>
             </Switch>
             <Toasts />
+            <Footer />
         </ScrollToTop>
     </BrowserRouter>
 );

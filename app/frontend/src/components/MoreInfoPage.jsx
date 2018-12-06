@@ -1,19 +1,14 @@
 import React, {Component} from 'react';
-import Header from './Header';
-import Footer from './Footer';
 import '../styles/HomePage.css';
 import Ad from './Ad';
 import { Link } from 'react-router-dom';
 import { switchTab } from '../actions/navigation';
 import { connect } from 'react-redux';
 
-
-
 class MoreInfoPage extends Component {
     render() {
         return (
             <div className='MoreInfoPage'>
-                <Header/>
                 <Ad/>
                 <br/>
                 <div className='container'>
@@ -172,7 +167,6 @@ class MoreInfoPage extends Component {
                    <br/>
                    <br/>
               </div>
-              <Footer/>
             </div>
         );
     }

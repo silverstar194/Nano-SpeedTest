@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import Header from './Header';
-import Footer from './Footer';
 import EditableAd from './EditableAd';
 import { fetchWrapper } from 'util/helpers';
 import { makeToast } from 'util/toasts';
@@ -156,7 +154,6 @@ class BuildAd extends Component {
         const {title, description, url, project, email, selectedSlot, errors} = this.state;
         return (
          <div className='AdBuild'>
-               <Header/>
                 { this.state.showSpinner ?
                     <div className='loading-container'>
                         <div className='loader-container d-flex justify-content-center'>
@@ -305,7 +302,6 @@ class BuildAd extends Component {
                     </form>
                 </div>
                 }
-                <Footer/>
           </div>
         );
     }
