@@ -2,3 +2,8 @@
     max-width: 8rem;
     overflow-x: auto;
 }
+
+.text-ellipsis {
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+}
