@@ -1,18 +1,19 @@
-import React, {Fragment} from 'react';
+import React, { Fragment } from 'react';
 import Ad from 'components/Ad';
 import Map from './Map';
 import Table from './Table';
 import NoTableEntries from './NoTableEntries';
+import '../../styles/CurrentTransactionsView.css'
 
 const loader = (
     <div className='loading-container'>
-    <div className='loader-container d-flex justify-content-center'>
-        <div className='loader'></div>
+        <div className='loader-container d-flex justify-content-center'>
+            <div className='loader'></div>
+        </div>
+        <div>
+            <p className='text-center'>Your transaction is processing. Please wait.</p>
+        </div>
     </div>
-    <div>
-        <p className='text-center'>Your transaction is processing. Please wait.</p>
-    </div>
-</div>
 );
 
 const errorMessage = (mostRecent, isFetchingTransaction) =>
@@ -23,7 +24,7 @@ const errorMessage = (mostRecent, isFetchingTransaction) =>
         </div>
         : null;
 
-const CurrentTransactionsView = ({table, isFetchingTiming, isFetchingTransaction}) => {
+const CurrentTransactionsView = ({ table, isFetchingTiming, isFetchingTransaction }) => {
     const mostRecent = table.length && table[table.length - 1];
     const sendMessage = mostRecent.completed ? 'Sent' : 'Sending';
     // render the jsx
@@ -32,28 +33,31 @@ const CurrentTransactionsView = ({table, isFetchingTiming, isFetchingTransaction
     return (
         <Fragment>
             <Ad/>
-            <h2 className='map-header page-header text-left'>Your Transactions</h2>
+            <h2 className='map-header page-header text-left d-inline-block'>Your Transactions</h2>
             {errorMessage(mostRecent, isFetchingTransaction)} {/*Displays an error message if fetching the transaction fails*/}
-            { (shouldShowTable) ?  // this is pretty ugly and should be refactored in V2
+            {(shouldShowTable) ?  // this is pretty ugly and should be refactored in V2
                 <Fragment>{
                     (isFetchingTransaction || !mostRecent) ? loader // show loader if no data or is getting a transaction
-                    : <Fragment>
-                        <Table tableData={table}/>
-                        <h2 className='map-header page-header text-center'>
-                        {sendMessage} from {mostRecent.origin.nodeLocation} to {mostRecent.destination.nodeLocation}
-                        { isFetchingTiming &&
-                            <Fragment>
-                                <p/>
-                                This can take up to 30 seconds hold tight.
-                            </Fragment>
-                        }
-                        </h2>
-                        <div className='nano-container map-container'>
-                            <Map {...mostRecent}/>
-                        </div>
-                    </Fragment>
+                        : <Fragment>
+                            <div className='nano-container float-right'>
+                                <button id='rerun' className='btn btn-primary'>Rerun Test</button>
+                            </div>
+                            <Table tableData={table}/>
+                            <h2 className='map-header page-header text-center'>
+                                {sendMessage} from {mostRecent.origin.nodeLocation} to {mostRecent.destination.nodeLocation}
+                                {isFetchingTiming &&
+                                <Fragment>
+                                    <p/>
+                                    This can take up to 30 seconds hold tight.
+                                </Fragment>
+                                }
+                            </h2>
+                            <div className='nano-container map-container'>
+                                <Map {...mostRecent}/>
+                            </div>
+                        </Fragment>
                 }</Fragment>
-                : <NoTableEntries />
+                : <NoTableEntries/>
             }
         </Fragment>
     );

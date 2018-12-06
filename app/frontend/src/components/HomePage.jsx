@@ -34,10 +34,10 @@ class HomePage extends Component {
         const destAdv = !!hasAdvFormData && notSameAdv ? hasAdvFormData.values.destination : null;
 
         // ALSO check if the "to" and "from" on homepage.  These values should overwrite those in the advanced settings
-        const hasHomepageFormData = this.props.homeDropdownsForm;
-        const notSameHomepage = !!hasHomepageFormData ? hasHomepageFormData.values.origin !== hasHomepageFormData.values.destination : false;
-        const originHomepage = !!hasHomepageFormData && notSameHomepage ? hasHomepageFormData.values.origin : null;
-        const destHomepage = !!hasHomepageFormData && notSameHomepage ? hasHomepageFormData.values.destination : null;
+        const hasHomepageFormData = this.props.homeDropdownsForm.values;
+        const notSameHomepage = !!hasHomepageFormData ? hasHomepageFormData.origin !== hasHomepageFormData.destination : false;
+        const originHomepage = !!hasHomepageFormData && notSameHomepage ? hasHomepageFormData.origin : null;
+        const destHomepage = !!hasHomepageFormData && notSameHomepage ? hasHomepageFormData.destination : null;
 
         let finalOrigin = originHomepage ? originHomepage : originAdv;
         let finalDest = destHomepage ? destHomepage: destAdv;
