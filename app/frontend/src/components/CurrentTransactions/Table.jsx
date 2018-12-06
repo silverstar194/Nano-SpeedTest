@@ -21,7 +21,9 @@ const Table = ({tableData}) => {
                 </thead>
                 <tbody>
                 {
-                    tableData.sort((a,b) => b.endSendTimestamp - a.endSendTimestamp)
+                    tableData.sort((a,b) => {
+                        return (a.endSendTimestamp || Date.now()) - (b.endSendTimestamp || Date.now());
+                    })
                     .map((transactionData) => {
                         return <TableRow key={uuid(transactionData.id)} {...transactionData}/>;
                     })
