@@ -6,10 +6,7 @@ import '../styles/LocationDropdowns.css'
 class LocationDropdowns extends Component {
 
     render() {
-        const { nodes, homeDropdownsForm, modalSettings} = this.props;
-        let hasBothValuesInModal = modalSettings && modalSettings.values && modalSettings.values.origin && modalSettings.values.destination;
-        let modalSettingsForHome = hasBothValuesInModal ? modalSettings.values : false;
-        console.log(modalSettingsForHome);
+        const { nodes, settings} = this.props;
         return (
             <div>
                 <form>
@@ -18,8 +15,9 @@ class LocationDropdowns extends Component {
                         <option></option>
                         {
                             nodes && Object.keys(nodes).filter((nodeId) => {
-                                if (homeDropdownsForm && homeDropdownsForm.values && homeDropdownsForm.values.destination) {
-                                    return homeDropdownsForm.values.destination !== nodeId;
+                                if (settings && settings.advSettings && settings.advSettings.values //grab the origin nodes value and don't show it
+                                    && settings.advSettings.values.destination) {
+                                    return settings.advSettings.values.destination !== nodeId;
                                 } else {
                                     return true;
                                 }
@@ -36,8 +34,9 @@ class LocationDropdowns extends Component {
                         <option></option>
                         {
                             nodes && Object.keys(nodes).filter((nodeId) => {
-                                if (homeDropdownsForm &&homeDropdownsForm.values && homeDropdownsForm.values.origin) {
-                                    return homeDropdownsForm.values.origin !== nodeId;
+                                if (settings && settings.advSettings && settings.advSettings.values //grab the origin nodes value and don't show it
+                                    && settings.advSettings.values.origin) {
+                                    return settings.advSettings.values.origin !== nodeId;
                                 } else {
                                     return true;
                                 }
@@ -59,7 +58,7 @@ class LocationDropdowns extends Component {
 // Allows form to communicate with store
 LocationDropdowns = reduxForm({
     // a unique name for the form
-    form: 'homepageLocations'
+    form: 'advSettings'
 })(LocationDropdowns);
 
 export default LocationDropdowns;

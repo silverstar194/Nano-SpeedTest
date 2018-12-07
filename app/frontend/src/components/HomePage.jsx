@@ -26,27 +26,17 @@ class HomePage extends Component {
         // navigate to /Stats route
         this.props.history.push('/Results');
 
-        // check if user selected locations to send to and from.  Make null (random) if it is NOT the case
+        // check if user selected locations to send to and from.  Error if it is NOT the case
         // that they selected two different valid locations
         const hasAdvFormData = this.props.advSettingsForm.advSettings;
-        const notSameAdv = !!hasAdvFormData ? hasAdvFormData.values.origin !== hasAdvFormData.values.destination : false;
+        const notSameAdv = !!hasAdvFormData && hasAdvFormData.values ? hasAdvFormData.values.origin !== hasAdvFormData.values.destination : false;
         const originAdv = !!hasAdvFormData && notSameAdv ? hasAdvFormData.values.origin : null;
         const destAdv = !!hasAdvFormData && notSameAdv ? hasAdvFormData.values.destination : null;
 
-        // ALSO check if the "to" and "from" on homepage.  These values should overwrite those in the advanced settings
-        const hasHomepageFormData = this.props.homeDropdownsForm.values;
-        const notSameHomepage = !!hasHomepageFormData ? hasHomepageFormData.origin !== hasHomepageFormData.destination : false;
-        const originHomepage = !!hasHomepageFormData && notSameHomepage ? hasHomepageFormData.origin : null;
-        const destHomepage = !!hasHomepageFormData && notSameHomepage ? hasHomepageFormData.destination : null;
-
-        let finalOrigin = originHomepage ? originHomepage : originAdv;
-        let finalDest = destHomepage ? destHomepage: destAdv;
-
-
         // multiple transactions
-        const numTransactions = hasAdvFormData && hasAdvFormData.values.numTransactions ? hasAdvFormData.values.numTransactions : false;
+        const numTransactions = hasAdvFormData && hasAdvFormData.values && hasAdvFormData.values.numTransactions ? hasAdvFormData.values.numTransactions : false;
 
-        this.props.onGoPressed(finalOrigin, finalDest, numTransactions); // Update current active tab and dispatch action to get
+        this.props.onGoPressed(originAdv, destAdv, numTransactions); // Update current active tab and dispatch action to get
                                                                // transaction data
     };
 
@@ -105,8 +95,7 @@ class HomePage extends Component {
 
                             <LocationDropdowns
                                 nodes={nodes}
-                                homeDropdownsForm={homeDropdownsForm}
-                                modalSettings={advSettingsForm.advSettings}
+                                settings={advSettingsForm}
                             />
 
                             <button type='button' className='btn btn-success btn-circle btn-xl' onClick={this.onClick}>
