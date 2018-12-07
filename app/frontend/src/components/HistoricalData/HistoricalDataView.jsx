@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
-import Header from 'components/Header';
-import Footer from 'components/Footer';
 import Ad from 'components/Ad';
 import PastResultsTable from './PastResultsTable';
 import ScatterView from './ScatterView';
@@ -34,7 +32,6 @@ class HistoricalDataView extends React.Component {
 
         return (
             <div className='HistoricalData'>
-                <Header/>
                 <Ad />
 
                 <div className='container-fluid'>
@@ -85,7 +82,6 @@ class HistoricalDataView extends React.Component {
                      </div>
                      </div>
                 </div>
-                <Footer/>
             </div>
         );
     }
