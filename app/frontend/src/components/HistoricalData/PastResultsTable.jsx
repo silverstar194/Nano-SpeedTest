@@ -63,7 +63,7 @@ class PastResultsTable extends React.Component {
         const prevClass = 'page-item' + (disablePrev ? ' disabled' : '');
         const nextClass = 'page-item' + (disableNext ? ' disabled' : '');
         return (
-            <div className='nano-container'>
+            <div className='nano-container table-responsive'>
                 <h2 className='map-header text-left'>Past Transactions</h2>
                 <table className='table'>
                     <thead>
