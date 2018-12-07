@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {
     ResponsiveContainer,
     ScatterChart,
@@ -23,36 +22,20 @@ const dateFormatterWithHMS = (tick) => (new Date(tick)).toLocaleDateString({}, {
 const timeFormatter = (value) => parseInt(value/1000);
 const timeFormatterWithMilli = (value) => (value/1000).toFixed(3);
 
-const formatTooltip = (value, unit, plotData) => {
-    if (unit === yName) { // dates
-        // return timeFormatterWithMilli(value) + ' Seconds';
-    } else { // if the unit is date it is really array index so need to convert the displayed value to a date
-        const point = plotData[value];
-        return `${dateFormatterWithHMS(point.date)} &nbsp; Origin: ${point.origin} \nDestination: ${point.destination}`;
-    }
+const CustomTooltip = ({active, payload}) => {
+    if (!active) return null;
+    // .payload[0] gives a x axis payload and .payload[0].payload gives access to all information on a point
+    const data = payload[0].payload;
+
+    return (
+        <div className='custom-tooltip bg-light shadow rounded'>
+        <p>{`Date: ${dateFormatterWithHMS(data.date)}`}</p>
+        <p>{`Seconds: ${timeFormatterWithMilli(data.y)}`}</p>
+        <p>{`Origin: ${data.origin}`}</p>
+        <p>{`Destination: ${data.destination}`}</p>
+        </div>
+    );
 };
-
-class CustomTooltip extends React.Component {
-    render() {
-      const { active } = this.props;
-      if (active) {
-        // .payload[0] gives a x axis payload and .payload[0].payload gives access to all information on a point
-        const data = this.props.payload[0].payload;
-
-        return (
-          <div className='custom-tooltip bg-light shadow rounded'>
-            <p>{`Date: ${dateFormatterWithHMS(data.date)}`}</p>
-            <p>{`Seconds: ${timeFormatterWithMilli(data.y)}`}</p>
-            <p>{`Origin: ${data.origin}`}</p>
-            <p>{`Destination: ${data.destination}`}</p>
-          </div>
-        );
-
-      }
-
-      return null;
-    }
-}
 
 const ScatterView = ({plotData}) => {
 
@@ -60,6 +43,7 @@ const ScatterView = ({plotData}) => {
         <ResponsiveContainer width='100%' height={500}>
             <ScatterChart>
                 <XAxis
+                    label={{ value: 'Ordered Chronologically By Date', position: 'insideBottom' }}
                     dataKey='x'
                     name={xName}
                     domain={['auto', 'auto']}

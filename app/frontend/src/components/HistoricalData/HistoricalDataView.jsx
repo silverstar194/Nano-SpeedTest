@@ -60,7 +60,7 @@ class HistoricalDataView extends React.Component {
                     <div className='row form-group mt-5'>
                         <div className='col-6'>
                             <h2 className='map-header text-center'>
-                                Scatter Chart of Recent Transactions
+                                Scatter Chart of Last 250 Transactions
                             </h2>
                             {
                                 plotData && plotData.length ?
