@@ -2,7 +2,8 @@ import React from 'react';
 import Header from './Header';
 
 export default() => (
-    <div class="container">
+ <div class="container">
+    <Header/>
     <div class="row">
         <div class="col-md-12 text-center">
             <div class="error-template">
