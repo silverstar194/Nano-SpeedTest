@@ -25,8 +25,10 @@ class HistoricalDataView extends React.Component {
         .forEach((transaction, i) => {
             plotData.push({
                 x: i,
+                y: transaction.elapsedTime,
                 date: transaction.endSendTimestamp,
-                y: transaction.elapsedTime
+                origin: transaction.origin.nodeLocation,
+                destination: transaction.destination.nodeLocation
             });
         });
 

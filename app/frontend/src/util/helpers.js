@@ -22,7 +22,7 @@ export const fetchWrapper = (urlSuffix, options) => {
 };
 
 export const fetchPastResults = () => {
-    return fetchWrapper('transactions/statistics?count=500', {
+    return fetchWrapper('transactions/statistics?count=250', {
         method: 'GET'
     }).then((data) => {
         const transactions = data.transactions.filter((transaction) => {
