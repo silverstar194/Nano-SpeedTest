@@ -59,7 +59,7 @@ class HistoricalDataView extends React.Component {
                         </div>
                     </div>
                     <div className='row form-group mt-5'>
-                        <div className='col-6'>
+                        <div className='col-6 col-md-push-6'>
                             <h2 className='map-header text-center'>
                                 Scatter Chart of Recent Transactions
                             </h2>
@@ -69,7 +69,7 @@ class HistoricalDataView extends React.Component {
                                 : null
                             }
                         </div>
-                        <div className='col-6'>
+                        <div className='col-6 col-md-push-6'>
                             <h2 className='map-header text-center'>
                                 Locations of Our Nano Nodes
                             </h2>
