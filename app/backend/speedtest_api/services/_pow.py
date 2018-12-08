@@ -32,16 +32,18 @@ class POWService:
         @return: POW as a string
         @raise RPCException: RPC Failure
         """
+        account = get_account(address=address)
 
         for i in range(5):
             try:
                 return cls._get_dpow(hash)['work']
             except Exception as e:
                 logger.error('dPoW failure: %s' % e)
+                account.unlock()
             
             time.sleep(10)
         
-        account = get_account(address=address)
+
         rpc_node = nano.rpc.Client(account.wallet.node.URL)
         POW = None
 
@@ -51,6 +53,7 @@ class POWService:
                 break
             except Exception as e:
                 logger.error('Node work_generate error: %s' % e)
+                account.unlock()
             
             time.sleep(30)
         
@@ -115,6 +118,7 @@ class POWService:
                 # Run this every second
                 time.sleep(1)
         except Exception as e:
+            get_account(address=address).unlock()
             logger.error(e)
             print(e)
 
@@ -171,6 +175,7 @@ class POWService:
                 POWService.enqueue_account(address=account.address, frontier=frontier)
         except Exception as e:
             logger.error('Error getting hash for: ' + account.address)
+            account.unlock()
 
 
     @classmethod
