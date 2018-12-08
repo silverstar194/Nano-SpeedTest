@@ -1,9 +1,9 @@
 import {ADD_TRANSACTIONS, ADD_TIMING_DATA} from '../actions/table';
 export const INITIAL_STATE = {
-    mostRecentLocations: {
+    mostRecentLocations: [{
         origin: null,
         destination: null
-    },
+    }],
     tableEntries: []
 };
 
@@ -11,10 +11,10 @@ export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case ADD_TRANSACTIONS:
             return {
-                mostRecentLocations: {
+                mostRecentLocations: [...state.mostRecentLocations, {
                     origin: action.transactionData[0].origin.id,
                     destination: action.transactionData[0].destination.id
-                },
+                }],
                 tableEntries: [...state.tableEntries, ...action.transactionData]
             };
         case ADD_TIMING_DATA:

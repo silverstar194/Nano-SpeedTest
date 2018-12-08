@@ -70,11 +70,11 @@ class HomePage extends Component {
                 &nbsp;to {this.nodeIdToLocation(values.destination, nodes)}!</h3>;
             }
         }
-        return <h4 className='greeting'>Hit GO to send Nano between two random nodes or choose an origin and destination below!</h4>;
     }
 
     render() {
-        const { advSettingsForm, nodes, homeDropdownsForm } = this.props;
+        const { advSettingsForm, nodes } = this.props;
+
         return (
             <div className='HomePage'>
                 <Header/>
@@ -125,7 +125,6 @@ class HomePage extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        homeDropdownsForm: state.form.homepageLocations,
         advSettingsForm: state.form,
         nodes: state.nodes
     };
@@ -164,7 +163,6 @@ const mapDispatchToProps = (dispatch) => {
 HomePage.propTypes = {
     history: PropTypes.object.isRequired,
     onGoPressed: PropTypes.func.isRequired,
-    homeDropdownsForm: PropTypes.object,
     advSettingsForm: PropTypes.object,
     nodes: PropTypes.object
 };

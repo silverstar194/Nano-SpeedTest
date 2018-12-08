@@ -97,7 +97,6 @@ class AdvancedModal extends Component {
                                 <label>Origin</label>
                                 <div>
                                     <Field name='origin' component='select'>
-                                        <option></option>
                                         {
                                             nodes && Object.keys(nodes).filter((nodeId) => {
                                                 if (settings && settings.advSettings && settings.advSettings.values //grab the origin nodes value and don't show it
@@ -120,7 +119,6 @@ class AdvancedModal extends Component {
                                 <label>Destination</label>
                                 <div>
                                     <Field name='destination' component='select'>
-                                        <option></option>
                                         {
                                             nodes && Object.keys(nodes).filter((nodeId) => {
                                                 if (settings && settings.advSettings && settings.advSettings.values //grab the origin nodes value and don't show it
