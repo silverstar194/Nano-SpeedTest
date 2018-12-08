@@ -30,6 +30,7 @@ class SpeedtestApiConfig(AppConfig):
         logger.info('Syncing account balances...')
         sync_accounts()
 
+
         # Current state validator that fixes changes between Nano and our DB
         logger.info('Starting node, wallet and account validation...')
 
@@ -47,6 +48,10 @@ class SpeedtestApiConfig(AppConfig):
         logger.info('Balances validated...')
         self.thread_pool.close()
         self.thread_pool.join()
+
+        # Clear locks on all accounts to cleanup any leaks at the DB layer
+        for account in enabled_accounts:
+            account.unlock()
 
 
 

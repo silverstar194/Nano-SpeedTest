@@ -131,6 +131,10 @@ LOGGING = {
             'class': 'logging.FileHandler',
             'filename': 'debug.log',
         },
+        'null': {
+            'level': 'DEBUG',
+            'class':'logging.NullHandler',
+        },
     },
     'loggers': {
         'django': {
@@ -138,7 +142,12 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': True,
         },
-    'speedtest_api': {
+        'django.db.backends': {
+            'handlers': ['null'],  # Quiet the database queries!
+            'propagate': False,
+            'level':'DEBUG',
+        },
+        'speedtest_api': {
         'handlers': ['file'],
         'level': 'DEBUG',
         'propagate': True,
