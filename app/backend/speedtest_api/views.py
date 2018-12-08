@@ -1,7 +1,9 @@
 from decimal import *
 import json
 from threading import Thread
+import random
 from queue import Queue
+
 
 from django.db.models import Avg
 from django.db.models import F
@@ -249,6 +251,8 @@ def list_nodes(request):
         }
 
         nodes_array.append(temp_node)
+
+    random.shuffle(nodes_array)
 
     node_dict = {
         'nodes': nodes_array

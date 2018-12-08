@@ -50,6 +50,8 @@ class SpeedtestApiConfig(AppConfig):
         self.thread_pool.join()
 
         # Clear locks on all accounts to cleanup any leaks at the DB layer
+        # Issues may arise from parallelism is pending transactions are cleared.
+        # The impact will quite low as the pending transaction would be to be immediately selected to reuse.
         for account in enabled_accounts:
             account.unlock()
 
