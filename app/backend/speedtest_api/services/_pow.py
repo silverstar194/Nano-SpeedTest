@@ -118,8 +118,7 @@ class POWService:
                 time.sleep(1)
         except Exception as e:
             get_account(address=address).unlock()
-            logger.error(e)
-            print(e)
+            logger.error("Error in _run PoW address %s", address)
 
 
     @classmethod
