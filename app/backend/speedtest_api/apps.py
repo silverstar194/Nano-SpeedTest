@@ -30,7 +30,6 @@ class SpeedtestApiConfig(AppConfig):
         logger.info('Syncing account balances...')
         sync_accounts()
 
-
         # Current state validator that fixes changes between Nano and our DB
         logger.info('Starting node, wallet and account validation...')
 

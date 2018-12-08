@@ -42,7 +42,6 @@ class POWService:
                 account.unlock()
             
             time.sleep(10)
-        
 
         rpc_node = nano.rpc.Client(account.wallet.node.URL)
         POW = None

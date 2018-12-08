@@ -4,7 +4,6 @@ from threading import Thread
 import random
 from queue import Queue
 
-
 from django.db.models import Avg
 from django.db.models import F
 from django.http import JsonResponse
