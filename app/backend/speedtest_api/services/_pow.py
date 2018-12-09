@@ -1,6 +1,5 @@
 import datetime
 import logging
-import traceback
 import queue
 import requests
 from multiprocessing.pool import ThreadPool
@@ -177,9 +176,8 @@ class POWService:
             except Exception as e:
                 logger.error('Error getting hash for %s try %s of 5' % (account.address, str(i)))
                 time.sleep(10)
-                traceback.print_exc()
-                logging.error(e)
-                account.unlock()
+                if i == 5:
+                    account.unlock()
 
 
     @classmethod
