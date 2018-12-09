@@ -124,6 +124,9 @@ class Command(BaseCommand):
             logger.info('Balancing %s with %s amount %s' % (accounts[upper], accounts[lower], str(amount)))
         except Exception as e:
             logger.error('Transaction error: %s' % e)
+            accounts[upper].unlock()
+            accounts[lower].unlock()
+
             
         # Remove the accounts that got balanced (at least 1 did)
         if values[lower] + amount == mean:
