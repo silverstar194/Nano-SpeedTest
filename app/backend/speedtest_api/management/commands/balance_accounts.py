@@ -121,8 +121,12 @@ class Command(BaseCommand):
         try:
             transaction = transactions.new_transaction(accounts[upper], accounts[lower], amount, batch)
             transactions.send_transaction(transaction)
+            logger.info('Balancing %s with %s amount %s' % (accounts[upper], accounts[lower], str(amount)))
         except Exception as e:
             logger.error('Transaction error: %s' % e)
+            accounts[upper].unlock()
+            accounts[lower].unlock()
+
             
         # Remove the accounts that got balanced (at least 1 did)
         if values[lower] + amount == mean:
