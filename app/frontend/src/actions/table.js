@@ -5,7 +5,7 @@ export const ADD_TIMING_DATA = 'ADD_TIMING_DATA';
 export const fetchTransaction = (num, transactionParams) => {
     return {
         type: FETCH_TRANSACTION,
-        num,
+        num: parseInt(num),
         transactionParams
     };
 };

@@ -15,12 +15,17 @@ export default (state = INITIAL_STATE, action) => {
             };
 
         case ADD_TRANSACTIONS:
+            const transactions = [];
+            for (let i = 0; i < state.num; i++) {
+                transactions.push({
+                    origin: action.transactionData[i].origin.id,
+                    destination: action.transactionData[i].destination.id
+                });
+            }
+
             return {
                 num: state.num,
-                mostRecentLocations: [...state.mostRecentLocations, {
-                    origin: action.transactionData[0].origin.id,
-                    destination: action.transactionData[0].destination.id
-                }],
+                mostRecentLocations: [...state.mostRecentLocations, ...transactions],
                 tableEntries: [...state.tableEntries, ...action.transactionData]
             };
         case ADD_TIMING_DATA:

@@ -136,7 +136,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onGoPressed(origin, dest, multi) {
             if (multi) {
-                const transactions = [];
+                let transactions = [];
                 for (let i = 0; i < multi; i++) {
                     transactions.push({
                         originNodeId: null,

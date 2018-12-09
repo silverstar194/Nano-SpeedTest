@@ -28,8 +28,10 @@ const errorMessage = (mostRecent, isFetchingTransaction) =>
 
 class CurrentTransactionsView extends Component {
     handleRerun = () => {
-        console.log(this.props.mostRecent);
-        this.props.onRerun(this.props.mostRecent[0].origin.toString(), this.props.mostRecent[0].destination.toString());
+        this.props.onRerun(this.props.mostRecent[this.props.mostRecent.length - 1].origin.toString(),
+            this.props.mostRecent[this.props.mostRecent.length - 1].destination.toString(),
+            this.props.numToRerun,
+            this.props.mostRecent);
     };
 
     render() {
@@ -78,19 +80,35 @@ class CurrentTransactionsView extends Component {
 const mapStateToProps = (state) => {
     return {
         table: state.table.tableEntries,
+        numToRerun: state.table.num,
         mostRecent: state.table.mostRecentLocations
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onRerun(origin, dest) {
-            dispatch(fetchTransaction({
-                transactions: [{
-                    originNodeId: origin,
-                    destinationNodeId: dest
-                }]
-            }));
+        onRerun(origin, dest, multi, mostRecent) {
+            console.log(mostRecent);
+            if (multi > 1) {
+                let transactions = [];
+                for (let i = 1; i <= multi; i++) {
+                    transactions.push({
+                        originNodeId: mostRecent[mostRecent.length - i].origin.toString(),
+                        destinationNodeId: mostRecent[mostRecent.length - i].destination.toString(),
+                    });
+                }
+                transactions = transactions.reverse();
+                dispatch(fetchTransaction(multi, {
+                    transactions
+                }));
+            } else {
+                dispatch(fetchTransaction(1, {
+                    transactions: [{
+                        originNodeId: origin,
+                        destinationNodeId: dest
+                    }]
+                }));
+            }
         }
     };
 };
