@@ -32,24 +32,32 @@ class POWService:
         @return: POW as a string
         @raise RPCException: RPC Failure
         """
-        try:
-            return cls._get_dpow(hash)['work']
-        except Exception as e:
-            logger.error('dPoW failure: %s' % e)
-        
         account = get_account(address=address)
+
+        for i in range(5):
+            try:
+                return cls._get_dpow(hash)['work']
+            except Exception as e:
+                logger.error('dPoW failure: %s' % e)
+                account.unlock()
+            
+            time.sleep(10)
+
         rpc_node = nano.rpc.Client(account.wallet.node.URL)
         POW = None
 
-        for i in range(10):
+        for i in range(5):
             try:
                 POW = rpc_node.work_generate(hash)
                 break
             except Exception as e:
                 logger.error('Node work_generate error: %s' % e)
+                account.unlock()
             
-            time.sleep(5)
-            
+            time.sleep(30)
+        
+        # Add third POW that cannot fail (if it does our account object becomes broken)
+
         if POW is None:
             raise Exception()
 
@@ -103,11 +111,14 @@ class POWService:
                 while not cls._pow_queue.empty():
                     address, frontier, wait = cls._pow_queue.get()
                     cls.thread_pool.apply_async(cls.threaded_PoW_worker, args=(address, frontier, wait,))
+
+                    # Don't spam the dPoW
+                    time.sleep(5)
                 # Run this every second
                 time.sleep(1)
         except Exception as e:
-            logger.error(e)
-            print(e)
+            get_account(address=address).unlock()
+            logger.error("Error in _run PoW address %s", address)
 
 
     @classmethod
@@ -162,6 +173,7 @@ class POWService:
                 POWService.enqueue_account(address=account.address, frontier=frontier)
         except Exception as e:
             logger.error('Error getting hash for: ' + account.address)
+            account.unlock()
 
 
     @classmethod

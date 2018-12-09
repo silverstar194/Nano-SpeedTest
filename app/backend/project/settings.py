@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.admindocs',
     'corsheaders',
-    'speedtest_api'
+    'speedtest_api',
+    'django_crontab',
 ]
 
 MIDDLEWARE = [
@@ -57,6 +58,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+CRONJOBS = [
+    ('0 * * * *', 'django.core.management.balance_accounts'),
+    ('*/5 * * * *', 'speedtest_api.cron.node_status_job'),
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -131,6 +137,10 @@ LOGGING = {
             'class': 'logging.FileHandler',
             'filename': 'debug.log',
         },
+        'null': {
+            'level': 'DEBUG',
+            'class':'logging.NullHandler',
+        },
     },
     'loggers': {
         'django': {
@@ -138,7 +148,12 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': True,
         },
-    'speedtest_api': {
+        'django.db.backends': {
+            'handlers': ['null'],  # Quiet the database queries!
+            'propagate': False,
+            'level':'DEBUG',
+        },
+        'speedtest_api': {
         'handlers': ['file'],
         'level': 'DEBUG',
         'propagate': True,

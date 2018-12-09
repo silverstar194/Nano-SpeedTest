@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import Header from './Header';
-import Footer from './Footer';
 import Ad from './Ad';
 import AdvancedModal from './AdvancedModal';
 import PropTypes from 'prop-types';
@@ -77,7 +75,6 @@ class HomePage extends Component {
 
         return (
             <div className='HomePage'>
-                <Header/>
                 <Ad/>
                 <AdvancedModal
                     open={this.state.modalOpen}
@@ -117,7 +114,6 @@ class HomePage extends Component {
                     It's block-lattice structure enables decentralized transactions without loss of security, speed, or high costs.
                     </div>
                 </div>
-                <Footer/>
             </div>
         );
     }
