@@ -54,7 +54,11 @@ class HomePage extends Component {
     };
 
     nodeIdToLocation = (nodeId, nodes) => {
-        return nodes[nodeId].location;
+        for (let i = 0; i < nodes.length; i++) {
+            if (nodes[i].id === parseInt(nodeId)) {
+                return nodes[i].location;
+            }
+        }
     };
 
     drawMessage(advSettingsForm, nodes) {
@@ -161,7 +165,7 @@ HomePage.propTypes = {
     history: PropTypes.object.isRequired,
     onGoPressed: PropTypes.func.isRequired,
     advSettingsForm: PropTypes.object,
-    nodes: PropTypes.object
+    nodes: PropTypes.array
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

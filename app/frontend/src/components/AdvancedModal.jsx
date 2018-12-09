@@ -93,18 +93,19 @@ class AdvancedModal extends Component {
                                 <div>
                                     <Field name='origin' component='select'>
                                         {
-                                            nodes && Object.keys(nodes).filter((nodeId) => {
+                                            nodes && nodes.filter(node => {
                                                 if (settings && settings.advSettings && settings.advSettings.values //grab the origin nodes value and don't show it
                                                     && settings.advSettings.values.destination) {
-                                                    return settings.advSettings.values.destination.toString() !== nodeId;
+                                                    return settings.advSettings.values.destination.toString() !== node.id.toString();
                                                 } else {
                                                     return true;
                                                 }
-                                            }).map(nodeKey => {
+                                            }).map(node => {
+
                                                 return <option
-                                                    key={nodeKey}
-                                                    value={nodes[nodeKey].id}
-                                                >{nodes[nodeKey].location}</option>;
+                                                    key={node.id}
+                                                    value={node.id}
+                                                >{node.location}</option>;
                                             })
                                         }
                                     </Field>
@@ -115,19 +116,19 @@ class AdvancedModal extends Component {
                                 <div>
                                     <Field name='destination' component='select'>
                                         {
-                                            nodes && Object.keys(nodes).filter((nodeId) => {
+                                            nodes && nodes.filter(node => {
                                                 if (settings && settings.advSettings && settings.advSettings.values //grab the origin nodes value and don't show it
                                                     && settings.advSettings.values.origin) {
-                                                    return settings.advSettings.values.origin.toString() !== nodeId;
+                                                    return settings.advSettings.values.origin.toString() !== node.id.toString();
                                                 } else {
                                                     return true;
                                                 }
                                             })
-                                                .map(nodeKey => {
+                                                .map(node => {
                                                     return <option
-                                                        key={nodeKey}
-                                                        value={nodes[nodeKey].id}
-                                                    >{nodes[nodeKey].location}</option>;
+                                                        key={node.id}
+                                                        value={node.id}
+                                                    >{node.location}</option>;
                                                 })
                                         }
                                     </Field>
