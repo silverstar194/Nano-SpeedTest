@@ -24,7 +24,8 @@ const timeFormatterWithMilli = (value) => (value/1000).toFixed(3);
 
 const CustomTooltip = ({active, payload}) => {
     if (!active) return null;
-    // .payload[0] gives a x axis payload and .payload[0].payload gives access to all information on a point
+    //active means someone is hovering over a transaction
+    // payload[0] gives multiple fields include another payload, so payload[0].payload gives access to all information on a point
     const data = payload[0].payload;
 
     return (
@@ -58,7 +59,6 @@ const ScatterView = ({plotData}) => {
                     tickFormatter={timeFormatter}
                 />
                 <Tooltip content={<CustomTooltip/>} cursor={{ strokeDasharray: '3 3' }} />
-                {/* <Tooltip formatter={(value, unit) => formatTooltip(value, unit, plotData)} cursor={{ strokeDasharray: '3 3' }} /> */}
                 <Legend />
                 <Scatter name='Transactions' data={plotData} fill='#8884d8' />
             </ScatterChart>
