@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import Ad from 'components/Ad';
 import Map from './Map';
@@ -28,11 +28,12 @@ const errorMessage = (mostRecent, isFetchingTransaction) =>
 
 class CurrentTransactionsView extends Component {
     handleRerun = () => {
-       this.props.onRerun(this.props.mostRecent.origin, this.props.mostRecent.destination);
+        console.log(this.props.mostRecent);
+        this.props.onRerun(this.props.mostRecent.origin.toString(), this.props.mostRecent.destination.toString());
     };
 
     render() {
-        const { table, isFetchingTiming, isFetchingTransaction  } = this.props;
+        const { table, isFetchingTiming, isFetchingTransaction } = this.props;
         const mostRecent = table.length && table[table.length - 1];
         const sendMessage = mostRecent.completed ? 'Sent' : 'Sending';
         // render the jsx
@@ -77,10 +78,7 @@ class CurrentTransactionsView extends Component {
 const mapStateToProps = (state) => {
     return {
         table: state.table.tableEntries,
-        mostRecent: {
-            origin: state.table.mostRecentLocations.origin,
-            destination: state.table.mostRecentLocations.destination
-        }
+        mostRecent: state.table.mostRecentLocations
     };
 };
 

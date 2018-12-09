@@ -1,9 +1,6 @@
 import {ADD_TRANSACTIONS, ADD_TIMING_DATA} from '../actions/table';
 export const INITIAL_STATE = {
-    mostRecentLocations: [{
-        origin: null,
-        destination: null
-    }],
+    mostRecentLocations: [],
     tableEntries: []
 };
 
