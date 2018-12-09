@@ -1,17 +1,17 @@
 import {ADD_NODES} from 'actions/nodes';
 import { convertCoordsToString } from 'util/helpers';
 
-export const INITIAL_STATE = {};
+export const INITIAL_STATE = [];
 
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case ADD_NODES:
-            const nodes = {};
+            const nodes = [];
             action.nodesArray.forEach((node) => {
                 node.coords = convertCoordsToString(node);
-                nodes[node.id] = node;
+                nodes.push(node);
             });
-            return {...nodes};
+            return nodes;
         default:
             return state;
     }
