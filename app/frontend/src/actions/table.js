@@ -2,9 +2,10 @@ export const FETCH_TRANSACTION = 'FETCH_TRANSACTION';
 export const ADD_TRANSACTIONS = 'ADD_TRANSACTIONS';
 export const ADD_TIMING_DATA = 'ADD_TIMING_DATA';
 
-export const fetchTransaction = transactionParams => {
+export const fetchTransaction = (num, transactionParams)=> {
     return {
         type: FETCH_TRANSACTION,
+        num,
         transactionParams
     };
 };

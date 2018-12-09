@@ -6,13 +6,14 @@ import {connect} from 'react-redux';
 import PastResultsTable from 'components/HistoricalData/PastResultsTable';
 import CurrentTransactionsView from 'components/CurrentTransactions/CurrentTransactionsView';
 
-const UserStatsPage = ({table, pastTransactions, isFetchingTransaction, isFetchingTiming}) => {
+const UserStatsPage = ({numToRerun, table, pastTransactions, isFetchingTransaction, isFetchingTiming}) => {
     return (
         <div className='UserStatsPage'>
             <div className='container-fluid'>
                 <div className='row'>
                     <div className='col'>
                         <CurrentTransactionsView
+                            numToRerun={numToRerun}
                             table={table}
                             isFetchingTiming={isFetchingTiming}
                             isFetchingTransaction={isFetchingTransaction}
@@ -31,7 +32,8 @@ const UserStatsPage = ({table, pastTransactions, isFetchingTransaction, isFetchi
 
 const mapStateToProps = (state) => {
     return {
-        table: state.table,
+        numToRerun: state.table.num,
+        table: state.table.rows,
         pastTransactions: state.pastResults.pastTransactions,
         isFetchingTransaction: state.transactions.isFetchingTransaction,
         isFetchingTiming: state.transactions.isFetchingTiming
