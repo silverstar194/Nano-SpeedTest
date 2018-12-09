@@ -138,11 +138,11 @@ const mapDispatchToProps = (dispatch) => {
                         destinationNodeId: null
                     });
                 }
-                dispatch(fetchTransaction(/*multi,*/ {
+                dispatch(fetchTransaction(multi, {
                     transactions
                 }));
             } else {
-                dispatch(fetchTransaction(/*1,*/ {
+                dispatch(fetchTransaction(1, {
                     transactions: [{
                         originNodeId: origin,
                         destinationNodeId: dest
