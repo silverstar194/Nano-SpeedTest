@@ -56,8 +56,8 @@ class CurrentTransactionsView extends Component {
                                 </div>
                                 <Table tableData={table}/>
                                 <h2 className='map-header page-header text-center'>
-                                    {sendMessage} from {mostRecent.origin.nodeLocation}
-                                    to {mostRecent.destination.nodeLocation}
+                                    {sendMessage} from {mostRecent.origin.nodeLocation}&nbsp;to
+                                    {mostRecent.destination.nodeLocation}
                                     {isFetchingTiming &&
                                     <Fragment>
                                         <p/>
@@ -88,7 +88,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         onRerun(origin, dest, multi, mostRecent) {
-            console.log(mostRecent);
             if (multi > 1) {
                 let transactions = [];
                 for (let i = 1; i <= multi; i++) {
