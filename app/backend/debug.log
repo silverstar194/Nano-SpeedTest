@@ -2712,3 +2712,2389 @@ Traceback (most recent call last):
 django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <URLPattern list> (admin:admin) 'admin/'>
 Not Found: /
 "GET / HTTP/1.1" 404 2828
+Starting check that nodes are up...
+Starting POWService and running POW_accounts()...
+Starting PoW thread.
+Syncing account balances...
+Starting node, wallet and account validation...
+Nodes and wallets validated...
+Accounts validated...
+Balances validated...
+Starting check that nodes are up...
+Starting POWService and running POW_accounts()...
+Starting PoW thread.
+Syncing account balances...
+Starting node, wallet and account validation...
+Nodes and wallets validated...
+Accounts validated...
+Balances validated...
+"GET /header/random HTTP/1.1" 200 116
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 281154
+Error getting hash for: xrb_1eeha1ufb356b7mox4cu51rgb8mxh6jt9spdgwckbngqdte7ayj7emqgq1rr
+Error getting hash for: xrb_3u18frdrrg5379mzq63eoiamenjo8qunmcaybo1wawkjdwk47zcihois8xt6
+Error getting hash for: xrb_1ddtn7m1fux3hwtba8uhi89ppg5pzehodehfuduf68o5oc3unrdwawtj3gwo
+Error getting hash for: xrb_35fkpzjbc6n8xhm66sm18hckcrthx6uodi8q8eta8w5t6xufjiuswui9ik5y
+Error getting hash for: xrb_3g3f6fuusrdaktkysyybucx3cw13cuizo5co7ub7yrfk81nzmy5bg3g6ing1
+Error getting hash for: xrb_3m9mp6fa3nmi5bezr4uj8ud96z65c97io9i6qp6353yybuhqwxhsigkzmjc9
+Error getting hash for: xrb_1sfq1is9bepzoyfmapkd69sbw87wcxg1kzz9gsax6ukmd173t5jccxowou5x
+Error getting hash for: xrb_34u9x1xst11yy741apcjy9fqz1tt1uxfir4yb89j6ik7xx9wshb1doc43ui4
+Error getting hash for: xrb_344j9cek8j4wa7xg16wof3snkczq6pphnmxfmgshyenj5y1zu8zfgqijiyjp
+Internal Server Error: /transactions
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 194, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/mysql/base.py", line 227, in get_new_connection
+    return Database.connect(**conn_params)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/__init__.py", line 85, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/connections.py", line 204, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+_mysql_exceptions.OperationalError: (1040, 'Too many connections')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.7/site-packages/ratelimit/decorators.py", line 30, in _wrapped
+    return fn(*args, **kw)
+  File "/usr/local/lib/python3.7/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 495, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 455, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 492, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/decorators.py", line 54, in handler
+    return func(*args, **kwargs)
+  File "/Users/BenScudder/Desktop/506 Project/Nano-SpeedTest/app/backend/speedtest_api/views.py", line 41, in generate_transaction
+    batch = batches.new_batch(client_ip)
+  File "/Users/BenScudder/Desktop/506 Project/Nano-SpeedTest/app/backend/speedtest_api/services/batches.py", line 14, in new_batch
+    return models.Batch.objects.create(initiated_by=initiated_by)
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 413, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/base.py", line 718, in save
+    force_update=force_update, update_fields=update_fields)
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/base.py", line 745, in save_base
+    with transaction.atomic(using=using, savepoint=False):
+  File "/usr/local/lib/python3.7/site-packages/django/db/transaction.py", line 147, in __enter__
+    if not connection.get_autocommit():
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 378, in get_autocommit
+    self.ensure_connection()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/utils.py", line 89, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 194, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/mysql/base.py", line 227, in get_new_connection
+    return Database.connect(**conn_params)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/__init__.py", line 85, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/connections.py", line 204, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+django.db.utils.OperationalError: (1040, 'Too many connections')
+"POST /transactions HTTP/1.1" 500 18502
+Error getting hash for: xrb_1597fixdoze4wsngtisagg9qemxtk1i9cohfd19grrk7tsfhhz77zdp6jxo4
+Internal Server Error: /header/random
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 194, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/mysql/base.py", line 227, in get_new_connection
+    return Database.connect(**conn_params)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/__init__.py", line 85, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/connections.py", line 204, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+_mysql_exceptions.OperationalError: (1040, 'Too many connections')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 495, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 455, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 492, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/decorators.py", line 54, in handler
+    return func(*args, **kwargs)
+  File "/Users/BenScudder/Desktop/506 Project/Nano-SpeedTest/app/backend/speedtest_api/views.py", line 169, in get_random_advertisement
+    random_ad = advertisements.get_random_ad()
+  File "/Users/BenScudder/Desktop/506 Project/Nano-SpeedTest/app/backend/speedtest_api/services/advertisements.py", line 21, in get_random_ad
+    for a in ads:
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 268, in __iter__
+    self._fetch_all()
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 1186, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 54, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/sql/compiler.py", line 1063, in execute_sql
+    cursor = self.connection.cursor()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 255, in cursor
+    return self._cursor()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 232, in _cursor
+    self.ensure_connection()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/utils.py", line 89, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 194, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/mysql/base.py", line 227, in get_new_connection
+    return Database.connect(**conn_params)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/__init__.py", line 85, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/connections.py", line 204, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+django.db.utils.OperationalError: (1040, 'Too many connections')
+"GET /header/random HTTP/1.1" 500 18300
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 111, in _get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/usr/local/lib/python3.7/site-packages/django/urls/resolvers.py", line 520, in resolve
+    raise Resolver404({'tried': tried, 'path': new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <module 'django.contrib.admindocs.urls' from '/usr/local/lib/python3.7/site-packages/django/contrib/admindocs/urls.py'> (None:None) 'admin/doc/'>], [<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLPattern 'transactions/send'>], [<URLPattern 'transactions'>], [<URLPattern 'header/random'>], [<URLPattern 'header/add'>], [<URLPattern 'header/info'>], [<URLPattern 'nodes/list'>], [<URLPattern 'transactions/statistics'>]], 'path': ''}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 829, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 837, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 850, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <module 'django.contrib.admindocs.urls' from '/usr/local/lib/python3.7/site-packages/django/contrib/admindocs/urls.py'> (None:None) 'admin/doc/'>
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 111, in _get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/usr/local/lib/python3.7/site-packages/django/urls/resolvers.py", line 520, in resolve
+    raise Resolver404({'tried': tried, 'path': new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <module 'django.contrib.admindocs.urls' from '/usr/local/lib/python3.7/site-packages/django/contrib/admindocs/urls.py'> (None:None) 'admin/doc/'>], [<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLPattern 'transactions/send'>], [<URLPattern 'transactions'>], [<URLPattern 'header/random'>], [<URLPattern 'header/add'>], [<URLPattern 'header/info'>], [<URLPattern 'nodes/list'>], [<URLPattern 'transactions/statistics'>]], 'path': ''}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 829, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 837, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 850, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <URLPattern list> (admin:admin) 'admin/'>
+Not Found: /
+"GET / HTTP/1.1" 404 2828
+Error getting hash for: xrb_35fkpzjbc6n8xhm66sm18hckcrthx6uodi8q8eta8w5t6xufjiuswui9ik5y
+Error getting hash for: xrb_1eeha1ufb356b7mox4cu51rgb8mxh6jt9spdgwckbngqdte7ayj7emqgq1rr
+Error getting hash for: xrb_1ddtn7m1fux3hwtba8uhi89ppg5pzehodehfuduf68o5oc3unrdwawtj3gwo
+Error getting hash for: xrb_3u18frdrrg5379mzq63eoiamenjo8qunmcaybo1wawkjdwk47zcihois8xt6
+"GET /header/random HTTP/1.1" 200 116
+Error getting hash for: xrb_1sfq1is9bepzoyfmapkd69sbw87wcxg1kzz9gsax6ukmd173t5jccxowou5x
+Error getting hash for: xrb_3g3f6fuusrdaktkysyybucx3cw13cuizo5co7ub7yrfk81nzmy5bg3g6ing1
+"GET /header/random HTTP/1.1" 200 115
+Internal Server Error: /transactions
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 194, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/mysql/base.py", line 227, in get_new_connection
+    return Database.connect(**conn_params)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/__init__.py", line 85, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/connections.py", line 204, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+_mysql_exceptions.OperationalError: (1040, 'Too many connections')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.7/site-packages/ratelimit/decorators.py", line 30, in _wrapped
+    return fn(*args, **kw)
+  File "/usr/local/lib/python3.7/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 495, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 455, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 492, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/decorators.py", line 54, in handler
+    return func(*args, **kwargs)
+  File "/Users/BenScudder/Desktop/506 Project/Nano-SpeedTest/app/backend/speedtest_api/views.py", line 41, in generate_transaction
+    batch = batches.new_batch(client_ip)
+  File "/Users/BenScudder/Desktop/506 Project/Nano-SpeedTest/app/backend/speedtest_api/services/batches.py", line 14, in new_batch
+    return models.Batch.objects.create(initiated_by=initiated_by)
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 413, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/base.py", line 718, in save
+    force_update=force_update, update_fields=update_fields)
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/base.py", line 745, in save_base
+    with transaction.atomic(using=using, savepoint=False):
+  File "/usr/local/lib/python3.7/site-packages/django/db/transaction.py", line 147, in __enter__
+    if not connection.get_autocommit():
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 378, in get_autocommit
+    self.ensure_connection()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/utils.py", line 89, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 194, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/mysql/base.py", line 227, in get_new_connection
+    return Database.connect(**conn_params)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/__init__.py", line 85, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/connections.py", line 204, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+django.db.utils.OperationalError: (1040, 'Too many connections')
+"POST /transactions HTTP/1.1" 500 18501
+Error getting hash for: xrb_3m9mp6fa3nmi5bezr4uj8ud96z65c97io9i6qp6353yybuhqwxhsigkzmjc9
+Error getting hash for: xrb_34u9x1xst11yy741apcjy9fqz1tt1uxfir4yb89j6ik7xx9wshb1doc43ui4
+Error getting hash for: xrb_344j9cek8j4wa7xg16wof3snkczq6pphnmxfmgshyenj5y1zu8zfgqijiyjp
+Error getting hash for: xrb_1597fixdoze4wsngtisagg9qemxtk1i9cohfd19grrk7tsfhhz77zdp6jxo4
+Internal Server Error: /nodes/list
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 194, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/mysql/base.py", line 227, in get_new_connection
+    return Database.connect(**conn_params)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/__init__.py", line 85, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/connections.py", line 204, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+_mysql_exceptions.OperationalError: (1040, 'Too many connections')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 495, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 455, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 492, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/decorators.py", line 54, in handler
+    return func(*args, **kwargs)
+  File "/Users/BenScudder/Desktop/506 Project/Nano-SpeedTest/app/backend/speedtest_api/views.py", line 244, in list_nodes
+    for node in all_nodes:
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 268, in __iter__
+    self._fetch_all()
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 1186, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 54, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/sql/compiler.py", line 1063, in execute_sql
+    cursor = self.connection.cursor()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 255, in cursor
+    return self._cursor()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 232, in _cursor
+    self.ensure_connection()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/utils.py", line 89, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 194, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/mysql/base.py", line 227, in get_new_connection
+    return Database.connect(**conn_params)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/__init__.py", line 85, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/connections.py", line 204, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+django.db.utils.OperationalError: (1040, 'Too many connections')
+"GET /nodes/list HTTP/1.1" 500 18092
+Internal Server Error: /transactions/statistics
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 194, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/mysql/base.py", line 227, in get_new_connection
+    return Database.connect(**conn_params)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/__init__.py", line 85, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/connections.py", line 204, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+_mysql_exceptions.OperationalError: (1040, 'Too many connections')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 495, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 455, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 492, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/decorators.py", line 54, in handler
+    return func(*args, **kwargs)
+  File "/Users/BenScudder/Desktop/506 Project/Nano-SpeedTest/app/backend/speedtest_api/views.py", line 276, in get_transaction_statistics
+    for transaction in recent_transactions:
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 268, in __iter__
+    self._fetch_all()
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 1186, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 54, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/sql/compiler.py", line 1063, in execute_sql
+    cursor = self.connection.cursor()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 255, in cursor
+    return self._cursor()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 232, in _cursor
+    self.ensure_connection()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/utils.py", line 89, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 194, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/mysql/base.py", line 227, in get_new_connection
+    return Database.connect(**conn_params)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/__init__.py", line 85, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/connections.py", line 204, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+django.db.utils.OperationalError: (1040, 'Too many connections')
+"GET /transactions/statistics?count=500 HTTP/1.1" 500 18198
+Internal Server Error: /header/random
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 194, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/mysql/base.py", line 227, in get_new_connection
+    return Database.connect(**conn_params)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/__init__.py", line 85, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/connections.py", line 204, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+_mysql_exceptions.OperationalError: (1040, 'Too many connections')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 495, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 455, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 492, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/decorators.py", line 54, in handler
+    return func(*args, **kwargs)
+  File "/Users/BenScudder/Desktop/506 Project/Nano-SpeedTest/app/backend/speedtest_api/views.py", line 169, in get_random_advertisement
+    random_ad = advertisements.get_random_ad()
+  File "/Users/BenScudder/Desktop/506 Project/Nano-SpeedTest/app/backend/speedtest_api/services/advertisements.py", line 21, in get_random_ad
+    for a in ads:
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 268, in __iter__
+    self._fetch_all()
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 1186, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 54, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/sql/compiler.py", line 1063, in execute_sql
+    cursor = self.connection.cursor()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 255, in cursor
+    return self._cursor()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 232, in _cursor
+    self.ensure_connection()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/utils.py", line 89, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 194, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/mysql/base.py", line 227, in get_new_connection
+    return Database.connect(**conn_params)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/__init__.py", line 85, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/connections.py", line 204, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+django.db.utils.OperationalError: (1040, 'Too many connections')
+"GET /header/random HTTP/1.1" 500 18293
+Internal Server Error: /header/random
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 194, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/mysql/base.py", line 227, in get_new_connection
+    return Database.connect(**conn_params)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/__init__.py", line 85, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/connections.py", line 204, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+_mysql_exceptions.OperationalError: (1040, 'Too many connections')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 495, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 455, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 492, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/decorators.py", line 54, in handler
+    return func(*args, **kwargs)
+  File "/Users/BenScudder/Desktop/506 Project/Nano-SpeedTest/app/backend/speedtest_api/views.py", line 169, in get_random_advertisement
+    random_ad = advertisements.get_random_ad()
+  File "/Users/BenScudder/Desktop/506 Project/Nano-SpeedTest/app/backend/speedtest_api/services/advertisements.py", line 21, in get_random_ad
+    for a in ads:
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 268, in __iter__
+    self._fetch_all()
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 1186, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 54, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/sql/compiler.py", line 1063, in execute_sql
+    cursor = self.connection.cursor()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 255, in cursor
+    return self._cursor()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 232, in _cursor
+    self.ensure_connection()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/utils.py", line 89, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 194, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/mysql/base.py", line 227, in get_new_connection
+    return Database.connect(**conn_params)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/__init__.py", line 85, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/connections.py", line 204, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+django.db.utils.OperationalError: (1040, 'Too many connections')
+"GET /header/random HTTP/1.1" 500 18300
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 111, in _get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/usr/local/lib/python3.7/site-packages/django/urls/resolvers.py", line 520, in resolve
+    raise Resolver404({'tried': tried, 'path': new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <module 'django.contrib.admindocs.urls' from '/usr/local/lib/python3.7/site-packages/django/contrib/admindocs/urls.py'> (None:None) 'admin/doc/'>], [<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLPattern 'transactions/send'>], [<URLPattern 'transactions'>], [<URLPattern 'header/random'>], [<URLPattern 'header/add'>], [<URLPattern 'header/info'>], [<URLPattern 'nodes/list'>], [<URLPattern 'transactions/statistics'>]], 'path': ''}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 829, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 837, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 850, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <module 'django.contrib.admindocs.urls' from '/usr/local/lib/python3.7/site-packages/django/contrib/admindocs/urls.py'> (None:None) 'admin/doc/'>
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 111, in _get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/usr/local/lib/python3.7/site-packages/django/urls/resolvers.py", line 520, in resolve
+    raise Resolver404({'tried': tried, 'path': new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <module 'django.contrib.admindocs.urls' from '/usr/local/lib/python3.7/site-packages/django/contrib/admindocs/urls.py'> (None:None) 'admin/doc/'>], [<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLPattern 'transactions/send'>], [<URLPattern 'transactions'>], [<URLPattern 'header/random'>], [<URLPattern 'header/add'>], [<URLPattern 'header/info'>], [<URLPattern 'nodes/list'>], [<URLPattern 'transactions/statistics'>]], 'path': ''}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 829, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 837, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 850, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <URLPattern list> (admin:admin) 'admin/'>
+Not Found: /
+"GET / HTTP/1.1" 404 2828
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 111, in _get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/usr/local/lib/python3.7/site-packages/django/urls/resolvers.py", line 520, in resolve
+    raise Resolver404({'tried': tried, 'path': new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <module 'django.contrib.admindocs.urls' from '/usr/local/lib/python3.7/site-packages/django/contrib/admindocs/urls.py'> (None:None) 'admin/doc/'>], [<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLPattern 'transactions/send'>], [<URLPattern 'transactions'>], [<URLPattern 'header/random'>], [<URLPattern 'header/add'>], [<URLPattern 'header/info'>], [<URLPattern 'nodes/list'>], [<URLPattern 'transactions/statistics'>]], 'path': ''}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 829, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 837, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 850, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <module 'django.contrib.admindocs.urls' from '/usr/local/lib/python3.7/site-packages/django/contrib/admindocs/urls.py'> (None:None) 'admin/doc/'>
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 111, in _get_response
+    resolver_match = resolver.resolve(request.path_info)
+  File "/usr/local/lib/python3.7/site-packages/django/urls/resolvers.py", line 520, in resolve
+    raise Resolver404({'tried': tried, 'path': new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <module 'django.contrib.admindocs.urls' from '/usr/local/lib/python3.7/site-packages/django/contrib/admindocs/urls.py'> (None:None) 'admin/doc/'>], [<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLPattern 'transactions/send'>], [<URLPattern 'transactions'>], [<URLPattern 'header/random'>], [<URLPattern 'header/add'>], [<URLPattern 'header/info'>], [<URLPattern 'nodes/list'>], [<URLPattern 'transactions/statistics'>]], 'path': ''}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 829, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 837, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 850, in _resolve_lookup
+    (bit, current))  # missing attribute
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <URLPattern list> (admin:admin) 'admin/'>
+Not Found: /
+"GET / HTTP/1.1" 404 2828
+"GET /header/random HTTP/1.1" 200 116
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 281154
+"GET /header/random HTTP/1.1" 200 116
+"POST /transactions HTTP/1.1" 200 449
+Error getting hash for: xrb_16ysfre8987b7yp6xm96bgwtrf5x3618ijqce5bzhs9xrhaiptmepgjbezb3
+Error getting hash for: xrb_1kaypmkxhxm6rgy1jsnfrky4j4ezagx5khubt866br9mojarwyi7rpsr9dnn
+Error getting hash for: xrb_3qots9swwb65z4xi6k68f97yym88raanebru717bwxm964debzjqs4kbwos6
+Error getting hash for: xrb_18w1h6frhpmwuzr3uq7xbwup7di3h5i33fzadui94ysdbb8yo6r6w3bsfrbw
+Error getting hash for: xrb_3c7eofcrmy49foqiegehyb7q9bfrsfiyxk4hwcjqg3ej4eh3hdc3bshiszxq
+Error getting hash for: xrb_16ysfre8987b7yp6xm96bgwtrf5x3618ijqce5bzhs9xrhaiptmepgjbezb3
+Error getting hash for: xrb_1kaypmkxhxm6rgy1jsnfrky4j4ezagx5khubt866br9mojarwyi7rpsr9dnn
+Error getting hash for: xrb_18w1h6frhpmwuzr3uq7xbwup7di3h5i33fzadui94ysdbb8yo6r6w3bsfrbw
+Error getting hash for: xrb_3qots9swwb65z4xi6k68f97yym88raanebru717bwxm964debzjqs4kbwos6
+Error getting hash for: xrb_3c7eofcrmy49foqiegehyb7q9bfrsfiyxk4hwcjqg3ej4eh3hdc3bshiszxq
+"POST /transactions/send HTTP/1.1" 200 32
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 280828
+Internal Server Error: /header/random
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 194, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/mysql/base.py", line 227, in get_new_connection
+    return Database.connect(**conn_params)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/__init__.py", line 85, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/connections.py", line 204, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+_mysql_exceptions.OperationalError: (1040, 'Too many connections')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 495, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 455, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 492, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/decorators.py", line 54, in handler
+    return func(*args, **kwargs)
+  File "/Users/BenScudder/Desktop/506 Project/Nano-SpeedTest/app/backend/speedtest_api/views.py", line 169, in get_random_advertisement
+    random_ad = advertisements.get_random_ad()
+  File "/Users/BenScudder/Desktop/506 Project/Nano-SpeedTest/app/backend/speedtest_api/services/advertisements.py", line 21, in get_random_ad
+    for a in ads:
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 268, in __iter__
+    self._fetch_all()
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 1186, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 54, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/sql/compiler.py", line 1063, in execute_sql
+    cursor = self.connection.cursor()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 255, in cursor
+    return self._cursor()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 232, in _cursor
+    self.ensure_connection()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/utils.py", line 89, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 194, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/mysql/base.py", line 227, in get_new_connection
+    return Database.connect(**conn_params)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/__init__.py", line 85, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/connections.py", line 204, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+django.db.utils.OperationalError: (1040, 'Too many connections')
+"GET /header/random HTTP/1.1" 500 18299
+Internal Server Error: /header/random
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 194, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/mysql/base.py", line 227, in get_new_connection
+    return Database.connect(**conn_params)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/__init__.py", line 85, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/connections.py", line 204, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+_mysql_exceptions.OperationalError: (1040, 'Too many connections')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 495, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 455, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 492, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/decorators.py", line 54, in handler
+    return func(*args, **kwargs)
+  File "/Users/BenScudder/Desktop/506 Project/Nano-SpeedTest/app/backend/speedtest_api/views.py", line 169, in get_random_advertisement
+    random_ad = advertisements.get_random_ad()
+  File "/Users/BenScudder/Desktop/506 Project/Nano-SpeedTest/app/backend/speedtest_api/services/advertisements.py", line 21, in get_random_ad
+    for a in ads:
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 268, in __iter__
+    self._fetch_all()
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 1186, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 54, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/sql/compiler.py", line 1063, in execute_sql
+    cursor = self.connection.cursor()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 255, in cursor
+    return self._cursor()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 232, in _cursor
+    self.ensure_connection()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/utils.py", line 89, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 194, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/mysql/base.py", line 227, in get_new_connection
+    return Database.connect(**conn_params)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/__init__.py", line 85, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/connections.py", line 204, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+django.db.utils.OperationalError: (1040, 'Too many connections')
+"GET /header/random HTTP/1.1" 500 18293
+Internal Server Error: /transactions/statistics
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 194, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/mysql/base.py", line 227, in get_new_connection
+    return Database.connect(**conn_params)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/__init__.py", line 85, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/connections.py", line 204, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+_mysql_exceptions.OperationalError: (1040, 'Too many connections')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 495, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 455, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 492, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/decorators.py", line 54, in handler
+    return func(*args, **kwargs)
+  File "/Users/BenScudder/Desktop/506 Project/Nano-SpeedTest/app/backend/speedtest_api/views.py", line 276, in get_transaction_statistics
+    for transaction in recent_transactions:
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 268, in __iter__
+    self._fetch_all()
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 1186, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 54, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/sql/compiler.py", line 1063, in execute_sql
+    cursor = self.connection.cursor()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 255, in cursor
+    return self._cursor()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 232, in _cursor
+    self.ensure_connection()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/utils.py", line 89, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 194, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/mysql/base.py", line 227, in get_new_connection
+    return Database.connect(**conn_params)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/__init__.py", line 85, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/connections.py", line 204, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+django.db.utils.OperationalError: (1040, 'Too many connections')
+"GET /transactions/statistics?count=500 HTTP/1.1" 500 18205
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /header/random HTTP/1.1" 200 116
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 280828
+Starting check that nodes are up...
+Starting POWService and running POW_accounts()...
+Starting PoW thread.
+Syncing account balances...
+Starting node, wallet and account validation...
+Nodes and wallets validated...
+Accounts validated...
+Balances validated...
+Starting check that nodes are up...
+Starting POWService and running POW_accounts()...
+Starting PoW thread.
+Syncing account balances...
+Starting node, wallet and account validation...
+Nodes and wallets validated...
+Accounts validated...
+Balances validated...
+"GET /header/random HTTP/1.1" 200 116
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 280828
+"GET /header/random HTTP/1.1" 200 115
+"POST /transactions HTTP/1.1" 200 449
+Error getting hash for: xrb_35fkpzjbc6n8xhm66sm18hckcrthx6uodi8q8eta8w5t6xufjiuswui9ik5y
+Error getting hash for: xrb_344j9cek8j4wa7xg16wof3snkczq6pphnmxfmgshyenj5y1zu8zfgqijiyjp
+Error getting hash for: xrb_1eeha1ufb356b7mox4cu51rgb8mxh6jt9spdgwckbngqdte7ayj7emqgq1rr
+Error getting hash for: xrb_1ddtn7m1fux3hwtba8uhi89ppg5pzehodehfuduf68o5oc3unrdwawtj3gwo
+Error getting hash for: xrb_3g3f6fuusrdaktkysyybucx3cw13cuizo5co7ub7yrfk81nzmy5bg3g6ing1
+Error getting hash for: xrb_3m9mp6fa3nmi5bezr4uj8ud96z65c97io9i6qp6353yybuhqwxhsigkzmjc9
+Error getting hash for: xrb_1sfq1is9bepzoyfmapkd69sbw87wcxg1kzz9gsax6ukmd173t5jccxowou5x
+Error getting hash for: xrb_34u9x1xst11yy741apcjy9fqz1tt1uxfir4yb89j6ik7xx9wshb1doc43ui4
+Error getting hash for: xrb_3u18frdrrg5379mzq63eoiamenjo8qunmcaybo1wawkjdwk47zcihois8xt6
+Error getting hash for: xrb_1597fixdoze4wsngtisagg9qemxtk1i9cohfd19grrk7tsfhhz77zdp6jxo4
+Error getting hash for: xrb_344j9cek8j4wa7xg16wof3snkczq6pphnmxfmgshyenj5y1zu8zfgqijiyjp
+Error getting hash for: xrb_35fkpzjbc6n8xhm66sm18hckcrthx6uodi8q8eta8w5t6xufjiuswui9ik5y
+Error getting hash for: xrb_1eeha1ufb356b7mox4cu51rgb8mxh6jt9spdgwckbngqdte7ayj7emqgq1rr
+Error getting hash for: xrb_1ddtn7m1fux3hwtba8uhi89ppg5pzehodehfuduf68o5oc3unrdwawtj3gwo
+Error getting hash for: xrb_3g3f6fuusrdaktkysyybucx3cw13cuizo5co7ub7yrfk81nzmy5bg3g6ing1
+Error getting hash for: xrb_3m9mp6fa3nmi5bezr4uj8ud96z65c97io9i6qp6353yybuhqwxhsigkzmjc9
+Error getting hash for: xrb_1sfq1is9bepzoyfmapkd69sbw87wcxg1kzz9gsax6ukmd173t5jccxowou5x
+Error getting hash for: xrb_34u9x1xst11yy741apcjy9fqz1tt1uxfir4yb89j6ik7xx9wshb1doc43ui4
+Error getting hash for: xrb_3u18frdrrg5379mzq63eoiamenjo8qunmcaybo1wawkjdwk47zcihois8xt6
+Error getting hash for: xrb_1597fixdoze4wsngtisagg9qemxtk1i9cohfd19grrk7tsfhhz77zdp6jxo4
+Internal Server Error: /nodes/list
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 194, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/mysql/base.py", line 227, in get_new_connection
+    return Database.connect(**conn_params)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/__init__.py", line 85, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/connections.py", line 204, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+_mysql_exceptions.OperationalError: (1040, 'Too many connections')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 495, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 455, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 492, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/decorators.py", line 54, in handler
+    return func(*args, **kwargs)
+  File "/Users/BenScudder/Desktop/506 Project/Nano-SpeedTest/app/backend/speedtest_api/views.py", line 244, in list_nodes
+    for node in all_nodes:
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 268, in __iter__
+    self._fetch_all()
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 1186, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 54, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/sql/compiler.py", line 1063, in execute_sql
+    cursor = self.connection.cursor()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 255, in cursor
+    return self._cursor()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 232, in _cursor
+    self.ensure_connection()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/utils.py", line 89, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 194, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/mysql/base.py", line 227, in get_new_connection
+    return Database.connect(**conn_params)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/__init__.py", line 85, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/connections.py", line 204, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+django.db.utils.OperationalError: (1040, 'Too many connections')
+Internal Server Error: /transactions/statistics
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 194, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/mysql/base.py", line 227, in get_new_connection
+    return Database.connect(**conn_params)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/__init__.py", line 85, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/connections.py", line 204, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+_mysql_exceptions.OperationalError: (1040, 'Too many connections')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 495, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 455, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 492, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/decorators.py", line 54, in handler
+    return func(*args, **kwargs)
+  File "/Users/BenScudder/Desktop/506 Project/Nano-SpeedTest/app/backend/speedtest_api/views.py", line 276, in get_transaction_statistics
+    for transaction in recent_transactions:
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 268, in __iter__
+    self._fetch_all()
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 1186, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 54, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/sql/compiler.py", line 1063, in execute_sql
+    cursor = self.connection.cursor()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 255, in cursor
+    return self._cursor()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 232, in _cursor
+    self.ensure_connection()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/utils.py", line 89, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 194, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/mysql/base.py", line 227, in get_new_connection
+    return Database.connect(**conn_params)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/__init__.py", line 85, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/connections.py", line 204, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+django.db.utils.OperationalError: (1040, 'Too many connections')
+Internal Server Error: /header/random
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 194, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/mysql/base.py", line 227, in get_new_connection
+    return Database.connect(**conn_params)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/__init__.py", line 85, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/connections.py", line 204, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+_mysql_exceptions.OperationalError: (1040, 'Too many connections')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 495, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 455, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 492, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/decorators.py", line 54, in handler
+    return func(*args, **kwargs)
+  File "/Users/BenScudder/Desktop/506 Project/Nano-SpeedTest/app/backend/speedtest_api/views.py", line 169, in get_random_advertisement
+    random_ad = advertisements.get_random_ad()
+  File "/Users/BenScudder/Desktop/506 Project/Nano-SpeedTest/app/backend/speedtest_api/services/advertisements.py", line 21, in get_random_ad
+    for a in ads:
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 268, in __iter__
+    self._fetch_all()
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 1186, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 54, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/sql/compiler.py", line 1063, in execute_sql
+    cursor = self.connection.cursor()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 255, in cursor
+    return self._cursor()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 232, in _cursor
+    self.ensure_connection()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/utils.py", line 89, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 194, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/mysql/base.py", line 227, in get_new_connection
+    return Database.connect(**conn_params)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/__init__.py", line 85, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/connections.py", line 204, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+django.db.utils.OperationalError: (1040, 'Too many connections')
+"GET /nodes/list HTTP/1.1" 500 18099
+"GET /transactions/statistics?count=500 HTTP/1.1" 500 18205
+"GET /header/random HTTP/1.1" 500 18300
+Internal Server Error: /header/random
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 194, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/mysql/base.py", line 227, in get_new_connection
+    return Database.connect(**conn_params)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/__init__.py", line 85, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/connections.py", line 204, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+_mysql_exceptions.OperationalError: (1040, 'Too many connections')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 495, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 455, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 492, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/decorators.py", line 54, in handler
+    return func(*args, **kwargs)
+  File "/Users/BenScudder/Desktop/506 Project/Nano-SpeedTest/app/backend/speedtest_api/views.py", line 169, in get_random_advertisement
+    random_ad = advertisements.get_random_ad()
+  File "/Users/BenScudder/Desktop/506 Project/Nano-SpeedTest/app/backend/speedtest_api/services/advertisements.py", line 21, in get_random_ad
+    for a in ads:
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 268, in __iter__
+    self._fetch_all()
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 1186, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 54, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/sql/compiler.py", line 1063, in execute_sql
+    cursor = self.connection.cursor()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 255, in cursor
+    return self._cursor()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 232, in _cursor
+    self.ensure_connection()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/utils.py", line 89, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 194, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/mysql/base.py", line 227, in get_new_connection
+    return Database.connect(**conn_params)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/__init__.py", line 85, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/connections.py", line 204, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+django.db.utils.OperationalError: (1040, 'Too many connections')
+"GET /header/random HTTP/1.1" 500 18300
+"POST /transactions/send HTTP/1.1" 200 32
+Internal Server Error: /nodes/list
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 194, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/mysql/base.py", line 227, in get_new_connection
+    return Database.connect(**conn_params)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/__init__.py", line 85, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/connections.py", line 204, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+_mysql_exceptions.OperationalError: (1040, 'Too many connections')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 495, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 455, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 492, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/decorators.py", line 54, in handler
+    return func(*args, **kwargs)
+  File "/Users/BenScudder/Desktop/506 Project/Nano-SpeedTest/app/backend/speedtest_api/views.py", line 244, in list_nodes
+    for node in all_nodes:
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 268, in __iter__
+    self._fetch_all()
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 1186, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 54, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/sql/compiler.py", line 1063, in execute_sql
+    cursor = self.connection.cursor()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 255, in cursor
+    return self._cursor()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 232, in _cursor
+    self.ensure_connection()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/utils.py", line 89, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 194, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/mysql/base.py", line 227, in get_new_connection
+    return Database.connect(**conn_params)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/__init__.py", line 85, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/connections.py", line 204, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+django.db.utils.OperationalError: (1040, 'Too many connections')
+"GET /nodes/list HTTP/1.1" 500 18092
+Internal Server Error: /transactions/statistics
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 194, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/mysql/base.py", line 227, in get_new_connection
+    return Database.connect(**conn_params)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/__init__.py", line 85, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/connections.py", line 204, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+_mysql_exceptions.OperationalError: (1040, 'Too many connections')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 495, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 455, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 492, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/decorators.py", line 54, in handler
+    return func(*args, **kwargs)
+  File "/Users/BenScudder/Desktop/506 Project/Nano-SpeedTest/app/backend/speedtest_api/views.py", line 276, in get_transaction_statistics
+    for transaction in recent_transactions:
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 268, in __iter__
+    self._fetch_all()
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 1186, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 54, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/sql/compiler.py", line 1063, in execute_sql
+    cursor = self.connection.cursor()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 255, in cursor
+    return self._cursor()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 232, in _cursor
+    self.ensure_connection()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/utils.py", line 89, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 194, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/mysql/base.py", line 227, in get_new_connection
+    return Database.connect(**conn_params)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/__init__.py", line 85, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/connections.py", line 204, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+django.db.utils.OperationalError: (1040, 'Too many connections')
+"GET /transactions/statistics?count=500 HTTP/1.1" 500 18198
+Internal Server Error: /header/random
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 194, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/mysql/base.py", line 227, in get_new_connection
+    return Database.connect(**conn_params)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/__init__.py", line 85, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/connections.py", line 204, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+_mysql_exceptions.OperationalError: (1040, 'Too many connections')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 495, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 455, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 492, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/decorators.py", line 54, in handler
+    return func(*args, **kwargs)
+  File "/Users/BenScudder/Desktop/506 Project/Nano-SpeedTest/app/backend/speedtest_api/views.py", line 169, in get_random_advertisement
+    random_ad = advertisements.get_random_ad()
+  File "/Users/BenScudder/Desktop/506 Project/Nano-SpeedTest/app/backend/speedtest_api/services/advertisements.py", line 21, in get_random_ad
+    for a in ads:
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 268, in __iter__
+    self._fetch_all()
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 1186, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 54, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/sql/compiler.py", line 1063, in execute_sql
+    cursor = self.connection.cursor()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 255, in cursor
+    return self._cursor()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 232, in _cursor
+    self.ensure_connection()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/utils.py", line 89, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 194, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/mysql/base.py", line 227, in get_new_connection
+    return Database.connect(**conn_params)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/__init__.py", line 85, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/connections.py", line 204, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+django.db.utils.OperationalError: (1040, 'Too many connections')
+"GET /header/random HTTP/1.1" 500 18293
+"GET /header/random HTTP/1.1" 200 115
+"POST /transactions HTTP/1.1" 200 449
+Error getting hash for: xrb_16ysfre8987b7yp6xm96bgwtrf5x3618ijqce5bzhs9xrhaiptmepgjbezb3
+Error getting hash for: xrb_1kaypmkxhxm6rgy1jsnfrky4j4ezagx5khubt866br9mojarwyi7rpsr9dnn
+Error getting hash for: xrb_3qots9swwb65z4xi6k68f97yym88raanebru717bwxm964debzjqs4kbwos6
+Error getting hash for: xrb_18w1h6frhpmwuzr3uq7xbwup7di3h5i33fzadui94ysdbb8yo6r6w3bsfrbw
+Error getting hash for: xrb_3c7eofcrmy49foqiegehyb7q9bfrsfiyxk4hwcjqg3ej4eh3hdc3bshiszxq
+Error getting hash for: xrb_16ysfre8987b7yp6xm96bgwtrf5x3618ijqce5bzhs9xrhaiptmepgjbezb3
+Error getting hash for: xrb_1kaypmkxhxm6rgy1jsnfrky4j4ezagx5khubt866br9mojarwyi7rpsr9dnn
+Error getting hash for: xrb_3qots9swwb65z4xi6k68f97yym88raanebru717bwxm964debzjqs4kbwos6
+Error getting hash for: xrb_18w1h6frhpmwuzr3uq7xbwup7di3h5i33fzadui94ysdbb8yo6r6w3bsfrbw
+Error getting hash for: xrb_3c7eofcrmy49foqiegehyb7q9bfrsfiyxk4hwcjqg3ej4eh3hdc3bshiszxq
+"POST /transactions/send HTTP/1.1" 200 32
+"GET /header/random HTTP/1.1" 200 115
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /header/random HTTP/1.1" 200 116
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 280502
+"GET /header/random HTTP/1.1" 200 116
+"POST /transactions HTTP/1.1" 200 449
+"POST /transactions HTTP/1.1" 200 449
+"GET /header/random HTTP/1.1" 200 72
+"GET /header/random HTTP/1.1" 200 116
+"POST /transactions/send HTTP/1.1" 200 32
+"POST /transactions/send HTTP/1.1" 200 32
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /header/random HTTP/1.1" 200 116
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 280176
+"GET /header/random HTTP/1.1" 200 116
+"GET /header/random HTTP/1.1" 200 115
+"POST /transactions HTTP/1.1" 200 1286
+Generated POW on multithread: db994a06b4a29160 for account xrb_18hb9ugx7s3eenezdcyb5naz3axzh5odk6mo9fs3sjqor61r7z88ahy1ang3
+Generated POW on multithread: 662563f6fdc33fb1 for account xrb_18i7hmkabspz344yea6dp85x1dzom96nxtohwfgsxsg3x9uqrqedkhxgh9rm
+Generated POW on multithread: ed43016e2f4e622f for account xrb_3yi3autbywirm6sk5ojsdyxt9prew5dxtbtdxaj5iya5by5bt9kfzzynm1uu
+Generated POW on multithread: 3942580f41a01b98 for account xrb_3soth7zazgf7miedapdwg4dytc4ujq94rd7rzri3614xain6m8kntdxd7341
+"POST /transactions/send HTTP/1.1" 200 1178
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /header/random HTTP/1.1" 200 115
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 280179
+"GET /header/random HTTP/1.1" 200 116
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 280179
+"GET /header/random HTTP/1.1" 200 115
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 280179
+"GET /header/random HTTP/1.1" 200 89
+"GET /header/random HTTP/1.1" 200 116
+"POST /transactions HTTP/1.1" 200 449
+"POST /transactions/send HTTP/1.1" 200 32
+"GET /header/random HTTP/1.1" 200 115
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 280179
+"GET /header/random HTTP/1.1" 200 89
+Internal Server Error: /transactions
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.7/site-packages/ratelimit/decorators.py", line 30, in _wrapped
+    return fn(*args, **kw)
+  File "/usr/local/lib/python3.7/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 495, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 455, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 492, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/decorators.py", line 54, in handler
+    return func(*args, **kwargs)
+  File "/Users/BenScudder/Desktop/506 Project/Nano-SpeedTest/app/backend/speedtest_api/views.py", line 39, in generate_transaction
+    body = json.loads(request.body)
+  File "/usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+"POST /transactions HTTP/1.1" 500 16356
+"GET /header/random HTTP/1.1" 200 116
+"GET /header/random HTTP/1.1" 200 116
+Internal Server Error: /transactions
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.7/site-packages/ratelimit/decorators.py", line 30, in _wrapped
+    return fn(*args, **kw)
+  File "/usr/local/lib/python3.7/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 495, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 455, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 492, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/decorators.py", line 54, in handler
+    return func(*args, **kwargs)
+  File "/Users/BenScudder/Desktop/506 Project/Nano-SpeedTest/app/backend/speedtest_api/views.py", line 39, in generate_transaction
+    body = json.loads(request.body)
+  File "/usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+"POST /transactions HTTP/1.1" 500 16356
+"GET /header/random HTTP/1.1" 200 116
+"GET /header/random HTTP/1.1" 200 116
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 280179
+"GET /header/random HTTP/1.1" 200 116
+Internal Server Error: /transactions
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.7/site-packages/ratelimit/decorators.py", line 30, in _wrapped
+    return fn(*args, **kw)
+  File "/usr/local/lib/python3.7/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 495, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 455, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 492, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/decorators.py", line 54, in handler
+    return func(*args, **kwargs)
+  File "/Users/BenScudder/Desktop/506 Project/Nano-SpeedTest/app/backend/speedtest_api/views.py", line 39, in generate_transaction
+    body = json.loads(request.body)
+  File "/usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+"POST /transactions HTTP/1.1" 500 16356
+"GET /header/random HTTP/1.1" 200 116
+"GET /header/random HTTP/1.1" 200 116
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 280179
+"GET /header/random HTTP/1.1" 200 192
+Internal Server Error: /transactions
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.7/site-packages/ratelimit/decorators.py", line 30, in _wrapped
+    return fn(*args, **kw)
+  File "/usr/local/lib/python3.7/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 495, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 455, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 492, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/decorators.py", line 54, in handler
+    return func(*args, **kwargs)
+  File "/Users/BenScudder/Desktop/506 Project/Nano-SpeedTest/app/backend/speedtest_api/views.py", line 39, in generate_transaction
+    body = json.loads(request.body)
+  File "/usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+"POST /transactions HTTP/1.1" 500 16356
+"GET /header/random HTTP/1.1" 200 192
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /header/random HTTP/1.1" 200 84
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 280179
+"GET /header/random HTTP/1.1" 200 116
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 280179
+Internal Server Error: /transactions
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.7/site-packages/ratelimit/decorators.py", line 30, in _wrapped
+    return fn(*args, **kw)
+  File "/usr/local/lib/python3.7/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 495, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 455, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 492, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/decorators.py", line 54, in handler
+    return func(*args, **kwargs)
+  File "/Users/BenScudder/Desktop/506 Project/Nano-SpeedTest/app/backend/speedtest_api/views.py", line 39, in generate_transaction
+    body = json.loads(request.body)
+  File "/usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+"POST /transactions HTTP/1.1" 500 16356
+"GET /header/random HTTP/1.1" 200 116
+"GET /header/random HTTP/1.1" 200 116
+"GET /header/random HTTP/1.1" 200 116
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 280179
+Internal Server Error: /transactions
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.7/site-packages/ratelimit/decorators.py", line 30, in _wrapped
+    return fn(*args, **kw)
+  File "/usr/local/lib/python3.7/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 495, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 455, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 492, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/decorators.py", line 54, in handler
+    return func(*args, **kwargs)
+  File "/Users/BenScudder/Desktop/506 Project/Nano-SpeedTest/app/backend/speedtest_api/views.py", line 39, in generate_transaction
+    body = json.loads(request.body)
+  File "/usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+"POST /transactions HTTP/1.1" 500 16356
+"GET /header/random HTTP/1.1" 200 116
+"GET /header/random HTTP/1.1" 200 115
+"GET /header/random HTTP/1.1" 200 115
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 280179
+Internal Server Error: /transactions
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.7/site-packages/ratelimit/decorators.py", line 30, in _wrapped
+    return fn(*args, **kw)
+  File "/usr/local/lib/python3.7/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 495, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 455, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 492, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/decorators.py", line 54, in handler
+    return func(*args, **kwargs)
+  File "/Users/BenScudder/Desktop/506 Project/Nano-SpeedTest/app/backend/speedtest_api/views.py", line 39, in generate_transaction
+    body = json.loads(request.body)
+  File "/usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+"POST /transactions HTTP/1.1" 500 16356
+"GET /header/random HTTP/1.1" 200 115
+"GET /header/random HTTP/1.1" 200 116
+Starting check that nodes are up...
+Starting POWService and running POW_accounts()...
+Starting PoW thread.
+Syncing account balances...
+Starting node, wallet and account validation...
+Nodes and wallets validated...
+Accounts validated...
+Balances validated...
+Starting check that nodes are up...
+Starting POWService and running POW_accounts()...
+Starting PoW thread.
+Starting check that nodes are up...
+Starting POWService and running POW_accounts()...
+Starting PoW thread.
+Syncing account balances...
+Starting node, wallet and account validation...
+Nodes and wallets validated...
+Accounts validated...
+Balances validated...
+Starting check that nodes are up...
+Starting POWService and running POW_accounts()...
+Starting PoW thread.
+Syncing account balances...
+Starting node, wallet and account validation...
+Nodes and wallets validated...
+Accounts validated...
+Balances validated...
+Error getting hash for: xrb_1ddtn7m1fux3hwtba8uhi89ppg5pzehodehfuduf68o5oc3unrdwawtj3gwo
+Error getting hash for: xrb_1eeha1ufb356b7mox4cu51rgb8mxh6jt9spdgwckbngqdte7ayj7emqgq1rr
+Error getting hash for: xrb_3u18frdrrg5379mzq63eoiamenjo8qunmcaybo1wawkjdwk47zcihois8xt6
+Error getting hash for: xrb_35fkpzjbc6n8xhm66sm18hckcrthx6uodi8q8eta8w5t6xufjiuswui9ik5y
+Error getting hash for: xrb_3g3f6fuusrdaktkysyybucx3cw13cuizo5co7ub7yrfk81nzmy5bg3g6ing1
+Error getting hash for: xrb_1sfq1is9bepzoyfmapkd69sbw87wcxg1kzz9gsax6ukmd173t5jccxowou5x
+Error getting hash for: xrb_344j9cek8j4wa7xg16wof3snkczq6pphnmxfmgshyenj5y1zu8zfgqijiyjp
+Error getting hash for: xrb_34u9x1xst11yy741apcjy9fqz1tt1uxfir4yb89j6ik7xx9wshb1doc43ui4
+Error getting hash for: xrb_3m9mp6fa3nmi5bezr4uj8ud96z65c97io9i6qp6353yybuhqwxhsigkzmjc9
+Enqueuing address: xrb_1pe3q6ix6n9p74fa8kfftax7qwj7u3uq8gcdknuygmy7wjk48nf1haup631n
+Error getting hash for: xrb_1597fixdoze4wsngtisagg9qemxtk1i9cohfd19grrk7tsfhhz77zdp6jxo4
+Enqueuing address: xrb_1n8pk5sg4gfjn83tfdoftbojopx9xb5zqhhypspqj4y9p4nnhznrhuwc7woo
+Error getting hash for: xrb_35fkpzjbc6n8xhm66sm18hckcrthx6uodi8q8eta8w5t6xufjiuswui9ik5y
+Generated POW on multithread: cb5bd3a32233a54a for account xrb_1pe3q6ix6n9p74fa8kfftax7qwj7u3uq8gcdknuygmy7wjk48nf1haup631n
+Error getting hash for: xrb_3g3f6fuusrdaktkysyybucx3cw13cuizo5co7ub7yrfk81nzmy5bg3g6ing1
+Error getting hash for: xrb_3m9mp6fa3nmi5bezr4uj8ud96z65c97io9i6qp6353yybuhqwxhsigkzmjc9
+Generated POW on multithread: d0166fda5d340c73 for account xrb_1n8pk5sg4gfjn83tfdoftbojopx9xb5zqhhypspqj4y9p4nnhznrhuwc7woo
+Error getting hash for: xrb_1597fixdoze4wsngtisagg9qemxtk1i9cohfd19grrk7tsfhhz77zdp6jxo4
+"GET /header/random HTTP/1.1" 200 89
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+Error getting hash for: xrb_1ddtn7m1fux3hwtba8uhi89ppg5pzehodehfuduf68o5oc3unrdwawtj3gwo
+Error getting hash for: xrb_344j9cek8j4wa7xg16wof3snkczq6pphnmxfmgshyenj5y1zu8zfgqijiyjp
+Error getting hash for: xrb_1sfq1is9bepzoyfmapkd69sbw87wcxg1kzz9gsax6ukmd173t5jccxowou5x
+Error getting hash for: xrb_34u9x1xst11yy741apcjy9fqz1tt1uxfir4yb89j6ik7xx9wshb1doc43ui4
+Internal Server Error: /transactions
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.7/site-packages/ratelimit/decorators.py", line 30, in _wrapped
+    return fn(*args, **kw)
+  File "/usr/local/lib/python3.7/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 495, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 455, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 492, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/decorators.py", line 54, in handler
+    return func(*args, **kwargs)
+  File "/Users/BenScudder/Desktop/506 Project/Nano-SpeedTest/app/backend/speedtest_api/views.py", line 39, in generate_transaction
+    body = json.loads(request.body)
+  File "/usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+"POST /transactions HTTP/1.1" 500 16357
+"GET /header/random HTTP/1.1" 200 115
+Error getting hash for: xrb_1eeha1ufb356b7mox4cu51rgb8mxh6jt9spdgwckbngqdte7ayj7emqgq1rr
+Error getting hash for: xrb_3u18frdrrg5379mzq63eoiamenjo8qunmcaybo1wawkjdwk47zcihois8xt6
+Enqueuing address: xrb_1pe3q6ix6n9p74fa8kfftax7qwj7u3uq8gcdknuygmy7wjk48nf1haup631n
+Enqueuing address: xrb_1n8pk5sg4gfjn83tfdoftbojopx9xb5zqhhypspqj4y9p4nnhznrhuwc7woo
+Generated POW on multithread: e9600663dc2fef90 for account xrb_1pe3q6ix6n9p74fa8kfftax7qwj7u3uq8gcdknuygmy7wjk48nf1haup631n
+Generated POW on multithread: d0166fda5d340c73 for account xrb_1n8pk5sg4gfjn83tfdoftbojopx9xb5zqhhypspqj4y9p4nnhznrhuwc7woo
+Error getting hash for: xrb_16ysfre8987b7yp6xm96bgwtrf5x3618ijqce5bzhs9xrhaiptmepgjbezb3
+Error getting hash for: xrb_1kaypmkxhxm6rgy1jsnfrky4j4ezagx5khubt866br9mojarwyi7rpsr9dnn
+Error getting hash for: xrb_3qots9swwb65z4xi6k68f97yym88raanebru717bwxm964debzjqs4kbwos6
+Error getting hash for: xrb_18w1h6frhpmwuzr3uq7xbwup7di3h5i33fzadui94ysdbb8yo6r6w3bsfrbw
+Error getting hash for: xrb_3c7eofcrmy49foqiegehyb7q9bfrsfiyxk4hwcjqg3ej4eh3hdc3bshiszxq
+Error getting hash for: xrb_16ysfre8987b7yp6xm96bgwtrf5x3618ijqce5bzhs9xrhaiptmepgjbezb3
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /header/random HTTP/1.1" 200 116
+Error getting hash for: xrb_1kaypmkxhxm6rgy1jsnfrky4j4ezagx5khubt866br9mojarwyi7rpsr9dnn
+Error getting hash for: xrb_18w1h6frhpmwuzr3uq7xbwup7di3h5i33fzadui94ysdbb8yo6r6w3bsfrbw
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+Error getting hash for: xrb_3qots9swwb65z4xi6k68f97yym88raanebru717bwxm964debzjqs4kbwos6
+"GET /header/random HTTP/1.1" 200 116
+Error getting hash for: xrb_3c7eofcrmy49foqiegehyb7q9bfrsfiyxk4hwcjqg3ej4eh3hdc3bshiszxq
+Internal Server Error: /transactions
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.7/site-packages/ratelimit/decorators.py", line 30, in _wrapped
+    return fn(*args, **kw)
+  File "/usr/local/lib/python3.7/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 495, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 455, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 492, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/decorators.py", line 54, in handler
+    return func(*args, **kwargs)
+  File "/Users/BenScudder/Desktop/506 Project/Nano-SpeedTest/app/backend/speedtest_api/views.py", line 39, in generate_transaction
+    body = json.loads(request.body)
+  File "/usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+"POST /transactions HTTP/1.1" 500 16356
+"GET /header/random HTTP/1.1" 200 116
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /header/random HTTP/1.1" 200 116
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+"GET /header/random HTTP/1.1" 200 115
+Internal Server Error: /transactions
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.7/site-packages/ratelimit/decorators.py", line 30, in _wrapped
+    return fn(*args, **kw)
+  File "/usr/local/lib/python3.7/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 495, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 455, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 492, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/decorators.py", line 54, in handler
+    return func(*args, **kwargs)
+  File "/Users/BenScudder/Desktop/506 Project/Nano-SpeedTest/app/backend/speedtest_api/views.py", line 39, in generate_transaction
+    body = json.loads(request.body)
+  File "/usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+"POST /transactions HTTP/1.1" 500 16356
+"GET /header/random HTTP/1.1" 200 70
+"GET /header/random HTTP/1.1" 200 115
+"GET /header/random HTTP/1.1" 200 116
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /header/random HTTP/1.1" 200 192
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+Internal Server Error: /transactions
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.7/site-packages/ratelimit/decorators.py", line 30, in _wrapped
+    return fn(*args, **kw)
+  File "/usr/local/lib/python3.7/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 495, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 455, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 492, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/decorators.py", line 54, in handler
+    return func(*args, **kwargs)
+  File "/Users/BenScudder/Desktop/506 Project/Nano-SpeedTest/app/backend/speedtest_api/views.py", line 39, in generate_transaction
+    body = json.loads(request.body)
+  File "/usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+"POST /transactions HTTP/1.1" 500 16356
+"GET /header/random HTTP/1.1" 200 116
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /header/random HTTP/1.1" 200 116
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+"GET /header/random HTTP/1.1" 200 115
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+"GET /header/random HTTP/1.1" 200 115
+Internal Server Error: /transactions
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.7/site-packages/ratelimit/decorators.py", line 30, in _wrapped
+    return fn(*args, **kw)
+  File "/usr/local/lib/python3.7/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 495, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 455, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 492, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/decorators.py", line 54, in handler
+    return func(*args, **kwargs)
+  File "/Users/BenScudder/Desktop/506 Project/Nano-SpeedTest/app/backend/speedtest_api/views.py", line 39, in generate_transaction
+    body = json.loads(request.body)
+  File "/usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+"POST /transactions HTTP/1.1" 500 16356
+"GET /header/random HTTP/1.1" 200 116
+"GET /header/random HTTP/1.1" 200 115
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /header/random HTTP/1.1" 200 115
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+"GET /header/random HTTP/1.1" 200 89
+Internal Server Error: /transactions
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.7/site-packages/ratelimit/decorators.py", line 30, in _wrapped
+    return fn(*args, **kw)
+  File "/usr/local/lib/python3.7/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 495, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 455, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 492, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/decorators.py", line 54, in handler
+    return func(*args, **kwargs)
+  File "/Users/BenScudder/Desktop/506 Project/Nano-SpeedTest/app/backend/speedtest_api/views.py", line 39, in generate_transaction
+    body = json.loads(request.body)
+  File "/usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+"POST /transactions HTTP/1.1" 500 16356
+"GET /header/random HTTP/1.1" 200 115
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /header/random HTTP/1.1" 200 116
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /header/random HTTP/1.1" 200 116
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+"GET /header/random HTTP/1.1" 200 116
+Internal Server Error: /transactions
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.7/site-packages/ratelimit/decorators.py", line 30, in _wrapped
+    return fn(*args, **kw)
+  File "/usr/local/lib/python3.7/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 495, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 455, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 492, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/decorators.py", line 54, in handler
+    return func(*args, **kwargs)
+  File "/Users/BenScudder/Desktop/506 Project/Nano-SpeedTest/app/backend/speedtest_api/views.py", line 39, in generate_transaction
+    body = json.loads(request.body)
+  File "/usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/local/Cellar/python/3.7.1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+"POST /transactions HTTP/1.1" 500 16356
+"GET /header/random HTTP/1.1" 200 116
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /header/random HTTP/1.1" 200 115
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+"GET /header/random HTTP/1.1" 200 116
+"GET /header/random HTTP/1.1" 200 116
+"POST /transactions HTTP/1.1" 200 867
+Generated POW on multithread: bb9417ea0c95e36d for account xrb_1h9dg49tuu6fqc6kwtpsd45npwj5xsyde58f5im3mt9f43ydmgh159y8uepz
+Generated POW on multithread: 2138c1f1bc261b9b for account xrb_3ycnp4fstkgkmh3q7wzedo1gakrnit747fyk4r3csbiq8gcowyd7o1z7px3x
+"GET /header/random HTTP/1.1" 200 116
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288193
+"GET /header/random HTTP/1.1" 200 116
+"GET /header/random HTTP/1.1" 200 116
+"POST /transactions HTTP/1.1" 200 449
+"POST /transactions/send HTTP/1.1" 200 603
+"POST /transactions/send HTTP/1.1" 200 32
+"GET /header/random HTTP/1.1" 200 116
+"GET /header/random HTTP/1.1" 200 116
+"POST /transactions HTTP/1.1" 200 867
+"GET /header/random HTTP/1.1" 200 116
+Generated POW on multithread: 7b42a0ef3ae95a50 for account xrb_3rk7hgkpsi6j77rhqns514ykctm6pyro9ho3aye1ssu9bni6hqkqyyb4effo
+Generated POW on multithread: 6ba502906856fe20 for account xrb_39ypwbmd4tn8y91pdd6u1qqs65ugnnbfrz46zxaxcx8rhp7ipctbnjw5ens9
+"POST /transactions/send HTTP/1.1" 200 603
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /header/random HTTP/1.1" 200 72
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288193
+"GET /header/random HTTP/1.1" 200 116
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288193
+"GET /header/random HTTP/1.1" 200 115
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288193
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /header/random HTTP/1.1" 200 116
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288193
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /header/random HTTP/1.1" 200 116
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288193
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /header/random HTTP/1.1" 200 116
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288193
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /header/random HTTP/1.1" 200 115
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288193
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /header/random HTTP/1.1" 200 116
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288193
+"GET /header/random HTTP/1.1" 200 116
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288193
+"GET /header/random HTTP/1.1" 200 116
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288193
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /header/random HTTP/1.1" 200 116
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288193
+"GET /header/random HTTP/1.1" 200 116
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288193
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /header/random HTTP/1.1" 200 116
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288193
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /header/random HTTP/1.1" 200 89
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288193
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /header/random HTTP/1.1" 200 116
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288193
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /header/random HTTP/1.1" 200 116
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288193
+"GET /header/random HTTP/1.1" 200 116
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288193
+"GET /header/random HTTP/1.1" 200 116
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288193
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /header/random HTTP/1.1" 200 116
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288193
+"GET /header/random HTTP/1.1" 200 116
+"POST /transactions HTTP/1.1" 200 1285
+"GET /header/random HTTP/1.1" 200 115
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /header/random HTTP/1.1" 200 116
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288193
+"POST /transactions/send HTTP/1.1" 200 1750
+"GET /header/random HTTP/1.1" 200 116
+"POST /transactions HTTP/1.1" 200 449
+Generated POW on multithread: 09df347860ebd6e5 for account xrb_1n8pk5sg4gfjn83tfdoftbojopx9xb5zqhhypspqj4y9p4nnhznrhuwc7woo
+"GET /header/random HTTP/1.1" 200 116
+Generated POW on multithread: 91495b70ac3e81cc for account xrb_1pe3q6ix6n9p74fa8kfftax7qwj7u3uq8gcdknuygmy7wjk48nf1haup631n
+Generated POW on multithread: 4e0499d435857da0 for account xrb_14foarbupzcpjh3ygiptdfii61d3msiqgbwgdiioqep7qxpnz5urz71zi4ga
+Generated POW on multithread: fcec3935ba86d7fe for account xrb_17ykykayhrfxsbywo99k84gp4zimk5788ztqw6wu5ak9git53usbayxcwdof
+Generated POW on multithread: 9ab18afc6f098826 for account xrb_3xktf6xrizqkkp43qtx311kxauudd1kinfa3ra7bgzeg9s77fdcqr9g8sjnh
+Generated POW on multithread: 759cede6f8ed4fec for account xrb_3a4chnahod149ttaxedgoae3xbaitwjzq8jwqbyutpqs555if1t8b9axu48e
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /header/random HTTP/1.1" 200 116
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+"POST /transactions/send HTTP/1.1" 200 32
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /header/random HTTP/1.1" 200 116
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+"GET /header/random HTTP/1.1" 200 116
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+Internal Server Error: /nodes/list
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 194, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/mysql/base.py", line 227, in get_new_connection
+    return Database.connect(**conn_params)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/__init__.py", line 85, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/connections.py", line 204, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+_mysql_exceptions.OperationalError: (2003, "Can't connect to MySQL server on 'db-1.cwqtb8th0ywk.us-east-1.rds.amazonaws.com' (60)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 495, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 455, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/views.py", line 492, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/rest_framework/decorators.py", line 54, in handler
+    return func(*args, **kwargs)
+  File "/Users/BenScudder/Desktop/506 Project/Nano-SpeedTest/app/backend/speedtest_api/views.py", line 244, in list_nodes
+    for node in all_nodes:
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 268, in __iter__
+    self._fetch_all()
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 1186, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/query.py", line 54, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+  File "/usr/local/lib/python3.7/site-packages/django/db/models/sql/compiler.py", line 1063, in execute_sql
+    cursor = self.connection.cursor()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 255, in cursor
+    return self._cursor()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 232, in _cursor
+    self.ensure_connection()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/utils.py", line 89, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 216, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/base/base.py", line 194, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python3.7/site-packages/django/db/backends/mysql/base.py", line 227, in get_new_connection
+    return Database.connect(**conn_params)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/__init__.py", line 85, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/local/lib/python3.7/site-packages/MySQLdb/connections.py", line 204, in __init__
+    super(Connection, self).__init__(*args, **kwargs2)
+django.db.utils.OperationalError: (2003, "Can't connect to MySQL server on 'db-1.cwqtb8th0ywk.us-east-1.rds.amazonaws.com' (60)")
+"GET /nodes/list HTTP/1.1" 500 18287
+"GET /header/random HTTP/1.1" 200 116
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /header/random HTTP/1.1" 200 116
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /header/random HTTP/1.1" 200 116
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+"GET /header/random HTTP/1.1" 200 116
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /header/random HTTP/1.1" 200 192
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+"GET /header/random HTTP/1.1" 200 116
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+"GET /header/random HTTP/1.1" 200 116
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /header/random HTTP/1.1" 200 116
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+"GET /header/random HTTP/1.1" 200 115
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+"GET /header/random HTTP/1.1" 200 115
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /header/random HTTP/1.1" 200 115
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+"GET /header/random HTTP/1.1" 200 115
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+"GET /header/random HTTP/1.1" 200 116
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+"GET /header/random HTTP/1.1" 200 72
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+"GET /header/random HTTP/1.1" 200 72
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /header/random HTTP/1.1" 200 116
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /header/random HTTP/1.1" 200 116
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /header/random HTTP/1.1" 200 116
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /header/random HTTP/1.1" 200 116
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+"GET /header/random HTTP/1.1" 200 116
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /header/random HTTP/1.1" 200 115
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+"GET /header/random HTTP/1.1" 200 115
+"GET /header/random HTTP/1.1" 200 116
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+"GET /header/random HTTP/1.1" 200 116
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /header/random HTTP/1.1" 200 116
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /header/random HTTP/1.1" 200 116
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /header/random HTTP/1.1" 200 115
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /header/random HTTP/1.1" 200 70
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /header/random HTTP/1.1" 200 116
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+"GET /header/random HTTP/1.1" 200 116
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /header/random HTTP/1.1" 200 116
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+"GET /header/random HTTP/1.1" 200 192
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+"GET /header/random HTTP/1.1" 200 116
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+"GET /header/random HTTP/1.1" 200 116
+"GET /nodes/list HTTP/1.1" 200 362
+"GET /transactions/statistics?count=500 HTTP/1.1" 200 288192
+"GET /header/random HTTP/1.1" 200 192
+"POST /transactions HTTP/1.1" 200 449
+"GET /header/random HTTP/1.1" 200 116
+"GET /header/random HTTP/1.1" 200 116
+"POST /transactions HTTP/1.1" 200 866
+"POST /transactions/send HTTP/1.1" 200 1176
+Generated POW on multithread: df558f413969b9a3 for account xrb_3be8bf3zf5gm3f7swxm8mu1fcwneph5w4frj6mr1kc9jtpajyg3uiqtqiyks
+Generated POW on multithread: 99aa7a8302628eea for account xrb_3qnnmamrx98m8h996hgpxa5mr18u5f6hpkmsgw6pc4a1sg9bnqy8gyb3748q
+Generated POW on multithread: d4aae712c3a90d33 for account xrb_3bmntijn5qyuxu7pspsc5cinut1ncishpppraimrmip6u5r46pkdb9cjxf9w
+Generated POW on multithread: 6276ddd3e78e2467 for account xrb_1u9bhpx387fstng84bmkh1sc3ttp6q3xwbdagfmkedg13pn4ftj868fjb5zn

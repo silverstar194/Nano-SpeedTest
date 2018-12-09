@@ -6,9 +6,9 @@ import { connect } from 'react-redux';
 
 class LocationDropdowns extends Component {
     render() {
-        const { nodes, settings } = this.props;
-        return ( nodes &&
-            <div>
+        const { nodes, settings, show } = this.props;
+        return ( nodes && show &&
+            <>
                 <form>
                     <label className='label'>Origin</label>
                     <Field name='origin' component='select'>
@@ -49,7 +49,7 @@ class LocationDropdowns extends Component {
                         }
                     </Field>
                 </form>
-            </div>
+            </>
         );
     }
 }

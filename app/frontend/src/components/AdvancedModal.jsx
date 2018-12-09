@@ -101,7 +101,7 @@ class AdvancedModal extends Component {
                                             nodes && Object.keys(nodes).filter((nodeId) => {
                                                 if (settings && settings.advSettings && settings.advSettings.values //grab the origin nodes value and don't show it
                                                     && settings.advSettings.values.destination) {
-                                                    return settings.advSettings.values.destination !== nodeId;
+                                                    return settings.advSettings.values.destination.toString() !== nodeId;
                                                 } else {
                                                     return true;
                                                 }
@@ -123,7 +123,7 @@ class AdvancedModal extends Component {
                                             nodes && Object.keys(nodes).filter((nodeId) => {
                                                 if (settings && settings.advSettings && settings.advSettings.values //grab the origin nodes value and don't show it
                                                     && settings.advSettings.values.origin) {
-                                                    return settings.advSettings.values.origin !== nodeId;
+                                                    return settings.advSettings.values.origin.toString() !== nodeId;
                                                 } else {
                                                     return true;
                                                 }

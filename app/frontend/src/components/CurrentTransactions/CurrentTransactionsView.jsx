@@ -29,7 +29,7 @@ const errorMessage = (mostRecent, isFetchingTransaction) =>
 class CurrentTransactionsView extends Component {
     handleRerun = () => {
         console.log(this.props.mostRecent);
-        this.props.onRerun(this.props.mostRecent.origin.toString(), this.props.mostRecent.destination.toString());
+        this.props.onRerun(this.props.mostRecent[0].origin.toString(), this.props.mostRecent[0].destination.toString());
     };
 
     render() {

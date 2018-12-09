@@ -12,8 +12,11 @@ import LocationDropdowns from './LocationDropdowns';
 class HomePage extends Component {
     // component specific state -- don't need to add to redux store
     state = {
-        modalOpen: false
+        modalOpen: false,
     };
+
+    // putting this in state would make us need to call setState() inside the render function.  React doesn't like that.
+    showDropdowns = true;
 
     onAdvancedClick = () => {
         this.props.onAdvPressed();
@@ -62,8 +65,10 @@ class HomePage extends Component {
         const { values } = (advSettingsForm && advSettingsForm.advSettings) || {};
         if (values) {
             if (values.numTransactions) { // multi transaction message
-                return <h3 className='greeting'>Hit GO to send {values.numTransactions} Transactions!</h3>;
+                this.showDropdowns = false;
+                return <h3 className='greeting'>Hit GO to send {values.numTransactions} random Transactions!</h3>;
             } else if (values.origin && values.destination) { // two city message
+                this.showDropdowns = true;
                 return <h3 className='greeting'>Hit GO to send Nano from {this.nodeIdToLocation(values.origin, nodes)}
                 &nbsp;to {this.nodeIdToLocation(values.destination, nodes)}!</h3>;
             }
@@ -93,6 +98,7 @@ class HomePage extends Component {
                             <LocationDropdowns
                                 nodes={nodes}
                                 settings={advSettingsForm}
+                                show={this.showDropdowns}
                             />
 
                             <button type='button' className='btn btn-success btn-circle btn-xl' onClick={this.onClick}>
@@ -137,11 +143,11 @@ const mapDispatchToProps = (dispatch) => {
                         destinationNodeId: null
                     });
                 }
-                dispatch(fetchTransaction({
+                dispatch(fetchTransaction(multi, {
                     transactions
                 }));
             } else {
-                dispatch(fetchTransaction({
+                dispatch(fetchTransaction(1, {
                     transactions: [{
                         originNodeId: origin,
                         destinationNodeId: dest
