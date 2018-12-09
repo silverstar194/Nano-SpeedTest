@@ -83,7 +83,6 @@ const mapDispatchToProps = (dispatch) => {
         onRerun(origin, dest, multi, table) {
             if (multi > 1) {
                 let transactions = [];
-                console.log(table)
                 for (let i = 1; i <= multi; i++) {
                     transactions.push({
                         originNodeId: table[table.length - i].origin.id.toString(),

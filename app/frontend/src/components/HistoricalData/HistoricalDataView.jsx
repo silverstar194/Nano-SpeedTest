@@ -70,8 +70,7 @@ class HistoricalDataView extends React.Component {
                             <h2 className='map-header text-center'>
                                 Locations of Our Nano Nodes
                             </h2>
-                            { nodeLocations && Object.keys(nodeLocations).length ?
-
+                            { nodeLocations && nodeLocations.length ?
                                 <HeatMap nodeLocations={nodeLocations} /> : null
                             }
                         </div>
@@ -108,7 +107,7 @@ HistoricalDataView.propTypes = {
     pastTransactions: PropTypes.array.isRequired,
     totalTransactions: PropTypes.number,
     globalAverage: PropTypes.number,
-    nodeLocations: PropTypes.object
+    nodeLocations: PropTypes.array
 };
 
 HistoricalDataView.defaultProps = {
