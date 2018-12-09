@@ -146,7 +146,7 @@ class POWService:
 
             logger.info('Starting PoW thread.')
 
-            cls.thread_pool = ThreadPool(processes=10)
+            cls.thread_pool = ThreadPool(processes=4)
             cls.thread = threading.Thread(target=cls._run)
             cls.thread.daemon = daemon
             cls.thread.start()
@@ -165,15 +165,19 @@ class POWService:
     def POW_account_thread_asyc(cls, account):
         rpc = nano.rpc.Client(account.wallet.node.URL)
 
-        try:
-            frontier = rpc.frontiers(account=account.address, count=1)[account.address]
-
-            if account.POW is None or not rpc.work_validate(work=account.POW, hash=frontier):
-                logger.info('Enqueuing address: ' + account.address)
-                POWService.enqueue_account(address=account.address, frontier=frontier)
-        except Exception as e:
-            logger.error('Error getting hash for: ' + account.address)
-            account.unlock()
+        for i in range(1,6):
+            try:
+                frontier = rpc.frontiers(account=account.address, count=1)[account.address]
+                logger.info('Frontier %s for %s address ' % (frontier, account.address))
+                if account.POW is None or not rpc.work_validate(work=account.POW, hash=frontier):
+                    logger.info('Enqueuing address %s' % (account.address))
+                    POWService.enqueue_account(address=account.address, frontier=frontier)
+                    break
+            except Exception as e:
+                logger.error('Error getting hash for %s try %s of 5' % (account.address, str(i)))
+                time.sleep(10)
+                if i == 5:
+                    account.unlock()
 
 
     @classmethod

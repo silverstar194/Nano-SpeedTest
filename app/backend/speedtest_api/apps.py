@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 class SpeedtestApiConfig(AppConfig):
     name = 'speedtest_api'
-    thread_pool = ThreadPool(processes=10)
+    thread_pool = ThreadPool(processes=4)
 
     def ready(self):
         from .services.accounts import get_accounts, sync_accounts
