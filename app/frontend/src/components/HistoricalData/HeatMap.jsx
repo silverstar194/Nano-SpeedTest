@@ -8,7 +8,7 @@ const size = `1200x600`;
 const googleKey = process.env.REACT_APP_GOOGLE_MAPS_KEY;
 
 const HeatMap = ({nodeLocations}) => {
-    const points = Object.keys(nodeLocations).map((id) => nodeLocations[id].coords);
+    const points = nodeLocations.map((node) => node.coords );
     const markers = `size:small|${points.join('|')}`;
     // Google maps will auto zoom and fit any markers on a map
     return (
@@ -19,7 +19,7 @@ const HeatMap = ({nodeLocations}) => {
 };
 
 HeatMap.propTypes = {
-    nodeLocations: PropTypes.object.isRequired
+    nodeLocations: PropTypes.array.isRequired
 };
 
 export default HeatMap;
