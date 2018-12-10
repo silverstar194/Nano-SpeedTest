@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
 import { Field, reduxForm } from 'redux-form';
+import '../styles/Field.css';
 
 // Need to make this a class component so it can have some local state
 class AdvancedModal extends Component {
@@ -40,7 +41,10 @@ class AdvancedModal extends Component {
                 style={{
                     content: {
                         bottom: 'auto',
-                        width: 'auto'
+                        width: 'auto',
+                        maxWidth: '750px',
+                        margin: 'auto',
+
                     }
                 }}
             >
@@ -91,7 +95,7 @@ class AdvancedModal extends Component {
                             <div>
                                 <label>Origin</label>
                                 <div>
-                                    <Field name='origin' component='select'>
+                                    <Field name='origin' component='select' className='background-select'>
                                         {
                                             nodes && nodes.filter(node => {
                                                 if (settings && settings.advSettings && settings.advSettings.values //grab the origin nodes value and don't show it
@@ -114,7 +118,7 @@ class AdvancedModal extends Component {
                             <div>
                                 <label>Destination</label>
                                 <div>
-                                    <Field name='destination' component='select'>
+                                    <Field name='destination' component='select'  className='background-select'>
                                         {
                                             nodes && nodes.filter(node => {
                                                 if (settings && settings.advSettings && settings.advSettings.values //grab the origin nodes value and don't show it
@@ -138,7 +142,7 @@ class AdvancedModal extends Component {
                                 <button
                                     id='submit'
                                     type='submit'
-                                    className='btn btn-primary float-right col-2'
+                                    className='btn btn-primary float-right col-4'
                                 >Save
                                 </button>
                             </div>
@@ -160,7 +164,7 @@ class AdvancedModal extends Component {
                                 <button
                                     id='submit'
                                     type='submit'
-                                    className='btn btn-primary float-right col-2'
+                                    className='btn btn-primary float-right col-4'
                                 >Save
                                 </button>
                             </div>

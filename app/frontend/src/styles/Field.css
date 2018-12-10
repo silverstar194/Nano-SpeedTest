@@ -1,0 +1,13 @@
+.btn{
+    white-space:normal !important;
+    word-wrap: break-word;
+    font-size:.75em;
+}
+
+.background-select {
+    background: lightgray;
+    order: 0;
+    border:0;
+    box-shadow: none;
+    border: 1px solid gray;
+ }
