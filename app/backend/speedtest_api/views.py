@@ -39,7 +39,7 @@ def generate_transaction(request):
     try
         body = json.loads(request.body)
     except Exception as e:
-        return JsonResponse({'message': "You must include a body with your post."},
+        return JsonResponse({'message': "You must include a body with valid JSON."},
                             status=400)
 
     batch = batches.new_batch(client_ip)
