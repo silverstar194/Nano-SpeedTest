@@ -36,7 +36,11 @@ def generate_transaction(request):
                             status=403)
 
     client_ip, is_routable = get_client_ip(request)
-    body = json.loads(request.body)
+    try
+        body = json.loads(request.body)
+    except Exception as e:
+        return JsonResponse({'message': "You must include a body with your post."},
+                            status=400)
 
     batch = batches.new_batch(client_ip)
     body_transactions = body['transactions']
