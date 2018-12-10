@@ -93,7 +93,6 @@ class HomePage extends Component {
                     <div className='row'>
                         <div className='col-md-12 text-center'>
                             {this.drawMessage(advSettingsForm, nodes)}
-
                             <LocationDropdowns
                                 nodes={nodes}
                                 settings={advSettingsForm}
