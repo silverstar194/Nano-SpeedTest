@@ -65,7 +65,7 @@ class PastResultsTable extends React.Component {
         return (
             <div className='nano-container table-responsive'>
                 <h2 className='map-header text-left'>Past Transactions</h2>
-                <table className='table'>
+                <table className='table '>
                     <thead>
                     <tr>
                         <th scope='col'>Origin</th>
