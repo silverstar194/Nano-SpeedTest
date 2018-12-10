@@ -51,15 +51,15 @@ def get_accounts(enabled=True, node=None, in_use=None):
     @return: Query of all accounts (filtered by enabled or node)
     """
     if in_use is not None and node:
-        return models.Account.objects.filter(wallet__node__id=node.id).filter(in_use=in_use)
+        return models.Account.objects.filter(wallet__node__id=node.id).filter(in_use=in_use).select_related()
 
     if in_use is not None:
-        return models.Account.objects.filter(wallet__node__enabled=enabled).filter(in_use=in_use)
+        return models.Account.objects.filter(wallet__node__enabled=enabled).filter(in_use=in_use).select_related()
 
     if node:
-        return models.Account.objects.filter(wallet__node__id=node.id)
+        return models.Account.objects.filter(wallet__node__id=node.id).select_related()
 
-    return models.Account.objects.filter(wallet__node__enabled=enabled)
+    return models.Account.objects.filter(wallet__node__enabled=enabled).select_related()
 
 def get_account(address):
     """
@@ -86,7 +86,7 @@ def sync_accounts():
 
     accounts_list = get_accounts()
 
-    thread_pool = ThreadPool(processes=10)
+    thread_pool = ThreadPool(processes=4)
     thread_pool.apply_async(check_account_async, accounts_list)
     thread_pool.close()
     thread_pool.join()
