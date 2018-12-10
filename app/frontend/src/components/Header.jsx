@@ -1,8 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import HeaderItem from './HeaderItem';
-import { withRouter } from 'react-router';
+import { withRouter } from 'react-router'; // provides access to the history and location
 
+/**
+ * location: has pathname to current url which is used on the tab
+ * to: url to navigate to
+ * text: display name of the tab
+ */
 const Header = ({location}) => {
 	const activeTab = location && location.pathname.substring(1);
 	return (
