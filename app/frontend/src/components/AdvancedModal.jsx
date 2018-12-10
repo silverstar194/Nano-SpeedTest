@@ -95,7 +95,7 @@ class AdvancedModal extends Component {
                             <div>
                                 <label>Origin</label>
                                 <div>
-                                    <Field name='origin' component='select' className='background-select'>
+                                    <Field name='origin' component='select' className='background-select noselect'>
                                         {
                                             nodes && nodes.filter(node => {
                                                 if (settings && settings.advSettings && settings.advSettings.values //grab the origin nodes value and don't show it
@@ -118,7 +118,7 @@ class AdvancedModal extends Component {
                             <div>
                                 <label>Destination</label>
                                 <div>
-                                    <Field name='destination' component='select'  className='background-select'>
+                                    <Field name='destination' component='select'  className='background-select noselect'>
                                         {
                                             nodes && nodes.filter(node => {
                                                 if (settings && settings.advSettings && settings.advSettings.values //grab the origin nodes value and don't show it
