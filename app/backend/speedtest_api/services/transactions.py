@@ -306,7 +306,7 @@ def time_receive_block_async(transaction):
     POWService.enqueue_account(address=transaction.origin.address, frontier=transaction.transaction_hash_sending, wait=True)
     POWService.enqueue_account(address=transaction.destination.address, frontier=transaction.transaction_hash_receiving, wait=True)
 
-def simple_send(from_account, to_address, amount):
+def simple_send(from_account, to_address, amount, generate_PoW=True):
     """
     Send funds from managed account to external/new account. ONLY send block will be generated and sent. No receive block or timing is handled.
 
@@ -327,11 +327,13 @@ def simple_send(from_account, to_address, amount):
             amount=amount
         )
 
-        POWService.enqueue_account(address=from_account.address, frontier=transaction_hash_sending)
+        if generate_PoW:
+            POWService.enqueue_account(address=from_account.address, frontier=transaction_hash_sending)
+
         from_account.current_balance = from_account.current_balance - amount
         from_account.save()
     except Exception as e:
-        logger.error("Error in simple_send account %s to account %s", from_account.address, to_address)
+        logger.error("Error in simple_send account %s to account %s %s", from_account.address, to_address, str(e))
 
     from_account.unlock()
 
