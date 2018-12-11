@@ -137,7 +137,7 @@ class MoreInfoPage extends Component {
                         <li>Time we broadcast receive block at location #2</li>
                         <li>Time we see the receive block back at location #1</li>
                     </ol>
-                    We time you see is the difference between steps 1 and 2. This represents the time is takes to send a transaction.
+                    The time you see is the difference between steps 1 and 2. This represents the time is takes to send a transaction.
                     Transactions are final and confirmed after step 2, steps 3 and 4 are pocketing steps for the receiving wallet.
                     <br/>
                     <a
