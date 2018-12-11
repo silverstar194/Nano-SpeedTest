@@ -164,20 +164,13 @@ def send_transaction(transaction):
         transaction.origin.current_balance = origin_balance
         transaction.origin.save()
         transaction.save()
+        logger.info("AccountBalanceMismatch %s" % transaction.origin.address)
 
+    if (origin_balance - transaction.amount < 0):
         ##Unlock accounts
         transaction.origin.unlock()
         transaction.destination.unlock()
-
-        raise AccountBalanceMismatchException(
-            balance_actual=origin_balance, 
-            balance_db=transaction.origin.current_balance,
-            account=transaction.origin.address
-        )
-    elif (origin_balance - transaction.amount < 0):
-        ##Unlock accounts
-        transaction.origin.unlock()
-        transaction.destination.unlock()
+        logger.info("InsufficientNanoException %s" % transaction.origin.address)
         raise InsufficientNanoException()
     
     # Make sure the wallet contains the account address
@@ -185,6 +178,7 @@ def send_transaction(transaction):
         ##Unlock accounts
         transaction.origin.unlock()
         transaction.destination.unlock()
+        logger.info("AddressDoesNotExistException %s" % transaction.origin.address)
         raise AddressDoesNotExistException(
             wallet=transaction.origin.wallet,
             account=transaction.origin.address
@@ -194,6 +188,7 @@ def send_transaction(transaction):
         ##Unlock accounts
         transaction.origin.unlock()
         transaction.destination.unlock()
+        logger.info("AddressDoesNotExistException %s" % transaction.destination.address)
         raise AddressDoesNotExistException(
             wallet=transaction.destination.wallet,
             account=transaction.destination.address
@@ -242,7 +237,7 @@ def send_transaction(transaction):
         transaction.destination.current_balance = transaction.destination.current_balance + transaction.amount
         transaction.origin.POW = None
     except nano.rpc.RPCException as e:
-        logger.error(e)
+        logger.error("RPCException one %s" % e.text)
         ##Unlock accounts
         transaction.origin.unlock()
         transaction.destination.unlock()
@@ -275,6 +270,7 @@ def send_transaction(transaction):
             transaction.save()
         except nano.rpc.RPCException:
             ##Unlock accounts
+            logger.error("RPCException two %s" % e.text)
             transaction.origin.unlock()
             transaction.destination.unlock()
             raise nano.rpc.RPCException()

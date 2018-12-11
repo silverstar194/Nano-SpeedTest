@@ -89,7 +89,7 @@ class POWService:
         try:
             if wait:
                 pass
-                #time.sleep(40)  ## Allow frontier block to clear before PoW is usable
+                #time.sleep(10)  ## Allow frontier block some time to clear before PoW is usable
 
             account = get_account(address=address)
             account.POW = cls.get_pow(address=address, hash=frontier)
