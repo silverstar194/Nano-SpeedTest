@@ -36,7 +36,7 @@ def generate_transaction(request):
                             status=403)
 
     client_ip, is_routable = get_client_ip(request)
-    try
+    try:
         body = json.loads(request.body)
     except Exception as e:
         return JsonResponse({'message': "You must include a body with valid JSON."},
