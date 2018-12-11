@@ -40,6 +40,7 @@ class POWService:
             except Exception as e:
                 logger.error('dPoW failure: %s try %s of 4' % (e, i))
                 if i == 4:
+                    logger.error('dPoW failure account %s unlocked without PoW' % address)
                     account.unlock()
             
             time.sleep(10)
@@ -54,6 +55,7 @@ class POWService:
             except Exception as e:
                 logger.error('Node work_generate error: %s try %s of 4' % (e, i))
                 if i == 4:
+                    logger.error('dPoW failure account %s unlocked without PoW' % address)
                     account.unlock()
             
             time.sleep(30)
@@ -102,6 +104,7 @@ class POWService:
             account.unlock()
         except Exception as e:
             logger.error('Exception in POW thread: %s ' % e)
+            logger.error('dPoW failure account %s unlocked without PoW' % address)
             account.unlock()  ## Prevent leaks
 
 
@@ -120,6 +123,7 @@ class POWService:
                 time.sleep(1)
         except Exception as e:
             get_account(address=address).unlock()
+            logger.error('dPoW failure account %s unlocked without PoW' % address)
             logger.error("Error in _run PoW address %s", address)
 
 
@@ -176,9 +180,10 @@ class POWService:
                     POWService.enqueue_account(address=account.address, frontier=frontier)
                     break
             except Exception as e:
-                logger.error('Error getting hash for %s try %s of 5' % (account.address, str(i)))
+                logger.error('Error %s getting hash for %s try %s of 5' % (str(e), account.address, str(i)))
                 time.sleep(10)
                 if i == 5:
+                    logger.error('dPoW failure account %s unlocked without PoW' % account.address)
                     account.unlock()
 
 
