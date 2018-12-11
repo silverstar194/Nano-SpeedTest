@@ -25,8 +25,10 @@ class HistoricalDataView extends React.Component {
         .forEach((transaction, i) => {
             plotData.push({
                 x: i,
+                y: transaction.elapsedTime,
                 date: transaction.endSendTimestamp,
-                y: transaction.elapsedTime
+                origin: transaction.origin.nodeLocation,
+                destination: transaction.destination.nodeLocation
             });
         });
 
@@ -58,7 +60,7 @@ class HistoricalDataView extends React.Component {
                     <div className='row'>
                         <div className='col-xs-12 col-sm-12 col-lg-6'>
                             <h2 className='map-header text-center'>
-                                Scatter Chart of Recent Transactions
+                                Scatter Chart of Last 250 Transactions
                             </h2>
                             {
                                 plotData && plotData.length ?

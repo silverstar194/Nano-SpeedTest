@@ -8,6 +8,7 @@ import {
     Tooltip,
     Legend
 } from 'recharts';
+import 'styles/ScatterTooltip.css';
 
 const xName = 'Date';
 const yName = 'Elapsed time';
@@ -21,12 +22,20 @@ const dateFormatterWithHMS = (tick) => (new Date(tick)).toLocaleDateString({}, {
 const timeFormatter = (value) => parseInt(value/1000);
 const timeFormatterWithMilli = (value) => (value/1000).toFixed(3);
 
-const formatTooltip = (value, unit, plotData) => {
-    if (unit === yName) { // dates
-        return timeFormatterWithMilli(value) + ' Seconds';
-    } else { // if the unit is date it is really array index so need to convert the displayed value to a date
-        return dateFormatterWithHMS(plotData[value].date);
-    }
+const CustomTooltip = ({active, payload}) => {
+    if (!active) return null;
+    //active means someone is hovering over a transaction
+    // payload[0] gives multiple fields include another payload, so payload[0].payload gives access to all information on a point
+    const data = payload[0].payload;
+
+    return (
+        <div className='custom-tooltip bg-light shadow rounded'>
+        <p>{`Date: ${dateFormatterWithHMS(data.date)}`}</p>
+        <p>{`Seconds: ${timeFormatterWithMilli(data.y)}`}</p>
+        <p>{`Origin: ${data.origin}`}</p>
+        <p>{`Destination: ${data.destination}`}</p>
+        </div>
+    );
 };
 
 const ScatterView = ({plotData}) => {
@@ -35,6 +44,7 @@ const ScatterView = ({plotData}) => {
         <ResponsiveContainer width='100%' height={500}>
             <ScatterChart>
                 <XAxis
+                    label={{ value: 'Ordered Chronologically By Date', position: 'insideBottom' }}
                     dataKey='x'
                     name={xName}
                     domain={['auto', 'auto']}
@@ -48,7 +58,7 @@ const ScatterView = ({plotData}) => {
                     name={yName}
                     tickFormatter={timeFormatter}
                 />
-                <Tooltip formatter={(value, unit) => formatTooltip(value, unit, plotData)} cursor={{ strokeDasharray: '3 3' }} />
+                <Tooltip content={<CustomTooltip/>} cursor={{ strokeDasharray: '3 3' }} />
                 <Legend />
                 <Scatter name='Transactions' data={plotData} fill='#8884d8' />
             </ScatterChart>
