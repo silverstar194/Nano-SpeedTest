@@ -3,7 +3,6 @@ import Ad from './Ad';
 import AdvancedModal from './AdvancedModal';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { switchTab } from '../actions/navigation';
 import { fetchTransaction } from '../actions/table';
 import '../styles/HomePage.css';
 import { openAdvSettings } from '../actions/advancedModal';
@@ -152,7 +151,6 @@ const mapDispatchToProps = (dispatch) => {
                     }]
                 }));
             }
-            dispatch(switchTab('Results')); // Update current active tab
         },
         onAdvPressed() {
             dispatch(openAdvSettings());

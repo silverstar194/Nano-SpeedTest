@@ -6,7 +6,6 @@ import { Provider } from 'react-redux';
 import NanoRouter from './NanoRouter';
 import * as serviceWorker from './serviceWorker';
 
-import navigation from './reducers/navigation';
 import table from './reducers/table';
 import transactions from './reducers/transactions';
 import pastResults from './reducers/pastResults';
@@ -17,7 +16,6 @@ import toasts from 'reducers/toasts';
 
 import rootEpic from './epics/table';
 import transactionsMiddleware from './middleware/transactionsMiddleware';
-import adLoader from './middleware/adLoader';
 
 import fetchAndUpdateAd from 'util/fetchAndUpdateAd';
 import { addNodes } from 'actions/nodes';
@@ -56,13 +54,7 @@ const eventsMap = {
 const gaMiddleware = createMiddleware(eventsMap, GoogleAnalytics());
 // <--- Redux Beacon
 
-// TODO - persist state so when user refreshes page, it doesn't delete state (bug: sets active tab to home, stays on
-// curr)
-const initialState = {
-    navigation: {
-        activeTab: '' // initialize the starting tab to be our default home page
-    }
-};
+const initialState = {};
 
 // call this in order to get argument needed for applyMiddleware (when creating the store)
 const epicMiddleware = createEpicMiddleware();
@@ -71,7 +63,6 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(
     combineReducers({
-        navigation,
         table,
         transactions,
         pastResults,
@@ -83,7 +74,7 @@ const store = createStore(
     }),
     initialState,
     composeEnhancers(
-        applyMiddleware(epicMiddleware, transactionsMiddleware, adLoader, gaMiddleware, routerMiddleware(history))
+        applyMiddleware(epicMiddleware, transactionsMiddleware, gaMiddleware, routerMiddleware(history))
     )
 );
 
