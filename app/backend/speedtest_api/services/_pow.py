@@ -199,7 +199,12 @@ class POWService:
         if not cls._running:
             cls.start(daemon=daemon)
 
-        accounts_list = get_accounts()
+        accounts_list = get_accounts(in_use=False)
+
+        for account in accounts_list:
+            account.lock() # Helps to prevent multi. startup threads from generating duplicate PoW.
+                           # Note: Not atomic so some duplicates will still happen. That's ok.
+
         cls.thread_pool.apply_async(cls.POW_account_thread_asyc, accounts_list)
         
         # If we are running this from the command, don't stop the main thread until we are done
