@@ -147,7 +147,7 @@ class MoreInfoPage extends Component {
                    <br/>
                    <br/>
                    <h5>How much Nano are you sending?</h5>
-                   Are are sending increments of nano, lower case. This is equal to less then $.01 USD.
+                   We are sending increments of nano, lower case. This is equal to less then $.01 USD.
                    <br/>
                    1 nano = 0.000001 NANO. NANO is the unit used on exchanges.
                    <br/>
