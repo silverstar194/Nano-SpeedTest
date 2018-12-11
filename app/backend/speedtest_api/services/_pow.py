@@ -97,7 +97,6 @@ class POWService:
 
             account = get_account(address=address)
             account.POW = cls.get_pow(address=address, hash=frontier)
-
             logger.info('Generated POW on multithread: %s for account %s' % (account.POW, account.address))
 
             # Also calls save()
