@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import '../styles/LocationDropdowns.css';
 import { connect } from 'react-redux';
+import '../styles/Field.css';
 
 
 class LocationDropdowns extends Component {
@@ -11,7 +12,7 @@ class LocationDropdowns extends Component {
             <>
             <form>
                 <label className='label'>Origin</label>
-                <Field name='origin' component='select'>
+                <Field name='origin' component='select' className='background-select noselect'>
                     {
                         nodes && nodes.filter(node => {
                             if (settings && settings.advSettings && settings.advSettings.values //grab the origin nodes value and don't show it
@@ -30,7 +31,7 @@ class LocationDropdowns extends Component {
                     }
                 </Field>
                 <label className='label'>Destination</label>
-                <Field name='destination' component='select'>
+                <Field name='destination' component='select' className='background-select noselect'>
                     {
                         nodes && nodes.filter(node => {
                             if (settings && settings.advSettings && settings.advSettings.values //grab the origin nodes value and don't show it

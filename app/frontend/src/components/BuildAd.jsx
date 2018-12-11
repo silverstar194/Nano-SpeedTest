@@ -298,7 +298,7 @@ class BuildAd extends Component {
                        <p>Your ad will be reviewed within 24 hours and you'll receive an e-mail.
                            <b> If your ad is approved, you must submit payment in order to secure your ad slot(s).</b>
                         </p>
-                      <button onClick={this.onSubmit} type='submit' className='btn btn-success'>Submit</button>
+                      <button onClick={this.onSubmit} type='submit' className='btn btn-success submit-button'>Submit</button>
                     </form>
                 </div>
                 }
