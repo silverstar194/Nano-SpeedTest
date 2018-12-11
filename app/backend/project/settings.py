@@ -60,10 +60,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+CRONTAB_COMMAND_PREFIX = '. $HOME/.bash_profile;'
 CRONJOBS = [
     ('0 * * * *', 'django.core.management.balance_accounts'),
     ('0 * * * *', 'django.core.management.clean_up'),
-    ('*/5 * * * *', 'speedtest_api.cron.node_status_job'),
+    ('*/15 * * * *', 'speedtest_api.cron.node_status_job'),
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True

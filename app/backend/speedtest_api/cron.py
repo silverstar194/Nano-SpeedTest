@@ -17,12 +17,15 @@ def node_status_job():
     subject = "URGENT: A node is down on NanoSpeed.live"
 
     for node in nodes:
-        if not nano.rpc.Client(node.URL).version():
+        try:
+            nano.rpc.Client(node.URL).version()
+        except Exception as e:
             try:
                 sg = sendgrid.SendGridAPIClient(apikey=settings.SENDGRID_API_KEY)
+                logger.error("Going %s ")
             except Exception as e:
                 logger.error("Error occurred connecting to sendgrid %s " % str(e))
-                continue
+                break
 
             text = """
               Hello Admin,
