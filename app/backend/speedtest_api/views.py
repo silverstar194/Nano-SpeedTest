@@ -149,9 +149,14 @@ def send_batch_transactions(request):
             except transactions.InvalidPOWException as e:
                 return JsonResponse({'message': "The transaction POW was invalid. Please try again."}, status=400)
 
+
         ## Wait on all transaction threads to complete
         for t in all_threads:
             t.join()
+
+        if not len(list(transactions_queue.queue)):
+            return JsonResponse({'message': "Please try again. No transactions generated."}, status=400)
+
 
         sent_batch = {
             'id': batch_id,
@@ -346,5 +351,5 @@ def send_transaction_async(transaction, out_queue):
     @param out_queue Queue to store transaction once finished
 
     """
-    tranaction_async = transactions.send_transaction(transaction)
-    out_queue.put(convert_transaction_to_dict(tranaction_async))
+    transaction_async = transactions.send_transaction(transaction)
+    out_queue.put(convert_transaction_to_dict(transaction_async))
