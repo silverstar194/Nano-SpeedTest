@@ -20,7 +20,7 @@ const loader = (
 );
 
 const errorMessage = (mostRecent, isFetchingTransaction) =>
-    (mostRecent && mostRecent.error && !isFetchingTransaction) ?
+    (mostRecent && mostRecent[0].error && !isFetchingTransaction) ?
         <div className='alert alert-danger' role='alert'>
             Something went wrong while trying to get the transaction.
             This is an issue with our servers and not the Nano network. Hold tight and try again.
@@ -31,11 +31,11 @@ const errorMessage = (mostRecent, isFetchingTransaction) =>
 class CurrentTransactionsView extends Component {
     render() {
         const { numToRerun, table, isFetchingTiming, isFetchingTransaction } = this.props;
-        const mostRecent = table.length && table[table.length - 1];
-        const sendMessage = mostRecent.completed ? 'Sent' : 'Sending';
+        const mostRecent = table.length && table.slice(table.length - numToRerun); // get the last numToRerun transactions
+        const sendMessage = mostRecent && mostRecent[0].completed ? 'Sent' : 'Sending';
         // render the jsx
 
-        const shouldShowTable = (isFetchingTransaction || mostRecent || isFetchingTiming);
+        const shouldShowTable = (isFetchingTransaction || mostRecent.length || isFetchingTiming);
         return (
             <Fragment>
                 <Ad/>
@@ -47,17 +47,20 @@ class CurrentTransactionsView extends Component {
                             : <Fragment>
                                 <div className='nano-container float-right'>
                                     <button id='rerun' className='btn btn-primary' onClick={
-                                        () => this.props.onRerun(
-                                            mostRecent.origin.id.toString(),
-                                            mostRecent.destination.id.toString(),
-                                            numToRerun,
-                                            table)
+                                        () => this.props.onRerun(numToRerun,table)
                                     }>Rerun Test
                                     </button>
                                 </div>
                                 <Table tableData={table}/>
                                 <h2 className='map-header page-header text-center'>
-                                    {sendMessage} from {mostRecent.origin.nodeLocation} to {mostRecent.destination.nodeLocation}
+                                    {sendMessage} from: {
+                                        mostRecent.map((trans) => {
+                                            const cites = `${trans.origin.nodeLocation} to ${trans.destination.nodeLocation}`;
+                                            return mostRecent.length === 1 ?
+                                                cites
+                                                : <React.Fragment key={trans.id}><br/>{cites}</React.Fragment>;
+                                        })
+                                    }
                                     {isFetchingTiming &&
                                     <Fragment>
                                         <p/>
@@ -66,7 +69,7 @@ class CurrentTransactionsView extends Component {
                                     }
                                 </h2>
                                 <div className='nano-container map-container text-center>'>
-                                    <Map {...mostRecent}/>
+                                    <Map transactions={mostRecent}/>
                                 </div>
                             </Fragment>
                     }</Fragment>
@@ -79,7 +82,7 @@ class CurrentTransactionsView extends Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onRerun(origin, dest, multi, table) {
+        onRerun(multi, table) {
             if (multi > 1) {
                 let transactions = [];
                 for (let i = 1; i <= multi; i++) {
@@ -95,8 +98,8 @@ const mapDispatchToProps = (dispatch) => {
             } else {
                 dispatch(fetchTransaction(1, {
                     transactions: [{
-                        originNodeId: origin,
-                        destinationNodeId: dest
+                        originNodeId: table[table.length - 1].origin.id.toString(),
+                        destinationNodeId: table[table.length - 1].destination.id.toString(),
                     }]
                 }));
             }
