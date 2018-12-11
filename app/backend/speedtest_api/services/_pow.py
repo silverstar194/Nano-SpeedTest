@@ -38,8 +38,9 @@ class POWService:
             try:
                 return cls._get_dpow(hash)['work']
             except Exception as e:
-                logger.error('dPoW failure: %s' % e)
-                account.unlock()
+                logger.error('dPoW failure: %s try %s of 4' % (e, i))
+                if i == 4:
+                    account.unlock()
             
             time.sleep(10)
 
@@ -51,8 +52,9 @@ class POWService:
                 POW = rpc_node.work_generate(hash)
                 break
             except Exception as e:
-                logger.error('Node work_generate error: %s' % e)
-                account.unlock()
+                logger.error('Node work_generate error: %s try %s of 4' % (e, i))
+                if i == 4:
+                    account.unlock()
             
             time.sleep(30)
         
@@ -99,7 +101,7 @@ class POWService:
             # Also calls save()
             account.unlock()
         except Exception as e:
-            logger.error('Exception in POW thread: ' + e)
+            logger.error('Exception in POW thread: %s ' % e)
             account.unlock()  ## Prevent leaks
 
 
@@ -165,7 +167,7 @@ class POWService:
     def POW_account_thread_asyc(cls, account):
         rpc = nano.rpc.Client(account.wallet.node.URL)
 
-        for i in range(1,6):
+        for i in range(6):
             try:
                 frontier = rpc.frontiers(account=account.address, count=1)[account.address]
                 logger.info('Frontier %s for %s address ' % (frontier, account.address))
