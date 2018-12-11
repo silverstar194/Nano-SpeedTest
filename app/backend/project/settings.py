@@ -64,6 +64,7 @@ MIDDLEWARE = [
 
 CRONJOBS = [
     ('0 * * * *', 'django.core.management.balance_accounts'),
+    ('0 * * * *', 'django.core.management.clean_up'),
     ('*/5 * * * *', 'speedtest_api.cron.node_status_job'),
 ]
 
