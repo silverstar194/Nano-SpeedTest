@@ -99,7 +99,9 @@ class POWService:
             account.POW = cls.get_pow(address=address, hash=frontier)
             logger.info('Generated POW on multithread: %s for account %s' % (account.POW, account.address))
 
-            # Also calls save()
+            time.sleep(1) ## Don't spam dPoW
+
+           # Also calls save()
             account.unlock()
         except Exception as e:
             logger.error('Exception in POW thread: %s ' % e)
@@ -116,8 +118,6 @@ class POWService:
                     address, frontier, wait = cls._pow_queue.get()
                     cls.thread_pool.apply_async(cls.threaded_PoW_worker, args=(address, frontier, wait,))
 
-                    # Don't spam the dPoW
-                    time.sleep(5)
                 # Run this every second
                 time.sleep(1)
         except Exception as e:
@@ -200,9 +200,7 @@ class POWService:
             cls.start(daemon=daemon)
 
         accounts_list = get_accounts()
-
-        for account in accounts_list:
-            cls.thread_pool.apply_async(cls.POW_account_thread_asyc, (account,))
+        cls.thread_pool.apply_async(cls.POW_account_thread_asyc, accounts_list)
         
         # If we are running this from the command, don't stop the main thread until we are done
         if not daemon:

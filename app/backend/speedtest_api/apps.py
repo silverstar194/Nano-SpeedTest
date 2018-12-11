@@ -66,7 +66,7 @@ class SpeedtestApiConfig(AppConfig):
         try:
             requests.post(url=node.URL, data={"action": "peers"})
         except Exception as e:
-            logger.error('Node %s not found.' % (node.URL))
+            logger.error('Node %s not found. %s ' % (node.URL, str(e)))
             raise NodeNotFoundException(node)
 
     def check_wallet_async(self, wallet):
