@@ -57,8 +57,7 @@ class CurrentTransactionsView extends Component {
                                 </div>
                                 <Table tableData={table}/>
                                 <h2 className='map-header page-header text-center'>
-                                    {sendMessage} from {mostRecent.origin.nodeLocation}
-                                    to {mostRecent.destination.nodeLocation}
+                                    {sendMessage} from {mostRecent.origin.nodeLocation} to {mostRecent.destination.nodeLocation}
                                     {isFetchingTiming &&
                                     <Fragment>
                                         <p/>
@@ -66,7 +65,7 @@ class CurrentTransactionsView extends Component {
                                     </Fragment>
                                     }
                                 </h2>
-                                <div className='nano-container map-container'>
+                                <div className='nano-container map-container text-center>'>
                                     <Map {...mostRecent}/>
                                 </div>
                             </Fragment>

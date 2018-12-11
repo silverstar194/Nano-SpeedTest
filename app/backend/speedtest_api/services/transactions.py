@@ -125,17 +125,17 @@ def new_transaction(origin_account, destination_account, amount, batch):
     if amount < 0:
         raise ValueError("Amount sent must be positive.")
 
+    ##Lock origin and destination accounts
+    ##Unlock accounts
+    origin_account.lock()
+    destination_account.lock()
+
     transaction = models.Transaction(
         origin=origin_account,
         destination=destination_account,
         amount=amount,
         batch=batch
     )
-
-    ##Lock origin and destination accounts
-    ##Unlock accounts
-    origin_account.lock()
-    destination_account.lock()
 
     transaction.save()
     return transaction

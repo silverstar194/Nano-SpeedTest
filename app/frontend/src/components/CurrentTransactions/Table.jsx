@@ -6,7 +6,7 @@ import uuid from 'uuid';
 const Table = ({tableData}) => {
 
     return (
-        <div className='nano-container'>
+        <div className='nano-container table-responsive'>
             <table className='table'>
                 <thead>
                 <tr>

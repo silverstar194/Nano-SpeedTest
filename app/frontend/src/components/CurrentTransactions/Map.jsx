@@ -4,7 +4,16 @@ import 'styles/GoogleMaps.css';
 
 const base = 'https://maps.googleapis.com/maps/api/staticmap';
 const scale = '2';
-const size = `1200x400`;
+var sizeTemp = '1200x400'
+
+var w = window.innerWidth;
+
+if(w && w !== 0 && w < 800){
+        sizeTemp = w+'x'+(w*3)
+}
+
+const size = sizeTemp
+
 const googleKey = process.env.REACT_APP_GOOGLE_MAPS_KEY;
 
 const makeCoordinate = (point) => {
