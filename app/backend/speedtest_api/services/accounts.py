@@ -80,6 +80,7 @@ def get_account(address):
 def get_accounts_ignore_lock():
     """
     Get an account in the database regardless of if its locked or not.
+    TODO
     """
 
     accounts_list = models.Account.objects.filter(wallet__node__enabled=True).filter(current_balance__gt=0).select_related()
@@ -91,7 +92,7 @@ def sync_accounts():
 
     @raise RPCException: RPC Failure
     """
-    accounts_list = get_accounts_ignore_lock() # Not great all threads will vaildate TODO
+    accounts_list = get_accounts() # Not great all threads will vaildate TODO
 
     thread_pool = ThreadPool(processes=8)
     for account in accounts_list:
