@@ -25,12 +25,11 @@ class Command(BaseCommand):
        Cleans up and validates database state
 
         """
-        from ...services.accounts import get_accounts, sync_accounts
+        from ...services.accounts import get_accounts, sync_accounts, unlock_all_accounts
         from ...services._pow import POWService
         from ...services.wallets import get_wallets
 
-        logger.info('Starting POWService and running POW_accounts() for clean up...')
-        POWService.start()
+        logger.info('POW_accounts() for clean up...')
         POWService.POW_accounts()
 
         logger.info('Syncing account balances...')
@@ -57,8 +56,7 @@ class Command(BaseCommand):
         # Clear locks on all accounts to cleanup any leaks at the DB layer
         # Issues may arise from parallelism is pending transactions are cleared.
         # The impact will quite low as the pending transaction would be to be immediately selected to reuse.
-        for account in enabled_accounts:
-            account.unlock()
+        unlock_all_accounts()
 
 
     def check_wallet_async(self, wallet):

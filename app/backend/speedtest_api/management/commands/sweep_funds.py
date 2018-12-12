@@ -36,7 +36,7 @@ class Command(BaseCommand):
             i+=1
             logger.info("%s of %s %s -> %s" % (i, len(accounts_list), account.address, out_address))
             if account.current_balance > 0:
-                simple_send(account, out_address, int(account.current_balance))
+                simple_send(account, out_address, int(account.current_balance), generate_PoW=False)
                 time.sleep(10) ## Helps with timeout issues on nodes
 
         # Disable nodes

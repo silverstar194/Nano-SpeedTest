@@ -38,10 +38,10 @@ class POWService:
             try:
                 return cls._get_dpow(hash)['work']
             except Exception as e:
-                logger.error('dPoW failure: %s' % e)
-                account.unlock()
-            
-            time.sleep(10)
+                logger.error('dPoW failure: %s try %s of 4' % (e, i))
+                time.sleep(15)
+                if i == 4:
+                    logger.error('dPoW failure account %s' % address)
 
         rpc_node = nano.rpc.Client(account.wallet.node.URL)
         POW = None
@@ -51,14 +51,16 @@ class POWService:
                 POW = rpc_node.work_generate(hash)
                 break
             except Exception as e:
-                logger.error('Node work_generate error: %s' % e)
-                account.unlock()
-            
-            time.sleep(30)
+                logger.error('Node work_generate error: %s try %s of 4' % (e, i))
+                time.sleep(30)
+                if i == 4:
+                    logger.error('dPoW failure account %s unlocked without PoW' % address)
+                    account.unlock()
         
         # Add third POW that cannot fail (if it does our account object becomes broken)
 
         if POW is None:
+            account.unlock()
             raise Exception()
 
         return POW
@@ -93,13 +95,14 @@ class POWService:
 
             account = get_account(address=address)
             account.POW = cls.get_pow(address=address, hash=frontier)
+            logger.info('Generated POW on multithread: %s for account %s' % (account.POW, account))
+            time.sleep(1) ## Don't spam dPoW
 
-            logger.info('Generated POW on multithread: %s for account %s' % (account.POW, account.address))
-
-            # Also calls save()
+           # Also calls save()
             account.unlock()
         except Exception as e:
-            logger.error('Exception in POW thread: ' + e)
+            logger.error('Exception in POW thread: %s ' % e)
+            logger.error('dPoW failure account %s unlocked without PoW' % address)
             account.unlock()  ## Prevent leaks
 
 
@@ -112,12 +115,11 @@ class POWService:
                     address, frontier, wait = cls._pow_queue.get()
                     cls.thread_pool.apply_async(cls.threaded_PoW_worker, args=(address, frontier, wait,))
 
-                    # Don't spam the dPoW
-                    time.sleep(5)
                 # Run this every second
                 time.sleep(1)
         except Exception as e:
             get_account(address=address).unlock()
+            logger.error('dPoW failure account %s unlocked without PoW' % address)
             logger.error("Error in _run PoW address %s", address)
 
 
@@ -165,7 +167,7 @@ class POWService:
     def POW_account_thread_asyc(cls, account):
         rpc = nano.rpc.Client(account.wallet.node.URL)
 
-        for i in range(1,6):
+        for i in range(6):
             try:
                 frontier = rpc.frontiers(account=account.address, count=1)[account.address]
                 logger.info('Frontier %s for %s address ' % (frontier, account.address))
@@ -174,9 +176,10 @@ class POWService:
                     POWService.enqueue_account(address=account.address, frontier=frontier)
                     break
             except Exception as e:
-                logger.error('Error getting hash for %s try %s of 5' % (account.address, str(i)))
+                logger.error('Error %s getting hash for %s try %s of 5' % (str(e), account.address, str(i)))
                 time.sleep(10)
                 if i == 5:
+                    logger.error('dPoW failure account %s unlocked without PoW' % account.address)
                     account.unlock()
 
 
@@ -193,10 +196,12 @@ class POWService:
         if not cls._running:
             cls.start(daemon=daemon)
 
-        accounts_list = get_accounts()
+        accounts_list = get_accounts(in_use=False)
 
-        for account in accounts_list:
-            cls.thread_pool.apply_async(cls.POW_account_thread_asyc, (account,))
+        lock_all_accounts()# Helps to prevent multi. startup threads from generating duplicate PoW.
+                           # Note: Not atomic so some duplicates will still happen. That's ok.
+
+        cls.thread_pool.apply_async(cls.POW_account_thread_asyc, accounts_list)
         
         # If we are running this from the command, don't stop the main thread until we are done
         if not daemon:
