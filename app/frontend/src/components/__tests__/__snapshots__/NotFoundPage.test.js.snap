@@ -1,67 +1,44 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders snapshot correctly 1`] = `
-<div>
+<div
+  class="container"
+>
   <div
-    className="nav nav-tabs"
+    class="row"
   >
-    <li
-      className="nav-item"
+    <div
+      class="col-md-12 text-center"
     >
-      <a
-        className="nav-link active"
-        href="/"
-        onClick={[Function]}
+      <div
+        class="error-template"
       >
-         
-        Speed Test
-         
-      </a>
-    </li>
-    <li
-      className="nav-item"
-    >
-      <a
-        className="nav-link "
-        href="/Results"
-        onClick={[Function]}
-      >
-         
-        Your Results
-         
-      </a>
-    </li>
-    <li
-      className="nav-item"
-    >
-      <a
-        className="nav-link "
-        href="/Stats"
-        onClick={[Function]}
-      >
-         
-        Global Statistics
-         
-      </a>
-    </li>
-    <li
-      className="nav-item"
-    >
-      <a
-        className="nav-link "
-        href="/Info"
-        onClick={[Function]}
-      >
-         
-        More Info
-         
-      </a>
-    </li>
+        <h1>
+          Oops!
+        </h1>
+        <h2>
+          404 Not Found
+        </h2>
+        <div
+          class="error-details"
+        >
+          Sorry, an error has occured, Requested page not found!
+        </div>
+        <div
+          class="error-actions"
+        >
+          <a
+            class="btn btn-primary btn-lg"
+            href="/"
+          >
+            <span
+              class="glyphicon glyphicon-home"
+            />
+            Take Me Home
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
-  <h1
-    className="page-header text-center"
-  >
-    404
-  </h1>
 </div>
 `;

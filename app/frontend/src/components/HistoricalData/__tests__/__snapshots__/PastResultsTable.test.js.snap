@@ -2,7 +2,7 @@
 
 exports[`renders snapshot correctly 1`] = `
 <div
-  className="nano-container"
+  className="nano-container table-responsive"
 >
   <h2
     className="map-header text-left"
@@ -89,7 +89,7 @@ exports[`renders snapshot correctly 1`] = `
             </button>
           </li>
           <li
-            className="page-item disabled"
+            className="page-item"
           >
             <button
               className="page-link"

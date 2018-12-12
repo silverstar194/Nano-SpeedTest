@@ -11,6 +11,7 @@ import {
 
 describe('Actions - table', () => {
     it('should correctly setup addTransactions action', () => {
+        const batchId = 1;
         const transactionData = {
             hash: 'abc-123',
             origin: 'Chicago',
@@ -19,11 +20,12 @@ describe('Actions - table', () => {
             amount: 11111,
             completed: 'Oct 9, 2018'
         };
-        const action = addTransactions(transactionData);
+        const action = addTransactions(transactionData, batchId);
 
         expect(action).toEqual({
             type: ADD_TRANSACTIONS,
-            transactionData
+            transactionData,
+            batchId
         });
     });
 
@@ -40,13 +42,15 @@ describe('Actions - table', () => {
     });
 
     it('should correctly setup fetchTransaction action', () => {
+        const num = 1;
         const data = {
            id: 123
         };
-        const action = fetchTransaction(data);
+        const action = fetchTransaction(num, data);
 
         expect(action).toEqual({
             type: FETCH_TRANSACTION,
+            num,
             transactionParams: data
         });
     });

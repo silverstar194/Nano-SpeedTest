@@ -8,8 +8,12 @@ import { shallow } from 'enzyme';
 
 const mockStore = configureStore();
 let store = mockStore({
-    navigation: {
-        activeTab: ''
+    ads: {
+        currentAd: {
+            title: 'Title',
+            message: 'message',
+            url: 'www.test.com'
+        }
     }
 });
 
@@ -17,7 +21,7 @@ it('shallow renders without crashing', () => {
     shallow(<Ad store={store}/>);
 });
 
-it(`renders snapshot correctly when activeTab is ''`, () => {
+it(`renders snapshot correctly`, () => {
     const tree = renderer.create(
         <Provider store={store}>
             <BrowserRouter >

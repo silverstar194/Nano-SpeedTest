@@ -20,6 +20,20 @@ describe('Actions - pastResults', () => {
         });
     });
 
+    it('should not fail if no transactions passed to addPastResults ', () => {
+        const data = {
+            totalTransactions: 125,
+            globalAverage: 25.333
+        };
+        const action = addPastResults(data);
+
+        expect(action).toEqual({
+            type: ADD_ALL_PAST_RESULTS,
+           ...data,
+           pastTransactions: []
+        });
+    });
+
     it('should correctly setup appendPastResults action', () => {
         const newResults = [{
             foo: 'bar'

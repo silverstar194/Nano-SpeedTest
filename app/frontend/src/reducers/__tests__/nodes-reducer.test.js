@@ -25,7 +25,7 @@ describe('Reducer - nodes', () => {
             nodesArray
         };
         const state = addNodes({}, action);
-        expect(state).toEqual({123: nodesArray[0]});
+        expect(state).toEqual([...nodesArray]);
     });
 
 });

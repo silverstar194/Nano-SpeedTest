@@ -5,62 +5,6 @@ exports[`renders base snapshot correctly 1`] = `
   className="HistoricalData"
 >
   <div
-    className="nav nav-tabs"
-  >
-    <li
-      className="nav-item"
-    >
-      <a
-        className="nav-link "
-        href="/"
-        onClick={[Function]}
-      >
-         
-        Speed Test
-         
-      </a>
-    </li>
-    <li
-      className="nav-item"
-    >
-      <a
-        className="nav-link "
-        href="/Results"
-        onClick={[Function]}
-      >
-         
-        Your Results
-         
-      </a>
-    </li>
-    <li
-      className="nav-item"
-    >
-      <a
-        className="nav-link active"
-        href="/Stats"
-        onClick={[Function]}
-      >
-         
-        Global Statistics
-         
-      </a>
-    </li>
-    <li
-      className="nav-item"
-    >
-      <a
-        className="nav-link "
-        href="/Info"
-        onClick={[Function]}
-      >
-         
-        More Info
-         
-      </a>
-    </li>
-  </div>
-  <div
     className="container"
   >
     <div
@@ -71,12 +15,15 @@ exports[`renders base snapshot correctly 1`] = `
       >
         <a
           className="row"
-          href="https://nano21.net"
+          href="url"
+          rel="noopener noreferrer"
+          target="_blank"
         >
           <b>
-            ♠ Nano21.net 
+            Title
           </b>
-            | 20 Nano Give-Away for testers! | Nano Blackjack Casino
+           
+          Message
         </a>
         <p
           className="row"
@@ -92,14 +39,14 @@ exports[`renders base snapshot correctly 1`] = `
     <div
       className="row form-group"
     >
-      <h2
-        className="map-header text-center"
-      >
-        Some Stats
-      </h2>
       <div
         className="container-fluid"
       >
+        <h2
+          className="map-header"
+        >
+          Some Stats
+        </h2>
         <div
           className="row form-group"
         >
@@ -128,19 +75,19 @@ exports[`renders base snapshot correctly 1`] = `
       </div>
     </div>
     <div
-      className="row form-group mt-5"
+      className="row"
     >
       <div
-        className="col-6"
+        className="col-xs-12 col-sm-12 col-lg-6"
       >
         <h2
           className="map-header text-center"
         >
-          Scatter Chart of Recent Transactions
+          Scatter Chart of Last 250 Transactions
         </h2>
       </div>
       <div
-        className="col-6"
+        className="col-xs-12 col-sm-12 col-lg-6"
       >
         <h2
           className="map-header text-center"
@@ -150,13 +97,13 @@ exports[`renders base snapshot correctly 1`] = `
       </div>
     </div>
     <div
-      className="row form-groups mt-5"
+      className="row"
     >
       <div
-        className="col"
+        className="col-12"
       >
         <div
-          className="nano-container"
+          className="nano-container table-responsive"
         >
           <h2
             className="map-header text-left"
@@ -243,7 +190,7 @@ exports[`renders base snapshot correctly 1`] = `
                     </button>
                   </li>
                   <li
-                    className="page-item disabled"
+                    className="page-item"
                   >
                     <button
                       className="page-link"

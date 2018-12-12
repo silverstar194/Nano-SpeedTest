@@ -8,23 +8,37 @@ import { shallow } from 'enzyme';
 
 const mockStore = configureStore();
 let store = mockStore({
-    navigation: {
-        activeTab: ''
-    }
+    ads: {
+        currentAd: {
+            title: 'Title',
+            message: 'message',
+            url: 'url'
+        }
+    },
+    nodes: [
+        {
+            id: 1,
+            location: 'A'
+        },
+        {
+            id: 2,
+            location: 'B'
+        }
+    ]
 });
 
 const props = {
     history: {},
     onGoPressed: () => {},
     advSettingsForm: {},
-    nodes: {
-        1: {
+    nodes: [
+        {
             location: 'A'
         },
-        2: {
+        {
             location: 'B'
         }
-    }
+    ]
 };
 
 it('shallow renders without crashing', () => {

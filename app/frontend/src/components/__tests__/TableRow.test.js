@@ -7,7 +7,9 @@ const props = {
     index: 0,
     id: 123,
     origin: {},
-    destination: {}
+    destination: {},
+    transactionHashSending: 'ABC123',
+    transactionHashReceiving: 'ZXY321'
 };
 
 it('shallow renders without crashing', () => {
