@@ -71,7 +71,7 @@ def get_account(address):
     """
 
     try:
-        return models.Account.objects.get(address=address)
+        return models.Account.objects.filter(address=address)[0]
     except models.Account.DoesNotExist:
         return None
     except MultipleObjectsReturned:
@@ -86,14 +86,28 @@ def sync_accounts():
 
     accounts_list = get_accounts()
 
-    thread_pool = ThreadPool(processes=4)
-    thread_pool.apply_async(check_account_async, accounts_list)
+    thread_pool = ThreadPool(processes=8)
+    for account in accounts_list:
+        thread_pool.apply_async(check_account_async, (account,))
     thread_pool.close()
     thread_pool.join()
 
+def unlock_all_accounts():
+    """
+    Unlock all the account at once for speed at DB layer
+    """
+    models.Account.objects.all().update(in_use=False)
+
+
+def lock_all_accounts():
+    """
+    Lock all the account at once for speed at DB layer
+    """
+    models.Account.objects.all().update(in_use=True)
 
 def check_account_async(account):
     rpc = nano.rpc.Client(account.wallet.node.URL)
+    logger.info('Syncing account: %s' % account)
 
     try:
         rpc.search_pending_all()
@@ -102,7 +116,7 @@ def check_account_async(account):
             rpc.receive(wallet=account.wallet.wallet_id, account=account.address, block=block_hash)
             account.POW = None
             account.save()
-            logger.warning('Received block: %s' % block_hash)
+            logger.info('Received block: %s' % block_hash)
     except Exception as e:
         logger.error('Error trying to receive blocks (for %s): %s' % (account.address, e))
 

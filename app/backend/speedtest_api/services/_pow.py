@@ -39,11 +39,9 @@ class POWService:
                 return cls._get_dpow(hash)['work']
             except Exception as e:
                 logger.error('dPoW failure: %s try %s of 4' % (e, i))
+                time.sleep(15)
                 if i == 4:
-                    logger.error('dPoW failure account %s unlocked without PoW' % address)
-                    account.unlock()
-            
-            time.sleep(10)
+                    logger.error('dPoW failure account %s' % address)
 
         rpc_node = nano.rpc.Client(account.wallet.node.URL)
         POW = None
@@ -54,15 +52,15 @@ class POWService:
                 break
             except Exception as e:
                 logger.error('Node work_generate error: %s try %s of 4' % (e, i))
+                time.sleep(30)
                 if i == 4:
                     logger.error('dPoW failure account %s unlocked without PoW' % address)
                     account.unlock()
-            
-            time.sleep(30)
         
         # Add third POW that cannot fail (if it does our account object becomes broken)
 
         if POW is None:
+            account.unlock()
             raise Exception()
 
         return POW
@@ -97,8 +95,7 @@ class POWService:
 
             account = get_account(address=address)
             account.POW = cls.get_pow(address=address, hash=frontier)
-            logger.info('Generated POW on multithread: %s for account %s' % (account.POW, account.address))
-
+            logger.info('Generated POW on multithread: %s for account %s' % (account.POW, account))
             time.sleep(1) ## Don't spam dPoW
 
            # Also calls save()
@@ -201,8 +198,7 @@ class POWService:
 
         accounts_list = get_accounts(in_use=False)
 
-        for account in accounts_list:
-            account.lock() # Helps to prevent multi. startup threads from generating duplicate PoW.
+        lock_all_accounts()# Helps to prevent multi. startup threads from generating duplicate PoW.
                            # Note: Not atomic so some duplicates will still happen. That's ok.
 
         cls.thread_pool.apply_async(cls.POW_account_thread_asyc, accounts_list)
