@@ -196,10 +196,10 @@ class POWService:
         if not cls._running:
             cls.start(daemon=daemon)
 
-        accounts_list = get_accounts_ignore_lock(in_use=False)
+        accounts_list = get_accounts(in_use=False) ## Locking should be done properly here
 
-        lock_all_accounts()# Helps to prevent multi. startup threads from generating duplicate PoW.
-                           # Note: Not atomic so some duplicates will still happen. That's ok.
+        lock_all_accounts() # Helps to prevent multi. startup threads from generating duplicate PoW.
+                            # Note: Not atomic so some duplicates will still happen. That's ok.
 
         for account in accounts_list:
             cls.thread_pool.apply_async(cls.POW_account_thread_asyc, (account,))
