@@ -201,7 +201,8 @@ class POWService:
         lock_all_accounts()# Helps to prevent multi. startup threads from generating duplicate PoW.
                            # Note: Not atomic so some duplicates will still happen. That's ok.
 
-        cls.thread_pool.apply_async(cls.POW_account_thread_asyc, accounts_list)
+        for account in accounts_list:
+            cls.thread_pool.apply_async(cls.POW_account_thread_asyc, (account,))
         
         # If we are running this from the command, don't stop the main thread until we are done
         if not daemon:

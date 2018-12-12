@@ -30,16 +30,16 @@ class SpeedtestApiConfig(AppConfig):
         logger.info('Syncing account balances...')
         sync_accounts()
 
-        # # Current state validator that fixes changes between Nano and our DB
+        # Current state validator that fixes changes between Nano and our DB
         logger.info('Starting node, wallet and account validation...')
 
-        # # Check to see if the node contains the wallets
+        # Check to see if the node contains the wallets
         enabled_wallets = get_wallets()
         self.thread_pool.apply_async(self.check_wallet_async, enabled_wallets)
 
         logger.info('Nodes and wallets validated...')
 
-        # # Check to see if the accounts are contained in the wallets
+        # Check to see if the accounts are contained in the wallets
         enabled_accounts = get_accounts()
         self.thread_pool.apply_async(self.check_account_async, enabled_accounts)
 
@@ -48,9 +48,9 @@ class SpeedtestApiConfig(AppConfig):
         self.thread_pool.close()
         self.thread_pool.join()
 
-        # # Clear locks on all accounts to cleanup any leaks at the DB layer
-        # # Issues may arise from parallelism is pending transactions are cleared.
-        # # The impact will quite low as the pending transaction would be to be immediately selected to reuse.
+        # Clear locks on all accounts to cleanup any leaks at the DB layer
+        # Issues may arise from parallelism is pending transactions are cleared.
+        # The impact will quite low as the pending transaction would be to be immediately selected to reuse.
         unlock_all_accounts()
 
 

@@ -51,15 +51,15 @@ def get_accounts(enabled=True, node=None, in_use=None):
     @return: Query of all accounts (filtered by enabled or node)
     """
     if in_use is not None and node:
-        return models.Account.objects.filter(wallet__node__id=node.id).filter(in_use=in_use).select_related()
+        return models.Account.objects.filter(wallet__node__id=node.id).filter(in_use=in_use).filter(current_balance__gt=0).select_related()
 
     if in_use is not None:
-        return models.Account.objects.filter(wallet__node__enabled=enabled).filter(in_use=in_use).select_related()
+        return models.Account.objects.filter(wallet__node__enabled=enabled).filter(in_use=in_use).filter(current_balance__gt=0).select_related()
 
     if node:
-        return models.Account.objects.filter(wallet__node__id=node.id).select_related()
+        return models.Account.objects.filter(wallet__node__id=node.id).filter(current_balance__gt=0).select_related()
 
-    return models.Account.objects.filter(wallet__node__enabled=enabled).select_related()
+    return models.Account.objects.filter(wallet__node__enabled=enabled).filter(current_balance__gt=0).select_related()
 
 def get_account(address):
     """
@@ -71,7 +71,7 @@ def get_account(address):
     """
 
     try:
-        return models.Account.objects.filter(address=address)[0]
+        return models.Account.objects.get(address=address)
     except models.Account.DoesNotExist:
         return None
     except MultipleObjectsReturned:
@@ -84,7 +84,7 @@ def sync_accounts():
     @raise RPCException: RPC Failure
     """
 
-    accounts_list = get_accounts()
+    accounts_list = models.Account.objects.filter(wallet__node__enabled=True).select_related()
 
     thread_pool = ThreadPool(processes=8)
     for account in accounts_list:
