@@ -77,14 +77,21 @@ def get_account(address):
     except MultipleObjectsReturned:
         raise MultipleObjectsReturned()
 
+def get_accounts_ignore_lock():
+    """
+    Get an account in the database regardless of if its locked or not.
+    """
+
+    accounts_list = models.Account.objects.filter(wallet__node__enabled=True).select_related()
+    return accounts_list
+
 def sync_accounts():
     """
     Sync all the account balances with the nano network. If there is a difference, the account's POW will also be reset
 
     @raise RPCException: RPC Failure
     """
-
-    accounts_list = models.Account.objects.filter(wallet__node__enabled=True).select_related()
+    accounts_list = get_accounts_ignore_lock()
 
     thread_pool = ThreadPool(processes=8)
     for account in accounts_list:
