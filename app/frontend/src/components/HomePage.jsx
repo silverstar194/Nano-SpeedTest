@@ -34,7 +34,7 @@ class HomePage extends Component {
         const destAdv = !!hasAdvFormData && notSameAdv ? hasAdvFormData.values.destination : null;
 
         // multiple transactions
-        const numTransactions = hasAdvFormData && hasAdvFormData.values && hasAdvFormData.values.numTransactions ? hasAdvFormData.values.numTransactions : false;
+        const numTransactions = hasAdvFormData && hasAdvFormData.values && hasAdvFormData.values.numTransactions ? parseInt(hasAdvFormData.values.numTransactions) : false;
 
         this.props.onGoPressed(originAdv, destAdv, numTransactions); // Update current active tab and dispatch action to get
         // transaction data
