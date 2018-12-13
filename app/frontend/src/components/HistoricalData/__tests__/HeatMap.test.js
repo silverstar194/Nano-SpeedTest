@@ -11,13 +11,13 @@ let points;
 let markers;
 
 it('shallow renders without crashing', () => {
-    const nodeLocations = {
-        444: {
+    const nodeLocations = [
+        {
             latitude: 123,
             longitude: 456,
             coords: '123,456'
         }
-    };
+    ];
     shallow(<HeatMap nodeLocations={nodeLocations}/>);
     points = Object.keys(nodeLocations).map((id) => nodeLocations[id].coords);
     markers = `size:small|${points.join('|')}`;

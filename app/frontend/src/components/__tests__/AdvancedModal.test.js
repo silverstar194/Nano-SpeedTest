@@ -7,19 +7,14 @@ import { BrowserRouter} from 'react-router-dom';
 import { shallow } from 'enzyme';
 
 const mockStore = configureStore();
-let store = mockStore({
-    navigation: {
-        activeTab: ''
-    }
-});
-
+let store = mockStore({});
 it('shallow renders without crashing', () => {
     shallow(<AdvancedModal store={store}/>);
 });
 
 it(`renders base snapshot correctly`, () => {
     const tree = renderer.create(
-        <Provider store={store}>
+        <Provider  store={store}>
             <BrowserRouter >
                 <AdvancedModal />
             </BrowserRouter>
@@ -41,17 +36,16 @@ it(`renders two cities snapshot correctly`, () => {
                 }
             }
         },
-        nodes: {
-            123: {
+        nodes: [
+            {
                 id: 123,
                 location: 'A'
             },
-            222: {
+            {
                 id: 222,
                 location: 'B'
             }
-
-        }
+        ]
     };
     const tree = renderer.create(
         <Provider store={store}>
@@ -68,17 +62,16 @@ it(`renders multi snapshot correctly`, () => {
         multipleActive: true,
     };
     const props = {
-        nodes: {
-            123: {
+        nodes: [
+            {
                 id: 123,
                 location: 'A'
             },
-            222: {
+            {
                 id: 222,
                 location: 'B'
             }
-
-        }
+        ]
     };
     const tree = renderer.create(
         <Provider store={store}>

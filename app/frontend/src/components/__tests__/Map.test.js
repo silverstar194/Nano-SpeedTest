@@ -4,7 +4,7 @@ import Map from '../CurrentTransactions/Map';
 import { shallow } from 'enzyme';
 
 it('shallow renders without crashing', () => {
-    const testMapData = {
+    const testMapData = [{
         origin: {
             latitude: "1.293100",
             longitude: "103.850100"
@@ -13,12 +13,12 @@ it('shallow renders without crashing', () => {
             latitude: "40.804300",
             longitude: "-74.012100"
         }
-    };
-    shallow(<Map {...testMapData}/>);
+    }];
+    shallow(<Map transactions={testMapData}/>);
 });
 
 it(`renders snapshot correctly`, () => {
-    const testMapData = {
+    const testMapData = [{
         origin: {
             latitude: "1.293100",
             longitude: "103.850100"
@@ -27,9 +27,9 @@ it(`renders snapshot correctly`, () => {
             latitude: "40.804300",
             longitude: "-74.012100"
         }
-    };
+    }];
     const tree = renderer.create(
-        <Map {...testMapData}/>
+        <Map transactions={testMapData}/>
     ).toJSON();
     expect(tree).toMatchSnapshot();
 });

@@ -10,7 +10,7 @@ describe('Actions - nodes', () => {
                 origin: 'Singapore',
                 destination: 'New York'
             }
-        ]
+        ];
         const action = addNodes(nodesArray);
 
         expect(action).toEqual({

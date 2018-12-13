@@ -21,7 +21,7 @@ exports[`renders stats page correctly even if not active tab 1`] = `
   className="nav-item"
 >
   <a
-    className="nav-link "
+    className="nav-link"
     href="/Stats"
     onClick={[Function]}
   >
