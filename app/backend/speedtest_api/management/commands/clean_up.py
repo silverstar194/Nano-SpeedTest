@@ -1,10 +1,7 @@
 import logging
 import time
-import requests
 
 from django.core.management.base import BaseCommand, CommandError
-from multiprocessing.pool import ThreadPool
-import nano
 
 from ...models import *
 from ...services import *
@@ -24,4 +21,5 @@ class Command(BaseCommand):
        Django auto runs startup code for ant command
 
         """
-        pass
+        time.sleep(60*5)  # Allow PoW to finish across threads
+        logger.info("Clean up task completed...")

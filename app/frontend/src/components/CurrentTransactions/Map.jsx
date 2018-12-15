@@ -52,7 +52,7 @@ const Map = ({transactions}) => {
     const locations = transactionPairs.join('|'); // gives all locations in one single string
     const paths = transactionPairs.join('&path='); // each needs to be draw separately
     const markers = markerPairs.join("&")
-    
+
     return (
         <img className='GoogleMap'
         src={`${base}?size=${size}&scale=${scale}&${markers}&path=${paths}&key=${googleKey}`}
