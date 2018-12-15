@@ -5,62 +5,6 @@ exports[`renders base snapshot correctly 1`] = `
   className="HomePage"
 >
   <div
-    className="nav nav-tabs"
-  >
-    <li
-      className="nav-item"
-    >
-      <a
-        className="nav-link active"
-        href="/"
-        onClick={[Function]}
-      >
-         
-        Speed Test
-         
-      </a>
-    </li>
-    <li
-      className="nav-item"
-    >
-      <a
-        className="nav-link "
-        href="/Results"
-        onClick={[Function]}
-      >
-         
-        Your Results
-         
-      </a>
-    </li>
-    <li
-      className="nav-item"
-    >
-      <a
-        className="nav-link "
-        href="/Stats"
-        onClick={[Function]}
-      >
-         
-        Global Statistics
-         
-      </a>
-    </li>
-    <li
-      className="nav-item"
-    >
-      <a
-        className="nav-link "
-        href="/Info"
-        onClick={[Function]}
-      >
-         
-        More Info
-         
-      </a>
-    </li>
-  </div>
-  <div
     className="container"
   >
     <div
@@ -71,12 +15,15 @@ exports[`renders base snapshot correctly 1`] = `
       >
         <a
           className="row"
-          href="https://nano21.net"
+          href="url"
+          rel="noopener noreferrer"
+          target="_blank"
         >
           <b>
-            ♠ Nano21.net 
+            Title
           </b>
-            | 20 Nano Give-Away for testers! | Nano Blackjack Casino
+           
+          message
         </a>
         <p
           className="row"
@@ -100,11 +47,60 @@ exports[`renders base snapshot correctly 1`] = `
       <div
         className="col-md-12 text-center"
       >
-        <h3
-          className="greeting"
-        >
-          Hit GO to send Nano between two random nodes!
-        </h3>
+        <form>
+          <label
+            className="label"
+          >
+            Origin
+          </label>
+          <select
+            className="background-select noselect"
+            name="origin"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            onFocus={[Function]}
+            value=""
+          >
+            <option
+              value={1}
+            >
+              A
+            </option>
+            <option
+              value={2}
+            >
+              B
+            </option>
+          </select>
+          <label
+            className="label"
+          >
+            Destination
+          </label>
+          <select
+            className="background-select noselect"
+            name="destination"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            onFocus={[Function]}
+            value=""
+          >
+            <option
+              value={1}
+            >
+              A
+            </option>
+            <option
+              value={2}
+            >
+              B
+            </option>
+          </select>
+        </form>
         <button
           className="btn btn-success btn-circle btn-xl"
           onClick={[Function]}
@@ -130,6 +126,14 @@ exports[`renders base snapshot correctly 1`] = `
       </div>
     </div>
     <div />
+    <div
+      className="shadow-none p-3 mb-5 bg-light rounded"
+    >
+      <h5>
+        What is Nano?
+      </h5>
+      Nano is a next-generation cryptocurrency created by Colin LeMahieu for instant and free transactions. It's block-lattice structure enables decentralized transactions without loss of security, speed, or high costs.
+    </div>
   </div>
 </div>
 `;
@@ -139,62 +143,6 @@ exports[`renders multi city snapshot correctly 1`] = `
   className="HomePage"
 >
   <div
-    className="nav nav-tabs"
-  >
-    <li
-      className="nav-item"
-    >
-      <a
-        className="nav-link active"
-        href="/"
-        onClick={[Function]}
-      >
-         
-        Speed Test
-         
-      </a>
-    </li>
-    <li
-      className="nav-item"
-    >
-      <a
-        className="nav-link "
-        href="/Results"
-        onClick={[Function]}
-      >
-         
-        Your Results
-         
-      </a>
-    </li>
-    <li
-      className="nav-item"
-    >
-      <a
-        className="nav-link "
-        href="/Stats"
-        onClick={[Function]}
-      >
-         
-        Global Statistics
-         
-      </a>
-    </li>
-    <li
-      className="nav-item"
-    >
-      <a
-        className="nav-link "
-        href="/Info"
-        onClick={[Function]}
-      >
-         
-        More Info
-         
-      </a>
-    </li>
-  </div>
-  <div
     className="container"
   >
     <div
@@ -205,12 +153,15 @@ exports[`renders multi city snapshot correctly 1`] = `
       >
         <a
           className="row"
-          href="https://nano21.net"
+          href="url"
+          rel="noopener noreferrer"
+          target="_blank"
         >
           <b>
-            ♠ Nano21.net 
+            Title
           </b>
-            | 20 Nano Give-Away for testers! | Nano Blackjack Casino
+           
+          message
         </a>
         <p
           className="row"
@@ -234,11 +185,60 @@ exports[`renders multi city snapshot correctly 1`] = `
       <div
         className="col-md-12 text-center"
       >
-        <h3
-          className="greeting"
-        >
-          Hit GO to send Nano between two random nodes!
-        </h3>
+        <form>
+          <label
+            className="label"
+          >
+            Origin
+          </label>
+          <select
+            className="background-select noselect"
+            name="origin"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            onFocus={[Function]}
+            value=""
+          >
+            <option
+              value={1}
+            >
+              A
+            </option>
+            <option
+              value={2}
+            >
+              B
+            </option>
+          </select>
+          <label
+            className="label"
+          >
+            Destination
+          </label>
+          <select
+            className="background-select noselect"
+            name="destination"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            onFocus={[Function]}
+            value=""
+          >
+            <option
+              value={1}
+            >
+              A
+            </option>
+            <option
+              value={2}
+            >
+              B
+            </option>
+          </select>
+        </form>
         <button
           className="btn btn-success btn-circle btn-xl"
           onClick={[Function]}
@@ -264,6 +264,14 @@ exports[`renders multi city snapshot correctly 1`] = `
       </div>
     </div>
     <div />
+    <div
+      className="shadow-none p-3 mb-5 bg-light rounded"
+    >
+      <h5>
+        What is Nano?
+      </h5>
+      Nano is a next-generation cryptocurrency created by Colin LeMahieu for instant and free transactions. It's block-lattice structure enables decentralized transactions without loss of security, speed, or high costs.
+    </div>
   </div>
 </div>
 `;
@@ -273,62 +281,6 @@ exports[`renders two city snapshot correctly 1`] = `
   className="HomePage"
 >
   <div
-    className="nav nav-tabs"
-  >
-    <li
-      className="nav-item"
-    >
-      <a
-        className="nav-link active"
-        href="/"
-        onClick={[Function]}
-      >
-         
-        Speed Test
-         
-      </a>
-    </li>
-    <li
-      className="nav-item"
-    >
-      <a
-        className="nav-link "
-        href="/Results"
-        onClick={[Function]}
-      >
-         
-        Your Results
-         
-      </a>
-    </li>
-    <li
-      className="nav-item"
-    >
-      <a
-        className="nav-link "
-        href="/Stats"
-        onClick={[Function]}
-      >
-         
-        Global Statistics
-         
-      </a>
-    </li>
-    <li
-      className="nav-item"
-    >
-      <a
-        className="nav-link "
-        href="/Info"
-        onClick={[Function]}
-      >
-         
-        More Info
-         
-      </a>
-    </li>
-  </div>
-  <div
     className="container"
   >
     <div
@@ -339,12 +291,15 @@ exports[`renders two city snapshot correctly 1`] = `
       >
         <a
           className="row"
-          href="https://nano21.net"
+          href="url"
+          rel="noopener noreferrer"
+          target="_blank"
         >
           <b>
-            ♠ Nano21.net 
+            Title
           </b>
-            | 20 Nano Give-Away for testers! | Nano Blackjack Casino
+           
+          message
         </a>
         <p
           className="row"
@@ -368,11 +323,60 @@ exports[`renders two city snapshot correctly 1`] = `
       <div
         className="col-md-12 text-center"
       >
-        <h3
-          className="greeting"
-        >
-          Hit GO to send Nano between two random nodes!
-        </h3>
+        <form>
+          <label
+            className="label"
+          >
+            Origin
+          </label>
+          <select
+            className="background-select noselect"
+            name="origin"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            onFocus={[Function]}
+            value=""
+          >
+            <option
+              value={1}
+            >
+              A
+            </option>
+            <option
+              value={2}
+            >
+              B
+            </option>
+          </select>
+          <label
+            className="label"
+          >
+            Destination
+          </label>
+          <select
+            className="background-select noselect"
+            name="destination"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            onFocus={[Function]}
+            value=""
+          >
+            <option
+              value={1}
+            >
+              A
+            </option>
+            <option
+              value={2}
+            >
+              B
+            </option>
+          </select>
+        </form>
         <button
           className="btn btn-success btn-circle btn-xl"
           onClick={[Function]}
@@ -398,6 +402,14 @@ exports[`renders two city snapshot correctly 1`] = `
       </div>
     </div>
     <div />
+    <div
+      className="shadow-none p-3 mb-5 bg-light rounded"
+    >
+      <h5>
+        What is Nano?
+      </h5>
+      Nano is a next-generation cryptocurrency created by Colin LeMahieu for instant and free transactions. It's block-lattice structure enables decentralized transactions without loss of security, speed, or high costs.
+    </div>
   </div>
 </div>
 `;

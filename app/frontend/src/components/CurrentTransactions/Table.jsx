@@ -6,7 +6,7 @@ import uuid from 'uuid';
 const Table = ({tableData}) => {
 
     return (
-        <div className='nano-container'>
+        <div className='nano-container table-responsive'>
             <table className='table'>
                 <thead>
                 <tr>
@@ -21,7 +21,7 @@ const Table = ({tableData}) => {
                 </thead>
                 <tbody>
                 {
-                    tableData.sort((a,b) => b.endReceiveTimestamp - a.endReceiveTimestamp)
+                    tableData.sort((a,b) => (a.endSendTimestamp || Date.now()) - (b.endSendTimestamp || Date.now()))
                     .map((transactionData) => {
                         return <TableRow key={uuid(transactionData.id)} {...transactionData}/>;
                     })

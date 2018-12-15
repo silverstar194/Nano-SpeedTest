@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders snapshot correctly when activeTab is '' 1`] = `
+exports[`renders snapshot correctly 1`] = `
 <div
   className="container"
 >
@@ -12,12 +12,15 @@ exports[`renders snapshot correctly when activeTab is '' 1`] = `
     >
       <a
         className="row"
-        href="https://nano21.net"
+        href="www.test.com"
+        rel="noopener noreferrer"
+        target="_blank"
       >
         <b>
-          ♠ Nano21.net 
+          Title
         </b>
-          | 20 Nano Give-Away for testers! | Nano Blackjack Casino
+         
+        message
       </a>
       <p
         className="row"

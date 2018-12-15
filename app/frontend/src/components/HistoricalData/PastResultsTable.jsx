@@ -5,16 +5,14 @@ import uuid from 'uuid';
 import 'styles/PastResults.css';
 
 const viewItems = 25;
-//TODO switch to HASHes
 
 class PastResultsTable extends React.Component {
     constructor(props) {
         super(props);
-        const disableNext = (viewItems >= props.tableData.length);
         this.state = {
             startIndex: 0,
             disablePrev: true,
-            disableNext
+            disableNext: false
         };
         this.checkDisabled = this.checkDisabled.bind(this);
         this.nextPage = this.nextPage.bind(this);
@@ -65,7 +63,7 @@ class PastResultsTable extends React.Component {
         const prevClass = 'page-item' + (disablePrev ? ' disabled' : '');
         const nextClass = 'page-item' + (disableNext ? ' disabled' : '');
         return (
-            <div className='nano-container'>
+            <div className='nano-container table-responsive'>
                 <h2 className='map-header text-left'>Past Transactions</h2>
                 <table className='table'>
                     <thead>
@@ -80,8 +78,8 @@ class PastResultsTable extends React.Component {
                     </tr>
                     </thead>
                     <tbody>
-                    { tableData && //TODO remove reverse
-                        tableData.sort((a,b) => b.endReceiveTimestamp - a.endReceiveTimestamp)
+                    { tableData &&
+                        tableData.sort((a,b) => b.endSendTimestamp - a.endSendTimestamp)
                         .slice(startIndex, end).map((transactionData) => {
                             return <PastResultsTableRow key={uuid(transactionData.id)} {...transactionData}/>;
                         })

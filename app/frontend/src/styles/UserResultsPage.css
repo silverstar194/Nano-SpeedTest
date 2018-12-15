@@ -9,6 +9,11 @@
     padding: 10px;
 }
 
+.text-ellipsis {
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+}
+
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
@@ -19,7 +24,7 @@
 }
 
 .nano-container {
-    padding: 10px 40px;
+    padding: 20px 40px;
 }
 
 .map-container {

@@ -1,13 +1,15 @@
 import {
     setTransactionFetchStatus,
     setTimingFetchStatus,
-} from './actions/transactions';
+} from '../actions/transactions';
 
 import {
     FETCH_TRANSACTION,
     ADD_TRANSACTIONS,
     ADD_TIMING_DATA
-} from './actions/table';
+} from '../actions/table';
+
+import {appendPastResults} from 'actions/pastResults';
 
 // 'Listens' for actions and will dispatch others while they are occurring
 const transactionsMiddleware = store => next => action => {
@@ -21,6 +23,7 @@ const transactionsMiddleware = store => next => action => {
             break;
         case ADD_TIMING_DATA:
             store.dispatch(setTimingFetchStatus(false));
+            store.dispatch(appendPastResults(action.timingData));
             break;
         default:
             break;

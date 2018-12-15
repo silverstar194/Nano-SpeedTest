@@ -15,6 +15,8 @@ class BalancingException(Exception):
         Exception.__init__(self, "Error occurred in the balance process.")
 
 class Command(BaseCommand):
+    help = "Balance all accounts in the database"
+
     def handle(self, *args, **options):
         """
         Balance all accounts in the database
@@ -84,6 +86,8 @@ class Command(BaseCommand):
                 logger.warning('Account is unopened: %s' % accounts[lower].address)
                 break
 
+            accounts[lower].refresh_from_db()
+
             found_lower = accounts[lower].POW is not None
 
         while not found_upper:
@@ -94,7 +98,9 @@ class Command(BaseCommand):
             if values[upper] == mean:
                 del values[upper]
                 del accounts[upper]
-                upper = upper - 1
+                continue
+
+            accounts[upper].refresh_from_db()
             
             found_upper = accounts[upper].POW is not None
         
@@ -115,8 +121,12 @@ class Command(BaseCommand):
         try:
             transaction = transactions.new_transaction(accounts[upper], accounts[lower], amount, batch)
             transactions.send_transaction(transaction)
+            logger.info('Balancing %s with %s amount %s' % (accounts[upper], accounts[lower], str(amount)))
         except Exception as e:
             logger.error('Transaction error: %s' % e)
+            accounts[upper].unlock()
+            accounts[lower].unlock()
+
             
         # Remove the accounts that got balanced (at least 1 did)
         if values[lower] + amount == mean:

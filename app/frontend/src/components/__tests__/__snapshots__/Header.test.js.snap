@@ -21,7 +21,7 @@ exports[`renders snapshot correctly when activeTab is '' 1`] = `
     className="nav-item"
   >
     <a
-      className="nav-link "
+      className="nav-link"
       href="/Results"
       onClick={[Function]}
     >
@@ -34,7 +34,7 @@ exports[`renders snapshot correctly when activeTab is '' 1`] = `
     className="nav-item"
   >
     <a
-      className="nav-link "
+      className="nav-link"
       href="/Stats"
       onClick={[Function]}
     >
@@ -47,12 +47,25 @@ exports[`renders snapshot correctly when activeTab is '' 1`] = `
     className="nav-item"
   >
     <a
-      className="nav-link "
+      className="nav-link"
       href="/Info"
       onClick={[Function]}
     >
        
       More Info
+       
+    </a>
+  </li>
+  <li
+    className="nav-item"
+  >
+    <a
+      className="nav-link font-weight-bold"
+      href="/BuildAd"
+      onClick={[Function]}
+    >
+       
+      Advertise
        
     </a>
   </li>

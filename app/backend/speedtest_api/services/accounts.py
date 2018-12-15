@@ -1,4 +1,5 @@
 import logging
+from multiprocessing.pool import ThreadPool
 
 from django.conf import settings as settings
 import nano
@@ -41,7 +42,7 @@ def new_account(wallet, address=None):
 
     return models.Account.objects.create(wallet=wallet, address=address)
 
-def get_accounts(enabled=True, node=None):
+def get_accounts(enabled=True, node=None, in_use=None):
     """
     Get all accounts in the database
 
@@ -49,11 +50,16 @@ def get_accounts(enabled=True, node=None):
     @param node: Filter based on accounts belonging to the node (precendence) 
     @return: Query of all accounts (filtered by enabled or node)
     """
+    if in_use is not None and node:
+        return models.Account.objects.filter(wallet__node__id=node.id).filter(in_use=in_use).filter(current_balance__gt=0).select_related()
 
-    if node is not None:
-        return models.Account.objects.filter(wallet__node__id=node.id)
+    if in_use is not None:
+        return models.Account.objects.filter(wallet__node__enabled=enabled).filter(in_use=in_use).filter(current_balance__gt=0).select_related()
 
-    return models.Account.objects.filter(wallet__node__enabled=enabled)
+    if node:
+        return models.Account.objects.filter(wallet__node__id=node.id).filter(current_balance__gt=0).select_related()
+
+    return models.Account.objects.filter(wallet__node__enabled=enabled).filter(current_balance__gt=0).select_related()
 
 def get_account(address):
     """
@@ -71,35 +77,63 @@ def get_account(address):
     except MultipleObjectsReturned:
         raise MultipleObjectsReturned()
 
+def get_accounts_ignore_lock():
+    """
+    Get an account in the database regardless of if its locked or not.
+    TODO
+    """
+
+    accounts_list = models.Account.objects.filter(wallet__node__enabled=True).filter(current_balance__gt=0).select_related()
+    return accounts_list
+
 def sync_accounts():
     """
     Sync all the account balances with the nano network. If there is a difference, the account's POW will also be reset
 
     @raise RPCException: RPC Failure
     """
+    accounts_list = get_accounts() # Not great all threads will vaildate TODO
 
-    accounts_list = get_accounts()
-
+    thread_pool = ThreadPool(processes=8)
     for account in accounts_list:
-        rpc = nano.rpc.Client(account.wallet.node.URL)
+        thread_pool.apply_async(check_account_async, (account,))
+    thread_pool.close()
+    thread_pool.join()
 
-        try:
-            rpc.search_pending_all()
-            incoming_blocks = rpc.pending(account=account.address)
-            for block_hash in incoming_blocks:
-                rpc.receive(wallet=account.wallet.wallet_id, account=account.address, block=block_hash)
-                account.POW = None
-                account.save()
-                logger.warning('Received block: %s' % block_hash)
-        except Exception as e:
-            logger.error('Error trying to receive blocks (for %s): %s' % (account.address, e))
+def unlock_all_accounts():
+    """
+    Unlock all the account at once for speed at DB layer
+    """
+    models.Account.objects.all().update(in_use=False)
 
-        new_balance = rpc.account_balance(account=account.address)['balance']
 
-        if new_balance != account.current_balance:
-            account.current_balance = new_balance
-            
-            # We reset the POW because if there is an issue here, that means the POW must have been changed
+def lock_all_accounts():
+    """
+    Lock all the account at once for speed at DB layer
+    """
+    models.Account.objects.all().update(in_use=True)
+
+def check_account_async(account):
+    rpc = nano.rpc.Client(account.wallet.node.URL)
+    logger.info('Syncing account: %s' % account)
+
+    try:
+        rpc.search_pending_all()
+        incoming_blocks = rpc.pending(account=account.address)
+        for block_hash in incoming_blocks:
+            rpc.receive(wallet=account.wallet.wallet_id, account=account.address, block=block_hash)
             account.POW = None
-
             account.save()
+            logger.info('Received block: %s' % block_hash)
+    except Exception as e:
+        logger.error('Error trying to receive blocks (for %s): %s' % (account.address, e))
+
+    new_balance = rpc.account_balance(account=account.address)['balance']
+
+    if new_balance != account.current_balance:
+        account.current_balance = new_balance
+
+        # We reset the POW because if there is an issue here, that means the POW must have been changed
+        account.POW = None
+
+    account.unlock()

@@ -8,8 +8,12 @@ import { shallow } from 'enzyme';
 
 const mockStore = configureStore();
 let store = mockStore({
-    navigation: {
-        activeTab: 'Stats'
+    ads: {
+        currentAd: {
+            title: 'Title',
+            message: 'Message',
+            url: 'url'
+        }
     },
     table: {
         0: {
@@ -43,7 +47,7 @@ let store = mockStore({
     pastResults: {
         pastTransactions:[]
     },
-    nodes: {},
+    nodes: [],
     form: {}
 });
 

@@ -1,0 +1,211 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders base snapshot correctly 1`] = `
+<div
+  className="HistoricalData"
+>
+  <div
+    className="container"
+  >
+    <div
+      className="jumbotron"
+    >
+      <div
+        id="ad-content"
+      >
+        <a
+          className="row"
+          href="url"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          <b>
+            Title
+          </b>
+           
+          Message
+        </a>
+        <p
+          className="row"
+        >
+          COMMUNITY AD
+        </p>
+      </div>
+    </div>
+  </div>
+  <div
+    className="container-fluid"
+  >
+    <div
+      className="row form-group"
+    >
+      <div
+        className="container-fluid"
+      >
+        <h2
+          className="map-header"
+        >
+          Some Stats
+        </h2>
+        <div
+          className="row form-group"
+        >
+          <div
+            className="col-auto"
+          >
+            <h3
+              className="map-header"
+            >
+              Total Transactions Sent: 
+              0
+            </h3>
+          </div>
+          <div
+            className="col-auto"
+          >
+            <h3
+              className="map-header"
+            >
+              Average Time: 
+              0.000
+               Seconds
+            </h3>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="row"
+    >
+      <div
+        className="col-xs-12 col-sm-12 col-lg-6"
+      >
+        <h2
+          className="map-header text-center"
+        >
+          Scatter Chart of Last 250 Transactions
+        </h2>
+      </div>
+      <div
+        className="col-xs-12 col-sm-12 col-lg-6"
+      >
+        <h2
+          className="map-header text-center"
+        >
+          Locations of Our Nano Nodes
+        </h2>
+      </div>
+    </div>
+    <div
+      className="row"
+    >
+      <div
+        className="col-12"
+      >
+        <div
+          className="nano-container table-responsive"
+        >
+          <h2
+            className="map-header text-left"
+          >
+            Past Transactions
+          </h2>
+          <table
+            className="table"
+          >
+            <thead>
+              <tr>
+                <th
+                  scope="col"
+                >
+                  Origin
+                </th>
+                <th
+                  scope="col"
+                >
+                  Destination
+                </th>
+                <th
+                  scope="col"
+                >
+                  Amount
+                </th>
+                <th
+                  scope="col"
+                >
+                  Elapsed Time
+                </th>
+                <th
+                  scope="col"
+                >
+                  Date
+                </th>
+                <th
+                  className="block-col"
+                  scope="col"
+                >
+                  Sending Block
+                </th>
+                <th
+                  className="block-col"
+                  scope="col"
+                >
+                  Receiving Block
+                </th>
+              </tr>
+            </thead>
+            <tbody />
+          </table>
+          <div
+            className="row"
+          >
+            <div
+              className="col-sm-auto"
+            >
+              Showing 
+              1
+               to 
+              0
+               of 
+              0
+               transactions.
+            </div>
+            <div
+              className="col-sm-auto"
+            >
+              <nav
+                aria-label="Table navigation"
+              >
+                <ul
+                  className="pagination"
+                >
+                  <li
+                    className="page-item disabled"
+                  >
+                    <button
+                      className="page-link"
+                      onClick={[Function]}
+                    >
+                      Prev
+                    </button>
+                  </li>
+                  <li
+                    className="page-item"
+                  >
+                    <button
+                      className="page-link"
+                      onClick={[Function]}
+                    >
+                      Next
+                    </button>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

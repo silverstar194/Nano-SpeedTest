@@ -2,8 +2,9 @@ import datetime
 import logging
 import queue
 import requests
-import threading
+from multiprocessing.pool import ThreadPool
 import time
+import threading
 
 from django.conf import settings as settings
 import nano
@@ -17,6 +18,7 @@ logger = logging.getLogger(__name__)
 class POWService:
     _pow_queue = queue.Queue()
     _running = False
+    thread_pool = None
     loop = None
     thread = None
 
@@ -30,23 +32,35 @@ class POWService:
         @return: POW as a string
         @raise RPCException: RPC Failure
         """
-        try:
-            return cls._get_dpow(hash)['work']
-        except Exception as e:
-            logger.error('dPoW failure: %s' % e)
-        
         account = get_account(address=address)
+
+        for i in range(5):
+            try:
+                return cls._get_dpow(hash)['work']
+            except Exception as e:
+                logger.error('dPoW failure: %s try %s of 4' % (e, i))
+                time.sleep(15)
+                if i == 4:
+                    logger.error('dPoW failure account %s' % address)
+
         rpc_node = nano.rpc.Client(account.wallet.node.URL)
         POW = None
 
-        for i in range(3):
+        for i in range(5):
             try:
                 POW = rpc_node.work_generate(hash)
                 break
             except Exception as e:
-                logger.error('Node work_generate error: %s' % e)
-            
+                logger.error('Node work_generate error: %s try %s of 4' % (e, i))
+                time.sleep(30)
+                if i == 4:
+                    logger.error('dPoW failure account %s unlocked without PoW' % address)
+                    account.unlock()
+        
+        # Add third POW that cannot fail (if it does our account object becomes broken)
+
         if POW is None:
+            account.unlock()
             raise Exception()
 
         return POW
@@ -73,30 +87,44 @@ class POWService:
         return res.json()
 
     @classmethod
+    def threaded_PoW_worker(cls, address, frontier, wait):
+        try:
+            if wait:
+                pass
+                #time.sleep(10)  ## Allow frontier block some time to clear before PoW is usable
+
+            account = get_account(address=address)
+            account.POW = cls.get_pow(address=address, hash=frontier)
+            logger.info('Generated POW on multithread: %s for account %s' % (account.POW, account))
+            time.sleep(1) ## Don't spam dPoW
+
+           # Also calls save()
+            account.unlock()
+        except Exception as e:
+            logger.error('Exception in POW thread: %s ' % e)
+            logger.error('dPoW failure account %s unlocked without PoW' % address)
+            account.unlock()  ## Prevent leaks
+
+
+    @classmethod
     def _run(cls):
         try:
             while cls._running:
+                # Multi-thread this worker (our POW generation time must be less than transaction period)
                 while not cls._pow_queue.empty():
-                    try:
-                        address, frontier = cls._pow_queue.get()
+                    address, frontier, wait = cls._pow_queue.get()
+                    cls.thread_pool.apply_async(cls.threaded_PoW_worker, args=(address, frontier, wait,))
 
-                        account = get_account(address=address)
-                        account.POW = cls.get_pow(address=address, hash=frontier)
-
-                        logger.info('Generated POW: %s for account %s' % (account.POW, account.address))
-
-                        account.save()
-                    except Exception as e:
-                        logger.error('Exception in POW thread: ' + e)
-                
                 # Run this every second
-                time.sleep(10)
+                time.sleep(1)
         except Exception as e:
-            logger.error(e)
-            print(e)
+            get_account(address=address).unlock()
+            logger.error('dPoW failure account %s unlocked without PoW' % address)
+            logger.error("Error in _run PoW address %s", address)
+
 
     @classmethod
-    def enqueue_account(cls, address, frontier):
+    def enqueue_account(cls, address, frontier, wait=False):
         """
         Add an address, hash pair to the queue for POW generation (this will update the account object)
 
@@ -104,8 +132,8 @@ class POWService:
         @param frontier: Frontier block to generate valid POW
         """
 
-        cls._pow_queue.put((address, frontier))
-    
+        cls._pow_queue.put((address, frontier, wait))
+
     @classmethod
     def start(cls, daemon=True):
         """
@@ -120,6 +148,7 @@ class POWService:
 
             logger.info('Starting PoW thread.')
 
+            cls.thread_pool = ThreadPool(processes=4)
             cls.thread = threading.Thread(target=cls._run)
             cls.thread.daemon = daemon
             cls.thread.start()
@@ -135,37 +164,50 @@ class POWService:
         cls._running = False
 
     @classmethod
+    def POW_account_thread_asyc(cls, account):
+        rpc = nano.rpc.Client(account.wallet.node.URL)
+
+        for i in range(6):
+            try:
+                frontier = rpc.frontiers(account=account.address, count=1)[account.address]
+                logger.info('Frontier %s for %s address ' % (frontier, account.address))
+                if account.POW is None or not rpc.work_validate(work=account.POW, hash=frontier):
+                    logger.info('Enqueuing address %s' % (account.address))
+                    POWService.enqueue_account(address=account.address, frontier=frontier)
+                    break
+            except Exception as e:
+                logger.error('Error %s getting hash for %s try %s of 5' % (str(e), account.address, str(i)))
+                time.sleep(10)
+                if i == 5:
+                    logger.error('dPoW failure account %s unlocked without PoW' % account.address)
+                    account.unlock()
+
+
+    @classmethod
     def POW_accounts(cls, daemon=True):
         """
         Generate POW for all accounts.
         If daemon is false, this method will wait for all POWs to be processed and saved
 
         @param daemon: Pass through to POWService.start(daemon)
-        @raise RPCException: RPC Failure
+         @raise RPCException: RPC Failure
         """
 
         if not cls._running:
             cls.start(daemon=daemon)
 
-        accounts_list = get_accounts()
+        accounts_list = get_accounts() ## Locking should be done properly here
 
         for account in accounts_list:
-            rpc = nano.rpc.Client(account.wallet.node.URL)
-
-            try:
-                frontier = rpc.frontiers(account=account.address, count=1)[account.address]
-
-                if account.POW is None or not rpc.work_validate(work=account.POW, hash=frontier):
-                    logger.info('Enqueuing address: ' + account.address)
-                    POWService.enqueue_account(address=account.address, frontier=frontier)
-            except Exception as e:
-                logger.error('Error getting hash for: ' + account.address)
+            cls.thread_pool.apply_async(cls.POW_account_thread_asyc, (account,))
         
         # If we are running this from the command, don't stop the main thread until we are done
         if not daemon:
+            cls.thread_pool.join()
+
             while not cls._pow_queue.empty():
                 time.sleep(1)
             
             cls.stop()
             cls.thread.join()
-                
+

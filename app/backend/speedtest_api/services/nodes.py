@@ -3,6 +3,10 @@ from django.conf import settings as settings
 from .. import models as models
 
 
+class NodeNotFoundException(Exception):
+    def __init__(self, node):
+        Exception.__init__(self, "Fatal error occurred occurred. Node %s not found." % (node.URL))
+
 def new_node(URL, latitude, longitude, location_name=None):
     """
     Create a new node from the given information

@@ -2,12 +2,14 @@ import { combineEpics, ofType } from 'redux-observable';
 import { mergeMap } from 'rxjs/operators';
 import { ADD_TRANSACTIONS, ADD_TIMING_DATA, FETCH_TRANSACTION } from 'actions/table';
 import { convertCoordsToString, fetchWrapper } from 'util/helpers';
+import { makeToast } from 'util/toasts';
+import { setTransactionFetchStatus } from 'actions/transactions';
 
 //TODO going to need better error handling if rejected or times out
 export const fetchTransaction = action$ => action$.pipe(
     ofType(FETCH_TRANSACTION),
     mergeMap(action =>
-        fetchWrapper('http://127.0.0.1:8000/transactions', {
+        fetchWrapper('transactions', {
             method: 'POST',
             body: JSON.stringify(action.transactionParams)
         }).then((data) => {
@@ -22,8 +24,12 @@ export const fetchTransaction = action$ => action$.pipe(
             });
             return { type: ADD_TRANSACTIONS, transactionData, batchId: data.id };
         }).catch((err) => {
-            //TODO handle error
-            console.warn("TODO error in fetchTransaction");
+            console.warn('Error: Failed to Create Transaction');
+            makeToast({
+                text: 'Something went wrong while creating the transaction',
+                status: 'danger'
+            });
+            return setTransactionFetchStatus(false);
         })
     )
 );
@@ -32,18 +38,25 @@ export const fetchTransaction = action$ => action$.pipe(
 export const fetchTransactionTiming = action$ => action$.pipe(
     ofType(ADD_TRANSACTIONS),
     mergeMap(action =>
-        fetchWrapper('http://127.0.0.1:8000/transactions/send', {
+        fetchWrapper('transactions/send', {
             method: 'POST',
             body: JSON.stringify({
                 id: action.batchId
             })
         }).then((parsedResponse) => {
+            makeToast({
+                text: 'Transaction Complete',
+                status: 'success'
+            });
             return { type: ADD_TIMING_DATA, timingData: parsedResponse.transactions};
         }).catch((err) => {
-            //TODO throw something
-            console.warn("TODO error in fetchTransactionTiming");
+            console.warn('Error in Fetching Timing Data');
             action.transactionData.forEach((trans) => {
                 trans.error = true;
+            });
+            makeToast({
+                text: 'Something went wrong while fetching the transaction from our server',
+                status: 'danger'
             });
             return { type: ADD_TIMING_DATA, timingData: action.transactionData};
         })

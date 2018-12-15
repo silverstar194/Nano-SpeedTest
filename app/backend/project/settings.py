@@ -25,6 +25,8 @@ SECRET_KEY = '1okg_00w23xs9o62%ql^iazaab0=pw2)4&ltt06=f0g)p_#zg3'
 # Key used to access the dPoW service
 DPOW_API_KEY = os.environ["NANO_ST__DPOW__API_KEY"]
 DPOW_ENDPOINT = os.environ["NANO_ST__DPOW__ENDPOINT"]
+SENDGRID_API_KEY = os.environ["NANO_ST__SENDGRID__API_KEY"]
+ADMIN_EMAIL = os.environ["NANO_ST__ADMIN_EMAIL"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -43,18 +45,27 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.admindocs',
     'corsheaders',
-    'speedtest_api'
+    'speedtest_api',
+    'django_crontab',
 ]
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'corsheaders.middleware.CorsPostCsrfMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.security.SecurityMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+CRONTAB_COMMAND_PREFIX = '. $HOME/.bash_profile;'
+CRONJOBS = [
+    ('0 */3 * * *', 'django.core.management.clean_up'),
+    ('*/15 * * * *', 'speedtest_api.cron.node_status_job'),
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -96,9 +107,10 @@ DATABASES = {
         'PASSWORD': os.environ["NANO_ST__DB__PASSWORD"],
         'HOST': os.environ["NANO_ST__DB__HOST"],
         'OPTIONS': {
-            'sql_mode': 'STRICT_ALL_TABLES'
-        }
-    }
+                'sql_mode': 'STRICT_ALL_TABLES',
+                'ssl': {'ca': os.environ["NANO_ST__DB__SSL__CA__CERT"]},
+         }
+     }
 }
 
 
@@ -129,6 +141,10 @@ LOGGING = {
             'class': 'logging.FileHandler',
             'filename': 'debug.log',
         },
+        'null': {
+            'level': 'DEBUG',
+            'class':'logging.NullHandler',
+        },
     },
     'loggers': {
         'django': {
@@ -136,7 +152,12 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': True,
         },
-    'speedtest_api': {
+        'django.db.backends': {
+            'handlers': ['null'],  # Quiet the database queries!
+            'propagate': False,
+            'level':'DEBUG',
+        },
+        'speedtest_api': {
         'handlers': ['file'],
         'level': 'DEBUG',
         'propagate': True,

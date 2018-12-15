@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
-import { Field, reduxForm} from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
+import '../styles/Field.css';
 
 // Need to make this a class component so it can have some local state
 class AdvancedModal extends Component {
@@ -30,13 +31,8 @@ class AdvancedModal extends Component {
         }
     };
 
-    cancelForm = () => {
-        this.props.reset();
-        this.props.handleCancel();
-    };
-
     render() {
-        const {open, handleLocationSettings, handleCancel, handleMultiSettings, nodes, settings} = this.props;
+        const { open, handleLocationSettings,handleMultiSettings, nodes, settings } = this.props;
         return (
             <Modal
                 appElement={document.getElementById('root')}
@@ -45,7 +41,10 @@ class AdvancedModal extends Component {
                 style={{
                     content: {
                         bottom: 'auto',
-                        width: 'auto'
+                        width: 'auto',
+                        maxWidth: '750px',
+                        margin: 'auto',
+
                     }
                 }}
             >
@@ -96,14 +95,21 @@ class AdvancedModal extends Component {
                             <div>
                                 <label>Origin</label>
                                 <div>
-                                    <Field name='origin' component='select'>
-                                        <option></option>
+                                    <Field name='origin' component='select' className='background-select noselect'>
                                         {
-                                            nodes && Object.keys(nodes).map(nodeKey => {
+                                            nodes && nodes.filter(node => {
+                                                if (settings && settings.advSettings && settings.advSettings.values //grab the origin nodes value and don't show it
+                                                    && settings.advSettings.values.destination) {
+                                                    return settings.advSettings.values.destination.toString() !== node.id.toString();
+                                                } else {
+                                                    return true;
+                                                }
+                                            }).map(node => {
+
                                                 return <option
-                                                    key={nodeKey}
-                                                    value={nodes[nodeKey].id}
-                                                >{nodes[nodeKey].location}</option>;
+                                                    key={node.id}
+                                                    value={node.id}
+                                                >{node.location}</option>;
                                             })
                                         }
                                     </Field>
@@ -112,37 +118,31 @@ class AdvancedModal extends Component {
                             <div>
                                 <label>Destination</label>
                                 <div>
-                                    <Field name='destination' component='select'>
-                                        <option></option>
+                                    <Field name='destination' component='select'  className='background-select noselect'>
                                         {
-                                            nodes && Object.keys(nodes).filter((nodeId) => {
+                                            nodes && nodes.filter(node => {
                                                 if (settings && settings.advSettings && settings.advSettings.values //grab the origin nodes value and don't show it
                                                     && settings.advSettings.values.origin) {
-                                                    return settings.advSettings.values.origin !== nodeId;
+                                                    return settings.advSettings.values.origin.toString() !== node.id.toString();
                                                 } else {
                                                     return true;
                                                 }
                                             })
-                                            .map(nodeKey => {
-                                                return <option
-                                                    key={nodeKey}
-                                                    value={nodes[nodeKey].id}
-                                                >{nodes[nodeKey].location}</option>;
-                                            })
+                                                .map(node => {
+                                                    return <option
+                                                        key={node.id}
+                                                        value={node.id}
+                                                    >{node.location}</option>;
+                                                })
                                         }
                                     </Field>
                                 </div>
                             </div>
                             <div>
                                 <button
-                                    type='button'
-                                    className='btn btn-light float-right col-2'
-                                    onClick={handleCancel}>Cancel
-                                </button>
-                                <button
                                     id='submit'
                                     type='submit'
-                                    className='btn btn-primary float-right col-2'
+                                    className='btn btn-primary float-right col-4'
                                 >Save
                                 </button>
                             </div>
@@ -152,23 +152,19 @@ class AdvancedModal extends Component {
                             <p>Select to send either 2 or 3 random transactions for your test.</p>
                             <div>
                                 <div>
-                                    <label><Field name='numTransactions' component='input' type='radio' value='2'/> 2 Random Transactions</label>
+                                    <label><Field name='numTransactions' component='input' type='radio' value='2'/> 2
+                                        Random Transactions</label>
                                 </div>
                                 <div>
-                                    <label><Field name='numTransactions' component='input' type='radio' value='3'/> 3 Random Transactions</label>
+                                    <label><Field name='numTransactions' component='input' type='radio' value='3'/> 3
+                                        Random Transactions</label>
                                 </div>
                             </div>
                             <div>
                                 <button
-                                    type='button'
-                                    className='btn btn-light float-right col-2'
-                                    onClick={this.cancelForm}
-                                >Cancel
-                                </button>
-                                <button
                                     id='submit'
                                     type='submit'
-                                    className='btn btn-primary float-right col-2'
+                                    className='btn btn-primary float-right col-4'
                                 >Save
                                 </button>
                             </div>
@@ -181,7 +177,6 @@ class AdvancedModal extends Component {
 
 // Allows form to communicate with store
 AdvancedModal = reduxForm({
-    // a unique name for the form
     form: 'advSettings'
 })(AdvancedModal);
 
