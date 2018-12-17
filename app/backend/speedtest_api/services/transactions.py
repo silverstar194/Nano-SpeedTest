@@ -194,23 +194,29 @@ def send_transaction(transaction):
             account=transaction.destination.address
         )
 
-    # Make sure the POW is there (not in the POW regen queue)
-    if not transaction.origin.POW:
-        try:
-            frontier = rpc_origin_node.frontiers(account=transaction.origin.address, count=1)[transaction.origin.address]
-            POWService.enqueue_account(address=transaction.origin.address, frontier=frontier)
-            logger.info('Generated PoW during sending for: %s' % transaction.origin.address)
-        except Exception as e:
+    # Make sure the POW is there (not in the POW regen queue) if not wait for it
+    wait_on_PoW = 0
+    while not transaction.origin.POW:
+        if wait_on_PoW < 7:
+            wait_on_PoW += 1
+            logger.info('Waiting on PoW during sending %s of 6 for: %s' % (wait_on_PoW, transaction.origin.address))
+            time.sleep(3)
+        else:
+            try:
+                frontier = rpc_origin_node.frontiers(account=transaction.origin.address, count=1)[transaction.origin.address]
+                POWService.enqueue_account(address=transaction.origin.address, frontier=frontier)
+                logger.info('Generated PoW during sending for: %s' % transaction.origin.address)
+            except Exception as e:
+                ##Unlock accounts
+                transaction.origin.unlock()
+                transaction.destination.unlock()
+                logger.error('Error adding address, frontier pair to POWService: %s' % e)
+
             ##Unlock accounts
             transaction.origin.unlock()
             transaction.destination.unlock()
-            logger.error('Error adding address, frontier pair to POWService: %s' % e)
-
-        ##Unlock accounts
-        transaction.origin.unlock()
-        transaction.destination.unlock()
-        logger.warning('Transaction origin POW is invalid, transaction.id: %s' % str(transaction.id))
-        raise InvalidPOWException()
+            logger.warning('Transaction origin POW was invalid account %s, transaction.id: %s' % (transaction.origin.address, str(transaction.id)))
+            raise InvalidPOWException()
     
     if transaction.destination.POW is None:
         # We ignore this if we are sending a first block
