@@ -199,7 +199,7 @@ def send_transaction(transaction):
     while not transaction.origin.POW:
         if wait_on_PoW < 7:
             wait_on_PoW += 1
-            logger.info('Waiting on PoW during sending %s of 6 for: %s' % (wait_on_PoW, transaction.origin.address))
+            logger.info('Waiting on PoW during sending %s of 7 for: %s' % (wait_on_PoW, transaction.origin.address))
             time.sleep(3)
         else:
             try:
