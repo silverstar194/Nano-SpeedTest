@@ -4,15 +4,17 @@ from threading import Thread
 import random
 from queue import Queue
 
-from django.db.models import Avg
+
 from django.db.models import F
 from django.http import JsonResponse
+from django.conf import settings as settings
 from rest_framework.decorators import api_view
 
 from ipware import get_client_ip
 from ratelimit.decorators import ratelimit
 
 from speedtest_api.models import Transaction
+
 
 from speedtest_api.services import advertisements
 from speedtest_api.services import batches
@@ -233,7 +235,7 @@ def advertisement_information(request):
     @return JsonResponse The status of ad addition
 
     """
-    data = {'current_cost_per_slot': 2}
+    data = {'current_cost_per_slot': settings.COST_PER_SLOT}
 
     return JsonResponse({'data': data}, status=200)
 
