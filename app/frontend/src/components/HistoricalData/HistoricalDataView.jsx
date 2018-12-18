@@ -51,7 +51,7 @@ class HistoricalDataView extends React.Component {
                                 </div>
                                 <div className='col-auto'>
                                     <h3 className='map-header'>
-                                        Average Time: {globalAverage.toFixed(3)} Seconds
+                                        Median Time: {globalAverage.toFixed(3)} Seconds
                                     </h3>
                                 </div>
                             </div>
