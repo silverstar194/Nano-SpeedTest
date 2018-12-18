@@ -47,6 +47,7 @@ In order to run the Django server, the following environment variables need to e
 * `NANO_ST__DB__HOST`
 * `SENDGRID__API__KEY`
 * `ADMIN__EMAIL`
+* `COST_PER_SLOT`
 
 ## Running the Server
 

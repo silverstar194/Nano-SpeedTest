@@ -59,6 +59,7 @@ def new_transaction_random(batch):
     accounts_list = get_accounts(in_use=False)
 
     if len(accounts_list) == 0:
+        logging.error("No accounts for origin.")
         raise NoAccountsException()
 
     origin = random.choice(accounts_list)
@@ -70,6 +71,7 @@ def new_transaction_random(batch):
             account_destinations.append(account)
 
     if len(account_destinations) == 0:
+        logging.error("No accounts for destination.")
         raise NoAccountsException()
 
     destination = random.choice(account_destinations)
@@ -93,9 +95,11 @@ def new_transaction_nodes(origin_node, destination_node, batch):
     destination_accounts_list = get_accounts(node=destination_node, in_use=False)
 
     if len(origin_accounts_list) == 0:
+        logging.error("No accounts for origin %s." % origin_node)
         raise NoAccountsException(origin_node)
     
     if len(destination_accounts_list) == 0:
+        logging.error("No accounts for destination %s." % destination_node)
         raise NoAccountsException(destination_node)
 
     origin = random.choice(origin_accounts_list)
@@ -123,6 +127,7 @@ def new_transaction(origin_account, destination_account, amount, batch):
     """
 
     if amount < 0:
+        logging.error("Cannot send negative amount %s." % amount)
         raise ValueError("Amount sent must be positive.")
 
     ##Lock origin and destination accounts
@@ -222,6 +227,7 @@ def send_transaction(transaction):
         # We ignore this if we are sending a first block
         # POWService.enqueue_account(transaction.destination)
         # raise InvalidPOWException()
+        logging.info("PoW destination account %s invalid." % transaction.destination.address)
         pass
 
     # Start the timestamp before we try to send out the request
@@ -336,7 +342,9 @@ def simple_send(from_account, to_address, amount, generate_PoW=True):
         if generate_PoW:
             POWService.enqueue_account(address=from_account.address, frontier=transaction_hash_sending)
 
-        while not from_account.POW:
+        count = 0
+        while not from_account.POW and count < 5: # Allows newly enqueued PoW to clear
+            count += 1
             from_account = get_account(from_account.address)
             time.sleep(10)
 
