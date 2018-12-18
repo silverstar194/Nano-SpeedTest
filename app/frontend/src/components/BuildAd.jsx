@@ -239,7 +239,7 @@ class BuildAd extends Component {
                       </p>
 
                       <h4>Ad Slots</h4>
-                      <p>Each Slot represents 5% of all nanospeed.live impressions for the month and are available on a first-come, first-served basis.</p>
+                      <p>Each Slot represents 5% of all nanospeed.live impressions for the month and are available on a first-come, first-served basis. You may purchase up to 5 slots.</p>
 
                          <div className='form-group'>
                               <div className='col-sm-10'>
@@ -254,7 +254,8 @@ class BuildAd extends Component {
                                                 checked={selectedSlot === slot}
                                             />
                                             <label className='form-check-label'>
-                                                <b>{slot} Slot{slot > 1 ? 's' : ''} ({this.state.costPerSlot * slot} Nano)</b>
+                                               <b>{slot} Slot{slot > 1 ? 's' : ''}</b> <strike><b>({this.state.costPerSlot * slot  / .1} Nano)</b></strike>
+                                                 <div className="text-success"><i>({this.state.costPerSlot * slot } Nano)</i></div>
                                             </label>
                                         </div>
                                     ))

@@ -4,15 +4,17 @@ from threading import Thread
 import random
 from queue import Queue
 
-from django.db.models import Avg
+
 from django.db.models import F
 from django.http import JsonResponse
+from django.conf import settings as settings
 from rest_framework.decorators import api_view
 
 from ipware import get_client_ip
 from ratelimit.decorators import ratelimit
 
 from speedtest_api.models import Transaction
+
 
 from speedtest_api.services import advertisements
 from speedtest_api.services import batches
@@ -233,7 +235,7 @@ def advertisement_information(request):
     @return JsonResponse The status of ad addition
 
     """
-    data = {'current_cost_per_slot': 2}
+    data = {'current_cost_per_slot': settings.COST_PER_SLOT}
 
     return JsonResponse({'data': data}, status=200)
 
@@ -286,14 +288,15 @@ def get_transaction_statistics(request):
         temp_transaction = convert_transaction_to_dict(transaction)
         transactions_array.append(temp_transaction)
 
-    average_delta = Transaction.objects.all().aggregate(average_difference=Avg(F('end_send_timestamp') - F('start_send_timestamp')))['average_difference']
+    difference_set = Transaction.objects.all().annotate(difference=(F('end_send_timestamp') - F('start_send_timestamp')))
+    median_delta = median_value(difference_set, "difference")
 
     transaction_count = Transaction.objects.filter(end_receive_timestamp__gte=0, start_send_timestamp__gte=0).count()
 
     statistics = {
         'transactions': transactions_array,
         'count': transaction_count,
-        'average': average_delta
+        'average': median_delta
     }
 
     return JsonResponse(statistics, status=200)
@@ -353,3 +356,11 @@ def send_transaction_async(transaction, out_queue):
     """
     transaction_async = transactions.send_transaction(transaction)
     out_queue.put(convert_transaction_to_dict(transaction_async))
+
+def median_value(queryset, term):
+    count = queryset.count()
+    values = queryset.values_list(term, flat=True).order_by(term)
+    if count % 2 == 1:
+        return values[int(round(count/2))]
+    else:
+        return sum(values[count/2-1:count/2+1])/Decimal(2.0)

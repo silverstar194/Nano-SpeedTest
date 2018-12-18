@@ -1,6 +1,7 @@
 import datetime
 import logging
 import queue
+import copy
 import requests
 from multiprocessing.pool import ThreadPool
 import time
@@ -23,6 +24,14 @@ class POWService:
     thread = None
 
     @classmethod
+    def in_queue(cls, address):
+        temp_queue = copy.copy(cls._pow_queue)
+        while not temp_queue.empty():
+            if temp_queue.pop()[0] == address:
+                return True
+        return False
+
+    @classmethod
     def get_pow(cls, address, hash):
         """
         Get a POW, first try the dPoW, on failure, use a node
@@ -39,7 +48,7 @@ class POWService:
                 return cls._get_dpow(hash)['work']
             except Exception as e:
                 logger.error('dPoW failure: %s try %s of 4' % (e, i))
-                time.sleep(15)
+                time.sleep(3)
                 if i == 4:
                     logger.error('dPoW failure account %s' % address)
 
@@ -199,7 +208,10 @@ class POWService:
         accounts_list = get_accounts() ## Locking should be done properly here
 
         for account in accounts_list:
-            cls.thread_pool.apply_async(cls.POW_account_thread_asyc, (account,))
+            if not cls.in_queue(account):
+                cls.thread_pool.apply_async(cls.POW_account_thread_asyc, (account,))
+            else:
+                logger.error('account %s dPoW already in queue' % account.address)
         
         # If we are running this from the command, don't stop the main thread until we are done
         if not daemon:

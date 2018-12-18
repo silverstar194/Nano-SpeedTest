@@ -49,7 +49,6 @@ const Map = ({transactions}) => {
         markerPairs.push(`markers=color:0x4A90E2|label:${countUses(trans, transactions, true)}|${makeCoordinate(trans.origin)}&markers=color:0x4A90E2|label:${countUses(trans, transactions, false)}|${makeCoordinate(trans.destination)}`);
     });
 
-    const locations = transactionPairs.join('|'); // gives all locations in one single string
     const paths = transactionPairs.join('&path='); // each needs to be draw separately
     const markers = markerPairs.join("&")
 

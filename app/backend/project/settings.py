@@ -27,6 +27,7 @@ DPOW_API_KEY = os.environ["NANO_ST__DPOW__API_KEY"]
 DPOW_ENDPOINT = os.environ["NANO_ST__DPOW__ENDPOINT"]
 SENDGRID_API_KEY = os.environ["NANO_ST__SENDGRID__API_KEY"]
 ADMIN_EMAIL = os.environ["NANO_ST__ADMIN_EMAIL"]
+COST_PER_SLOT = os.environ["NANO_ST__COST_PER_SLOT"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -109,6 +110,7 @@ DATABASES = {
         'OPTIONS': {
                 'sql_mode': 'STRICT_ALL_TABLES',
                 'ssl': {'ca': os.environ["NANO_ST__DB__SSL__CA__CERT"]},
+                'charset': 'utf8mb4',
          }
      }
 }
