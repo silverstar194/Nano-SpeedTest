@@ -254,7 +254,8 @@ class BuildAd extends Component {
                                                 checked={selectedSlot === slot}
                                             />
                                             <label className='form-check-label'>
-                                                <b>{slot} Slot{slot > 1 ? 's' : ''} ({this.state.costPerSlot * slot} Nano)</b>
+                                               <strike><b>{slot} Slot{slot > 1 ? 's' : ''} ({this.state.costPerSlot * slot  / .1} Nano)</b></strike>
+                                                 <div className="text-success"><i>({this.state.costPerSlot * slot } Nano)</i></div>
                                             </label>
                                         </div>
                                     ))
