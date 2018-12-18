@@ -239,7 +239,7 @@ class BuildAd extends Component {
                       </p>
 
                       <h4>Ad Slots</h4>
-                      <p>Each Slot represents 5% of all nanospeed.live impressions for the month and are available on a first-come, first-served basis.</p>
+                      <p>Each Slot represents 5% of all nanospeed.live impressions for the month and are available on a first-come, first-served basis. You may purchase up to 5 slots.</p>
 
                          <div className='form-group'>
                               <div className='col-sm-10'>
