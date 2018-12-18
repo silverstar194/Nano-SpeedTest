@@ -1,5 +1,6 @@
 import random
 import os
+import time
 import logging
 
 import sendgrid
@@ -17,6 +18,10 @@ def get_random_ad():
     """
 
     ads = get_advertisements()
+
+    if not len(ads):
+        return None
+
     max_tokens = 0
     for a in ads:
         if a.tokens > max_tokens:
@@ -34,7 +39,7 @@ def get_advertisements():
 
     @return: Query of all Advertisements
     """
-    return models.Advertisement.objects.all()
+    return models.Advertisement.objects.filter(enabled=True).filter(start_timestamp__lte=int(time.time())).filter(end_timestamp__gte=int(time.time())).all()
 
 def create_advertisement(title, description, URL, company, email, tokens, enabled):
     """

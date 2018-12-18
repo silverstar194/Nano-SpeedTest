@@ -109,6 +109,7 @@ DATABASES = {
         'OPTIONS': {
                 'sql_mode': 'STRICT_ALL_TABLES',
                 'ssl': {'ca': os.environ["NANO_ST__DB__SSL__CA__CERT"]},
+                'charset': 'utf8mb4',
          }
      }
 }
