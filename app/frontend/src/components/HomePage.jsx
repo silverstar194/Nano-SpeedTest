@@ -17,6 +17,15 @@ class HomePage extends Component {
     // putting this in state would make us need to call setState() inside the render function.  React doesn't like that.
     showDropdowns = true;
 
+    dismiss = () => {
+        var x = document.getElementById("alert-info");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    };
+
     onAdvancedClick = () => {
         this.props.onAdvPressed();
         this.setState(() => ({ modalOpen: true }));
@@ -89,8 +98,8 @@ class HomePage extends Component {
                 />
                 <h1 className='greeting page-header text-center'>Welcome to NanoSpeed.live!</h1>
                 <div className='container'>
-                    <div className='row'>
-                        <div className='col-md-12 text-center'>
+                    <div className='row justify-content-end'>
+                        <div className='col-12 text-center'>
                             {this.drawMessage(advSettingsForm, nodes)}
                             <LocationDropdowns
                                 nodes={nodes}
@@ -109,8 +118,20 @@ class HomePage extends Component {
                             <br/>
                             <p className='greeting'>Run your live test now.</p>
                         </div>
+
                     </div>
                     <div/>
+                    <div id="alert-info" className="alert alert-success alert-dismissible fade show" role="alert">
+                        <h4 className="alert-heading">Welcome!</h4>
+                            <p>Press the 'GO' button to send a small amount of Nano between several locations worldwide using our demo wallets.
+                                This site demonstrates how Nano can be used to send money international without fees, long waits or hassle.
+                                All transactions are executed as you see them live and provide you with a insight into the speed and efficiently of Nano.</p>
+                                <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={this.dismiss}>
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <a href="/Info">More Info</a>
+                    </div>
+
                     <div className="shadow-none p-3 mb-5 bg-light rounded">
                         <h5>What is Nano?</h5>
                         Nano is a next-generation cryptocurrency created by Colin LeMahieu for instant and free transactions.

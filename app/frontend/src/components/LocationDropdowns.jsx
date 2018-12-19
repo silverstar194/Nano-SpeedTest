@@ -11,7 +11,7 @@ class LocationDropdowns extends Component {
         return ( nodes && show &&
             <>
             <form>
-            <div class="no-wrap">
+            <div className="no-wrap">
                 <label className='label'>Origin</label>
                 <Field name='origin' component='select' className='background-select noselect'>
                     {
@@ -32,7 +32,7 @@ class LocationDropdowns extends Component {
                     }
                 </Field>
             </div>
-            <div class="no-wrap">
+            <div className="no-wrap">
                 <label className='label'>Destination</label>
                 <Field name='destination' component='select' className='background-select noselect'>
                     {
