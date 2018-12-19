@@ -64,7 +64,7 @@ class CurrentTransactionsView extends Component {
                                     {isFetchingTiming &&
                                     <Fragment>
                                         <p/>
-                                        This can take up to 30 seconds hold tight.
+                                        Hold tight. We're hard at work. 🕑 💰
                                     </Fragment>
                                     }
                                 </h2>
