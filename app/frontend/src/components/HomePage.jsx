@@ -125,7 +125,7 @@ class HomePage extends Component {
                         <h4 className="alert-heading">Welcome!</h4>
                             <p>Press the 'GO' button to send a small amount of Nano between several locations worldwide using our demo wallets.
                                 This site demonstrates how Nano can be used to send money international without fees, long waits or hassle.
-                                All transactions are executed as you see them live and provide you with a insight into the speed and efficiently of Nano.</p>
+                                All transactions are executed as you see them live and provide you with an insight into the speed and efficiently of Nano.</p>
                                 <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={this.dismiss}>
                                     <span aria-hidden="true">&times;</span>
                                 </button>
