@@ -75,7 +75,7 @@ def get_account(address):
     except models.Account.DoesNotExist:
         return None
     except MultipleObjectsReturned:
-        raise MultipleObjectsReturned()
+        return models.Account.objects.filter(address=address).first()
 
 def get_accounts_ignore_lock():
     """
