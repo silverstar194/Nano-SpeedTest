@@ -164,9 +164,9 @@ class MoreInfoPage extends Component {
                         Excellent. <a href="mailto:iliketoemail@ymail.com?Subject=Bug Report: NanoSpeed" target="_top">Send us a report.</a> We'll fix it ASAP.
                    <br/>
                    <br/>
-                   Help keep the servers up.
+                   <i>Help keep the servers up.
                     <br/>
-                   xrb_1ft5e6xtnxwotrszg44tx99wcqyckgsf5xeijqpitinqgyxu8fgxzhwas9eo
+                   xrb_1ft5e6xtnxwotrszg44tx99wcqyckgsf5xeijqpitinqgyxu8fgxzhwas9eo</i>
               </div>
             </div>
         );
