@@ -22,7 +22,7 @@ from speedtest_api.services import transactions
 from speedtest_api.services import nodes
 
 
-#@ratelimit(key='ip', rate='50/d')
+@ratelimit(key='ip', rate='60/d')
 @api_view(['POST'])
 def generate_transaction(request):
     """
@@ -112,7 +112,7 @@ def generate_transaction(request):
         return JsonResponse({'message': "The transaction format is invalid. Please try again."}, status=400)
 
 
-#@ratelimit(key='ip', rate='50/d')
+@ratelimit(key='ip', rate='60/d')
 @api_view(['POST'])
 def send_batch_transactions(request):
     """
