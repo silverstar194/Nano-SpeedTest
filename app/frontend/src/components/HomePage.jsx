@@ -124,7 +124,7 @@ class HomePage extends Component {
                     <div id="alert-info" className="alert alert-success alert-dismissible fade show" role="alert">
                         <h4 className="alert-heading">Welcome!</h4>
                             <p>Press the 'GO' button to send a small random amount of Nano between various locations worldwide using funds in our demo wallets.
-                                This site demonstrates how Nano can be used to send money internationally without fees, long waits or hassle.
+                                This site demonstrates how Nano can be used to send money internationally without fees, long waits, or hassle.
                                 All transactions are executed as you see them live and provide you with an insight into the speed and efficiency of Nano.</p>
                                 <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={this.dismiss}>
                                     <span aria-hidden="true">&times;</span>
@@ -135,7 +135,7 @@ class HomePage extends Component {
                     <div className="shadow-none p-3 mb-5 bg-light rounded">
                         <h5>What is Nano?</h5>
                         Nano is a next-generation cryptocurrency created by Colin LeMahieu for instant and free transactions.
-                        It's block-lattice structure enables decentralized transactions without loss of security, speed, or high costs.
+                        It's block-lattice structure enables decentralized transactions without the loss of security or speed and without high costs.
                     </div>
                 </div>
             </div>
