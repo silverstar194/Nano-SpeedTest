@@ -123,7 +123,7 @@ class MoreInfoPage extends Component {
                     </ul>
                     <h3>FAQ</h3>
                     <h5>What is this site doing?</h5>
-                    What are timing the speed of a Nano transaction as it happens.
+                    We are timing the speed of a Nano transaction as it happens.
                     Everytime you click the big green 'GO' button we send a small amount of money in the form of Nano between two locations worldwide and time how long it takes.
                     <br/>
                     <br/>
@@ -136,7 +136,7 @@ class MoreInfoPage extends Component {
                         <li>Time we see the receive block back at location #1</li>
                     </ol>
                     The time you see is the difference between steps 1 and 2. This represents the time is takes to send a transaction.
-                    Transactions are final and confirmed after step 2, steps 3 and 4 are pocketing steps for the receiving wallet.
+                    Transactions are final and confirmed after step 2. Steps 3 and 4 are pocketing steps for the receiving wallet.
                     <br/>
                     <a
                         href='https://nano.org/en/whitepaper'
@@ -145,7 +145,7 @@ class MoreInfoPage extends Component {
                    <br/>
                    <br/>
                    <h5>How much Nano are you sending?</h5>
-                   We are sending increments of nano, lower case. This is equal to less then $.01 USD.
+                   We are sending increments of nano, lower case (lower and upper case are different). This is equal to less then $.01 USD.
                    <br/>
                    1 nano = 0.000001 NANO. NANO is the unit used on exchanges.
                    <br/>
@@ -161,7 +161,7 @@ class MoreInfoPage extends Component {
                         <br/>
        
                   <h5>Found a bug?</h5>
-                        Excellent. <a href="mailto:iliketoemail@ymail.com?Subject=Bug Report: NanoSpeed" target="_top">Send us a report.</a> We'll fix it ASAP.
+                        Excellent. Thank's for the bug. <a href="mailto:iliketoemail@ymail.com?Subject=Bug Report: NanoSpeed" target="_top">Send us a report.</a> We'll fix it ASAP.
                    <br/>
                    <br/>
                    <i>Help keep the servers up.

@@ -123,6 +123,16 @@ class BuildAd extends Component {
     onRadioChange(event) {
         this.setState({ selectedSlot: parseInt(event.target.value)} );
     }
+
+    dismiss = () => {
+        var x = document.getElementById("alert-info");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    };
+
     onEditField(event) {
         const target = event.target;
         if (!target) return;
@@ -165,6 +175,22 @@ class BuildAd extends Component {
                     </div>
                 : <div className='form-container'>
                     <h3>Create Ad</h3>
+
+                    <div id="alert-info" className="alert alert-primary alert-dismissible fade show" role="alert">
+                        <h4 className="alert-heading">About our Ads</h4>
+                            <h5>Where and how often are the ads shown?</h5>
+                            <p>Our ads show up directly at the top of each page.
+                               <br/>
+                               Each time the page changes a new ad is selected.
+                                <br/>
+                               1 slot represents 5% of the total monthly views.
+                            </p>
+                            <a href="mailto:iliketoemail@ymail.com?Subject=Ad Information: NanoSpeed" target="_top">Please contact us with any questions.</a>
+                            <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={this.dismiss}>
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                    </div>
+
                     <b>Live Preview</b>
                     <EditableAd
                         title={title.length ? title : defaults.title}
