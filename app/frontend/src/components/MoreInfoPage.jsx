@@ -21,7 +21,7 @@ class MoreInfoPage extends Component {
                             <i>https://nano.org</i>
                         </a>
                     <div>
-                        Nano is built for efficiency. The network utilizes minimal resources, resulting in the fastest transactions of any currency, while not sacrificing security. Lightweight, optimized nodes are run throughout the world to confirm transactions and require no mining, making Nano perfect for everyday transactions, no matter how large or small.
+                        Nano is built for efficiency. The network utilizes minimal resources, resulting in the fastest transactions of any currency, while not sacrificing security. Lightweight, optimized nodes are run throughout the world to confirm transactions and require no mining, making Nano perfect for everyday transactions -- no matter how large or small.
                       <br/>
                       <br/>
                       <h5>What's different about Nano?</h5>
@@ -59,7 +59,7 @@ class MoreInfoPage extends Component {
                     <br/>
                     <br/>
                     <h5>Accept Nano as a merchant</h5>
-                    You can setup an online Nano payments with <a
+                    You can setup online Nano payments with <a
                             href='https://brainblocks.io/'
                             target='_blank'
                             rel='noopener noreferrer'>
@@ -68,18 +68,19 @@ class MoreInfoPage extends Component {
                     <div>
                     <br/>
                     <h5>Additional</h5>
+                    For information about Nano projects worldwide visit
                         <a
                             href='https://nanolinks.info/'
                             target='_blank'
                             rel='noopener noreferrer'>
-                            https://nanolinks.info/
-                        </a> has information about Nano projects worldwide.
+                            : https://nanolinks.info/
+                        </a>
                     </div>
                     <br/>
 
                     <h3>Let’s get social</h3>
                     <div>
-                        Nano has one of the largest and most active communities of any cryptocurrency. If you’d like to get involved with the project or simply learn more, please join us on any of our multiple platforms.
+                        Nano has one of the largest and most active communities of any cryptocurrency. If you’d like to get involved with Nano or simply learn more, please join us on any of our multiple platforms.
                     </div>
                     <ul>
                         <li><a
@@ -127,7 +128,7 @@ class MoreInfoPage extends Component {
                     Everytime you click the big green 'GO' button we send a small amount of money in the form of Nano between two locations worldwide and time how long it takes.
                     <br/>
                     <br/>
-                    <h5>Technically, what do you record as the time? Isn't the network decentralized?</h5>
+                    <h5>Isn't the network decentralized? Technically, what do you record as the time?</h5>
                     Yes, the Nano network is decentralized so not all parts see transactions at the same time. We record four times:
                     <ol>
                         <li>Time we broadcast send block at location #1</li>
@@ -135,17 +136,17 @@ class MoreInfoPage extends Component {
                         <li>Time we broadcast receive block at location #2</li>
                         <li>Time we see the receive block back at location #1</li>
                     </ol>
-                    The time you see is the difference between steps 1 and 2. This represents the time is takes to send a transaction.
+                    The time you see is the difference between steps 1 and 2. This represents the time is takes to send Nano.
                     Transactions are final and confirmed after step 2. Steps 3 and 4 are pocketing steps for the receiving wallet.
                     <br/>
                     <a
                         href='https://nano.org/en/whitepaper'
                         target='_blank'
-                        rel='noopener noreferrer'>Learn more about Nano in the whitepaper.</a>
+                        rel='noopener noreferrer'>Learn more about Nano in this whitepaper.</a>
                    <br/>
                    <br/>
                    <h5>How much Nano are you sending?</h5>
-                   We are sending increments of nano, lower case (lower and upper case are different). This is equal to less then $.01 USD.
+                   We are sending increments of nano, lower case, this is equal to less then $.01 USD. (lower nano and upper case NANO are different)
                    <br/>
                    1 nano = 0.000001 NANO. NANO is the unit used on exchanges.
                    <br/>
@@ -161,7 +162,7 @@ class MoreInfoPage extends Component {
                         <br/>
        
                   <h5>Found a bug?</h5>
-                        Excellent. Thank's for the bug. <a href="mailto:iliketoemail@ymail.com?Subject=Bug Report: NanoSpeed" target="_top">Send us a report.</a> We'll fix it ASAP.
+                        Excellent. Thanks for the bug. <a href="mailto:iliketoemail@ymail.com?Subject=Bug Report: NanoSpeed" target="_top">Send us a report.</a> We'll fix it ASAP.
                    <br/>
                    <br/>
                    <i>Help keep the servers up.
