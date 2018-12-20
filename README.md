@@ -56,6 +56,23 @@ They will not be included in the production build so you can use them for things
 Using `process.env.<VARIABLE>` requires placing the variable you wish to use in the `.env` file prefixed with `REACT_APP_<YOUR_NAME>` which can then be used in the code as `process.env.REACT_APP_<YOUR_NAME>`. If you want to use the variable in the index.html file it must be wrapped `"%<VARIABLE_NAME>%"`.
 
 
+### Some Notes on the Frontend
+
+#### Structure
+`Components/` holds all the React Elements. It also holds most of the other pages such as the `Homepage`, `MoreInfo Page`, and `Advertisements`.
+
+`Components/CurrentTransactions/` is the `Your Results` tab
+
+`Components/HistoricalData` is the `Global Statistics` tab
+
+The structure and naming of the components could definitely use some work as we did not originally plan to have as many pages and the project never got refactored based on our timeline. There are also a number of components that really should have the logic simplified and broken out into smaller subsections.
+
+#### Testing
+
+The tests on UI components are basically worthless - they just perform checking that the component actually renders.
+
+Tests on `.js` files are better but some of the more complicated areas such as requests and middleware we did not cover.
+
 # Nano SpeedTest Back End
 
 ## Installing Dependencies
