@@ -11,6 +11,7 @@ logger = logging.getLogger(__name__)
 
 
 def node_status_job():
+    logger.info("Running node check...")
     nodes = models.Node.objects.filter(enabled=True)
     from_email = Email("admin@NanoSpeed.live")
     to_email = Email(settings.ADMIN_EMAIL)
