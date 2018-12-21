@@ -25,7 +25,7 @@ def transaction_general(node_URL, account_address, current_hash, start_timestamp
 
 	#Sleep times are incase we are still waiting for the transcation to go through
 
-	backoff_sleep_values =[6] + [.5]*40
+	backoff_sleep_values =[6] + [.5]*60
 	for sleep_value in backoff_sleep_values:
 
 		address = account_address
