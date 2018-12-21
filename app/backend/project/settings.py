@@ -66,7 +66,7 @@ MIDDLEWARE = [
 CRONTAB_COMMAND_PREFIX = '. $HOME/.bash_profile;'
 CRONJOBS = [
     ('0 */3 * * *', 'django.core.management.clean_up'),
-    ('*/15 * * * *', 'speedtest_api.cron.node_status_job'),
+    ('10 */3 * * *', 'speedtest_api.cron.node_status_job'),
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
