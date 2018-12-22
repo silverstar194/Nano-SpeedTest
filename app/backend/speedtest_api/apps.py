@@ -54,7 +54,6 @@ class SpeedtestApiConfig(AppConfig):
         unlock_all_accounts()
 
 
-
     def check_node_async(self, node):
         '''
         Checks that node is online

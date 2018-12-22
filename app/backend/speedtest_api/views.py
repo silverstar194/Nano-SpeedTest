@@ -310,6 +310,7 @@ def convert_transaction_to_dict(transaction):
     @return dict A dictionary representation of the transaction
 
     """
+    print(transaction)
     origin_node = transaction.origin.wallet.node
     destination_node = transaction.destination.wallet.node
 

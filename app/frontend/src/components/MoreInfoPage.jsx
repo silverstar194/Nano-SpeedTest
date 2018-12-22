@@ -21,15 +21,15 @@ class MoreInfoPage extends Component {
                             <i>https://nano.org</i>
                         </a>
                     <div>
-                        Nano is built for efficiency. The network utilizes minimal resources, resulting in the fastest transactions of any currency, while not sacrificing security. Lightweight, optimized nodes are run throughout the world to confirm transactions and require no mining, making Nano perfect for everyday transactions -- no matter how large or small.
+                       Nano is built for efficiency. The network utilizes minimal resources, resulting in lightning fast transactions while not sacrificing security. Nodes around the world communicate to confirm transactions without mining, making Nano environmentally friendly and perfect for everyday transactions -- no matter how large or small.
                       <br/>
                       <br/>
-                      <h5>What's different about Nano?</h5>
+                      <h5>Why Nano?</h5>
                       <ul>
                         <li><b>No Fees. Ever.</b></li>
                         Send $.01 or $1,000,000 worldwide without paying a cent in transaction fees. Keep every cent you earn.
                         <li><b>It's fast.</b></li>
-                        Payments are finalized in seconds with no rollbacks giving you financial confidence.
+                        Payments are finalized in seconds with no rollbacks, giving you financial confidence.
                         <li><b>It'll grow.</b></li>
                         The protocol is incredibly lightweight and will scale to thousands of transactions per second.
                         <li><b>It's way greener.</b></li>

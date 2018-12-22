@@ -2,6 +2,7 @@ import logging
 import random
 import requests
 import time
+import sys
 import threading
 from decimal import *
 
@@ -223,12 +224,12 @@ def send_transaction(transaction):
             transaction.destination.unlock()
             logger.warning('Transaction origin POW was invalid account %s, transaction.id: %s' % (transaction.origin.address, str(transaction.id)))
             raise InvalidPOWException()
-    
+
     if transaction.destination.POW is None:
         # We ignore this if we are sending a first block
         # POWService.enqueue_account(transaction.destination)
         # raise InvalidPOWException()
-        logging.info("PoW destination account %s invalid." % transaction.destination.address)
+        logging.info("PoW destination account %s invalid PoW %s." % (transaction.destination.address, transaction.destination.POW))
         pass
 
     # Start the timestamp before we try to send out the request
@@ -250,7 +251,7 @@ def send_transaction(transaction):
         transaction.destination.current_balance = transaction.destination.current_balance + transaction.amount
         transaction.origin.POW = None
     except nano.rpc.RPCException as e:
-        logger.error("RPCException one %s" % e.text)
+        logger.error("RPCException one %s" % e)
         ##Unlock accounts
         transaction.origin.unlock()
         transaction.destination.unlock()
@@ -281,9 +282,9 @@ def send_transaction(transaction):
             work=transaction.destination.POW,
             )
             transaction.save()
-        except nano.rpc.RPCException:
+        except nano.rpc.RPCException as e:
             ##Unlock accounts
-            logger.error("RPCException two %s" % e.text)
+            logger.error("RPCException two %s" % e)
             transaction.origin.unlock()
             transaction.destination.unlock()
             raise nano.rpc.RPCException()
