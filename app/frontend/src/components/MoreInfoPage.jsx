@@ -139,6 +139,8 @@ class MoreInfoPage extends Component {
                     The time you see is the difference between steps 1 and 2. This represents the time is takes to send Nano.
                     Transactions are final and confirmed after step 2. Steps 3 and 4 are pocketing steps for the receiving wallet.
                     <br/>
+                    The times vary due to many reasons including our server load and our Nano node load, often the network will be even faster than displayed.
+                    <br/>
                     <a
                         href='https://nano.org/en/whitepaper'
                         target='_blank'
@@ -154,18 +156,30 @@ class MoreInfoPage extends Component {
                    <h5>What's a Nano node?</h5>
                         Nano nodes broadcast transactions to the Nano network and keep the network secure by voting on transactions. They store and validate your transactions. Our nodes are physically located in data centers around the world.
                         <br/>
+                        <b>Our Nodes</b>
+                        <br/>
+                        <Link to="https://frankfurt.nanospeed.live/">https://frankfurt.nanospeed.live/</Link>
+                        <br/>
+                        <Link to="https://singapore.nanospeed.live/">https://singapore.nanospeed.live/</Link>
+                        <br/>
+                        <Link to="https://bangalore.nanospeed.live/">https://bangalore.nanospeed.live/</Link>
+                        <br/>
+                        <Link to="https://newyork.nanospeed.live/">https://newyork.nanospeed.live/</Link>
+                        <br/>
+                        <br/>
                         <a
                             href='https://github.com/clemahieu/raiblocks'
                             target='_blank'
                             rel='noopener noreferrer'>You can also run a node yourself.</a>
                         <br/>
                         <br/>
+
        
                   <h5>Found a bug?</h5>
                         Excellent. Thanks for the bug. <a href="mailto:iliketoemail@ymail.com?Subject=Bug Report: NanoSpeed" target="_top">Send us a report.</a> We'll fix it ASAP.
                    <br/>
                    <br/>
-                   <i>Help keep the servers up.
+                   <i>Help keep the servers and nodes up.
                     <br/>
                    xrb_1ft5e6xtnxwotrszg44tx99wcqyckgsf5xeijqpitinqgyxu8fgxzhwas9eo</i>
               </div>
