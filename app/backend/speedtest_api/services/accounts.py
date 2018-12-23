@@ -2,6 +2,7 @@ import logging
 from multiprocessing.pool import ThreadPool
 
 from django.conf import settings as settings
+from django.core.exceptions import MultipleObjectsReturned
 import nano
 
 from .. import models as models
