@@ -158,13 +158,25 @@ class MoreInfoPage extends Component {
                         <br/>
                         <b>Our Nodes</b>
                         <br/>
-                        <Link to="https://frankfurt.nanospeed.live/">https://frankfurt.nanospeed.live/</Link>
+                        <a
+                        href='https://frankfurt.nanospeed.live/'
+                        target='_blank'
+                        rel='noopener noreferrer'>https://frankfurt.nanospeed.live/</a>
                         <br/>
-                        <Link to="https://singapore.nanospeed.live/">https://singapore.nanospeed.live/</Link>
+                        <a
+                        href='https://singapore.nanospeed.live/'
+                        target='_blank'
+                        rel='noopener noreferrer'>https://singapore.nanospeed.live/</a>
                         <br/>
-                        <Link to="https://bangalore.nanospeed.live/">https://bangalore.nanospeed.live/</Link>
+                        <a
+                        href='https://bangalore.nanospeed.live/'
+                        target='_blank'
+                        rel='noopener noreferrer'>https://bangalore.nanospeed.live/</a>
                         <br/>
-                        <Link to="https://newyork.nanospeed.live/">https://newyork.nanospeed.live/</Link>
+                        <a
+                        href='https://newyork.nanospeed.live/'
+                        target='_blank'
+                        rel='noopener noreferrer'>https://newyork.nanospeed.live/</a>
                         <br/>
                         <br/>
                         <a
