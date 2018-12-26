@@ -24,21 +24,22 @@ export const fetchTransaction = action$ => action$.pipe(
             });
             return { type: ADD_TRANSACTIONS, transactionData, batchId: data.id };
         }).catch((err) => {
-           if(err.status == 403){
-		console.warn('Error in Fetching Timing Data Due to API Abuse');
+
+            if(err.status == 403){
+		        console.warn('Blocked Transaction Due to API Abuse');
                 makeToast({
                         text: 'Please stop spamming tests or you will be banned for 24 hours.',
                         status: 'danger'
                 });
-	   }else{
+	        }else{
 		
-	   	console.warn('Error: Failed to Create Transaction');
-          	console.log(err); 
-	   	makeToast({
+	   	        console.warn('Error: Failed to Create Transaction');
+          	    console.log(err);
+	   	        makeToast({
                 	text: 'Something went wrong while creating the transaction',
                 	status: 'danger'
             	});
-	   }
+	        }
             return setTransactionFetchStatus(false);
         })
     )
@@ -60,23 +61,23 @@ export const fetchTransactionTiming = action$ => action$.pipe(
             });
             return { type: ADD_TIMING_DATA, timingData: parsedResponse.transactions};
         }).catch((err) => {
-	    if(err.status == 403){
-		console.warn('Error in Fetching Timing Data Due to API Abuse');
+	        if(err.status == 403){
+		        console.warn('Blocked Fetching Timing Data Due to API Abuse');
             	makeToast({
-         		text: 'Please stop spamming tests or you will be banned for 24 hours.',
+         		    text: 'Please stop spamming tests or you will be banned for 24 hours.',
                 	status: 'danger'
-           	});
+           	    });
 	   
-	    }else{
-		console.warn('Error in Fetching Timing Data');
-		makeToast({
+	        }else{
+		        console.warn('Error in Fetching Timing Data');
+		        makeToast({
                 	text: 'Something went wrong while fetching the transaction from our server',
                		status: 'danger'
             	});
-	    }
+	        }
             action.transactionData.forEach((trans) => {
                 trans.error = true;
-            });
+            );
             return { type: ADD_TIMING_DATA, timingData: action.transactionData};
         })
     )

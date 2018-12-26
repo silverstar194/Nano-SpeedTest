@@ -1,150 +1,57 @@
-Exception while resolving variable 'name' in template 'unknown'.
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.6/dist-packages/django/core/handlers/exception.py", line 34, in inner
-    response = get_response(request)
-  File "/usr/local/lib/python3.6/dist-packages/django/core/handlers/base.py", line 111, in _get_response
-    resolver_match = resolver.resolve(request.path_info)
-  File "/usr/local/lib/python3.6/dist-packages/django/urls/resolvers.py", line 520, in resolve
-    raise Resolver404({'tried': tried, 'path': new_path})
-django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <module 'django.contrib.admindocs.urls' from '/usr/local/lib/python3.6/dist-packages/django/contrib/admindocs/urls.py'> (None:None) 'admin/doc/'>], [<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLPattern 'transactions/send'>], [<URLPattern 'transactions'>], [<URLPattern 'header/random'>], [<URLPattern 'header/add'>], [<URLPattern 'header/info'>], [<URLPattern 'nodes/list'>], [<URLPattern 'transactions/statistics'>]], 'path': ''}
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.6/dist-packages/django/template/base.py", line 829, in _resolve_lookup
-    current = current[bit]
-TypeError: 'URLResolver' object is not subscriptable
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.6/dist-packages/django/template/base.py", line 837, in _resolve_lookup
-    current = getattr(current, bit)
-AttributeError: 'URLResolver' object has no attribute 'name'
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.6/dist-packages/django/template/base.py", line 843, in _resolve_lookup
-    current = current[int(bit)]
-ValueError: invalid literal for int() with base 10: 'name'
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.6/dist-packages/django/template/base.py", line 850, in _resolve_lookup
-    (bit, current))  # missing attribute
-django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <module 'django.contrib.admindocs.urls' from '/usr/local/lib/python3.6/dist-packages/django/contrib/admindocs/urls.py'> (None:None) 'admin/doc/'>
-Exception while resolving variable 'name' in template 'unknown'.
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.6/dist-packages/django/core/handlers/exception.py", line 34, in inner
-    response = get_response(request)
-  File "/usr/local/lib/python3.6/dist-packages/django/core/handlers/base.py", line 111, in _get_response
-    resolver_match = resolver.resolve(request.path_info)
-  File "/usr/local/lib/python3.6/dist-packages/django/urls/resolvers.py", line 520, in resolve
-    raise Resolver404({'tried': tried, 'path': new_path})
-django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <module 'django.contrib.admindocs.urls' from '/usr/local/lib/python3.6/dist-packages/django/contrib/admindocs/urls.py'> (None:None) 'admin/doc/'>], [<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLPattern 'transactions/send'>], [<URLPattern 'transactions'>], [<URLPattern 'header/random'>], [<URLPattern 'header/add'>], [<URLPattern 'header/info'>], [<URLPattern 'nodes/list'>], [<URLPattern 'transactions/statistics'>]], 'path': ''}
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.6/dist-packages/django/template/base.py", line 829, in _resolve_lookup
-    current = current[bit]
-TypeError: 'URLResolver' object is not subscriptable
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.6/dist-packages/django/template/base.py", line 837, in _resolve_lookup
-    current = getattr(current, bit)
-AttributeError: 'URLResolver' object has no attribute 'name'
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.6/dist-packages/django/template/base.py", line 843, in _resolve_lookup
-    current = current[int(bit)]
-ValueError: invalid literal for int() with base 10: 'name'
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.6/dist-packages/django/template/base.py", line 850, in _resolve_lookup
-    (bit, current))  # missing attribute
-django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <URLPattern list> (admin:admin) 'admin/'>
-Not Found: /
-Exception while resolving variable 'name' in template 'unknown'.
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.6/dist-packages/django/core/handlers/exception.py", line 34, in inner
-    response = get_response(request)
-  File "/usr/local/lib/python3.6/dist-packages/django/core/handlers/base.py", line 111, in _get_response
-    resolver_match = resolver.resolve(request.path_info)
-  File "/usr/local/lib/python3.6/dist-packages/django/urls/resolvers.py", line 520, in resolve
-    raise Resolver404({'tried': tried, 'path': new_path})
-django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <module 'django.contrib.admindocs.urls' from '/usr/local/lib/python3.6/dist-packages/django/contrib/admindocs/urls.py'> (None:None) 'admin/doc/'>], [<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLPattern 'transactions/send'>], [<URLPattern 'transactions'>], [<URLPattern 'header/random'>], [<URLPattern 'header/add'>], [<URLPattern 'header/info'>], [<URLPattern 'nodes/list'>], [<URLPattern 'transactions/statistics'>]], 'path': ''}
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.6/dist-packages/django/template/base.py", line 829, in _resolve_lookup
-    current = current[bit]
-TypeError: 'URLResolver' object is not subscriptable
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.6/dist-packages/django/template/base.py", line 837, in _resolve_lookup
-    current = getattr(current, bit)
-AttributeError: 'URLResolver' object has no attribute 'name'
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.6/dist-packages/django/template/base.py", line 843, in _resolve_lookup
-    current = current[int(bit)]
-ValueError: invalid literal for int() with base 10: 'name'
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.6/dist-packages/django/template/base.py", line 850, in _resolve_lookup
-    (bit, current))  # missing attribute
-django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <module 'django.contrib.admindocs.urls' from '/usr/local/lib/python3.6/dist-packages/django/contrib/admindocs/urls.py'> (None:None) 'admin/doc/'>
-Exception while resolving variable 'name' in template 'unknown'.
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.6/dist-packages/django/core/handlers/exception.py", line 34, in inner
-    response = get_response(request)
-  File "/usr/local/lib/python3.6/dist-packages/django/core/handlers/base.py", line 111, in _get_response
-    resolver_match = resolver.resolve(request.path_info)
-  File "/usr/local/lib/python3.6/dist-packages/django/urls/resolvers.py", line 520, in resolve
-    raise Resolver404({'tried': tried, 'path': new_path})
-django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <module 'django.contrib.admindocs.urls' from '/usr/local/lib/python3.6/dist-packages/django/contrib/admindocs/urls.py'> (None:None) 'admin/doc/'>], [<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLPattern 'transactions/send'>], [<URLPattern 'transactions'>], [<URLPattern 'header/random'>], [<URLPattern 'header/add'>], [<URLPattern 'header/info'>], [<URLPattern 'nodes/list'>], [<URLPattern 'transactions/statistics'>]], 'path': ''}
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.6/dist-packages/django/template/base.py", line 829, in _resolve_lookup
-    current = current[bit]
-TypeError: 'URLResolver' object is not subscriptable
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.6/dist-packages/django/template/base.py", line 837, in _resolve_lookup
-    current = getattr(current, bit)
-AttributeError: 'URLResolver' object has no attribute 'name'
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.6/dist-packages/django/template/base.py", line 843, in _resolve_lookup
-    current = current[int(bit)]
-ValueError: invalid literal for int() with base 10: 'name'
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.6/dist-packages/django/template/base.py", line 850, in _resolve_lookup
-    (bit, current))  # missing attribute
-django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <URLPattern list> (admin:admin) 'admin/'>
-Not Found: /
+Starting check that nodes are up...
+Starting POWService and running POW_accounts()...
+Starting PoW thread.
+Syncing account balances...
+Syncing account: xrb_3b9b4cjjr3w8qb5txhy9gyzg5jif5jwfypr49t9ikuf9sryeapf9dgxsym7i
+Syncing account: xrb_3b9jtmscrj7i9emigtnimz1on7tcf68qp1q6a3jpy6p37qgzcozodf4rtyij
+Syncing account: xrb_38ywc14o6og64q5j393fnpzdeqo4zdkyfinjr3u5oa7aynxowf7z41n78c84
+Syncing account: xrb_1763yiahyzurhop3wxu83yhwt5onxgxn8couff1mf6wbt3rfqfphq63juxaf
+Syncing account: xrb_1dyqqguuhsyp569cnubewndecxnzbwzeiho817tfyhgbjhmd6wcjn3i3d58q
+Syncing account: xrb_3zisdnfubasxun6p5cecrq8uw1xnqr1o8p65fpgb8hs6uakcxux4484sboid
+Syncing account: xrb_3fttgh384zdf1x7x59qc9crckuanjkuak553kc7a38ixi64m671u9rm5qjjr
+Syncing account: xrb_1kd4yut3eh1kxe7wid5f9i6tkphthxrwh4fzpmoryo3z7edyg8pobznjfeng
+Error string indices must be integers getting hash for xrb_38ywc14o6og64q5j393fnpzdeqo4zdkyfinjr3u5oa7aynxowf7z41n78c84 try 0 of 5
+Error string indices must be integers getting hash for xrb_1763yiahyzurhop3wxu83yhwt5onxgxn8couff1mf6wbt3rfqfphq63juxaf try 0 of 5
+Error string indices must be integers getting hash for xrb_3b9jtmscrj7i9emigtnimz1on7tcf68qp1q6a3jpy6p37qgzcozodf4rtyij try 0 of 5
+Error string indices must be integers getting hash for xrb_3b9b4cjjr3w8qb5txhy9gyzg5jif5jwfypr49t9ikuf9sryeapf9dgxsym7i try 0 of 5
+Error trying to receive blocks (for xrb_1kd4yut3eh1kxe7wid5f9i6tkphthxrwh4fzpmoryo3z7edyg8pobznjfeng): string indices must be integers
+Error trying to receive blocks (for xrb_3fttgh384zdf1x7x59qc9crckuanjkuak553kc7a38ixi64m671u9rm5qjjr): string indices must be integers
+Error trying to receive blocks (for xrb_3b9jtmscrj7i9emigtnimz1on7tcf68qp1q6a3jpy6p37qgzcozodf4rtyij): string indices must be integers
+Error trying to receive blocks (for xrb_38ywc14o6og64q5j393fnpzdeqo4zdkyfinjr3u5oa7aynxowf7z41n78c84): string indices must be integers
+Error trying to receive blocks (for xrb_1763yiahyzurhop3wxu83yhwt5onxgxn8couff1mf6wbt3rfqfphq63juxaf): string indices must be integers
+Error trying to receive blocks (for xrb_3b9b4cjjr3w8qb5txhy9gyzg5jif5jwfypr49t9ikuf9sryeapf9dgxsym7i): string indices must be integers
+Error trying to receive blocks (for xrb_3zisdnfubasxun6p5cecrq8uw1xnqr1o8p65fpgb8hs6uakcxux4484sboid): string indices must be integers
+Error trying to receive blocks (for xrb_1dyqqguuhsyp569cnubewndecxnzbwzeiho817tfyhgbjhmd6wcjn3i3d58q): string indices must be integers
+Syncing account: xrb_3ewufey781z3fmiy8n771nmj8h5sk8hdoinaspneofhfkppiz3gzy7zieaqp
+Syncing account: xrb_3fih64in9u3czmpier9ofhdrrq95nmdsnrktqktp3f1qoo9qxpzj9w3bw1e8
+Syncing account: xrb_1zg4yjba4ka64kiwsoy5faweyw49dprq4xtncpuh7wem36s1xbmf45jf8qzy
+Syncing account: xrb_1un845ospn3r4aorr385e19qs13oynwm14cfk16g5cq113wehxxfzoguo3rq
+Syncing account: xrb_3wk3pamfgyte58wggk41jozq9dd3mefwyg9hn9efs1t6xb3xnm99ynneshmd
+Syncing account: xrb_37k8w7ayytq1npi4g3zwsq1jisyrouytshqjwnizhcaog7h4i55oci4z7y46
+Syncing account: xrb_3xu5yydryho956go6bkkqkpwzoprwzhdbw6kf3xkfoqhg36t9m69cnup6zzs
+Syncing account: xrb_1j1uqa843xjqwaqjh5azfsb5o563xuzpk5ff6jk9pbd961rezdrzgw4krmum
+Error trying to receive blocks (for xrb_1zg4yjba4ka64kiwsoy5faweyw49dprq4xtncpuh7wem36s1xbmf45jf8qzy): string indices must be integers
+Error trying to receive blocks (for xrb_3fih64in9u3czmpier9ofhdrrq95nmdsnrktqktp3f1qoo9qxpzj9w3bw1e8): string indices must be integers
+Error trying to receive blocks (for xrb_1un845ospn3r4aorr385e19qs13oynwm14cfk16g5cq113wehxxfzoguo3rq): string indices must be integers
+Syncing account: xrb_34h4w9waqesd9jxbe4aby7jess1nwr7w8nqixc9364qw78hfyuxtfwg39hy5
+Syncing account: xrb_3eu9hbge565qsz9fbdctpb4i5sfn41bkhgq79sifgcmd3np84qw6w8jkt4cz
+Error trying to receive blocks (for xrb_3xu5yydryho956go6bkkqkpwzoprwzhdbw6kf3xkfoqhg36t9m69cnup6zzs): string indices must be integers
+Syncing account: xrb_1u1itdji5r8c7nnz6p6gekodwfpda3izzrmh8fs8kb8b53skp7umcqtuckqc
+Syncing account: xrb_171kt81bkq5pc1m9nnbhn3dgdt6aqn4fkmju9ngak1m5tkmd8awfwq3utpqr
+Error trying to receive blocks (for xrb_3wk3pamfgyte58wggk41jozq9dd3mefwyg9hn9efs1t6xb3xnm99ynneshmd): string indices must be integers
+Error trying to receive blocks (for xrb_3ewufey781z3fmiy8n771nmj8h5sk8hdoinaspneofhfkppiz3gzy7zieaqp): string indices must be integers
+Syncing account: xrb_138it3jee49zmso5d61ae5xbpa1ewg79x597d4mdwidazjtb7pjx19864jgu
+Syncing account: xrb_15dnux5n1p45xxp38siqif83w33pzw1xwzx9gwbp7s3w6c93a4g84a7nmwir
+Error trying to receive blocks (for xrb_34h4w9waqesd9jxbe4aby7jess1nwr7w8nqixc9364qw78hfyuxtfwg39hy5): string indices must be integers
+Error trying to receive blocks (for xrb_37k8w7ayytq1npi4g3zwsq1jisyrouytshqjwnizhcaog7h4i55oci4z7y46): string indices must be integers
+Error trying to receive blocks (for xrb_3eu9hbge565qsz9fbdctpb4i5sfn41bkhgq79sifgcmd3np84qw6w8jkt4cz): string indices must be integers
+Syncing account: xrb_3865f65hykrmonboi8gnuiafthdzgixhpqhu3yteqiaxuuoa7wft7dqtqanz
+Syncing account: xrb_3sbufoc99x1ym831tkiipfd8xezw5x8cuomjdm8j8ur5um33cadw8brd4rr3
+Error trying to receive blocks (for xrb_1u1itdji5r8c7nnz6p6gekodwfpda3izzrmh8fs8kb8b53skp7umcqtuckqc): string indices must be integers
+Error trying to receive blocks (for xrb_171kt81bkq5pc1m9nnbhn3dgdt6aqn4fkmju9ngak1m5tkmd8awfwq3utpqr): string indices must be integers
+Syncing account: xrb_3tdfzubqyh449ostu39569gn5wa4g7mpigsjzrqkzczjos5uj3dx8fx6rpm6
+Error trying to receive blocks (for xrb_138it3jee49zmso5d61ae5xbpa1ewg79x597d4mdwidazjtb7pjx19864jgu): string indices must be integers
+Error trying to receive blocks (for xrb_15dnux5n1p45xxp38siqif83w33pzw1xwzx9gwbp7s3w6c93a4g84a7nmwir): string indices must be integers
+Starting check that nodes are up...
+Starting POWService and running POW_accounts()...
+Starting PoW thread.

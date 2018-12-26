@@ -82,6 +82,7 @@ class HistoricalDataView extends React.Component {
                             <PastResultsTable tableData={pastTransactions}/>
                      </div>
                      </div>
+                     Please do not use bots to access site. Excessive testing or spam will result in a swift 24 hour ban.
                 </div>
             </div>
         );

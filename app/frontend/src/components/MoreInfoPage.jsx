@@ -194,6 +194,9 @@ class MoreInfoPage extends Component {
                    <i>Help keep the servers and nodes up.
                     <br/>
                    xrb_1ft5e6xtnxwotrszg44tx99wcqyckgsf5xeijqpitinqgyxu8fgxzhwas9eo</i>
+                   <br/>
+                   <br/>
+                   Please do not use bots to access site. Excessive testing or spam will result in a swift 24 hour ban.
               </div>
             </div>
         );
