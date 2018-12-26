@@ -24,11 +24,21 @@ export const fetchTransaction = action$ => action$.pipe(
             });
             return { type: ADD_TRANSACTIONS, transactionData, batchId: data.id };
         }).catch((err) => {
-            console.warn('Error: Failed to Create Transaction');
-            makeToast({
-                text: 'Something went wrong while creating the transaction',
-                status: 'danger'
-            });
+           if(err.status == 403){
+		console.warn('Error in Fetching Timing Data Due to API Abuse');
+                makeToast({
+                        text: 'Please stop spamming tests or you will be banned for 24 hours.',
+                        status: 'danger'
+                });
+	   }else{
+		
+	   	console.warn('Error: Failed to Create Transaction');
+          	console.log(err); 
+	   	makeToast({
+                	text: 'Something went wrong while creating the transaction',
+                	status: 'danger'
+            	});
+	   }
             return setTransactionFetchStatus(false);
         })
     )
@@ -50,13 +60,22 @@ export const fetchTransactionTiming = action$ => action$.pipe(
             });
             return { type: ADD_TIMING_DATA, timingData: parsedResponse.transactions};
         }).catch((err) => {
-            console.warn('Error in Fetching Timing Data');
+	    if(err.status == 403){
+		console.warn('Error in Fetching Timing Data Due to API Abuse');
+            	makeToast({
+         		text: 'Please stop spamming tests or you will be banned for 24 hours.',
+                	status: 'danger'
+           	});
+	   
+	    }else{
+		console.warn('Error in Fetching Timing Data');
+		makeToast({
+                	text: 'Something went wrong while fetching the transaction from our server',
+               		status: 'danger'
+            	});
+	    }
             action.transactionData.forEach((trans) => {
                 trans.error = true;
-            });
-            makeToast({
-                text: 'Something went wrong while fetching the transaction from our server',
-                status: 'danger'
             });
             return { type: ADD_TIMING_DATA, timingData: action.transactionData};
         })
