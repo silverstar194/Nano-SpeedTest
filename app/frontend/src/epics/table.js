@@ -77,7 +77,7 @@ export const fetchTransactionTiming = action$ => action$.pipe(
 	        }
             action.transactionData.forEach((trans) => {
                 trans.error = true;
-            );
+            });
             return { type: ADD_TIMING_DATA, timingData: action.transactionData};
         })
     )
