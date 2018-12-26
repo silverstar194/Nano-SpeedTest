@@ -2,6 +2,7 @@ from decimal import *
 import json
 from threading import Thread
 import random
+import logging
 from queue import Queue
 
 
@@ -21,8 +22,9 @@ from speedtest_api.services import batches
 from speedtest_api.services import transactions
 from speedtest_api.services import nodes
 
+logger = logging.getLogger(__name__)
 
-@ratelimit(key='ip', rate='60/d')
+@ratelimit(key='ip', rate='15/d')
 @api_view(['POST'])
 def generate_transaction(request):
     """
@@ -34,6 +36,7 @@ def generate_transaction(request):
     """
     was_limited = getattr(request, 'limited', False)
     if was_limited:
+        logger.info("Request was limited for %s" % request.META.get('REMOTE_ADDR'))
         return JsonResponse({'message': "You reached the max number of requests per day. Try again tomorrow."},
                             status=403)
 
@@ -112,7 +115,7 @@ def generate_transaction(request):
         return JsonResponse({'message': "The transaction format is invalid. Please try again."}, status=400)
 
 
-@ratelimit(key='ip', rate='60/d')
+@ratelimit(key='ip', rate='15/d')
 @api_view(['POST'])
 def send_batch_transactions(request):
     """
@@ -124,6 +127,7 @@ def send_batch_transactions(request):
     """
     was_limited = getattr(request, 'limited', False)
     if was_limited:
+        logger.info("Request was limited for %s" % request.META.get('REMOTE_ADDR'))
         return JsonResponse({'message': "You reached the max number of requests per day. Try again tomorrow."},
                             status=403)
 
@@ -310,7 +314,6 @@ def convert_transaction_to_dict(transaction):
     @return dict A dictionary representation of the transaction
 
     """
-    print(transaction)
     origin_node = transaction.origin.wallet.node
     destination_node = transaction.destination.wallet.node
 
