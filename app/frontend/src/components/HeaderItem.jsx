@@ -14,7 +14,7 @@ const onSwitchTab = (e, to, activeTab) => {
 const HeaderItem = ({activeTab, to, text}) => {
 	const active = (activeTab === to ? ' active' : '');
 	const buildAd = (to === 'BuildAd' ? ' font-weight-bold' : '');
-	
+
 	const styles = 'nav-link' + active + buildAd;
     return (
       	<li className='nav-item'>
