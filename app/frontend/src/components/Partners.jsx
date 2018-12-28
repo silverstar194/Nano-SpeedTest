@@ -67,9 +67,11 @@ class Partners extends Component {
        return (
          <div className='Partners'>
             <div className="container">
-             <h3>Our Partner Sites</h3>
+             <h3>Use Nano</h3>
 
-             <i><b>Check out these awesome Nano projects that help support us.</b></i>
+            <p>Interested in taking the next step with Nano? Visit any of our partner sites and try Nano out in the real world. Buy goods, start accounts, and discover Nano projects and ideas below.
+                <br/></p>
+                <i>Tap any panel to view more information.</i>
                 <div className="row">
                     <div className="flip-card partner-card-outer col-xs-12 col-ms-3 col-lg-3">
                         <div className="flip-card-inner">
@@ -78,10 +80,10 @@ class Partners extends Component {
                             <div className="custom-lower-banner">Become a Site Partner</div>
                         </div>
 
+                    <a href="#"  target="_blank" rel="noopener noreferrer">
                     <div className="flip-card-back custom-back-card">
                         <p>Allow users to speed test Nano when first getting introduced.</p>
-
-                          <b>Example Links</b>
+                          <b>Example Buttons</b>
 
                           <div className="custom-button-card">
                             <a href="http://nanospeed.live" className="btn-lg btn-success custom-button-card">
@@ -96,6 +98,8 @@ class Partners extends Component {
                           </div>
 
                    </div>
+                   <div className="custom-lower-banner custom-lower-banner-back">Tap to Join</div>
+                   </a>
                 </div>
               </div>
                     {goldCards}

@@ -17,7 +17,7 @@ const Header = ({location}) => {
 			<HeaderItem activeTab={activeTab} to='Stats' text='Global Statistics' />
 			<HeaderItem activeTab={activeTab} to='Info' text='More Info' />
 			<HeaderItem activeTab={activeTab} to='BuildAd' text='Advertise' />
-			<HeaderItem activeTab={activeTab} to='Partners' text='Partners' />
+			<HeaderItem activeTab={activeTab} to='Discover' text='Use Nano' />
 		</div>
 
 	);

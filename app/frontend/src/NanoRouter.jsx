@@ -22,7 +22,7 @@ export default() => (
                 <Route path='/Results' component={UserResultsPage}/>
                 <Route path='/Info' component={MoreInfoPage}/>
                 <Route path='/BuildAd' component={BuildAd}/>
-                <Route path='/Partners' component={Partners}/>
+                <Route path='/Discover' component={Partners}/>
                 <Route component={NotFoundPage}/>
             </Switch>
             <Toasts />
