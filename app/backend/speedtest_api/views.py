@@ -20,6 +20,7 @@ from speedtest_api.models import Transaction
 from speedtest_api.services import advertisements
 from speedtest_api.services import batches
 from speedtest_api.services import transactions
+from speedtest_api.services import sponsors
 from speedtest_api.services import nodes
 
 logger = logging.getLogger(__name__)
@@ -304,6 +305,36 @@ def get_transaction_statistics(request):
     }
 
     return JsonResponse(statistics, status=200)
+
+@api_view(['GET'])
+def get_sponsors(request):
+    sponsors_all = sponsors.get_sponsors()
+
+    titles = []
+    texts = []
+    links = []
+    imgs = []
+    for sponsor in sponsors_all:
+        titles.append(sponsor.title)
+        texts.append(sponsor.text)
+        links.append(sponsor.link)
+        imgs.append(sponsor.img)
+
+    c = list(zip(titles, texts, links, imgs))
+    random.shuffle(c)
+    titles, texts, links, imgs = zip(*c)
+
+    data = {
+        'gold':{
+            'title': titles,
+            'text': texts,
+            'link': links,
+            'img': imgs,
+        }
+    }
+
+
+    return JsonResponse({'data': data}, status=200)
 
 
 def convert_transaction_to_dict(transaction):
