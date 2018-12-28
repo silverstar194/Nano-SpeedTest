@@ -56,7 +56,7 @@ class Partners extends Component {
                 <div className="flip-card-back">
                     <h3>{title}</h3>
                     <p>{this.state.textGold[index]}</p>
-                    <div className="custom-lower-banner">Tap to Visit</div>
+                    <div className="custom-lower-banner custom-lower-banner-back">Tap to Visit</div>
                 </div>
             </a>
 

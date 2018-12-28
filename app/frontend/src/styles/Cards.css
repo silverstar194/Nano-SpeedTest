@@ -83,6 +83,11 @@
     border-radius: 0px 0px 10px 10px;
 }
 
+
+.custom-lower-banner-back{
+ transform: rotateY(180deg);
+}
+
 .custom-card-background{
     background: white;
 }
