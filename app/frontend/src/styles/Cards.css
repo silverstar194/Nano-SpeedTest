@@ -79,6 +79,7 @@
     bottom: 0;
     background:gray;
     background: rgba(128,128,128,0.8);
+    backface-visibility: hidden;
     border-radius: 0px 0px 10px 10px;
 }
 
