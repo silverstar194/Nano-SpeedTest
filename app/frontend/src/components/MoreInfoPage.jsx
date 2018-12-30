@@ -186,15 +186,18 @@ class MoreInfoPage extends Component {
                         <br/>
                         <br/>
 
-       
+
                   <h5>Found a bug?</h5>
                         Excellent. Thanks for the bug. <a href="mailto:iliketoemail@ymail.com?Subject=Bug Report: NanoSpeed" target="_top">Send us a report.</a> We'll fix it ASAP.
                    <br/>
                    <br/>
+
                    <i>Help keep the servers and nodes up.
                     <br/>
                    xrb_1ft5e6xtnxwotrszg44tx99wcqyckgsf5xeijqpitinqgyxu8fgxzhwas9eo</i>
                    <br/>
+                   <br/>
+                   <a href="http://api.nanospeed.live/transactions/download">Download all Transactions for Analysis</a>
                    <br/>
                    Please do not use bots to access site. Excessive testing or spam will result in a swift 24 hour ban.
               </div>

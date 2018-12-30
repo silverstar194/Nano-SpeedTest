@@ -361,7 +361,7 @@ def simple_send(from_account, to_address, amount, generate_PoW=True):
     return transaction_hash_sending
 
 
-def get_transactions(enabled=True, batch=None):
+def get_transactions(enabled=True, batch=None, download=False):
     """
     Get all transactions in the database.
 
@@ -375,7 +375,10 @@ def get_transactions(enabled=True, batch=None):
 
     if enabled:
         return models.Transaction.objects.filter(origin__wallet__node__enabled=enabled, destination__wallet__node__enabled=enabled)
-    
+
+    if download:
+        return models.Transaction.objects.select_related().order_by('-id')[:]
+
     return models.Transaction.objects.all()
 
 

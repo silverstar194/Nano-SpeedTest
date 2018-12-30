@@ -18,7 +18,6 @@ class Partners extends Component {
     componentDidMount() {
         fetchWrapper('sponsors/info')
         .then((response) => {
-        console.log(response.data)
             this.setState({
                 titleGold: response.data.gold.title,
                 textGold: response.data.gold.text,
@@ -52,12 +51,12 @@ class Partners extends Component {
                     <div className="custom-lower-banner">{title}</div>
                 </div>
 
-            <a href={this.state.linkGold[index]}  target="_blank" rel="noopener noreferrer">
-                <div className="flip-card-back">
-                    <h3>{title}</h3>
+            <a href={this.state.linkGold[index]} rel="noopener noreferrer">
+                <div className="flip-card-back custom-back-card">
+                    <h5>{title}</h5>
                     <p>{this.state.textGold[index]}</p>
-                    <div className="custom-lower-banner custom-lower-banner-back">Tap to Visit</div>
                 </div>
+                 <div className="custom-lower-banner custom-lower-banner-back">Tap to Visit</div>
             </a>
 
         </div>
@@ -69,8 +68,11 @@ class Partners extends Component {
             <div className="container">
              <h3>Use Nano</h3>
 
-            <p>Interested in taking the next step with Nano? Visit any of our partner sites and try Nano out in the real world. Buy goods, start accounts, and discover Nano projects and ideas below.
+            <p>Interested in taking the next step with Nano? Visit any of our partner sites and try Nano out in the real world. Buy goods, start accounts, discover Nano projects and other ideas.
                 <br/></p>
+                <a href="/PartnerInfo">More information about the Partner Program</a>
+                <br/>
+                <br/>
                 <i>Tap any panel to view more information.</i>
                 <div className="row">
                     <div className="flip-card partner-card-outer col-xs-12 col-ms-3 col-lg-3">
@@ -80,10 +82,10 @@ class Partners extends Component {
                             <div className="custom-lower-banner">Become a Site Partner</div>
                         </div>
 
-                    <a href="#"  target="_blank" rel="noopener noreferrer">
+                    <a href="/PartnerInfo"  target="_blank" rel="noopener noreferrer">
                     <div className="flip-card-back custom-back-card">
                         <p>Allow users to speed test Nano when first getting introduced.</p>
-                          <b>Example Buttons</b>
+                          <b>Embeddable Buttons</b>
 
                           <div className="custom-button-card">
                             <a href="http://nanospeed.live" className="btn-lg btn-success custom-button-card">
@@ -96,6 +98,7 @@ class Partners extends Component {
                                 Try Nano Now <span role="img" aria-label="Money Bag">💰</span>
                             </a>
                           </div>
+                    <a/>
 
                    </div>
                    <div className="custom-lower-banner custom-lower-banner-back">Tap to Join</div>

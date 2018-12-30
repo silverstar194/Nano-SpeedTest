@@ -1,5 +1,6 @@
 from decimal import *
 import json
+import csv
 from threading import Thread
 import random
 import logging
@@ -8,6 +9,7 @@ from queue import Queue
 
 from django.db.models import F
 from django.http import JsonResponse
+from djqscsv import render_to_csv_response
 from django.conf import settings as settings
 from rest_framework.decorators import api_view
 
@@ -337,6 +339,11 @@ def get_sponsors(request):
     return JsonResponse({'data': data}, status=200)
 
 
+@api_view(['GET'])
+def download_transaction(request):
+    qs = transactions.get_transactions(download=True)
+    return render_to_csv_response(qs)
+
 def convert_transaction_to_dict(transaction):
     """
     Private helper method to convert a transaction database query object to a dict
@@ -380,6 +387,8 @@ def convert_transaction_to_dict(transaction):
     }
 
     return converted_transaction
+
+
 
 def send_transaction_async(transaction, out_queue):
     """
