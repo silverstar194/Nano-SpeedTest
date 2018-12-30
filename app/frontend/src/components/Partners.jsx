@@ -82,7 +82,7 @@ class Partners extends Component {
                             <div className="custom-lower-banner">Become a Site Partner</div>
                         </div>
 
-                    <a href="/PartnerInfo"  target="_blank" rel="noopener noreferrer">
+                    <a href="/PartnerInfo">
                     <div className="flip-card-back custom-back-card">
                         <p>Allow users to speed test Nano when first getting introduced.</p>
                           <b>Embeddable Buttons</b>
