@@ -16,7 +16,7 @@ class Partners extends Component {
         };
     }
     componentDidMount() {
-        fetchWrapper('sponsors/info')
+        fetchWrapper('partners/info')
         .then((response) => {
             this.setState({
                 titleGold: response.data.gold.title,

@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class Sponsor(models.Model):
+class Partner(models.Model):
     title = models.CharField(max_length=56, null=True)
     text = models.CharField(max_length=256, null=True)
     link = models.CharField(max_length=512, null=True)

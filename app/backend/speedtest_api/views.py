@@ -22,7 +22,7 @@ from speedtest_api.models import Transaction
 from speedtest_api.services import advertisements
 from speedtest_api.services import batches
 from speedtest_api.services import transactions
-from speedtest_api.services import sponsors
+from speedtest_api.services import partners
 from speedtest_api.services import nodes
 
 logger = logging.getLogger(__name__)
@@ -309,18 +309,18 @@ def get_transaction_statistics(request):
     return JsonResponse(statistics, status=200)
 
 @api_view(['GET'])
-def get_sponsors(request):
-    sponsors_all = sponsors.get_sponsors()
+def get_partners(request):
+    partners_all = partners.get_partners()
 
     titles = []
     texts = []
     links = []
     imgs = []
-    for sponsor in sponsors_all:
-        titles.append(sponsor.title)
-        texts.append(sponsor.text)
-        links.append(sponsor.link)
-        imgs.append(sponsor.img)
+    for partner in partners_all:
+        titles.append(partner.title)
+        texts.append(partner.text)
+        links.append(partner.link)
+        imgs.append(partner.img)
 
     c = list(zip(titles, texts, links, imgs))
     random.shuffle(c)
@@ -337,7 +337,6 @@ def get_sponsors(request):
 
 
     return JsonResponse({'data': data}, status=200)
-
 
 @api_view(['GET'])
 def download_transaction(request):

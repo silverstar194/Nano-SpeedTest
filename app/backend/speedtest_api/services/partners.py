@@ -1,10 +1,10 @@
 from .. import models
 
 
-def get_sponsors(enabled=True):
+def get_parners(enabled=True):
     """
     Get all advertisements in the database
 
     @return: Query of all Sponsors
     """
-    return models.Sponsor.objects.filter(enabled=enabled).all()
+    return models.Partner.objects.filter(enabled=enabled).all()
