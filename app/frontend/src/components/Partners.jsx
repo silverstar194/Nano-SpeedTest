@@ -68,7 +68,7 @@ class Partners extends Component {
             <div className="container">
              <h3>Use Nano</h3>
 
-            <p>Interested in taking the next step with Nano? Visit any of our partner sites and try Nano out in the real world. Buy goods, start accounts, discover Nano projects and other ideas.
+            <p>Interested in taking the next step with Nano? Visit any of our partner sites and try Nano out in the real world: buy goods, start accounts, discover Nano projects, and other ideas.
                 <br/></p>
                 <a href="/PartnerInfo">More information about the Partner Program</a>
                 <br/>

@@ -17,19 +17,16 @@ class PartnerInfo extends Component {
                 <h4>Become a Partner</h4>
                 <h5>Overview of the Program</h5>
                 <p>
-                <i>All too often people visit crypto related sites, browse and leave, failing to see the vast utility.
+                <i>All too often people visit crypto related sites, browse, and leave; failing to see the vast utility.
                 Our vision is to change this radically.</i>
                 <br/>
                  <br/>
-                Integrating NanoSpeed.live buttons into your service or site allows users to test and try out Nano transactions instantly, before any download or signup. Our buttons are drop-dead easy and take only two lines of code.
+                Integrating NanoSpeed.live buttons into your service or site allows interested users to test and try out Nano transactions instantly, before any download or signup. Our buttons are drop-dead easy and take only two lines of code.
                 <br/>
                 <br/>
-                <a href="/">Read more on Medium</a></p>
+                <a href="/">Read more about the Partner Program on Medium</a></p>
 
                 <h5>Developer Information</h5>
-                Integrating a NanoSpeed.live button only takes 2 lines of code.
-                <br/>
-                <br/>
                 <b>Step 1.</b>
                  <br/>
                 Add the needed stylesheet
@@ -38,7 +35,7 @@ class PartnerInfo extends Component {
 
                 <b>Step 2.</b>
                 <br/>
-                Add the button style that works best for your site. Lastly, email us at sean@NanoSpeed.live to be added to the  <a href="/Discover">Partner Cards</a>.
+                Add the button style that works best for your site. Lastly, email us at  <a href="mailto:sean@NanoSpeed.live?Subject=Adding Nano SpeedTest.live Partner" target="_top">sean@NanoSpeed.live</a> to be added to the  <a href="/Discover">Partner Cards</a>.
                 <br/>
 
                     <div className="row">
@@ -76,7 +73,7 @@ class PartnerInfo extends Component {
                        </div>
                    </div>
                    <div className="custom-bottom-partnerinfo">
-                        <i>These buttons don't fit the current style of your site? That's fine! You're still welcome to join the Partner Program. Feel free to design your own button. Your button should direct users to http://nanospeed.live/</i>
+                        <i>These buttons don't fit the current style of your site? That's fine! You're still welcome to join the Partner Program. Feel free to design your own button. Your button should direct users to https://NanoSpeed.live/</i>
                    </div>
              </div>
           </div>
