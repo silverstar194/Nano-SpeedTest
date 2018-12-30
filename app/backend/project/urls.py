@@ -28,5 +28,6 @@ urlpatterns = [
     path('header/info', views.advertisement_information),
     path('nodes/list', views.list_nodes),
     path('transactions/statistics', views.get_transaction_statistics),
-    path('sponsors/info', views.get_sponsors)
+    path('sponsors/info', views.get_sponsors),
+    path('transactions/download', views.download_transaction)
 ]
