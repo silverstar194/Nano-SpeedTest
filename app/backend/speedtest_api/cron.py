@@ -23,6 +23,7 @@ def node_status_job():
         for i in range(5):
             try:
                 nano.rpc.Client(node.URL).version()
+                break
             except Exception as e:
                 time.sleep(10)
                 if i == 4:
