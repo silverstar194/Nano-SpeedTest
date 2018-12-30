@@ -56,7 +56,7 @@ def node_status_job():
     medium = sum(past_hours[int(count / 2 - 1):int(count / 2 + 1)]) / 2.0
 
     num_trans_past_hour = models.Transaction.objects.filter(start_send_timestamp__gte=(1000 * int(time.time())) - 60 * 60 * 1000).count()
-    if num_trans_past_hour > medium*2:
+    if num_trans_past_hour > medium*10:
         logger.info("Traffic doubled....")
         from_email = Email("admin@NanoSpeed.live")
         to_email = Email(settings.ADMIN_EMAIL)
