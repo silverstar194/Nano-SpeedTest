@@ -1,6 +1,5 @@
 from decimal import *
 import json
-import csv
 from threading import Thread
 import random
 import logging
@@ -386,8 +385,6 @@ def convert_transaction_to_dict(transaction):
     }
 
     return converted_transaction
-
-
 
 def send_transaction_async(transaction, out_queue):
     """

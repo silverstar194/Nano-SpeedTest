@@ -37,8 +37,6 @@ class PartnerInfo extends Component {
                 Add the button style that works best for your site.
                 <br/>
 
-
-
                     <div className="row">
                         <div className="col-lg-6">
 

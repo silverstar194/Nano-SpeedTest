@@ -48,8 +48,7 @@ class MoreInfoPage extends Component {
                         target='_blank'
                         rel='noopener noreferrer'>CoinMarketCap</a>.
                      <br/>
-                      <br/>
-
+                     <br/>
                      <h5>Places That Accept Nano</h5>
                     Each day, merchants around the world are beginning to accept Nano.
                     For a full list of businesses who currently accept Nano, visit  <a
