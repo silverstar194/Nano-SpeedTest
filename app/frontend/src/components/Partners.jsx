@@ -26,7 +26,7 @@ class Partners extends Component {
             });
         }).catch((err) => {
             makeToast({
-                text: `Can't receive Sponsors`,
+                text: `Can't receive Partners`,
                 status: 'danger'
             });
         });
