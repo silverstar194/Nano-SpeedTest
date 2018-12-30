@@ -15,14 +15,18 @@ class PartnerInfo extends Component {
          <div className='PartnerInfo'>
             <div className="container">
                 <h4>Become a Partner</h4>
-                Integrate NanoSpeed.live buttons for users to test and try Nano transactions. Email us at sean@NanoSpeed.live to be added to the Partner Cards.
-                <br/>
-                <br/>
                 <h5>Overview of the Program</h5>
+                <p>
+                <i>All too often people visit crypto related sites, browse and leave, failing to see the vast utility.
+                Our vision is to change this radical.</i>
+                <br/>
+                 <br/>
+                Integrating NanoSpeed.live buttons into your service or site, allows users to test and try out Nano transactions instantly before any download or signup. Our buttons are drop-dead easy and take only two lines of code.
+                <br/>
+                <br/>
+                <a href="/">Read more on Medium</a></p>
 
-                <a href="/">Read more on Medium</a>
-
-                <h5>Developer information</h5>
+                <h5>Developer Information</h5>
                 Integrating a NanoSpeed.live button only takes 2 lines of code.
                 <br/>
                 <br/>
@@ -34,7 +38,7 @@ class PartnerInfo extends Component {
 
                 <b>Step 2.</b>
                 <br/>
-                Add the button style that works best for your site.
+                Add the button style that works best for your site. Lastly, email us at sean@NanoSpeed.live to be added to the  <a href="/Discover">Partner Cards</a>.
                 <br/>
 
                     <div className="row">
@@ -55,7 +59,6 @@ class PartnerInfo extends Component {
                         </div>
                     </div>
 
-                    <br/>
                     <br/>
                    <div className="row">
                        <div className="col-lg-6">
