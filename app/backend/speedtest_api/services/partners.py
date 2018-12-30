@@ -1,7 +1,7 @@
 from .. import models
 
 
-def get_parners(enabled=True):
+def get_partners(enabled=True):
     """
     Get all advertisements in the database
 
