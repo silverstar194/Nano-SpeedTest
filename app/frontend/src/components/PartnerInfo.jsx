@@ -18,10 +18,10 @@ class PartnerInfo extends Component {
                 <h5>Overview of the Program</h5>
                 <p>
                 <i>All too often people visit crypto related sites, browse and leave, failing to see the vast utility.
-                Our vision is to change this radical.</i>
+                Our vision is to change this radically.</i>
                 <br/>
                  <br/>
-                Integrating NanoSpeed.live buttons into your service or site, allows users to test and try out Nano transactions instantly before any download or signup. Our buttons are drop-dead easy and take only two lines of code.
+                Integrating NanoSpeed.live buttons into your service or site allows users to test and try out Nano transactions instantly, before any download or signup. Our buttons are drop-dead easy and take only two lines of code.
                 <br/>
                 <br/>
                 <a href="/">Read more on Medium</a></p>
