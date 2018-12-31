@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import 'styles/PartnerInfo.css';
-import Gist from 'react-gist'
+import ReactEmbedGist from 'react-embed-gist';
 
 class PartnerInfo extends Component {
     constructor(props) {
@@ -31,7 +31,8 @@ class PartnerInfo extends Component {
                  <br/>
                 Add the needed stylesheet
                  <br/>
-                <Gist id='2e6737bf7f752371d1a6ea70b0b484b4' />
+
+                 <ReactEmbedGist gist="silverstar194/2e6737bf7f752371d1a6ea70b0b484b4"/>
 
                 <b>Step 2.</b>
                 <br/>
@@ -44,7 +45,7 @@ class PartnerInfo extends Component {
                             <a href="http://nanospeed.live" className="btn-nanospeed-live btn-nanospeed-live-lg">
                                         Speed Test Nano <span role="img" aria-label="Timer">&#9200;</span>
                             </a>
-                             <Gist id='df13667913a9910a6c6ee752af29a1b3' />
+                            <ReactEmbedGist gist="silverstar194/df13667913a9910a6c6ee752af29a1b3"/>
                         </div>
 
                         <div className="col-lg-6 custom-margin-buttom-sm">
@@ -52,7 +53,7 @@ class PartnerInfo extends Component {
                               <a href="http://nanospeed.live" className="btn-nanospeed-live btn-nanospeed-live-sm">
                                     Speed Test Nano <span role="img" aria-label="Timer">&#9200;</span>
                              </a>
-                             <Gist id='5df4a77ca09b94794c8f519874b3a15e' />
+                             <ReactEmbedGist gist="silverstar194/5df4a77ca09b94794c8f519874b3a15e"/>
                         </div>
                     </div>
 
@@ -62,14 +63,15 @@ class PartnerInfo extends Component {
                            <a  href="http://nanospeed.live" className="btn-nanospeed-live btn-nanospeed-live-lg">
                                 Try Nano Now <span role="img" aria-label="Money Bag">💰</span>
                            </a>
-                            <Gist id='1b0899856bfa6b32dcdf7bd43ba25810' />
+                           <ReactEmbedGist gist="silverstar194/1b0899856bfa6b32dcdf7bd43ba25810"/>
                        </div>
 
                        <div className="col-lg-6 custom-margin-buttom-sm">
                            <a  href="http://nanospeed.live" className="btn-nanospeed-live btn-nanospeed-live-sm">
                                 Try Nano Now <span role="img" aria-label="Money Bag">💰</span>
                            </a>
-                            <Gist id='2a46912193934e0cba3e76794859f943' />
+                            <ReactEmbedGist gist="silverstar194/2a46912193934e0cba3e76794859f943"/>
+
                        </div>
                    </div>
                    <div className="custom-bottom-partnerinfo">
