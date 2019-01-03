@@ -24,7 +24,7 @@ class PartnerInfo extends Component {
                 Integrating NanoSpeed.live buttons into your service or site allows interested users to test and try out Nano transactions instantly, before any download or signup. Our buttons are drop-dead easy and take only two lines of code.
                 <br/>
                 <br/>
-                <a href="/">Read more about the Partner Program on Medium</a></p>
+                <a href="https://medium.com/@seanmaloney_13696/nanospeed-live-partner-program-2cf812180af4">Read more about the Partner Program on Medium</a></p>
 
                 <h5>Developer Information</h5>
                 <b>Step 1.</b>
