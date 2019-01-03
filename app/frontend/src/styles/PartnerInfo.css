@@ -1,0 +1,70 @@
+.btn-nanospeed-live{
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  margin: .4em;
+  text-decoration: none;
+  color: #fff;
+  background-color: #28a745;
+  border-color: #28a745;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+
+}
+
+.btn-nanospeed-live-sm {
+  padding: .375rem .75rem;
+  font-size: .75em;
+  line-height: 1.42857143;
+  border-radius: .25rem;
+  line-height: 1.3333333;
+}
+
+.btn-nanospeed-live-lg {
+  padding: .5rem 1rem;
+  font-size: 1.25rem;
+  line-height: 1.5;
+  border-radius: .3rem;
+  line-height: 1.5;
+}
+
+.btn-nanospeed-live:hover{
+  color: #fff;
+  background-color: #449d44;
+  border-color: #398439;
+  text-decoration: none;
+}
+.btn-nanospeed-live:active{
+  color: #fff;
+  background-color: #449d44;
+  border-color: #398439;
+  text-decoration: none;
+}
+
+.custom-gist-outer{
+   position: relative;
+}
+
+.custom-gist-inner{
+   position: absolute;
+   bottom: 0;
+}
+
+.custom-margin-buttom-sm{
+    margin-top:1.5em;
+}
+
+.custom-bottom-partnerinfo{
+  padding-bottom:5%;
+}

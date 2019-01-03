@@ -20,25 +20,28 @@ def node_status_job():
     nodes = models.Node.objects.filter(enabled=True)
 
     for node in nodes:
-        try:
-            nano.rpc.Client(node.URL).version()
-        except Exception as e:
+        for i in range(5):
+            try:
+                nano.rpc.Client(node.URL).version()
+                break
+            except Exception as e:
+                time.sleep(10)
+                if i == 4:
+                    from_email = Email("admin@NanoSpeed.live")
+                    to_email = Email(settings.ADMIN_EMAIL)
+                    subject = "URGENT: A node is down on NanoSpeed.live"
+                    text = """
+                      Hello Admin,
+        
+                      Node %s in %s is down. Please investigate and restart.
+        
+                      Best,
+                      NanoSpeed
+        
+                      """ % (node.id, node.location_name)
 
-            from_email = Email("admin@NanoSpeed.live")
-            to_email = Email(settings.ADMIN_EMAIL)
-            subject = "URGENT: A node is down on NanoSpeed.live"
-            text = """
-              Hello Admin,
-
-              Node %s in %s is down. Please investigate and restart.
-
-              Best,
-              NanoSpeed
-
-              """ % (node.id, node.location_name)
-
-            send_mail(to_email,from_email, subject, text)
-            logger.info("Email sent to %s regarding crashed node %s in %s " % (settings.ADMIN_EMAIL, node.id, node.location_name))
+                    send_mail(to_email,from_email, subject, text)
+                    logger.info("Email sent to %s regarding crashed node %s in %s " % (settings.ADMIN_EMAIL, node.id, node.location_name))
 
     ###################################################################
     logger.info("Checking transactions generates for possible spam...")
@@ -53,7 +56,7 @@ def node_status_job():
     medium = sum(past_hours[int(count / 2 - 1):int(count / 2 + 1)]) / 2.0
 
     num_trans_past_hour = models.Transaction.objects.filter(start_send_timestamp__gte=(1000 * int(time.time())) - 60 * 60 * 1000).count()
-    if num_trans_past_hour > medium*2:
+    if num_trans_past_hour > medium*10:
         logger.info("Traffic doubled....")
         from_email = Email("admin@NanoSpeed.live")
         to_email = Email(settings.ADMIN_EMAIL)

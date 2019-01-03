@@ -8,6 +8,7 @@ from queue import Queue
 
 from django.db.models import F
 from django.http import JsonResponse
+from djqscsv import render_to_csv_response
 from django.conf import settings as settings
 from rest_framework.decorators import api_view
 
@@ -20,6 +21,7 @@ from speedtest_api.models import Transaction
 from speedtest_api.services import advertisements
 from speedtest_api.services import batches
 from speedtest_api.services import transactions
+from speedtest_api.services import partners
 from speedtest_api.services import nodes
 
 logger = logging.getLogger(__name__)
@@ -305,6 +307,40 @@ def get_transaction_statistics(request):
 
     return JsonResponse(statistics, status=200)
 
+@api_view(['GET'])
+def get_partners(request):
+    partners_all = partners.get_partners()
+
+    titles = []
+    texts = []
+    links = []
+    imgs = []
+    for partner in partners_all:
+        titles.append(partner.title)
+        texts.append(partner.text)
+        links.append(partner.link)
+        imgs.append(partner.img)
+
+    c = list(zip(titles, texts, links, imgs))
+    random.shuffle(c)
+    titles, texts, links, imgs = zip(*c)
+
+    data = {
+        'gold':{
+            'title': titles,
+            'text': texts,
+            'link': links,
+            'img': imgs,
+        }
+    }
+
+
+    return JsonResponse({'data': data}, status=200)
+
+@api_view(['GET'])
+def download_transaction(request):
+    qs = transactions.get_transactions(download=True)
+    return render_to_csv_response(qs)
 
 def convert_transaction_to_dict(transaction):
     """

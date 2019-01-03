@@ -25,7 +25,7 @@ export const fetchTransaction = action$ => action$.pipe(
             return { type: ADD_TRANSACTIONS, transactionData, batchId: data.id };
         }).catch((err) => {
 
-            if(err.status == 403){
+            if(err.status === 403){
 		        console.warn('Blocked Transaction Due to API Abuse');
                 makeToast({
                         text: 'Please stop spamming tests or you will be banned for 24 hours.',
@@ -61,7 +61,7 @@ export const fetchTransactionTiming = action$ => action$.pipe(
             });
             return { type: ADD_TIMING_DATA, timingData: parsedResponse.transactions};
         }).catch((err) => {
-	        if(err.status == 403){
+	        if(err.status === 403){
 		        console.warn('Blocked Fetching Timing Data Due to API Abuse');
             	makeToast({
          		    text: 'Please stop spamming tests or you will be banned for 24 hours.',

@@ -27,5 +27,7 @@ urlpatterns = [
     path('header/add', views.add_advertisement),
     path('header/info', views.advertisement_information),
     path('nodes/list', views.list_nodes),
-    path('transactions/statistics', views.get_transaction_statistics)
+    path('transactions/statistics', views.get_transaction_statistics),
+    path('partners/info', views.get_partners),
+    path('transactions/download', views.download_transaction)
 ]

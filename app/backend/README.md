@@ -31,6 +31,7 @@ $ pip install nano-python  # RPC wrapper for Nano
 $ pip install mysqlclient  # We are using a MySQL database
 $ pip install django-ipware  # Used for getting IP from REST request
 $ pip install sendgrid # Used for email service
+$ pip install django-queryset-csv
 ```
 
 ## Environment Variable Setup

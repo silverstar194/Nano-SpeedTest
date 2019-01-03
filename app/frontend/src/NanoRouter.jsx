@@ -6,6 +6,8 @@ import HistoricalDataView from './components/HistoricalData/HistoricalDataView';
 import MoreInfoPage from './components/MoreInfoPage';
 import NotFoundPage from './components/NotFoundPage';
 import BuildAd from './components/BuildAd';
+import Partners from './components/Partners';
+import PartnerInfo from './components/PartnerInfo';
 import ScrollToTop from 'components/ScrollToTop';
 import Toasts from 'components/Notifications/Toasts';
 import Header from 'components/Header';
@@ -21,6 +23,8 @@ export default() => (
                 <Route path='/Results' component={UserResultsPage}/>
                 <Route path='/Info' component={MoreInfoPage}/>
                 <Route path='/BuildAd' component={BuildAd}/>
+                <Route path='/Discover' component={Partners}/>
+                <Route path='/PartnerInfo' component={PartnerInfo}/>
                 <Route component={NotFoundPage}/>
             </Switch>
             <Toasts />
