@@ -2,11 +2,20 @@ import React, {Component} from 'react';
 import '../styles/HomePage.css';
 import Ad from './Ad';
 import { Link } from 'react-router-dom';
+import { Helmet } from "react-helmet";
 
 class MoreInfoPage extends Component {
     render() {
         return (
             <div className='MoreInfoPage'>
+             <Helmet>
+                <title>NanoSpeed.live - Learn more about Nano currency.</title>
+                <meta name="keywords" content="HTML,CSS,JavaScript" />
+                <meta
+                    name="description"
+                    content="Find out all the details about Nano. Buying Nano. Spending Nano. More about our site."
+                 />
+            </Helmet>
                 <Ad/>
                 <br/>
                 <div className='container'>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import 'styles/PartnerInfo.css';
 import ReactEmbedGist from 'react-embed-gist';
+import { Helmet } from "react-helmet";
 
 class PartnerInfo extends Component {
     constructor(props) {
@@ -13,6 +14,14 @@ class PartnerInfo extends Component {
     render() {
        return (
          <div className='PartnerInfo'>
+            <Helmet>
+                <title>NanoSpeed.live - Partner Program Information</title>
+                <meta name="keywords" content="HTML,CSS,JavaScript" />
+                <meta
+                    name="description"
+                    content="Learn more about out partner program and how to join today. Easily embeddable buttons available."
+                 />
+            </Helmet>
             <div className="container">
                 <h4>Become a Partner</h4>
                 <h5>Overview of the Program</h5>

@@ -3,6 +3,7 @@ import EditableAd from './EditableAd';
 import { fetchWrapper } from 'util/helpers';
 import { makeToast } from 'util/toasts';
 import 'styles/AdBuild.css';
+import { Helmet } from "react-helmet";
 
 const TITLE_MAX_LEN = 40;
 const DESCRIPTION_MAX_LEN = 120;
@@ -164,6 +165,15 @@ class BuildAd extends Component {
         const {title, description, url, project, email, selectedSlot, errors} = this.state;
         return (
          <div className='AdBuild'>
+            <Helmet>
+                <title>NanoSpeed.live - Build a community ad.</title>
+                <meta name="keywords" content="HTML,CSS,JavaScript" />
+                <meta
+                    name="description"
+                    content="Build a community ad using out interactive ad builder. Ads are a fixed monthly cost."
+                 />
+            </Helmet>
+
                 { this.state.showSpinner ?
                     <div className='loading-container'>
                         <div className='loader-container d-flex justify-content-center'>

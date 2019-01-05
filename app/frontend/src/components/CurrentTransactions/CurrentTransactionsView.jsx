@@ -6,7 +6,7 @@ import NoTableEntries from './NoTableEntries';
 import '../../styles/CurrentTransactionsView.css';
 import { connect } from 'react-redux';
 import { fetchTransaction } from '../../actions/table';
-
+import { Helmet } from "react-helmet";
 
 const loader = (
     <div className='loading-container'>
@@ -38,6 +38,14 @@ class CurrentTransactionsView extends Component {
         const shouldShowTable = (isFetchingTransaction || mostRecent.length || isFetchingTiming);
         return (
             <Fragment>
+            <Helmet>
+                <title>NanoSpeed.live - Current Transaction Information</title>
+                <meta name="keywords" content="HTML,CSS,JavaScript" />
+                <meta
+                    name="description"
+                    content="View statistics about your speed tests and transactions."
+                 />
+            </Helmet>
                 <Ad/>
                 <h2 className='map-header page-header text-left d-inline-block'>Your Transactions</h2>
                 {errorMessage(mostRecent, isFetchingTransaction)} {/*Displays an error message if fetching the transaction fails*/}

@@ -8,6 +8,7 @@ import ScatterView from './ScatterView';
 import HeatMap from './HeatMap';
 import {addPastResults} from 'actions/pastResults';
 import {fetchPastResults} from 'util/helpers';
+import { Helmet } from "react-helmet";
 
 class HistoricalDataView extends React.Component {
     componentDidMount() {
@@ -34,6 +35,15 @@ class HistoricalDataView extends React.Component {
 
         return (
             <div className='HistoricalData'>
+             <Helmet>
+                <title>NanoSpeed.live - Past Transaction Information</title>
+                <meta name="keywords" content="HTML,CSS,JavaScript" />
+                <meta
+                    name="description"
+                    content="View statistics about past speed tests and transactions."
+                 />
+            </Helmet>
+
                 <Ad />
 
                 <div className='container-fluid'>
