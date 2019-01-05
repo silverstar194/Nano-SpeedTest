@@ -74,7 +74,7 @@ class Partners extends Component {
                  />
             </Helmet>
             <div className="container">
-             <h3>Use Nano</h3>
+             <h1>Use Nano</h1>
 
             <p>Interested in taking the next step with Nano? Visit any of our partner sites and try Nano out in the real world: buy goods, start accounts, discover Nano projects, and other ideas.
                 <br/></p>

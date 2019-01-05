@@ -75,7 +75,7 @@ class HomePage extends Component {
         if (values) {
             if (values.numTransactions) { // multi transaction message
                 this.showDropdowns = false;
-                return <h3 className='greeting'>Hit GO to send {values.numTransactions} random Transactions!</h3>;
+                return <h2 className='greeting'>Hit GO to send {values.numTransactions} random Transactions!</h2>;
             } else if (values.origin && values.destination) { // two city message
                 this.showDropdowns = true;
                 return <h3 className='greeting'>Hit GO to send Nano from {this.nodeIdToLocation(values.origin, nodes)}
