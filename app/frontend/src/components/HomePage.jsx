@@ -7,6 +7,7 @@ import { fetchTransaction } from '../actions/table';
 import '../styles/HomePage.css';
 import { openAdvSettings } from '../actions/advancedModal';
 import LocationDropdowns from './LocationDropdowns';
+import { Helmet } from "react-helmet";
 
 class HomePage extends Component {
     // component specific state -- don't need to add to redux store
@@ -88,6 +89,15 @@ class HomePage extends Component {
 
         return (
             <div className='HomePage'>
+            <Helmet>
+                <title>NanoSpeed.live</title>
+                <meta name="keywords" content="HTML,CSS,JavaScript" />
+                <meta
+                    name="description"
+                    content="The fastest way to try out Nano. Run a speed test instantly. No wallets, accounts or sign up."
+                 />
+            </Helmet>
+
                 <Ad/>
                 <AdvancedModal
                     open={this.state.modalOpen}

@@ -3,7 +3,7 @@ import { fetchWrapper } from 'util/helpers';
 import { makeToast } from 'util/toasts';
 import 'styles/Cards.css';
 import icon from 'img/icon.jpg'
-
+import { Helmet } from "react-helmet";
 
 class Partners extends Component {
     constructor(props) {
@@ -65,6 +65,14 @@ class Partners extends Component {
 
        return (
          <div className='Partners'>
+             <Helmet>
+                <title>NanoSpeed.live - Our Nano Partner</title>
+                <meta name="keywords" content="HTML,CSS,JavaScript" />
+                <meta
+                    name="description"
+                    content="View our partners. Get started using Nano today by visiting our Partners below."
+                 />
+            </Helmet>
             <div className="container">
              <h3>Use Nano</h3>
 
