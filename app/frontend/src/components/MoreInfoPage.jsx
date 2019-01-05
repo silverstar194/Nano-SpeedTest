@@ -10,7 +10,7 @@ class MoreInfoPage extends Component {
             <div className='MoreInfoPage'>
              <Helmet>
                 <title>NanoSpeed.live - Learn more about Nano currency.</title>
-                <meta name="keywords" content="HTML,CSS,JavaScript" />
+                <meta name="keywords" content="Nano,speed test,cryptocurrency,bitcoin,instant,feeless" />
                 <meta
                     name="description"
                     content="Find out all the details about Nano. Buying Nano. Spending Nano. More about our site."
@@ -19,9 +19,9 @@ class MoreInfoPage extends Component {
                 <Ad/>
                 <br/>
                 <div className='container'>
-                    <h2>
+                    <h1>
                         What’s Nano?
-                    </h2>
+                    </h1>
                     <i> Official Nano site&nbsp;</i>
                         <a
                             href='https://nano.org'
@@ -50,7 +50,7 @@ class MoreInfoPage extends Component {
                     </div>
                     <br/>
 
-                    <h3>How to start using Nano</h3>
+                    <h2>How to start using Nano</h2>
                      <h5>Buy some Nano</h5>
                      You can find a list of exchanges on <a
                         href='https://coinmarketcap.com/currencies/nano/'
@@ -86,7 +86,7 @@ class MoreInfoPage extends Component {
                     </div>
                     <br/>
 
-                    <h3>Let’s get social</h3>
+                    <h2>Let’s get social</h2>
                     <div>
                         Nano has one of the largest and most active communities of any cryptocurrency. If you’d like to get involved with Nano or simply learn more, please join us on any of our multiple platforms.
                     </div>
@@ -130,7 +130,7 @@ class MoreInfoPage extends Component {
                             LinkedIn
                         </a> </li>
                     </ul>
-                    <h3>FAQ</h3>
+                    <h2>FAQ</h2>
                     <h5>What is this site doing?</h5>
                     We are timing the speed of a Nano transaction as it happens.
                     Everytime you click the big green 'GO' button we send a small amount of money in the form of Nano between two locations worldwide and time how long it takes.

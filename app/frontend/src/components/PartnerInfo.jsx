@@ -16,7 +16,7 @@ class PartnerInfo extends Component {
          <div className='PartnerInfo'>
             <Helmet>
                 <title>NanoSpeed.live - Partner Program Information</title>
-                <meta name="keywords" content="HTML,CSS,JavaScript" />
+                <meta name="keywords" content="Nano,speed test,cryptocurrency,bitcoin,instant,feeless" />
                 <meta
                     name="description"
                     content="Learn more about out partner program and how to join today. Easily embeddable buttons available."

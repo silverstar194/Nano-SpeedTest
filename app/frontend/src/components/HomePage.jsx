@@ -91,7 +91,7 @@ class HomePage extends Component {
             <div className='HomePage'>
             <Helmet>
                 <title>NanoSpeed.live</title>
-                <meta name="keywords" content="HTML,CSS,JavaScript" />
+                <meta name="keywords" content="Nano,speed test,cryptocurrency,bitcoin,instant,feeless" />
                 <meta
                     name="description"
                     content="The fastest way to try out Nano. Run a speed test instantly. No wallets, accounts or sign up."
