@@ -37,7 +37,7 @@ class HistoricalDataView extends React.Component {
             <div className='HistoricalData'>
              <Helmet>
                 <title>NanoSpeed.live - Past Transaction Information</title>
-                <meta name="keywords" content="HTML,CSS,JavaScript" />
+                <meta name="keywords" content="Nano,speed test,cryptocurrency,bitcoin,instant,feeless" />
                 <meta
                     name="description"
                     content="View statistics about past speed tests and transactions."
@@ -49,20 +49,20 @@ class HistoricalDataView extends React.Component {
                 <div className='container-fluid'>
                         <div className='row form-group'>
                         <div className='container-fluid'>
-                        <h2 className='map-header'>
+                        <h1 className='map-header'>
                             Some Stats
-                        </h2>
+                        </h1>
                             <div className='row form-group'>
 
                                 <div className='col-auto'>
-                                    <h3 className='map-header'>
+                                    <h2 className='map-header'>
                                         Total Transactions Sent: {totalTransactions}
-                                    </h3>
+                                    </h2>
                                 </div>
                                 <div className='col-auto'>
-                                    <h3 className='map-header'>
+                                    <h2 className='map-header'>
                                         Median Time: {globalAverage.toFixed(3)} Seconds
-                                    </h3>
+                                    </h2>
                                 </div>
                             </div>
                         </div>

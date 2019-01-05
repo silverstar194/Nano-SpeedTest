@@ -167,7 +167,7 @@ class BuildAd extends Component {
          <div className='AdBuild'>
             <Helmet>
                 <title>NanoSpeed.live - Build a community ad.</title>
-                <meta name="keywords" content="HTML,CSS,JavaScript" />
+                <meta name="keywords" content="Nano,speed test,cryptocurrency,bitcoin,instant,feeless" />
                 <meta
                     name="description"
                     content="Build a community ad using out interactive ad builder. Ads are a fixed monthly cost."

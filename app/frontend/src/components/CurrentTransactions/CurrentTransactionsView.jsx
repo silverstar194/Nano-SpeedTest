@@ -40,14 +40,14 @@ class CurrentTransactionsView extends Component {
             <Fragment>
             <Helmet>
                 <title>NanoSpeed.live - Current Transaction Information</title>
-                <meta name="keywords" content="HTML,CSS,JavaScript" />
+                <meta name="keywords" content="Nano,speed test,cryptocurrency,bitcoin,instant,feeless" />
                 <meta
                     name="description"
                     content="View statistics about your speed tests and transactions."
                  />
             </Helmet>
                 <Ad/>
-                <h2 className='map-header page-header text-left d-inline-block'>Your Transactions</h2>
+                <h1 className='map-header page-header text-left d-inline-block'>Your Transactions</h1>
                 {errorMessage(mostRecent, isFetchingTransaction)} {/*Displays an error message if fetching the transaction fails*/}
                 {(shouldShowTable) ?  // this is pretty ugly and should be refactored in V2
                     <Fragment>{
