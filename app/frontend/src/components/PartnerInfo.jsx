@@ -23,7 +23,7 @@ class PartnerInfo extends Component {
                  />
             </Helmet>
             <div className="container">
-                <h4>Become a Partner</h4>
+                <h1>Become a Partner</h1>
                 <h5>Overview of the Program</h5>
                 <p>
                 <i>All too often people visit crypto related sites, browse, and leave; failing to see the vast utility.
@@ -35,7 +35,7 @@ class PartnerInfo extends Component {
                 <br/>
                 <a href="https://medium.com/@seanmaloney_13696/nanospeed-live-partner-program-2cf812180af4">Read more about the Partner Program on Medium</a></p>
 
-                <h5>Developer Information</h5>
+                <h2>Developer Information</h2>
                 <b>Step 1.</b>
                  <br/>
                 Add the needed stylesheet

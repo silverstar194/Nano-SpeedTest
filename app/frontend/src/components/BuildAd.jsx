@@ -184,7 +184,7 @@ class BuildAd extends Component {
                         </div>
                     </div>
                 : <div className='form-container'>
-                    <h3>Create Ad</h3>
+                    <h1>Create Ad</h1>
 
                     <div id="alert-info" className="alert alert-primary alert-dismissible fade show" role="alert">
                         <h4 className="alert-heading">About our Ads</h4>
@@ -209,7 +209,7 @@ class BuildAd extends Component {
                     />
                     <br/>
 
-                   <h3>Ad Content</h3>
+                   <h2>Ad Content</h2>
                    <form onSubmit={this.onSubmit} >
 
                       <div className='form-group'>
@@ -268,13 +268,13 @@ class BuildAd extends Component {
                         </div>}
                       </div>
 
-                      <h3>Timing & Pricing</h3>
+                      <h2>Timing & Pricing</h2>
                       <p>Your ad will run from <b>{new Date(Date.now()  + 1000 * 60 * 60 * 24 * 1).toLocaleDateString({}, dateOptions)}</b> to <b>{ // tomorrow
                             new Date(Date.now() + 1000 * 60 * 60 * 24 * 31).toLocaleDateString({}, dateOptions) // 31 days later
                         }</b>
                       </p>
 
-                      <h4>Ad Slots</h4>
+                      <h3>Ad Slots</h3>
                       <p>Each Slot represents 5% of all nanospeed.live impressions for the month and are available on a first-come, first-served basis. You may purchase up to 5 slots.</p>
 
                          <div className='form-group'>
@@ -299,7 +299,7 @@ class BuildAd extends Component {
                             </div>
                           </div>
 
-                         <h4>Contact Info</h4>
+                         <h2>Contact Info</h2>
                          <div className='form-group'>
                             <label><b>Project Name</b></label>
                             <br/>
