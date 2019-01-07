@@ -108,7 +108,7 @@ class LoadTester:
 
 def transaction_test():
     '''
-    Validates nodes are running and spam attack is not happening.
+    Validates transaction can be generated and sent.
     '''
 
     loader = LoadTester("https://api.nanospeed.live/")
@@ -132,6 +132,7 @@ def transaction_test():
 def send_mail(to_email, from_email, subject, text):
     '''
     Handles sending out warning emails with SendGrid.
+    TODO: Put email into a service
     '''
 
     try:

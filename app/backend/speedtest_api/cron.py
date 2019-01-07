@@ -80,6 +80,7 @@ def node_status_job():
 def send_mail(to_email, from_email, subject, text):
     '''
     Handles sending out warning emails with SendGrid.
+    TODO: Put email into a service
     '''
 
     try:
