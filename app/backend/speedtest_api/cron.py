@@ -1,19 +1,18 @@
-from speedtest_api import models
-import sendgrid
-from sendgrid.helpers.mail import *
 import logging
 import time
 
-from django.conf import settings as settings
-
 import nano
+import sendgrid
+from django.conf import settings as settings
+from sendgrid.helpers.mail import *
+from speedtest_api import models
 
 logger = logging.getLogger(__name__)
 
 
 def node_status_job():
     '''
-    Validates nodes are running and spam attack is not happening
+    Validates nodes are running and spam attack is not happening.
     '''
 
     logger.info("Running node check...")
@@ -81,6 +80,7 @@ def node_status_job():
 def send_mail(to_email, from_email, subject, text):
     '''
     Handles sending out warning emails with SendGrid.
+    TODO: Put email into a service
     '''
 
     try:
