@@ -174,3 +174,14 @@ In order to do this you need to have a node set up. We have included a link on s
 ## Setting Up Node
 https://github.com/nanocurrency/raiblocks/wiki/Docker-node
 
+
+## Spam prevention
+There are several layers of spam protection. 
+
+Firstly, each IP is limited at the Django app layer to 15 requests per thread. The backend client is running on 3 threads for a total of 45 requests per day per IP.
+
+Secondly, total number of requests are limited to Nginx at 80/min with 20 burst limit.
+
+Lastly, using Fail2Ban any requests that are over the 80/min with 20 burst are counted up. Any IP with more than 3 violations are banned for a 24 hour period.
+
+
