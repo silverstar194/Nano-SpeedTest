@@ -78,6 +78,7 @@ class LoadTester:
         passing = 0
         failing = 0
         times = []
+        failures = []
         for d in results:
             response = d[0]
             times.append(d[1])
