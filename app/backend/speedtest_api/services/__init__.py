@@ -11,4 +11,4 @@ from .wallets import *
 from .batches import *
 
 
-__all__ = ['nodes', 'wallets', 'accounts', 'transactions', 'batches', 'partner']
+__all__ = ['nodes', 'wallets', 'accounts', 'transactions', 'batches', 'partners']
