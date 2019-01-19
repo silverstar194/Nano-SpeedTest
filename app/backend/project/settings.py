@@ -66,7 +66,7 @@ MIDDLEWARE = [
 
 CRONTAB_COMMAND_PREFIX = '. $HOME/.bash_profile;'
 CRONJOBS = [
-    ('0 */2 * * *', 'django.core.management.clean_up'),
+    ('0 */2 * * *', 'speedtest_api.clean_up.clean_up'),
     ('10 */2 * * *', 'speedtest_api.cron.node_status_job'),
     ('15 */2 * * *', 'speedtest_api.transaction_test.transaction_test'),
 ]
