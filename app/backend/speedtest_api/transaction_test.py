@@ -103,7 +103,6 @@ class LoadTester:
             subject = "URGENT: API Point %s%s is DOWN NanoSpeed.live" % (self.API_ENDPOINT, route)
 
             send_mail(to_email, from_email, subject, body)
-            print(settings.ADMIN_EMAIL, subject, body)
             logger.info("Email sent to %s%s down API points %s " % (settings.ADMIN_EMAIL, self.API_ENDPOINT, route))
 
 
