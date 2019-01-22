@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { fetchWrapper } from 'util/helpers';
 import { makeToast } from 'util/toasts';
 import 'styles/Cards.css';
+import Ad from 'components/Ad';
 import icon from 'img/icon.jpg'
 import { Helmet } from "react-helmet";
 
@@ -73,6 +74,7 @@ class Partners extends Component {
                     content="View our partners. Get started using Nano today by visiting our Partners below."
                  />
             </Helmet>
+            <Ad/>
             <div className="container">
              <h1>Use Nano</h1>
 
