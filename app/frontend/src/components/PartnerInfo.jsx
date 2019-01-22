@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import 'styles/PartnerInfo.css';
 import ReactEmbedGist from 'react-embed-gist';
 import { Helmet } from "react-helmet";
+import Ad from 'components/Ad';
 
 class PartnerInfo extends Component {
     constructor(props) {
@@ -22,6 +23,7 @@ class PartnerInfo extends Component {
                     content="Learn more about out partner program and how to join today. Easily embeddable buttons available."
                  />
             </Helmet>
+            <Ad/>
             <div className="container">
                 <h1>Become a Partner</h1>
                 <h5>Overview of the Program</h5>
