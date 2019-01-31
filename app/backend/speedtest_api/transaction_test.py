@@ -64,13 +64,13 @@ class LoadTester:
 
     def send_get(self, route):
         start = time.time()
-        r = requests.get(url=self.API_ENDPOINT + route)
+        r = requests.get(url=self.API_ENDPOINT + route, timeout=10)
         end = time.time()
         return (r, end - start)
 
     def send_post(self, args):
         start = time.time()
-        r = requests.post(url=self.API_ENDPOINT + args[0], data=args[1])
+        r = requests.post(url=self.API_ENDPOINT + args[0], data=args[1], timeout=60)
         end = time.time()
         return (r, end - start)
 
@@ -124,8 +124,8 @@ def transaction_test():
     trans_gen = TransactionGenerator(nodes)
 
     for i in range(0, 2):
-        response_create = loader.load_test_post("transactions", trans_gen.generate(2), threads=2)
-        loader.load_test_post("transactions/send", trans_gen.parse_ids(response_create), threads=2)
+        response_create = loader.load_test_post("transactions", trans_gen.generate(2), threads=1)
+        loader.load_test_post("transactions/send", trans_gen.parse_ids(response_create), threads=1)
         time.sleep(10)
 
 
