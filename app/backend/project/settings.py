@@ -139,34 +139,51 @@ AUTH_PASSWORD_VALIDATORS = [
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {message}',
+            'style': '{',
+            'datefmt': '%Y-%m-%d %H:%M',
+        },
+    },
     'handlers': {
-        'file': {
+        'application': {
             'level': 'DEBUG',
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': 'debug.log',
-            'backupCount': 10, # keep at most 10 log files
-            'maxBytes': 5242880, # 5*1024*1024 bytes (5MB)
+            'filename': 'application.log',
+            'backupCount': 1, # keep at most 1 log files
+            'maxBytes': 52428800, # 50*1024*1024 bytes (50MB)
+            'formatter': 'verbose',
         },
-        'null': {
+        'queries': {
             'level': 'DEBUG',
-            'class':'logging.NullHandler',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': 'queries.log',
+            'backupCount': 1,  # keep at most 1 log files
+            'maxBytes': 52428800,  # 50*1024*1024 bytes (50MB)
+            'formatter': 'verbose',
+        },
+        'django': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': 'django.log',
+            'backupCount': 1,  # keep at most 1 log files
+            'maxBytes': 52428800,  # 50*1024*1024 bytes (50MB)
+            'formatter': 'verbose',
         },
     },
     'loggers': {
         'django': {
-            'handlers': ['file'],
-            'level': 'DEBUG',
+            'handlers': ['django'],
             'propagate': True,
         },
         'django.db.backends': {
-            'handlers': ['null'],  # Quiet the database queries!
-            'propagate': False,
-            'level':'DEBUG',
+            'handlers': ['queries'],  # Database queries!
+            'propagate': True,
         },
         'speedtest_api': {
-        'handlers': ['file'],
-        'level': 'DEBUG',
-        'propagate': True,
+            'handlers': ['application'],
+            'propagate': True,
         },
     },
 }
