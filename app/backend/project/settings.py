@@ -30,7 +30,7 @@ ADMIN_EMAIL = os.environ["NANO_ST__ADMIN_EMAIL"]
 COST_PER_SLOT = os.environ["NANO_ST__COST_PER_SLOT"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 CSRF_COOKIE_SECURE = True
