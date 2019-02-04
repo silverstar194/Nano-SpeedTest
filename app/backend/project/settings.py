@@ -113,6 +113,7 @@ DATABASES = {
         'USER': os.environ["NANO_ST__DB__USER"],
         'PASSWORD': os.environ["NANO_ST__DB__PASSWORD"],
         'HOST': os.environ["NANO_ST__DB__HOST"],
+        'CONN_MAX_AGE': 15,  # seconds for persistent connection, since Django 1.6
         'OPTIONS': {
                 'sql_mode': 'STRICT_ALL_TABLES',
                 'ssl': {'ca': os.environ["NANO_ST__DB__SSL__CA__CERT"]},
