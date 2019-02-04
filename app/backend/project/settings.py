@@ -155,14 +155,6 @@ LOGGING = {
             'maxBytes': 52428800, # 50*1024*1024 bytes (50MB)
             'formatter': 'verbose',
         },
-        'queries': {
-            'level': 'DEBUG',
-            'class': 'logging.handlers.RotatingFileHandler',
-            'filename': 'queries.log',
-            'backupCount': 1,  # keep at most 1 log files
-            'maxBytes': 52428800,  # 50*1024*1024 bytes (50MB)
-            'formatter': 'verbose',
-        },
         'django': {
             'level': 'DEBUG',
             'class': 'logging.handlers.RotatingFileHandler',
@@ -175,14 +167,12 @@ LOGGING = {
     'loggers': {
         'django': {
             'handlers': ['django'],
-            'propagate': True,
-        },
-        'django.db.backends': {
-            'handlers': ['queries'],  # Database queries!
+            'level': 'DEBUG',
             'propagate': True,
         },
         'speedtest_api': {
             'handlers': ['application'],
+            'level': 'DEBUG',
             'propagate': True,
         },
     },
