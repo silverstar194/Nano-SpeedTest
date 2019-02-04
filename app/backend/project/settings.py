@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '1okg_00w23xs9o62%ql^iazaab0=pw2)4&ltt06=f0g)p_#zg3'
+SECRET_KEY = os.environ['NANO_ST__SECRET_KEY']
 
 # Key used to access the dPoW service
 DPOW_API_KEY = os.environ["NANO_ST__DPOW__API_KEY"]
