@@ -30,7 +30,7 @@ ADMIN_EMAIL = os.environ["NANO_ST__ADMIN_EMAIL"]
 COST_PER_SLOT = os.environ["NANO_ST__COST_PER_SLOT"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 CSRF_COOKIE_SECURE = True
@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'speedtest_api',
     'django_crontab',
+    'cachalot',
 ]
 
 MIDDLEWARE = [
@@ -122,6 +123,12 @@ DATABASES = {
      }
 }
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
