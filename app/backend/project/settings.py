@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'speedtest_api',
     'django_crontab',
+    'cachalot',
 ]
 
 MIDDLEWARE = [
@@ -113,6 +114,7 @@ DATABASES = {
         'USER': os.environ["NANO_ST__DB__USER"],
         'PASSWORD': os.environ["NANO_ST__DB__PASSWORD"],
         'HOST': os.environ["NANO_ST__DB__HOST"],
+        'CONN_MAX_AGE': 15,  # seconds for persistent connection, since Django 1.6
         'OPTIONS': {
                 'sql_mode': 'STRICT_ALL_TABLES',
                 'ssl': {'ca': os.environ["NANO_ST__DB__SSL__CA__CERT"]},
@@ -121,6 +123,12 @@ DATABASES = {
      }
 }
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators

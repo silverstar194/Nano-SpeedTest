@@ -1,6 +1,7 @@
 import random
 import os
 import time
+import datetime
 import logging
 
 import sendgrid
@@ -39,7 +40,7 @@ def get_advertisements():
 
     @return: Query of all Advertisements
     """
-    return models.Advertisement.objects.filter(enabled=True).filter(start_timestamp__lte=int(time.time())).filter(end_timestamp__gte=int(time.time())).all()
+    return models.Advertisement.objects.filter(enabled=True).filter(start_timestamp__lte=int(roundTime())).filter(end_timestamp__gte=int(roundTime()))[:]
 
 def create_advertisement(title, description, URL, company, email, tokens, enabled):
     """
@@ -97,3 +98,10 @@ def email_admin_with_new_ad(ad):
         logger.error("Error occurred sending email with sendgrid %s " % str(e))
 
     logger.info("Email sent to %s to_email regarding %s " % (from_email, ad.company))
+
+def roundTime(dt=None, roundTo=60*60):
+   if dt == None : dt = datetime.datetime.now()
+   seconds = (dt.replace(tzinfo=None) - dt.min).seconds
+   rounding = (seconds+roundTo/2) // roundTo * roundTo
+   output = dt + datetime.timedelta(0,rounding-seconds,-dt.microsecond)
+   return time.mktime(output.timetuple())
