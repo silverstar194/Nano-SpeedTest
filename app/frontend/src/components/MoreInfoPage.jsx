@@ -3,6 +3,7 @@ import '../styles/HomePage.css';
 import Ad from './Ad';
 import { Link } from 'react-router-dom';
 import { Helmet } from "react-helmet";
+import donate from 'img/donate.png'
 
 class MoreInfoPage extends Component {
     render() {
@@ -204,6 +205,7 @@ class MoreInfoPage extends Component {
                     <br/>
                    xrb_1ft5e6xtnxwotrszg44tx99wcqyckgsf5xeijqpitinqgyxu8fgxzhwas9eo</i>
                    <br/>
+                   <img src={donate} alt="Donate"></img>
                    <br/>
                    <a href="http://api.nanospeed.live/transactions/download">Download all Transactions for Analysis</a>
                    <br/>
