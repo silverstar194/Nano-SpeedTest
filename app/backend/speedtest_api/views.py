@@ -150,7 +150,7 @@ def send_batch_transactions(request):
             if transaction.start_send_timestamp or transaction.end_receive_timestamp:
                 return JsonResponse({'message': "This batch has already been sent."}, status=405)
 
-            if (transaction.end_send_timestamp - transaction.start_send_timestamp) < 0 or (transaction.end_receive_timestamp -  transaction.start_receive_timestamp):
+            if (transaction.end_send_timestamp - transaction.start_send_timestamp) < 0 or (transaction.end_receive_timestamp - transaction.start_receive_timestamp) < 0:
                 logger.error("Negative timing error")
                 return JsonResponse({'message': "Negative timing error"}, status=405)
 
