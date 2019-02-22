@@ -361,7 +361,7 @@ def callback(request):
         cache_key = body["hash"]+"_"+client_ip  # needs to be unique
         cache_time = 600  # time in seconds for cache to be valid
         data = cache.get(cache_key)  # returns None if no key-value pair
-        logger.info(cache_key)
+        logger.info("Cached key %s " % (cache_key))
         if data:
             logger.error("Block already in cache. Duplicated broadcast. Key %s" % (cache_key))
             return JsonResponse({'message': "Block already cached"},

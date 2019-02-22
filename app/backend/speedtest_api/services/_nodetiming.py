@@ -31,9 +31,10 @@ def transaction_general(node_URL, node_IP, account_address, current_hash, start_
 
 		cache_key = current_hash+"_"+node_IP  # needs to be unique
 		end_time = cache.get(cache_key)  # returns None if no key-value pair
+		logger.info("Checking for key %s" % (cache_key))
 
 		if end_time:
-			logger.info("Used cache %s %s" %(current_hash, account_address))
+			logger.info("Used cache %s %s" % (current_hash, account_address))
 			return end_time
 
 		time.sleep(sleep_value)
