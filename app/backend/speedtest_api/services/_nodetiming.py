@@ -72,7 +72,7 @@ def time_transaction_receive(transaction):
 	@raise Exception for when we have missed the transaction
 	"""
 	end_time = transaction_general(transaction.origin.wallet.node.URL,
-		transaction.origin.wallet.node.IP,
+		transaction.origin.wallet.node.IP_ADD,
 		transaction.destination.address, 
 		transaction.transaction_hash_receiving, 
 		transaction.start_receive_timestamp)
@@ -89,7 +89,7 @@ def time_transaction_send(transaction):
 	@raise Exception for when we have missed the transaction
 	"""
 	end_time = transaction_general(transaction.destination.wallet.node.URL,
-	transaction.destination.wallet.node.IP,
+	transaction.destination.wallet.node.IP_ADD,
 	 transaction.origin.address, 
 	 transaction.transaction_hash_sending,
 	 transaction.start_send_timestamp)
