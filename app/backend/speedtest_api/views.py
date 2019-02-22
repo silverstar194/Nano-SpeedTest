@@ -3,6 +3,7 @@ import json
 from threading import Thread
 import random
 import logging
+import time
 from queue import Queue
 
 
@@ -366,10 +367,11 @@ def callback(request):
             return JsonResponse({'message': "Block already cached"},
                                 status=400)
 
-        cache.set(cache_key, data, cache_time)
+        end_time = int(round(time.time() * 1000)) ## end time
+        cache.set(cache_key, end_time, cache_time)
 
     except Exception as e:
-        return JsonResponse({'message': str(e)},
+        return JsonResponse({'message': str(e.message)},
                             status=400)
 
     return JsonResponse(body, status=200)
