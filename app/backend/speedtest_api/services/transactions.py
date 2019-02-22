@@ -236,6 +236,7 @@ def send_transaction(transaction):
     # Start the timestamp before we try to send out the request
     transaction.start_send_timestamp = int(round(time.time() * 1000))
 
+
     try:
         # After this call, the nano will leave the origin
         transaction.transaction_hash_sending = rpc_origin_node.send(
