@@ -167,7 +167,7 @@ def send_batch_transactions(request):
 
         for transaction in list(transactions_queue.queue):
             print(transaction)
-            if (transaction["endSendTimestamp"] - transaction["startSendTimestamp"]) < 0:
+            if (transaction["startSendTimestamp"] - transaction["endSendTimestamp"]) < 0:
                 logger.error("Negative timing error")
                 return JsonResponse({'message': "Negative timing error."}, status=400)
 
