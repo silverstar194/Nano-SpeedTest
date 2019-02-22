@@ -26,7 +26,7 @@ def transaction_general(node_URL, node_IP, account_address, current_hash, start_
 
 	#Sleep times are incase we are still waiting for the transcation to go through
 
-	backoff_sleep_values =[2] + [.5]*45
+	backoff_sleep_values =[6] + [.5]*35
 	for sleep_value in backoff_sleep_values:
 
 		cache_key = current_hash+"_"+node_IP  # needs to be unique
@@ -43,7 +43,7 @@ def transaction_general(node_URL, node_IP, account_address, current_hash, start_
 	##Redundent code for timing if callback fails
 	rpc_node = nano.rpc.Client(node_URL)
 
-	backoff_sleep_values = [.5] * 30
+	backoff_sleep_values = [1] * 30
 	for sleep_value in backoff_sleep_values:
 
 		address = account_address
