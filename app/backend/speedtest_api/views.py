@@ -349,6 +349,18 @@ def download_transaction(request):
     qs = transactions.get_transactions(download=True)
     return render_to_csv_response(qs)
 
+
+@api_view(['POST'])
+def callback(request):
+    try:
+        body = json.loads(request.body)
+        print(body)
+    except Exception as e:
+        return JsonResponse({'message': "You must include a body with valid JSON."},
+                            status=400)
+
+    return JsonResponse(body, status=200)
+
 def convert_transaction_to_dict(transaction):
     """
     Private helper method to convert a transaction database query object to a dict

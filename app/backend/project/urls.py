@@ -29,5 +29,6 @@ urlpatterns = [
     path('nodes/list', views.list_nodes),
     path('transactions/statistics', views.get_transaction_statistics),
     path('partners/info', views.get_partners),
+    path('nodes/callback', views.callback),
     path('transactions/download', views.download_transaction)
 ]
