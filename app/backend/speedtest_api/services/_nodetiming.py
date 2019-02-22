@@ -23,43 +23,50 @@ def transaction_general(node_URL, node_IP, account_address, current_hash, start_
 	@raise Exception for when we have missed the transaction
 	"""
 
-	rpc_node = nano.rpc.Client(node_URL)
 
 	#Sleep times are incase we are still waiting for the transcation to go through
 
-	backoff_sleep_values =[6] + [.5]*60
+	backoff_sleep_values =[2] + [.5]*45
 	for sleep_value in backoff_sleep_values:
-
-		address = account_address
-		hash_of_block= current_hash
 
 		cache_key = current_hash+"_"+node_IP  # needs to be unique
 		end_time = cache.get(cache_key)  # returns None if no key-value pair
-		logger.info(cache_key)
 
 		if end_time:
+			logger.info("Used cache %s %s" %(current_hash, account_address))
 			return end_time
 
 		time.sleep(sleep_value)
-		#
-		# try:
-		# 	history_curr_account = rpc_node.account_history(address, count = 5) #magic assuming that if it is not 5 back it hasn't been received
-		# except:
-		# 	logger.error('Unable to get history hash: %s, account: %s' %(current_hash, account_address))
-		# 	raise ValueError("Unable to get history hash: %s, account: %s" %(current_hash, account_address))
-        #
-		# frontier_hash = history_curr_account[0][u'hash']
-        #
-		# if hash_of_block == frontier_hash:
-		# 	end_time = int(rpc_node.account_info(address)[u'modified_timestamp']) * 1000
-        #
-		# 	return end_time
-		#
-		# for value in history_curr_account:
-		# 	if value[u'hash'] is hash_of_block:
-		# 		logger.error("Unable to get hash %s" % hash_of_block)
-		# 		raise Exception("Unable to get hash %s" % hash_of_block)
 
+
+	rpc_node = nano.rpc.Client(node_URL)
+
+	backoff_sleep_values = [.5] * 30
+	for sleep_value in backoff_sleep_values:
+
+		address = account_address
+		hash_of_block = current_hash
+
+		try:
+			history_curr_account = rpc_node.account_history(address,
+															count=5)  # magic assuming that if it is not 5 back it hasn't been received
+		except:
+			logger.error('Unable to get history hash: %s, account: %s' % (current_hash, account_address))
+			raise ValueError("Unable to get history hash: %s, account: %s" % (current_hash, account_address))
+
+		frontier_hash = history_curr_account[0][u'hash']
+
+		if hash_of_block == frontier_hash:
+			end_time = int(rpc_node.account_info(address)[u'modified_timestamp']) * 1000
+
+			return end_time
+
+		for value in history_curr_account:
+			if value[u'hash'] is hash_of_block:
+				logger.error("Unable to get hash %s" % hash_of_block)
+				raise Exception("Unable to get hash %s" % hash_of_block)
+
+		time.sleep(sleep_value)
 
 	logger.error("Transaction was never found %s " % hash_of_block)
 	raise Exception("Transaction never found %s " % hash_of_block) 
