@@ -28,7 +28,7 @@ from speedtest_api.services import nodes
 
 logger = logging.getLogger(__name__)
 
-@ratelimit(key='ip', rate='15/d')
+#@ratelimit(key='ip', rate='15/d')
 @api_view(['POST'])
 def generate_transaction(request):
     """
@@ -119,7 +119,7 @@ def generate_transaction(request):
         return JsonResponse({'message': "The transaction format is invalid. Please try again."}, status=400)
 
 
-@ratelimit(key='ip', rate='15/d')
+#@ratelimit(key='ip', rate='15/d')
 @api_view(['POST'])
 def send_batch_transactions(request):
     """
@@ -359,15 +359,17 @@ def callback(request):
         client_ip, is_routable = get_client_ip(request)
 
         cache_key = body["hash"]+"_"+client_ip  # needs to be unique
-        cache_time = 600  # time in seconds for cache to be valid
-        data = cache.get(cache_key)  # returns None if no key-value pair
-        logger.info("Cached key %s " % (cache_key))
+        cache_time = 300  # time in seconds for cache to be valid
+        data = cache.get(cache_key)
+
         if data:
             logger.error("Block already in cache. Duplicated broadcast. Key %s" % (cache_key))
             return JsonResponse({'message': "Block already cached"},
                                 status=400)
 
         end_time = int(round(time.time() * 1000)) ## end time
+
+        logger.info("Cached key %s " % (cache_key))
         cache.set(cache_key, end_time, cache_time)
 
     except Exception as e:

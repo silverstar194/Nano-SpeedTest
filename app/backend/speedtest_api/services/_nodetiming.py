@@ -40,6 +40,7 @@ def transaction_general(node_URL, node_IP, account_address, current_hash, start_
 		time.sleep(sleep_value)
 
 
+	##Redundent code for timing if callback fails
 	rpc_node = nano.rpc.Client(node_URL)
 
 	backoff_sleep_values = [.5] * 30
