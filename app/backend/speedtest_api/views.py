@@ -354,7 +354,7 @@ def download_transaction(request):
 def callback(request):
     try:
         body = json.loads(request.body)
-        print(body)
+        logger.info(str(body))
     except Exception as e:
         return JsonResponse({'message': "You must include a body with valid JSON."},
                             status=400)
