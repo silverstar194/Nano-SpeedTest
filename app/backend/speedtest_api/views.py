@@ -369,7 +369,7 @@ def callback(request):
         cache.set(cache_key, data, cache_time)
 
     except Exception as e:
-        return JsonResponse({'message': "You must include a body with valid JSON."},
+        return JsonResponse({'message': str(e)},
                             status=400)
 
     return JsonResponse(body, status=200)
