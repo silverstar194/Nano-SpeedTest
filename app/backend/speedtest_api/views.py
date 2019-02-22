@@ -11,6 +11,7 @@ from django.http import JsonResponse
 from djqscsv import render_to_csv_response
 from django.conf import settings as settings
 from rest_framework.decorators import api_view
+from django.core.cache import cache
 
 from ipware import get_client_ip
 from ratelimit.decorators import ratelimit
@@ -354,7 +355,18 @@ def download_transaction(request):
 def callback(request):
     try:
         body = json.loads(request.body)
-        logger.info(str(body))
+        client_ip, is_routable = get_client_ip(request)
+
+        cache_key = body["hash"]+"_"+client_ip  # needs to be unique
+        cache_time = 600  # time in seconds for cache to be valid
+        data = cache.get(cache_key)  # returns None if no key-value pair
+        if data:
+            logger.error("Block already in cache. Duplicated broadcast. Key %s" % (cache_key))
+            return JsonResponse({'message': "Block already cached"},
+                                status=400)
+
+        cache.set(cache_key, data, cache_time)
+
     except Exception as e:
         return JsonResponse({'message': "You must include a body with valid JSON."},
                             status=400)
