@@ -26,24 +26,22 @@ def transaction_general(node_URL, node_IP, account_address, current_hash, start_
 
 	#Sleep times are incase we are still waiting for the transcation to go through
 
-	backoff_sleep_values =[6] + [.5]*35
-	for sleep_value in backoff_sleep_values:
+	# backoff_sleep_values =[6] + [.5]*35
+	# for sleep_value in backoff_sleep_values:
+    #
+	# 	cache_key = current_hash+"_"+node_IP  # needs to be unique
+	# 	end_time = cache.get(cache_key)  # returns None if no key-value pair
+	# 	logger.info("Checking for key %s" % (cache_key))
+    #
+	# 	if end_time:
+	# 		logger.info("Used cache %s %s" % (current_hash, account_address))
+	# 		return end_time
+    #
+	# 	time.sleep(sleep_value)
 
-		cache_key = current_hash+"_"+node_IP  # needs to be unique
-		end_time = cache.get(cache_key)  # returns None if no key-value pair
-		logger.info("Checking for key %s" % (cache_key))
-
-		if end_time:
-			logger.info("Used cache %s %s" % (current_hash, account_address))
-			return end_time
-
-		time.sleep(sleep_value)
-
-
-	##Redundent code for timing if callback fails
 	rpc_node = nano.rpc.Client(node_URL)
 
-	backoff_sleep_values = [1] * 30
+	backoff_sleep_values = [3] + [.5] * 45
 	for sleep_value in backoff_sleep_values:
 
 		address = account_address
@@ -85,10 +83,13 @@ def time_transaction_receive(transaction):
 		transaction.destination.address, 
 		transaction.transaction_hash_receiving, 
 		transaction.start_receive_timestamp)
-	
+
+	if transaction.start_receive_timestamp > end_time:
+		end_time += 2000 ## Add bias to account for threading and node rounding
+
 	transaction.end_receive_timestamp = end_time
 	transaction.save()
-	return	end_time
+	return end_time
 
 def time_transaction_send(transaction):
 	"""
@@ -102,7 +103,10 @@ def time_transaction_send(transaction):
 	 transaction.origin.address, 
 	 transaction.transaction_hash_sending,
 	 transaction.start_send_timestamp)
-	
+
+	if transaction.start_send_timestamp > end_time:
+		end_time += 2000 ## Add bias to account for threading and node rounding
+
 	transaction.end_send_timestamp = end_time
 	transaction.save()
 	return	end_time
