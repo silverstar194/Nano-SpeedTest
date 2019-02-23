@@ -111,7 +111,7 @@ class POWService:
            # Also calls save()
             account.unlock()
         except Exception as e:
-            logger.error('Exception in POW thread: %s ' % e)
+            logger.error('Exception in POW thread: %s ' % e.message)
             logger.error('dPoW failure account %s unlocked without PoW' % address)
             account.unlock()  ## Prevent leaks
 
@@ -158,7 +158,7 @@ class POWService:
 
             logger.info('Starting PoW thread.')
 
-            cls.thread_pool = ThreadPool(processes=4)
+            cls.thread_pool = ThreadPool(processes=2)
             cls.thread = threading.Thread(target=cls._run)
             cls.thread.daemon = daemon
             cls.thread.start()
