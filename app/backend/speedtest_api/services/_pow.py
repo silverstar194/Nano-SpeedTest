@@ -55,21 +55,22 @@ class POWService:
         rpc_node = nano.rpc.Client(account.wallet.node.URL)
         POW = None
 
-        for i in range(5):
-            try:
-                POW = rpc_node.work_generate(hash)
-                break
-            except Exception as e:
-                logger.error('Node work_generate error: %s try %s of 4' % (e, i))
-                time.sleep(30)
-                if i == 4:
-                    logger.error('dPoW failure account %s unlocked without PoW' % address)
-                    account.unlock()
+        # for i in range(5):
+        #     try:
+        #         POW = rpc_node.work_generate(hash)
+        #         break
+        #     except Exception as e:
+        #         logger.error('Node work_generate error: %s try %s of 4' % (e, i))
+        #         time.sleep(30)
+        #         if i == 4:
+        #             logger.error('dPoW failure account %s unlocked without PoW' % address)
+        #             account.unlock()
         
         # Add third POW that cannot fail (if it does our account object becomes broken)
 
         if POW is None:
             account.unlock()
+            logger.error('dPoW failure account %s unlocked without PoW' % address)
             raise Exception()
 
         return POW
