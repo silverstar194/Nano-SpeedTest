@@ -47,8 +47,7 @@ def transaction_general(node_URL, node_IP, account_address, current_hash, start_
         if hash_of_block == frontier_hash:
             logger.info("Used RPC %s %s" % (current_hash, account_address))
             end_time = int(rpc_node.account_info(address)[u'modified_timestamp']) * 1000
-
-        return end_time
+            return end_time
 
         for value in history_curr_account:
             if value[u'hash'] is hash_of_block:
@@ -74,7 +73,7 @@ def time_transaction_receive(transaction):
 		transaction.start_receive_timestamp)
 
 	if transaction.start_receive_timestamp >= end_time:
-		logger.error("Logging receive bias %s" % (str(end_time - transaction.start_receive_timestamp), transaction.transaction_hash_receiving))
+		logger.error("Logging receive bias %s %s" % (str(end_time - transaction.start_receive_timestamp), transaction.transaction_hash_receiving))
 		transaction.bias_receive = 1000
 		end_time += 1000 ## Add bias to account for node rounding/truncation
 
