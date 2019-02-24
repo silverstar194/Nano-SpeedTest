@@ -26,18 +26,18 @@ def transaction_general(node_URL, node_IP, account_address, current_hash, start_
 
 	#Sleep times are incase we are still waiting for the transcation to go through
 
-	# backoff_sleep_values =[6] + [.5]*35
-	# for sleep_value in backoff_sleep_values:
-    #
-	# 	cache_key = current_hash+"_"+node_IP  # needs to be unique
-	# 	end_time = cache.get(cache_key)  # returns None if no key-value pair
-	# 	logger.info("Checking for key %s" % (cache_key))
-    #
-	# 	if end_time:
-	# 		logger.info("Used cache %s %s" % (current_hash, account_address))
-	# 		return end_time
-    #
-	# 	time.sleep(sleep_value)
+	backoff_sleep_values =[3] + [.5]*35
+	for sleep_value in backoff_sleep_values:
+
+		cache_key = current_hash+"_"+node_IP  # needs to be unique
+		end_time = cache.get(cache_key)  # returns None if no key-value pair
+		logger.info("Checking for key %s" % (cache_key))
+
+		if end_time:
+			logger.info("Used cache %s %s" % (current_hash, account_address))
+			return end_time
+
+		time.sleep(sleep_value)
 
 	rpc_node = nano.rpc.Client(node_URL)
 
@@ -86,8 +86,8 @@ def time_transaction_receive(transaction):
 
 	if transaction.start_receive_timestamp > end_time:
 		logger.error("Logging receive bias %s" % transaction.transaction_hash_receiving)
-		transaction.bias_receive = 2000
-		end_time += 2000 ## Add bias to account for threading and node rounding
+		transaction.bias_receive = 1000
+		end_time += 1000 ## Add bias to account for node rounding
 
 	transaction.end_receive_timestamp = end_time
 	transaction.save()
@@ -108,8 +108,8 @@ def time_transaction_send(transaction):
 
 	if transaction.start_send_timestamp > end_time:
 		logger.error("Logging send bias %s" % transaction.transaction_hash_sending)
-		transaction.bias_send = 2000
-		end_time += 2000 ## Add bias to account for threading and node rounding
+		transaction.bias_send = 1000
+		end_time += 1000 ## Add bias to account for node rounding
 
 	transaction.end_send_timestamp = end_time
 	transaction.save()

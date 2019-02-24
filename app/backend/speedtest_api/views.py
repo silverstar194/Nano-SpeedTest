@@ -352,6 +352,25 @@ def download_transaction(request):
     qs = transactions.get_transactions(download=True)
     return render_to_csv_response(qs)
 
+
+@api_view(['POST'])
+def callback(request):
+    try:
+        body = json.loads(request.body)
+        client_ip, is_routable = get_client_ip(request)
+
+        cache_key = body["hash"]+"_"+client_ip  # needs to be unique
+        cache_time = 300  # time in seconds for cache to be valid
+
+        end_time = int(round(time.time() * 1000)) ## end time
+        cache.set(cache_key, end_time, cache_time)
+
+    except Exception as e:
+        return JsonResponse({'message': str(e.message)},
+                            status=400)
+
+    return JsonResponse({}, status=200)
+
 def convert_transaction_to_dict(transaction):
     """
     Private helper method to convert a transaction database query object to a dict
