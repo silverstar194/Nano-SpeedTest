@@ -41,7 +41,7 @@ def transaction_general(node_URL, node_IP, account_address, current_hash, start_
 
 	rpc_node = nano.rpc.Client(node_URL)
 
-	backoff_sleep_values = [3] + [.5] * 45
+	backoff_sleep_values = [7] + [.5] * 45
 	for sleep_value in backoff_sleep_values:
 
 		address = account_address
