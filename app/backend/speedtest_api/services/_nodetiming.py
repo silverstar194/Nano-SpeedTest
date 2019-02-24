@@ -23,7 +23,7 @@ def transaction_general(node_URL, node_IP, account_address, current_hash, start_
 	@raise Exception for when we have missed the transaction
 	"""
 
-    backoff_sleep_values =[2] + [.5]*35
+    backoff_sleep_values =[6] + [.5]*35
     for sleep_value in backoff_sleep_values:
         cache_key = current_hash+"_"+node_IP  # needs to be unique
         end_time = cache.get(cache_key)  # returns None if no key-value pair
@@ -35,7 +35,6 @@ def transaction_general(node_URL, node_IP, account_address, current_hash, start_
 
         address = account_address
         hash_of_block = current_hash
-
         try:
             history_curr_account = rpc_node.account_history(address,
 															count=5)  # magic assuming that if it is not 5 back it hasn't been received

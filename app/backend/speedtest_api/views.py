@@ -360,7 +360,6 @@ def callback(request):
         client_ip, is_routable = get_client_ip(request)
 
         cache_key = body["hash"]+"_"+client_ip  # needs to be unique
-        logger.info("recorded %s" % (cache_key))
         cache_time = 300  # time in seconds for cache to be valid
 
         end_time = int(round(time.time() * 1000)) ## end time
