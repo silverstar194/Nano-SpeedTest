@@ -73,10 +73,10 @@ def time_transaction_receive(transaction):
 		transaction.transaction_hash_receiving,
 		transaction.start_receive_timestamp)
 
-	if transaction.start_receive_timestamp > end_time:
-		logger.error("Logging receive bias %s" % transaction.transaction_hash_receiving)
+	if transaction.start_receive_timestamp >= end_time:
+		logger.error("Logging receive bias %s" % (str(end_time - transaction.start_receive_timestamp), transaction.transaction_hash_receiving))
 		transaction.bias_receive = 1000
-		end_time += 1000 ## Add bias to account for node rounding
+		end_time += 1000 ## Add bias to account for node rounding/truncation
 
 	transaction.end_receive_timestamp = end_time
 	transaction.save()
@@ -95,10 +95,10 @@ def time_transaction_send(transaction):
 	 transaction.transaction_hash_sending,
 	 transaction.start_send_timestamp)
 
-	if transaction.start_send_timestamp > end_time:
-		logger.error("Logging send bias %s" % transaction.transaction_hash_sending)
+	if transaction.start_send_timestamp >= end_time:
+		logger.error("Logging send bias %s %s" % (str(end_time - transaction.start_send_timestamp), transaction.transaction_hash_sending))
 		transaction.bias_send = 1000
-		end_time += 1000 ## Add bias to account for node rounding
+		end_time += 1000 ## Add bias to account for node rounding/truncation
 
 	transaction.end_send_timestamp = end_time
 	transaction.save()
