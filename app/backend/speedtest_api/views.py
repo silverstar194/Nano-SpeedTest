@@ -31,6 +31,7 @@ logger = logging.getLogger(__name__)
 @ratelimit(key='ip', rate='15/d')
 @api_view(['POST'])
 def generate_transaction(request):
+    
     """
     Generate a new random transaction and return its basic information
 
