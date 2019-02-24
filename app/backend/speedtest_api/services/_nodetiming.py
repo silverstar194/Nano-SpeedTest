@@ -24,7 +24,7 @@ def transaction_general(node_URL, node_IP, account_address, current_hash, start_
 	"""
 
     backoff_sleep_values =[2] + [.5]*35
-    for backoff_sleep_values in backoff_sleep_values:
+    for sleep_value in backoff_sleep_values:
         cache_key = current_hash+"_"+node_IP  # needs to be unique
         end_time = cache.get(cache_key)  # returns None if no key-value pair
         logger.info("Checking for key %s" % (cache_key))
