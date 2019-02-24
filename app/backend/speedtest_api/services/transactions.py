@@ -277,16 +277,13 @@ def send_transaction(transaction):
     for block_hash in incoming_blocks:
         transaction.start_receive_timestamp = int(round(time.time() * 1000))
         try:
-            logger.info("Sending recieve")
             transaction.transaction_hash_receiving = rpc_destination_node.receive(
             wallet=transaction.destination.wallet.wallet_id,
             account=transaction.destination.address,
             block=block_hash,
             work=transaction.destination.POW,
             )
-            logger.info("Saving")
             transaction.save()
-            logger.info("Saved")
         except nano.rpc.RPCException as e:
             ##Unlock accounts
             logger.error("RPCException two %s" % e)

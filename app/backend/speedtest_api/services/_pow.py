@@ -55,6 +55,7 @@ class POWService:
         rpc_node = nano.rpc.Client(account.wallet.node.URL)
         POW = None
 
+        ## Moved PoW to nodes as work peers
         # for i in range(5):
         #     try:
         #         POW = rpc_node.work_generate(hash)
