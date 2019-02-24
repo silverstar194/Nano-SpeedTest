@@ -11,7 +11,7 @@ import nano
 # Get an instance of a logger 
 logger = logging.getLogger(__name__)
 
-def transaction_general(node_URL, node_IP, account_address, current_hash, start_timestamp, ):
+def transaction_general(node_URL, node_IP, account_address, current_hash, start_timestamp):
 	"""
 	This to time the sending and recieving of blocks
 	@return delta of how long send or receive took in seconds
@@ -25,6 +25,7 @@ def transaction_general(node_URL, node_IP, account_address, current_hash, start_
 
 
 	#Sleep times are incase we are still waiting for the transcation to go through
+    rpc_node = nano.rpc.Client(node_URL)
 
 	backoff_sleep_values =[2] + [.5]*35
 	for sleep_value in backoff_sleep_values:
@@ -37,13 +38,7 @@ def transaction_general(node_URL, node_IP, account_address, current_hash, start_
 			logger.info("Used cache %s %s" % (current_hash, account_address))
 			return end_time
 
-		time.sleep(sleep_value)
-
-	rpc_node = nano.rpc.Client(node_URL)
-
-	backoff_sleep_values = [.5] * 20
-	for sleep_value in backoff_sleep_values:
-
+        ##Timing with RCP call
 		address = account_address
 		hash_of_block = current_hash
 
@@ -57,8 +52,8 @@ def transaction_general(node_URL, node_IP, account_address, current_hash, start_
 		frontier_hash = history_curr_account[0][u'hash']
 
 		if hash_of_block == frontier_hash:
+            logger.info("Used RPC %s %s" % (current_hash, account_address))
 			end_time = int(rpc_node.account_info(address)[u'modified_timestamp']) * 1000
-
 			return end_time
 
 		for value in history_curr_account:
