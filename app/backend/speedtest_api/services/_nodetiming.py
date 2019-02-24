@@ -25,6 +25,7 @@ def transaction_general(node_URL, node_IP, account_address, current_hash, start_
 
     backoff_sleep_values =[6] + [.5]*35
     for sleep_value in backoff_sleep_values:
+        rpc_node = nano.rpc.Client(node_URL)
         cache_key = current_hash+"_"+node_IP  # needs to be unique
         end_time = cache.get(cache_key)  # returns None if no key-value pair
         logger.info("Checking for key %s" % (cache_key))
@@ -36,8 +37,7 @@ def transaction_general(node_URL, node_IP, account_address, current_hash, start_
         address = account_address
         hash_of_block = current_hash
         try:
-            history_curr_account = rpc_node.account_history(address,
-															count=5)  # magic assuming that if it is not 5 back it hasn't been received
+            history_curr_account = rpc_node.account_history(address,count=5)  # magic assuming that if it is not 5 back it hasn't been received
         except:
             logger.error('Unable to get history hash: %s, account: %s' % (current_hash, account_address))
             raise ValueError("Unable to get history hash: %s, account: %s" % (current_hash, account_address))
