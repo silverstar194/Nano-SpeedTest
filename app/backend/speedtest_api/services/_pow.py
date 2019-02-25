@@ -47,7 +47,7 @@ class POWService:
             try:
                 return cls._get_dpow(hash)['work']
             except Exception as e:
-                logger.error('dPoW failure: %s try %s of 4' % (e, i))
+                logger.error('dPoW failure: %s try %s of 4' % (str(e), i))
                 time.sleep(3)
                 if i == 4:
                     logger.error('dPoW failure account %s' % address)
@@ -94,9 +94,12 @@ class POWService:
         res = requests.post(url=settings.DPOW_ENDPOINT, json=data, timeout=15)
         logger.info('Completed dPoW request')
 
-        res.raise_for_status()
+        if res.status_code == 200:
+            return res.json()
+        else:
+            logger.error('Status %s %s' % (res.status_code, res.json()))
+            raise Exception()
 
-        return res.json()
 
     @classmethod
     def threaded_PoW_worker(cls, address, frontier, wait):
