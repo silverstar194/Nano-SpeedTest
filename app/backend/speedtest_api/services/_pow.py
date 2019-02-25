@@ -90,8 +90,9 @@ class POWService:
                 'hash': hash,
                 'key': settings.DPOW_API_KEY
             }
-
-        res = requests.post(url=settings.DPOW_ENDPOINT, json=data)
+        logger.info('Starting dPoW request')
+        res = requests.post(url=settings.DPOW_ENDPOINT, json=data, timeout=15)
+        logger.info('Completed dPoW request')
 
         res.raise_for_status()
 
