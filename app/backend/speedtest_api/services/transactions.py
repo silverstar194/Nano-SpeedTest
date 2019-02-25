@@ -244,7 +244,6 @@ def send_transaction(transaction):
             source=transaction.origin.address,
             destination=transaction.destination.address,
             amount=int(transaction.amount),
-            work=transaction.origin.POW,
             id=transaction.id
         )
 
@@ -281,7 +280,6 @@ def send_transaction(transaction):
             wallet=transaction.destination.wallet.wallet_id,
             account=transaction.destination.address,
             block=block_hash,
-            work=transaction.destination.POW,
             )
             transaction.save()
         except nano.rpc.RPCException as e:
