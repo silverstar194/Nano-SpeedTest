@@ -13,7 +13,7 @@ class SpeedtestApiConfig(AppConfig):
     thread_pool = ThreadPool(processes=4)
 
     def ready(self):
-        # from .services.accounts import get_accounts, sync_accounts, unlock_all_accounts
+        from .services.accounts import get_accounts, sync_accounts, unlock_all_accounts
         # from .services.nodes import get_nodes
         # from .services._pow import POWService
         # from .services.wallets import get_wallets
