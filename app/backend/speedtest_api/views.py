@@ -28,12 +28,7 @@ from speedtest_api.services import nodes
 
 logger = logging.getLogger(__name__)
 
-<<<<<<< HEAD
 @ratelimit(key='ip', rate='50/d')
-=======
-@ratelimit(key='ip', rate='15/d')
->>>>>>> fef899defd1fff2bfa0e197a39bf6f9f7eac97c4
-@api_view(['POST'])
 def generate_transaction(request):
     
     """
@@ -124,11 +119,7 @@ def generate_transaction(request):
         return JsonResponse({'message': "The transaction format is invalid. Please try again."}, status=400)
 
 
-<<<<<<< HEAD
 @ratelimit(key='ip', rate='50/d')
-=======
-@ratelimit(key='ip', rate='15/d')
->>>>>>> fef899defd1fff2bfa0e197a39bf6f9f7eac97c4
 @api_view(['POST'])
 def send_batch_transactions(request):
     """
