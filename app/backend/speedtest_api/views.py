@@ -9,6 +9,7 @@ from queue import Queue
 
 from django.db.models import F
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 from djqscsv import render_to_csv_response
 from django.conf import settings as settings
 from rest_framework.decorators import api_view
@@ -30,6 +31,7 @@ logger = logging.getLogger(__name__)
 
 @ratelimit(key='ip', rate='15/d')
 @api_view(['POST'])
+@csrf_exempt
 def generate_transaction(request):
     
     """
@@ -122,6 +124,7 @@ def generate_transaction(request):
 
 @ratelimit(key='ip', rate='15/d')
 @api_view(['POST'])
+@csrf_exempt
 def send_batch_transactions(request):
     """
     Send the batch transactions specified in the request body
@@ -209,6 +212,7 @@ def get_random_advertisement(request):
         return JsonResponse({'message': "No advertisements were found."}, status=200)
 
 @api_view(['POST'])
+@csrf_exempt
 def add_advertisement(request):
     """
     Post information for a new advertisement
@@ -354,6 +358,7 @@ def download_transaction(request):
 
 
 @api_view(['POST'])
+@csrf_exempt
 def callback(request):
     try:
         body = json.loads(request.body)
