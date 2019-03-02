@@ -404,10 +404,16 @@ def convert_transaction_to_dict(transaction):
     amount_decimal = Decimal(transaction.amount) / Decimal(1e24)
     amount = round(amount_decimal, 4)
 
+    ##catch 0000 response from node
+    if int(transaction.transaction_hash_receiving) == 0:
+        output_rec = ""
+    else:
+        output_rec = transaction.transaction_hash_receiving
+
     converted_transaction = {
         "id": transaction.id,
         "transactionHashSending": transaction.transaction_hash_sending,
-        "transactionHashReceiving": transaction.transaction_hash_receiving,
+        "transactionHashReceiving": output_rec,
         "origin": origin,
         "destination": destination,
         "amount": amount,
