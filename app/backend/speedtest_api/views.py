@@ -29,7 +29,7 @@ from speedtest_api.services import nodes
 
 logger = logging.getLogger(__name__)
 
-@ratelimit(key='ip', rate='15/d')
+@ratelimit(key='ip', rate='50/d')
 @api_view(['POST'])
 @csrf_exempt
 def generate_transaction(request):
@@ -122,7 +122,7 @@ def generate_transaction(request):
         return JsonResponse({'message': "The transaction format is invalid. Please try again."}, status=400)
 
 
-@ratelimit(key='ip', rate='15/d')
+@ratelimit(key='ip', rate='50/d')
 @api_view(['POST'])
 @csrf_exempt
 def send_batch_transactions(request):
@@ -365,7 +365,7 @@ def callback(request):
         client_ip, is_routable = get_client_ip(request)
 
         cache_key = body["hash"]+"_"+client_ip  # needs to be unique
-        cache_time = 60  # time in seconds for cache to be valid
+        cache_time = 30  # time in seconds for cache to be valid
 
         end_time = int(round(time.time() * 1000)) ## end time
         cache.set(cache_key, end_time, cache_time)
