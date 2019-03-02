@@ -2,6 +2,7 @@ from decimal import *
 import json
 from threading import Thread
 import random
+import re
 import logging
 import time
 from queue import Queue
@@ -405,7 +406,7 @@ def convert_transaction_to_dict(transaction):
     amount = round(amount_decimal, 4)
 
     ##catch 0000 response from node
-    if int(transaction.transaction_hash_receiving) == 0:
+    if re.match("^[0]+$", transaction.transaction_hash_receiving):
         output_rec = ""
     else:
         output_rec = transaction.transaction_hash_receiving
