@@ -37,7 +37,6 @@ def transaction_general(node_URL, node_IP, account_address, current_hash, start_
         address = account_address
         hash_of_block = current_hash
         try:
-            logger.info("Checking RCP history account %s" % (account_address))
             history_curr_account = rpc_node.account_history(address,count=5)  # magic assuming that if it is not 5 back it hasn't been received
         except:
             logger.error('Unable to get history hash: %s, account: %s' % (current_hash, account_address))
