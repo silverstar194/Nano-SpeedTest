@@ -366,7 +366,6 @@ def callback(request):
 
         cache_key = body["hash"]+"_"+client_ip  # needs to be unique
         cache_time = 60  # time in seconds for cache to be valid
-        logger.info("Caching %s" % cache_key)
 
         end_time = int(round(time.time() * 1000)) ## end time
         cache.set(cache_key, end_time, cache_time)
