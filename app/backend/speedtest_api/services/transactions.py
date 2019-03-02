@@ -206,7 +206,6 @@ def send_transaction(transaction):
     try:
         frontier = rpc_origin_node.frontiers(account=transaction.origin.address, count=1)[transaction.origin.address]
         valid_PoW = rpc_origin_node.work_validate(work=transaction.origin.POW, hash=frontier)
-        logger.info('Vaid PoW during sending %s PoW %s frontier %s ' % (valid_PoW, transaction.origin.POW, frontier))
     except Exception as e:
         logger.info('PoW invalid during sending %s' % str(e))
         valid_PoW = False
@@ -292,7 +291,6 @@ def send_transaction(transaction):
         try:
             frontier = rpc_destination_node.frontiers(account=transaction.destination.address, count=1)[transaction.destination.address]
             valid_PoW = rpc_destination_node.work_validate(work=transaction.destination.POW, hash=frontier)
-            logger.info('Vaild PoW during receive %s PoW %s frontier %s ' % (valid_PoW, transaction.origin.POW, frontier))
         except Exception as e:
             logger.info('PoW invalid during receive %s' % str(e))
             valid_PoW = False
