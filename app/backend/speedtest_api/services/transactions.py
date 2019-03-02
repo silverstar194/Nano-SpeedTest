@@ -370,7 +370,7 @@ def send_transaction(transaction):
 
     #Regenerte PoW
     POWService.enqueue_account(address=transaction.origin.address, frontier=transaction.transaction_hash_sending, wait=True)
-    POWService.enqueue_account(address=transaction.destination.address, frontier=transaction.transaction_hash_receiving,ait=True)
+    POWService.enqueue_account(address=transaction.destination.address, frontier=transaction.transaction_hash_receiving, wait=True)
     return transaction
 
 def time_receive_block_async(transaction):
