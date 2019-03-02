@@ -206,7 +206,7 @@ def send_transaction(transaction):
     try:
         frontier = rpc_origin_node.frontiers(account=transaction.origin.address, count=1)[transaction.origin.address]
         valid_PoW = rpc_origin_node.work_validate(work=transaction.origin.POW, hash=frontier)
-        logger.info('Vaid PoW during sending %s' % valid_PoW)
+        logger.info('Vaid PoW during sending %s PoW %s frontier %s ' % (valid_PoW, transaction.origin.POW, frontier))
     except Exception as e:
         logger.info('PoW invalid during sending %s' % str(e))
         valid_PoW = False
@@ -225,27 +225,19 @@ def send_transaction(transaction):
                 transaction.destination.unlock()
                 logger.error('Error adding address, frontier pair to POWService: %s' % str(e))
 
+
         wait_on_PoW = 0
-        while wait_on_PoW < 7:
+        while wait_on_PoW < 7 and not account.POW:
             wait_on_PoW += 1
-            logger.info('Waiting on PoW during sending %s of 7 for: %s' % (wait_on_PoW, transaction.origin.address))
+            logger.info('Waiting on PoW during sending %s of 7 for: %s PoW %s' % (wait_on_PoW, transaction.origin.address, transaction.origin.POW))
+            account = get_account(transaction.origin.address)
+            time.sleep(5)
 
-            transaction.origin = get_account(transaction.origin.address)
-            time.sleep(7)
-
-        try:
-            frontier = rpc_origin_node.frontiers(account=transaction.origin.address, count=1)[transaction.origin.address]
-            valid_PoW = rpc_origin_node.work_validate(work=transaction.origin.POW, hash=frontier)
-        except Exception as e:
-            count += 1
-            if count >= 3:
-                ##Unlock accounts
-                transaction.origin.unlock()
-                transaction.destination.unlock()
-                logger.error('Error with new PoW %s' % e)
         count += 1
 
     ##Still no dPoW. Let's abort
+    frontier = rpc_origin_node.frontiers(account=transaction.origin.address, count=1)[transaction.origin.address]
+    valid_PoW = rpc_origin_node.work_validate(work=transaction.origin.POW, hash=frontier)
     if not transaction.origin.POW or not valid_PoW:
         logger.error('Total faliure of dPoW. Aborting transaction account %s' % transaction.origin.address)
         raise InvalidPOWException()
@@ -300,7 +292,7 @@ def send_transaction(transaction):
         try:
             frontier = rpc_destination_node.frontiers(account=transaction.destination.address, count=1)[transaction.destination.address]
             valid_PoW = rpc_destination_node.work_validate(work=transaction.destination.POW, hash=frontier)
-            logger.info('Vaild PoW during receive %s' % valid_PoW)
+            logger.info('Vaild PoW during receive %s PoW %s frontier %s ' % (valid_PoW, transaction.origin.POW, frontier))
         except Exception as e:
             logger.info('PoW invalid during receive %s' % str(e))
             valid_PoW = False
@@ -320,25 +312,14 @@ def send_transaction(transaction):
                     logger.error('Error adding address, frontier pair to POWService: %s' % e)
 
             wait_on_PoW = 0
-            while wait_on_PoW < 7:
+            while wait_on_PoW < 7 and not account.POW:
                 wait_on_PoW += 1
-                logger.info('Waiting on PoW during receive %s of 7 for: %s' % (wait_on_PoW, transaction.destination.address))
+                account = get_account(transaction.destination.address)
+                time.sleep(5)
 
-                transaction.destination = get_account(transaction.destination.address)
-                try:
-                    frontier = rpc_destination_node.frontiers(account=transaction.destination.address, count=1)[
-                        transaction.destination.address]
-                    valid_PoW = rpc_destination_node.work_validate(work=transaction.destination.POW, hash=frontier)
-                    time.sleep(3)
-                except Exception as e:
-                    count+=1
-                    if count >= 3:
-                        ##Unlock accounts
-                        transaction.origin.unlock()
-                        transaction.destination.unlock()
-                        logger.error('Error adding address, frontier pair to POWService: %s' % e)
-            count += 3
 
+        frontier = rpc_destination_node.frontiers(account=transaction.destination.address, count=1)[transaction.destination.address]
+        valid_PoW = rpc_destination_node.work_validate(work=transaction.destination.POW, hash=frontier)
         ##Still no dPoW. Let's abort
         if not transaction.destination.POW or not valid_PoW:
             logger.error('Total faliure of dPoW. Aborting transaction account %s' % transaction.destination.address)

@@ -92,7 +92,7 @@ class POWService:
             }
         logger.info('Starting dPoW request')
         res = requests.post(url=settings.DPOW_ENDPOINT, json=data, timeout=15)
-        logger.info('Completed dPoW request')
+        logger.info('Completed dPoW request %s' % (res.json()))
 
         if res.status_code == 200:
             return res.json()
@@ -146,7 +146,7 @@ class POWService:
         @param address: Account address to generate POW for
         @param frontier: Frontier block to generate valid POW
         """
-
+        logger.info('Enqueu address %s frontier %s' % (address, frontier))
         cls._pow_queue.put((address, frontier, wait))
 
     @classmethod
