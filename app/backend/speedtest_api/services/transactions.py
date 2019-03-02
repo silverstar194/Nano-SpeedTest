@@ -390,6 +390,7 @@ def simple_send(from_account, to_address, amount, generate_PoW=True):
             amount=amount,
             work=from_account.POW
         )
+        print(from_account.address, to_address, amount)
 
         from_account.POW = None
         from_account.save()
