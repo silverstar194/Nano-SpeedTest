@@ -166,41 +166,41 @@ def send_transaction(transaction):
     rpc_origin_node = nano.rpc.Client(transaction.origin.wallet.node.URL)
     rpc_destination_node = nano.rpc.Client(transaction.destination.wallet.node.URL)
 
-    # Do some origin balance checking
-    origin_balance = rpc_origin_node.account_balance(account=transaction.origin.address)['balance']
-    if (origin_balance != transaction.origin.current_balance):
-        transaction.origin.current_balance = origin_balance
-        transaction.origin.save()
-        transaction.save()
-        logger.info("AccountBalanceMismatch %s" % transaction.origin.address)
+    # # Do some origin balance checking
+    # origin_balance = rpc_origin_node.account_balance(account=transaction.origin.address)['balance']
+    # if (origin_balance != transaction.origin.current_balance):
+    #     transaction.origin.current_balance = origin_balance
+    #     transaction.origin.save()
+    #     transaction.save()
+    #     logger.info("AccountBalanceMismatch %s" % transaction.origin.address)
 
-    if (origin_balance - transaction.amount < 0):
+    if (transaction.origin.current_balance - transaction.amount < 0):
         ##Unlock accounts
         transaction.origin.unlock()
         transaction.destination.unlock()
         logger.info("InsufficientNanoException %s" % transaction.origin.address)
         raise InsufficientNanoException()
     
-    # Make sure the wallet contains the account address
-    if (not rpc_origin_node.wallet_contains(wallet=transaction.origin.wallet.wallet_id, account=transaction.origin.address)):
-        ##Unlock accounts
-        transaction.origin.unlock()
-        transaction.destination.unlock()
-        logger.info("AddressDoesNotExistException %s" % transaction.origin.address)
-        raise AddressDoesNotExistException(
-            wallet=transaction.origin.wallet,
-            account=transaction.origin.address
-        )
-    
-    if (not rpc_destination_node.wallet_contains(wallet=transaction.destination.wallet.wallet_id, account=transaction.destination.address)):
-        ##Unlock accounts
-        transaction.origin.unlock()
-        transaction.destination.unlock()
-        logger.info("AddressDoesNotExistException %s" % transaction.destination.address)
-        raise AddressDoesNotExistException(
-            wallet=transaction.destination.wallet,
-            account=transaction.destination.address
-        )
+    # # Make sure the wallet contains the account address
+    # if (not rpc_origin_node.wallet_contains(wallet=transaction.origin.wallet.wallet_id, account=transaction.origin.address)):
+    #     ##Unlock accounts
+    #     transaction.origin.unlock()
+    #     transaction.destination.unlock()
+    #     logger.info("AddressDoesNotExistException %s" % transaction.origin.address)
+    #     raise AddressDoesNotExistException(
+    #         wallet=transaction.origin.wallet,
+    #         account=transaction.origin.address
+    #     )
+    #
+    # if (not rpc_destination_node.wallet_contains(wallet=transaction.destination.wallet.wallet_id, account=transaction.destination.address)):
+    #     ##Unlock accounts
+    #     transaction.origin.unlock()
+    #     transaction.destination.unlock()
+    #     logger.info("AddressDoesNotExistException %s" % transaction.destination.address)
+    #     raise AddressDoesNotExistException(
+    #         wallet=transaction.destination.wallet,
+    #         account=transaction.destination.address
+    #     )
 
 
     ##Validate PoW on send
