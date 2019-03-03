@@ -149,41 +149,46 @@ def send_batch_transactions(request):
         return JsonResponse({'message': 'Batch ' + str(batch_id) + ' not found.'}, status=404)
 
     else:
-        batch_transactions = transactions.get_transactions(enabled=True, batch=batch)
 
+        count = 0 ## Must retry here to take threading and database lag into account
         transactions_queue = Queue()
-        all_threads = []
-        for transaction in batch_transactions:
-            if transaction.start_send_timestamp or transaction.end_receive_timestamp:
-                return JsonResponse({'message': "This batch has already been sent."}, status=405)
-
-            try:
-                thread = Thread(target=send_transaction_async, args=(transaction, transactions_queue))
-                thread.start()
-                all_threads.append(thread)
-            except transactions.InvalidPOWException as e:
-                return JsonResponse({'message': "The transaction POW was invalid. Please try again."}, status=400)
-
-
-        ## Wait on all transaction threads to complete
-        for t in all_threads:
-            t.join()
-
-        count = 0
         while not len(list(transactions_queue.queue)) and count < 3:
-            logger.error("Waiting on queue....")
-            time.sleep(1)
+            count += 1
+            batch_transactions = transactions.get_transactions(enabled=True, batch=batch)
+
+            all_threads = []
+            for transaction in batch_transactions:
+                if transaction.start_send_timestamp or transaction.end_receive_timestamp:
+                    logger.info("This batch has already been sent.")
+                    sent_batch = {
+                        'id': batch_id,
+                        'transactions': [convert_transaction_to_dict(transaction) for transaction in batch_transactions],
+                    }
+                    return JsonResponse(sent_batch, status=200)
+
+                try:
+                    thread = Thread(target=send_transaction_async, args=(transaction, transactions_queue))
+                    thread.start()
+                    all_threads.append(thread)
+                except transactions.InvalidPOWException as e:
+                    return JsonResponse({'message': "The transaction POW was invalid. Please try again."}, status=400)
+
+
+            ## Wait on all transaction threads to complete
+            for t in all_threads:
+                t.join()
+
+            for transaction in list(transactions_queue.queue):
+                if transaction["endSendTimestamp"] and transaction["startSendTimestamp"] and (transaction["endSendTimestamp"] - transaction["startSendTimestamp"]) < 0:
+                    logger.error("Negative timing error start %s end %s" % (str(transaction["startSendTimestamp"]), str(transaction["endSendTimestamp"])))
+                    return JsonResponse({'message': "Negative timing error."}, status=400)
+
+            if not len(list(transactions_queue.queue)):
+                logger.error("Retrying batch %s" % (batch_id))
+                time.sleep(2)
 
         if not len(list(transactions_queue.queue)):
-            logger.error("Queue failed.")
             return JsonResponse({'message': "Please try again. No transactions generated."}, status=400)
-
-        for transaction in list(transactions_queue.queue):
-            if transaction["endSendTimestamp"] and transaction["startSendTimestamp"] and (transaction["endSendTimestamp"] - transaction["startSendTimestamp"]) < 0:
-                logger.error("Negative timing error start %s end %s" % (str(transaction["startSendTimestamp"]), str(transaction["endSendTimestamp"])))
-                return JsonResponse({'message': "Negative timing error."}, status=400)
-
-
 
         sent_batch = {
             'id': batch_id,

@@ -227,6 +227,7 @@ def send_transaction(transaction):
 
 
         wait_on_PoW = 0
+        account = get_account(transaction.origin.address)
         while wait_on_PoW < 7 and not account.POW:
             wait_on_PoW += 1
             logger.info('Waiting on PoW during sending %s of 7 for: %s PoW %s' % (wait_on_PoW, transaction.origin.address, transaction.origin.POW))
@@ -310,6 +311,7 @@ def send_transaction(transaction):
                     logger.error('Error adding address, frontier pair to POWService: %s' % e)
 
             wait_on_PoW = 0
+            account = get_account(transaction.destination.address)
             while wait_on_PoW < 7 and not account.POW:
                 wait_on_PoW += 1
                 account = get_account(transaction.destination.address)
