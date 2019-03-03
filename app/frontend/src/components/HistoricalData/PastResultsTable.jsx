@@ -74,7 +74,6 @@ class PastResultsTable extends React.Component {
                         <th scope='col'>Elapsed Time</th>
                         <th scope='col'>Date</th>
                         <th scope='col' className='block-col'>Sending Block</th>
-                        <th scope='col' className='block-col'>Receiving Block</th>
                     </tr>
                     </thead>
                     <tbody>

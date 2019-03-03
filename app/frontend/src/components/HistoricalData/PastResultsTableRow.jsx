@@ -33,14 +33,6 @@ const TableRow = ({
                     {transactionHashSending}
                 </a>
             </td>
-            <td className='block-col text-ellipsis'>
-                <a
-                    href={`https://www.nanode.co/block/${transactionHashReceiving}`}
-                    target='_blank'
-                    rel='noopener noreferrer'>
-                    {transactionHashReceiving}
-                </a>
-            </td>
         </tr>
     );
 };
