@@ -52,10 +52,10 @@ def get_accounts(enabled=True, node=None, in_use=None):
     @return: Query of all accounts (filtered by enabled or node)
     """
     if in_use is not None and node:
-        return models.Account.objects.filter(wallet__node__id=node.id).filter(in_use=in_use).filter(current_balance__gt=0).select_related()
+        return models.Account.objects.filter(wallet__node__id=node.id).filter(in_use=in_use).filter(current_balance__gt=0).filter(POW__isnull=False).select_related()
 
     if in_use is not None:
-        return models.Account.objects.filter(wallet__node__enabled=enabled).filter(in_use=in_use).filter(current_balance__gt=0).select_related()
+        return models.Account.objects.filter(wallet__node__enabled=enabled).filter(in_use=in_use).filter(current_balance__gt=0).filter(POW__isnull=False).select_related()
 
     if node:
         return models.Account.objects.filter(wallet__node__id=node.id).filter(current_balance__gt=0).select_related()

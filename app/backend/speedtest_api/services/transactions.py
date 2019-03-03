@@ -1,6 +1,7 @@
 import logging
 import random
 import requests
+import re
 import time
 import sys
 import threading
@@ -344,6 +345,11 @@ def send_receive_block_async(transaction, rpc_destination_node):
         ##Still no dPoW. Let's abort
         if not transaction.destination.POW or not valid_PoW:
             logger.error('Total faliure of dPoW. Aborting transaction account %s' % transaction.destination.address)
+
+            time.sleep(3)
+            transaction.destination.POW = None
+            frontier = rpc_destination_node.frontiers(account=transaction.destination.address, count=1)[transaction.destination.address]
+            POWService.enqueue_account(address=transaction.destination.address, frontier=frontier, wait=True)
             raise InvalidPOWException()
 
         transaction.start_receive_timestamp = int(round(time.time() * 1000))
@@ -362,6 +368,11 @@ def send_receive_block_async(transaction, rpc_destination_node):
             logger.error("RPCException two %s" % e)
             transaction.origin.unlock()
             transaction.destination.unlock()
+
+            time.sleep(3)
+            transaction.destination.POW = None
+            frontier = rpc_destination_node.frontiers(account=transaction.destination.address, count=1)[transaction.destination.address]
+            POWService.enqueue_account(address=transaction.destination.address, frontier=frontier, wait=True)
             raise nano.rpc.RPCException()
 
     # Handover control to the timing service (expecting the timestamp to be set on return)
@@ -378,7 +389,13 @@ def send_receive_block_async(transaction, rpc_destination_node):
     transaction.destination.save()
     transaction.save()
 
-    POWService.enqueue_account(address=transaction.destination.address, frontier=transaction.transaction_hash_receiving, wait=True)
+    ## Check node didn't return all "000000"
+    frontier = transaction.transaction_hash_receiving
+    if re.match("^[0]+$", frontier):
+        logger.error('Node returned all zeros acccount: %s' % (transaction.destination.address))
+        frontier = rpc_destination_node.frontiers(account=transaction.destination.address, count=1)[transaction.destination.address]
+
+    POWService.enqueue_account(address=transaction.destination.address, frontier=frontier, wait=True)
 
 
 def simple_send(from_account, to_address, amount, generate_PoW=True):
