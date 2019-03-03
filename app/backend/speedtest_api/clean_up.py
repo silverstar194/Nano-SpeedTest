@@ -10,5 +10,5 @@ def clean_up():
    Django auto runs startup code for ant command
 
     """
-    time.sleep(60*10)  # Allow PoW to finish across threads
+    time.sleep(60*15)  # Allow PoW to finish across threads
     logger.info("Clean up task completed...")

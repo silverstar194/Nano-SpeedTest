@@ -67,8 +67,8 @@ MIDDLEWARE = [
 CRONTAB_COMMAND_PREFIX = '. $HOME/.bash_profile;'
 CRONJOBS = [
     ('0 */2 * * *', 'speedtest_api.clean_up.clean_up'),
-    ('10 */2 * * *', 'speedtest_api.cron.node_status_job'),
-    ('15 */2 * * *', 'speedtest_api.transaction_test.transaction_test'),
+    ('17 */2 * * *', 'speedtest_api.cron.node_status_job'),
+    ('45 */2 * * *', 'speedtest_api.transaction_test.transaction_test'),
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
