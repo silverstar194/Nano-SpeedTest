@@ -289,13 +289,24 @@ def send_transaction(transaction):
     transaction.save()
 
 
+    # Return as soon as transaction_hash_receiving is available
+    # Finish work on 2nd thread
+    t = threading.Thread(target=send_receive_block_async, args=(transaction, rpc_destination_node))
+    t.start()
+
+    #Regenerte PoW
+    POWService.enqueue_account(address=transaction.origin.address, frontier=transaction.transaction_hash_sending, wait=True)
+    return transaction
+
+
+def send_receive_block_async(transaction, rpc_destination_node):
     incoming_blocks = [transaction.transaction_hash_sending]
 
     for block_hash in incoming_blocks:
-
         ##Validate PoW on receive
         try:
-            frontier = rpc_destination_node.frontiers(account=transaction.destination.address, count=1)[transaction.destination.address]
+            frontier = rpc_destination_node.frontiers(account=transaction.destination.address, count=1)[
+                transaction.destination.address]
             valid_PoW = rpc_destination_node.work_validate(work=transaction.destination.POW, hash=frontier)
         except Exception as e:
             logger.info('PoW invalid during receive %s' % str(e))
@@ -316,9 +327,9 @@ def send_transaction(transaction):
                     transaction.destination.unlock()
                     logger.error('Error adding address, frontier pair to POWService: %s' % e)
 
-
             account = get_account(transaction.destination.address)
-            frontier = rpc_destination_node.frontiers(account=transaction.destination.address, count=1)[transaction.destination.address]
+            frontier = rpc_destination_node.frontiers(account=transaction.destination.address, count=1)[
+                transaction.destination.address]
             valid_PoW = rpc_destination_node.work_validate(work=transaction.destination.POW, hash=frontier)
 
             wait_on_PoW = 0
@@ -327,23 +338,22 @@ def send_transaction(transaction):
                 account = get_account(transaction.destination.address)
                 time.sleep(2)
 
-
-        frontier = rpc_destination_node.frontiers(account=transaction.destination.address, count=1)[transaction.destination.address]
+        frontier = rpc_destination_node.frontiers(account=transaction.destination.address, count=1)[
+            transaction.destination.address]
         valid_PoW = rpc_destination_node.work_validate(work=transaction.destination.POW, hash=frontier)
         ##Still no dPoW. Let's abort
         if not transaction.destination.POW or not valid_PoW:
             logger.error('Total faliure of dPoW. Aborting transaction account %s' % transaction.destination.address)
             raise InvalidPOWException()
 
-
         transaction.start_receive_timestamp = int(round(time.time() * 1000))
         try:
             logger.info("Receiving")
             transaction.transaction_hash_receiving = rpc_destination_node.receive(
-            wallet=transaction.destination.wallet.wallet_id,
-            account=transaction.destination.address,
-            work=transaction.destination.POW,
-            block=block_hash,
+                wallet=transaction.destination.wallet.wallet_id,
+                account=transaction.destination.address,
+                work=transaction.destination.POW,
+                block=block_hash,
             )
             logger.info("Received")
             transaction.save()
@@ -354,17 +364,6 @@ def send_transaction(transaction):
             transaction.destination.unlock()
             raise nano.rpc.RPCException()
 
-    # Return as soon as transaction_hash_receiving is available
-    # Finish work on 2nd thread
-    t = threading.Thread(target=time_receive_block_async, args=(transaction,))
-    t.start()
-
-    #Regenerte PoW
-    POWService.enqueue_account(address=transaction.origin.address, frontier=transaction.transaction_hash_sending, wait=True)
-    POWService.enqueue_account(address=transaction.destination.address, frontier=transaction.transaction_hash_receiving, wait=True)
-    return transaction
-
-def time_receive_block_async(transaction):
     # Handover control to the timing service (expecting the timestamp to be set on return)
     try:
         time_transaction_receive(transaction)
@@ -376,9 +375,10 @@ def time_receive_block_async(transaction):
 
 
     transaction.destination.POW = None
-
     transaction.destination.save()
     transaction.save()
+
+    POWService.enqueue_account(address=transaction.destination.address, frontier=transaction.transaction_hash_receiving, wait=True)
 
 
 def simple_send(from_account, to_address, amount, generate_PoW=True):
