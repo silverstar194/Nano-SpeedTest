@@ -171,9 +171,11 @@ def send_batch_transactions(request):
 
         count = 0
         while not len(list(transactions_queue.queue)) and count < 3:
+            logger.error("Waiting on queue....")
             time.sleep(1)
 
         if not len(list(transactions_queue.queue)):
+            logger.error("Queue failed.")
             return JsonResponse({'message': "Please try again. No transactions generated."}, status=400)
 
         for transaction in list(transactions_queue.queue):
