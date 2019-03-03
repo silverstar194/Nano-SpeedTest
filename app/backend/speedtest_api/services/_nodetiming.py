@@ -23,7 +23,7 @@ def transaction_general(node_URL, node_IP, account_address, current_hash, start_
 	@raise Exception for when we have missed the transaction
 	"""
 
-    backoff_sleep_values =[1] + [.5]*35
+    backoff_sleep_values = [.5]*35
     for sleep_value in backoff_sleep_values:
         rpc_node = nano.rpc.Client(node_URL)
         # cache_key = current_hash+"_"+node_IP  # needs to be unique

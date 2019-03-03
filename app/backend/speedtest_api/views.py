@@ -185,7 +185,7 @@ def send_batch_transactions(request):
 
             if not len(list(transactions_queue.queue)):
                 logger.error("Retrying batch %s" % (batch_id))
-                time.sleep(2)
+                time.sleep(1)
 
         if not len(list(transactions_queue.queue)):
             return JsonResponse({'message': "Please try again. No transactions generated."}, status=400)

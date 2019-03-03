@@ -237,7 +237,7 @@ def send_transaction(transaction):
             wait_on_PoW += 1
             logger.info('Waiting on PoW during sending %s of 7 for: %s PoW %s' % (wait_on_PoW, transaction.origin.address, transaction.origin.POW))
             account = get_account(transaction.origin.address)
-            time.sleep(5)
+            time.sleep(2)
 
         count += 1
 
@@ -325,7 +325,7 @@ def send_transaction(transaction):
             while wait_on_PoW < 7 and not account.POW:
                 wait_on_PoW += 1
                 account = get_account(transaction.destination.address)
-                time.sleep(5)
+                time.sleep(2)
 
 
         frontier = rpc_destination_node.frontiers(account=transaction.destination.address, count=1)[transaction.destination.address]
@@ -414,7 +414,7 @@ def simple_send(from_account, to_address, amount, generate_PoW=True):
         while not from_account.POW and count < 5: # Allows newly enqueued PoW to clear
             count += 1
             from_account = get_account(from_account.address)
-            time.sleep(10)
+            time.sleep(5)
 
         from_account.current_balance = from_account.current_balance - amount
         from_account.save()
