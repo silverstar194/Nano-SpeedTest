@@ -131,11 +131,10 @@ def check_account_async(account):
         logger.error('Error trying to receive blocks (for %s): %s' % (account.address, e))
 
     new_balance = rpc.account_balance(account=account.address)['balance']
-
-    if new_balance != account.current_balance:
+    if not account.current_balance == new_balance:
+        logger.error('Updating balance %s' % (account.address))
         account.current_balance = new_balance
-
-        # We reset the POW because if there is an issue here, that means the POW must have been changed
         account.POW = None
 
+    account.save()
     account.unlock()
