@@ -145,6 +145,7 @@ def new_transaction(origin_account, destination_account, amount, batch):
     )
 
     transaction.save()
+
     return transaction
 
 def send_transaction(transaction):
@@ -280,7 +281,6 @@ def send_transaction(transaction):
     transaction.origin.save()
     transaction.destination.save()
     transaction.save()
-
 
 
     incoming_blocks = [transaction.transaction_hash_sending]

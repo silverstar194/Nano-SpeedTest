@@ -30,7 +30,7 @@ from speedtest_api.services import nodes
 
 logger = logging.getLogger(__name__)
 
-# @ratelimit(key='ip', rate='5/h')
+@ratelimit(key='ip', rate='5/h')
 @api_view(['POST'])
 @csrf_exempt
 def generate_transaction(request):
@@ -123,7 +123,7 @@ def generate_transaction(request):
         return JsonResponse({'message': "The transaction format is invalid. Please try again."}, status=400)
 
 
-# @ratelimit(key='ip', rate='5/h')
+@ratelimit(key='ip', rate='5/h')
 @api_view(['POST'])
 @csrf_exempt
 def send_batch_transactions(request):
@@ -168,6 +168,10 @@ def send_batch_transactions(request):
         ## Wait on all transaction threads to complete
         for t in all_threads:
             t.join()
+
+        count = 0
+        while not len(list(transactions_queue.queue)) and count < 3:
+            time.sleep(1)
 
         if not len(list(transactions_queue.queue)):
             return JsonResponse({'message': "Please try again. No transactions generated."}, status=400)
