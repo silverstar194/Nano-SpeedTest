@@ -301,6 +301,11 @@ def send_transaction(transaction):
 
 
 def send_receive_block_async(transaction, rpc_destination_node):
+    """
+    Receive funds on managed account.
+
+    @param transaction: Managed transaction
+    """
     incoming_blocks = [transaction.transaction_hash_sending]
 
     for block_hash in incoming_blocks:
@@ -391,8 +396,11 @@ def send_receive_block_async(transaction, rpc_destination_node):
 
     ## Check node didn't return all "000000"
     frontier = transaction.transaction_hash_receiving
-    if re.match("^[0]+$", frontier):
-        logger.error('Node returned all zeros acccount: %s' % (transaction.destination.address))
+    count = 0
+    while re.match("^[0]+$", frontier) and count < 3:
+        count += 1
+        time.sleep(1) ## Allow frontier to clear in node
+        logger.error('Node returned all zeros acccount: %s. try %s of 3' % (transaction.destination.address, count))
         frontier = rpc_destination_node.frontiers(account=transaction.destination.address, count=1)[transaction.destination.address]
 
     POWService.enqueue_account(address=transaction.destination.address, frontier=frontier, wait=True)
