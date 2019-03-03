@@ -147,6 +147,7 @@ class POWService:
         @param frontier: Frontier block to generate valid POW
         """
         logger.info('Enqueuing address %s frontier %s' % (address, frontier))
+        get_account(address=address).lock()
         cls._pow_queue.put((address, frontier, wait))
 
     @classmethod

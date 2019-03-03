@@ -414,7 +414,7 @@ def simple_send(from_account, to_address, amount, generate_PoW=True):
         while not from_account.POW and count < 5: # Allows newly enqueued PoW to clear
             count += 1
             from_account = get_account(from_account.address)
-            time.sleep(5)
+            time.sleep(2)
 
         from_account.current_balance = from_account.current_balance - amount
         from_account.save()
