@@ -94,10 +94,10 @@ def time_transaction_send(transaction):
 	 transaction.transaction_hash_sending,
 	 transaction.start_send_timestamp)
 
-	if transaction.start_send_timestamp >= end_time:
+	if transaction.start_send_timestamp + 500 >= end_time:
 		logger.error("Logging send bias %s %s" % (str(end_time - transaction.start_send_timestamp), transaction.transaction_hash_sending))
 		transaction.bias_send = 1000
-		end_time += 1000 ## Add bias to account for node rounding/truncation
+		end_time += 1000 ## Add bias to account for node rounding/truncation to bring to median known time
 
 	transaction.end_send_timestamp = end_time
 	transaction.save()
