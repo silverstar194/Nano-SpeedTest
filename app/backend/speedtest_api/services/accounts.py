@@ -71,7 +71,7 @@ def get_accounts(enabled=True, node=None, in_use=None):
                 output_accounts.append(account)
             else:
                 logging.info("Account in use still %s " % account.address)
-            return output_accounts
+        return output_accounts
 
     if node:
         return models.Account.objects.filter(wallet__node__id=node.id).filter(current_balance__gt=0).select_related()
