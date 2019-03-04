@@ -56,14 +56,14 @@ class HistoricalDataView extends React.Component {
                             <div className='row form-group'>
 
                                 <div className='col-auto'>
-                                    <h2 className='map-header'>
+                                    <h3 className='map-header'>
                                         Total Transactions Sent: {totalTransactions}
-                                    </h2>
+                                    </h3>
                                 </div>
                                 <div className='col-auto'>
-                                    <h2 className='map-header'>
-                                        Median Time: {globalAverage.toFixed(3)} Seconds
-                                    </h2>
+                                    <h3 className='map-header'>
+                                        Median 24h: {globalAverage.toFixed(3)} Seconds
+                                    </h3>
                                 </div>
                             </div>
                         </div>
