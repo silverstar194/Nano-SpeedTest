@@ -24,7 +24,7 @@ const dateFormatterWithHMS = (tick) => (new Date(tick)).toLocaleDateString({}, {
 const timeFormatter = (value) => parseFloat(value/1000.0);
 const timeFormatterWithMilli = (value) => (value/1000.0).toFixed(3);
 const scale = scaleLog().base(10)
-const PoWCache = (value) => (value) ? ("Yes.") : ((value == null)  ? ("Unknown.") : ( "No."))
+const PoWCache = (value) => (value) ? ("Yes") : ((value == null)  ? ("Unknown") : ( "No"))
 
 
 const CustomTooltip = ({active, payload}) => {
