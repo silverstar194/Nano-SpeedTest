@@ -178,17 +178,18 @@ def send_batch_transactions(request):
             for t in all_threads:
                 t.join()
 
-            for transaction in list(transactions_queue.queue):
-                if transaction["endSendTimestamp"] and transaction["startSendTimestamp"] and (transaction["endSendTimestamp"] - transaction["startSendTimestamp"]) < 0:
-                    logger.error("Negative timing error start %s end %s" % (str(transaction["startSendTimestamp"]), str(transaction["endSendTimestamp"])))
-                    return JsonResponse({'message': "Negative timing error."}, status=400)
-
             if not len(list(transactions_queue.queue)):
                 logger.error("Retrying batch %s" % (batch_id))
                 time.sleep(1)
 
+
         if not len(list(transactions_queue.queue)):
             return JsonResponse({'message': "Please try again. No transactions generated."}, status=400)
+
+        for transaction in list(transactions_queue.queue):
+            if not transaction["endSendTimestamp"] or not transaction["startSendTimestamp"] or (int(transaction["endSendTimestamp"]) - int(transaction["startSendTimestamp"])) < 0:
+                logger.error("Negative timing error start %s end %s" % (str(transaction["startSendTimestamp"]), str(transaction["endSendTimestamp"])))
+                return JsonResponse({'message': "Negative timing error."}, status=400)
 
         sent_batch = {
             'id': batch_id,
