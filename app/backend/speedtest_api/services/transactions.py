@@ -271,6 +271,7 @@ def send_transaction(transaction):
         if before_send + 5000 < after_send:
             transaction.start_send_timestamp = after_send - 300 ##Node has issue, correct for it with normal call time
             transaction.node_send_bias = -300
+            transaction.node_lag = after_send - before_send
             logger.error("LONG TIME NODE: Sent work %s block %s time %s" %(transaction.origin.POW, transaction.transaction_hash_sending, after_send - before_send))
         else:
             logger.info("Sent work %s block %s time %s" %(transaction.origin.POW, transaction.transaction_hash_sending, after_send - before_send))

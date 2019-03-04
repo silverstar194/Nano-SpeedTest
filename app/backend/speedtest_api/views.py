@@ -441,6 +441,7 @@ def convert_transaction_to_dict(transaction):
         "bias_receive": transaction.bias_receive,
         "node_send_bias": transaction.node_send_bias,
         "PoW_cached_send": transaction.PoW_cached_send,
+        "node_lag": transaction.node_lag,
     }
 
     return converted_transaction
