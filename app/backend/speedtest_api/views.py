@@ -322,7 +322,7 @@ def get_transaction_statistics(request):
         temp_transaction = convert_transaction_to_dict(transaction)
         transactions_array.append(temp_transaction)
 
-    difference_set = Transaction.objects.filter(start_send_timestamp_gte=int(round(time.time() * 1000))-(24*60*60*1000)).annotate(difference=(F('end_send_timestamp') - F('start_send_timestamp')))
+    difference_set = Transaction.objects.filter(start_send_timestamp__gte=int(round(time.time() * 1000))-(24*60*60*1000)).annotate(difference=(F('end_send_timestamp') - F('start_send_timestamp')))
     median_delta = median_value(difference_set, "difference")
 
     transaction_count = Transaction.objects.filter(end_receive_timestamp__gte=0, start_send_timestamp__gte=0).count()
