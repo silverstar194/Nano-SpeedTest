@@ -269,9 +269,9 @@ def send_transaction(transaction):
         )
         after_send = int(round(time.time() * 1000))
         if before_send + 5000 < after_send:
-            logger.info("LONG TIME: Sent work %s block %s time %s" %(transaction.origin.POW, transaction.transaction_hash_sending, after_send))
+            logger.info("LONG TIME: Sent work %s block %s time %s" %(transaction.origin.POW, transaction.transaction_hash_sending, after_send - before_send))
         else:
-            logger.info("Sent work %s block %s time %s" %(transaction.origin.POW, transaction.transaction_hash_sending, after_send))
+            logger.info("Sent work %s block %s time %s" %(transaction.origin.POW, transaction.transaction_hash_sending, after_send - before_send))
 
 
         # Update the balances and POW
