@@ -57,10 +57,10 @@ def get_accounts(enabled=True, node=None, in_use=None):
         accounts = models.Account.objects.filter(wallet__node__id=node.id).filter(in_use=in_use).filter(current_balance__gt=0).filter(POW__isnull=False).select_related()
         for account in accounts:
             if not cache.get(account.address): ## Not in use via cache
-                output_accounts.append(account)
+                output_accounts.append(account.pk)
             else:
                 logging.info("Account in use still %s " % account.address)
-        return output_accounts
+        return models.Account.objects.filter(pk__in=output_accounts)
 
 
     if in_use is not None:
@@ -68,10 +68,10 @@ def get_accounts(enabled=True, node=None, in_use=None):
         accounts = models.Account.objects.filter(wallet__node__enabled=enabled).filter(in_use=in_use).filter(current_balance__gt=0).filter(POW__isnull=False).select_related()
         for account in accounts:
             if not cache.get(account.address):  ## Not in use via cache
-                output_accounts.append(account)
+                output_accounts.append(account.pk)
             else:
                 logging.info("Account in use still %s " % account.address)
-        return output_accounts
+        return models.Account.objects.filter(pk__in=output_accounts)
 
     if node:
         return models.Account.objects.filter(wallet__node__id=node.id).filter(current_balance__gt=0).select_related()
