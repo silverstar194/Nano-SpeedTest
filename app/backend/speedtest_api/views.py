@@ -437,6 +437,10 @@ def convert_transaction_to_dict(transaction):
         "startReceiveTimestamp": transaction.start_receive_timestamp,
         "endReceiveTimestamp": transaction.end_receive_timestamp,
         "PoWCached": transaction.PoW_cached_send,
+        "bias_send": transaction.bias_send,
+        "bias_receive": transaction.bias_receive,
+        "node_send_bias": transaction.node_send_bias,
+        "PoW_cached_send": transaction.PoW_cached_send,
     }
 
     return converted_transaction

@@ -17,6 +17,7 @@ class Transaction(models.Model):
     transaction_hash_receiving = models.CharField(max_length=64)
     bias_send = models.BigIntegerField(null=True, default=None)
     bias_receive = models.BigIntegerField(null=True, default=None)
+    node_send_bias = models.BigIntegerField(null=True, default=None)
     PoW_cached_send = models.BooleanField(default=False)
 
     def __str__(self):
