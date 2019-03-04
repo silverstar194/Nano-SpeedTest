@@ -6,6 +6,7 @@ import {
     XAxis,
     YAxis,
     Tooltip,
+    CartesianGrid,
     Legend
 } from 'recharts';
 import 'styles/ScatterTooltip.css';
@@ -23,6 +24,8 @@ const dateFormatterWithHMS = (tick) => (new Date(tick)).toLocaleDateString({}, {
 const timeFormatter = (value) => parseFloat(value/1000.0);
 const timeFormatterWithMilli = (value) => (value/1000.0).toFixed(3);
 const scale = scaleLog().base(10)
+const PoWCache = (value) => (value) ? ("Yes.") : ((value == null)  ? ("Unknown.") : ( "No."))
+
 
 const CustomTooltip = ({active, payload}) => {
     if (!active) return null;
@@ -36,6 +39,7 @@ const CustomTooltip = ({active, payload}) => {
         <p>{`Seconds: ${timeFormatterWithMilli(data.y)}`}</p>
         <p>{`Origin: ${data.origin}`}</p>
         <p>{`Destination: ${data.destination}`}</p>
+        <p>{`PoW Cached: ${PoWCache(data.PoWCached)}`}</p>
         </div>
     );
 };
@@ -53,6 +57,7 @@ const ScatterView = ({plotData}) => {
                     type='number'
                     tick={false}
                 />
+                <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
                 <YAxis
                     label={{ value: 'Time in Seconds', angle: -90, position: 'insideLeft' }}
                     dataKey='y'

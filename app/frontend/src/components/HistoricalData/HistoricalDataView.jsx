@@ -29,7 +29,8 @@ class HistoricalDataView extends React.Component {
                 y: transaction.elapsedTime,
                 date: transaction.endSendTimestamp,
                 origin: transaction.origin.nodeLocation,
-                destination: transaction.destination.nodeLocation
+                destination: transaction.destination.nodeLocation,
+                PoWCached: transaction.PoWCached,
             });
         });
 

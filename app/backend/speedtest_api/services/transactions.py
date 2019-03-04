@@ -203,7 +203,7 @@ def send_transaction(transaction):
     #         account=transaction.destination.address
     #     )
 
-
+    transaction.PoW_cached_send = True
     ##Validate PoW on send
     try:
         frontier = rpc_origin_node.frontiers(account=transaction.origin.address, count=1)[transaction.origin.address]
@@ -211,6 +211,7 @@ def send_transaction(transaction):
     except Exception as e:
         logger.info('PoW invalid during sending %s' % str(e))
         valid_PoW = False
+        transaction.PoW_cached_send = False
 
     # Make sure the POW is there (not in the POW regen queue) if not wait for it and its valid
     count = 0
@@ -343,6 +344,7 @@ def send_receive_block_async(transaction, rpc_destination_node):
                 wait_on_PoW += 1
                 account = get_account(transaction.destination.address)
                 time.sleep(2)
+
 
         frontier = rpc_destination_node.frontiers(account=transaction.destination.address, count=1)[
             transaction.destination.address]
