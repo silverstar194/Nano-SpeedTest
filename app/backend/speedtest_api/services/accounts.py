@@ -3,6 +3,7 @@ from multiprocessing.pool import ThreadPool
 
 from django.conf import settings as settings
 from django.core.exceptions import MultipleObjectsReturned
+from django.core.cache import cache
 import nano
 
 from .. import models as models
@@ -52,10 +53,25 @@ def get_accounts(enabled=True, node=None, in_use=None):
     @return: Query of all accounts (filtered by enabled or node)
     """
     if in_use is not None and node:
-        return models.Account.objects.filter(wallet__node__id=node.id).filter(in_use=in_use).filter(current_balance__gt=0).filter(POW__isnull=False).select_related()
+        output_accounts = []
+        accounts = models.Account.objects.filter(wallet__node__id=node.id).filter(in_use=in_use).filter(current_balance__gt=0).filter(POW__isnull=False).select_related()
+        for account in accounts:
+            if not cache.get(account.address): ## Not in use via cache
+                output_accounts.append(account)
+            else:
+                logging.info("Account in use still %s " % account.address)
+        return output_accounts
+
 
     if in_use is not None:
-        return models.Account.objects.filter(wallet__node__enabled=enabled).filter(in_use=in_use).filter(current_balance__gt=0).filter(POW__isnull=False).select_related()
+        output_accounts = []
+        accounts = models.Account.objects.filter(wallet__node__enabled=enabled).filter(in_use=in_use).filter(current_balance__gt=0).filter(POW__isnull=False).select_related()
+        for account in accounts:
+            if not cache.get(account.address):  ## Not in use via cache
+                output_accounts.append(account)
+            else:
+                logging.info("Account in use still %s " % account.address)
+            return output_accounts
 
     if node:
         return models.Account.objects.filter(wallet__node__id=node.id).filter(current_balance__gt=0).select_related()
