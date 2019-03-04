@@ -311,6 +311,9 @@ def get_transaction_statistics(request):
     @return dict An array of transactions with average timing and total count metadata
 
     """
+    if not request.GET.get('count'):
+        return JsonResponse({"error" : "Please provide number of transactions."}, status=400)
+
     count = request.GET.get('count')
     transactions_array = []
     recent_transactions = transactions.get_recent_transactions(int(count))
@@ -432,7 +435,8 @@ def convert_transaction_to_dict(transaction):
         "startSendTimestamp": transaction.start_send_timestamp,
         "endSendTimestamp": transaction.end_send_timestamp,
         "startReceiveTimestamp": transaction.start_receive_timestamp,
-        "endReceiveTimestamp": transaction.end_receive_timestamp
+        "endReceiveTimestamp": transaction.end_receive_timestamp,
+        "PoWCached": transaction.PoW_cached_send,
     }
 
     return converted_transaction
