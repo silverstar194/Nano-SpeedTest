@@ -248,6 +248,8 @@ def send_transaction(transaction):
     valid_PoW = rpc_origin_node.work_validate(work=transaction.origin.POW, hash=frontier)
     if not transaction.origin.POW or not valid_PoW:
         logger.error('Total faliure of dPoW. Aborting transaction account %s' % transaction.origin.address)
+        transaction.origin.unlock()
+        transaction.destination.unlock()
         raise InvalidPOWException()
 
     # Start the timestamp before we try to send out the request
@@ -255,6 +257,7 @@ def send_transaction(transaction):
 
     try:
         logger.info("Sending")
+        before_send = int(round(time.time() * 1000))
         # After this call, the nano will leave the origin
         transaction.transaction_hash_sending = rpc_origin_node.send(
             wallet=transaction.origin.wallet.wallet_id,
@@ -264,7 +267,12 @@ def send_transaction(transaction):
             work=transaction.origin.POW,
             id=transaction.id
         )
-        logger.info("Sent")
+        after_send = int(round(time.time() * 1000))
+        if before_send + 5000 < after_send:
+            logger.info("LONG TIME: Sent work %s block %s time %s" %(transaction.origin.POW, transaction.transaction_hash_sending, after_send))
+        else:
+            logger.info("Sent work %s block %s time %s" %(transaction.origin.POW, transaction.transaction_hash_sending, after_send))
+
 
         # Update the balances and POW
         transaction.origin.current_balance = transaction.origin.current_balance - transaction.amount
@@ -352,7 +360,6 @@ def send_receive_block_async(transaction, rpc_destination_node):
         ##Still no dPoW. Let's abort
         if not transaction.destination.POW or not valid_PoW:
             logger.error('Total faliure of dPoW. Aborting transaction account %s' % transaction.destination.address)
-
             time.sleep(3)
             transaction.destination.POW = None
             frontier = rpc_destination_node.frontiers(account=transaction.destination.address, count=1)[transaction.destination.address]
