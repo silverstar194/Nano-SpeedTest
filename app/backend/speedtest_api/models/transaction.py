@@ -20,6 +20,8 @@ class Transaction(models.Model):
     node_send_bias = models.BigIntegerField(null=True, default=None)
     PoW_cached_send = models.BooleanField(default=False)
     node_lag = models.BigIntegerField(null=True, default=None)
+    POW_send = models.CharField(max_length=16, null=True)
+    POW_receive = models.CharField(max_length=16, null=True)
 
     def __str__(self):
         return u'Amount: %s\nOrigin: %s\nDestination: %s\nOrigin Hash: %s\nDestination Hash: %s' % (self.amount, self.origin.address, self.destination.address, self.transaction_hash_sending, self.transaction_hash_receiving)

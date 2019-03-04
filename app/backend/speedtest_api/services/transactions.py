@@ -267,6 +267,7 @@ def send_transaction(transaction):
             work=transaction.origin.POW,
             id=transaction.id
         )
+        transaction.POW_send = transaction.origin.POW
         after_send = int(round(time.time() * 1000))
         if before_send + 5000 < after_send:
             transaction.start_send_timestamp = after_send - 300 ##Node has issue, correct for it with normal call time
@@ -378,6 +379,7 @@ def send_receive_block_async(transaction, rpc_destination_node):
                 work=transaction.destination.POW,
                 block=block_hash,
             )
+            transaction.POW_receive = transaction.destination.POW
             logger.info("Received")
             transaction.save()
         except nano.rpc.RPCException as e:
