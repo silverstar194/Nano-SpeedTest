@@ -9,6 +9,7 @@ import {
     Legend
 } from 'recharts';
 import 'styles/ScatterTooltip.css';
+import {scaleLog} from 'd3-scale'
 
 const xName = 'Date';
 const yName = 'Elapsed time';
@@ -19,8 +20,9 @@ const dateFormatterWithHMS = (tick) => (new Date(tick)).toLocaleDateString({}, {
     second: 'numeric'
 });
 
-const timeFormatter = (value) => parseInt(value/1000);
-const timeFormatterWithMilli = (value) => (value/1000).toFixed(3);
+const timeFormatter = (value) => parseFloat(value/1000.0);
+const timeFormatterWithMilli = (value) => (value/1000.0).toFixed(3);
+const scale = scaleLog().base(10)
 
 const CustomTooltip = ({active, payload}) => {
     if (!active) return null;
@@ -57,6 +59,7 @@ const ScatterView = ({plotData}) => {
                     domain={['auto', 'auto']}
                     name={yName}
                     tickFormatter={timeFormatter}
+                    scale={scale}
                 />
                 <Tooltip content={<CustomTooltip/>} cursor={{ strokeDasharray: '3 3' }} />
                 <Legend />

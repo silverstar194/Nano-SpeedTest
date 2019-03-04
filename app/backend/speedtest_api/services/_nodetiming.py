@@ -72,7 +72,7 @@ def time_transaction_receive(transaction):
 		transaction.transaction_hash_receiving,
 		transaction.start_receive_timestamp)
 
-	if transaction.start_receive_timestamp >= end_time:
+	if transaction.start_receive_timestamp + 500  >= end_time:
 		logger.error("Logging receive bias %s %s" % (str(end_time - transaction.start_receive_timestamp), transaction.transaction_hash_receiving))
 		transaction.bias_receive = 1000
 		end_time += 1000 ## Add bias to account for node rounding/truncation
