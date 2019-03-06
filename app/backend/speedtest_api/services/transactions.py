@@ -1,15 +1,15 @@
 import logging
 import random
-import requests
 import re
 import time
-import sys
 import threading
+import nano
 from decimal import *
 
 from django.conf import settings as settings
 from django.core.exceptions import MultipleObjectsReturned
-import nano
+from django.db.models import F
+
 
 from .. import models as models
 from .wallets import *
@@ -429,7 +429,7 @@ def get_recent_transactions(count=25):
     @param count: Number of most recent transactions to return
     @return: Query of transactions
     """
-    return models.Transaction.objects.select_related().order_by('-id')[:count]
+    return models.Transaction.objects.filter(end_send_timestamp__gt=(F('start_send_timestamp')+150)).select_related().order_by('-id')[:count]
 
 
 def get_transaction(id):
