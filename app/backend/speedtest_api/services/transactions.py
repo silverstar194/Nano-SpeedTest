@@ -310,7 +310,6 @@ def send_receive_block_async(transaction, rpc_destination_node):
     if not pre_validation_work == transaction.destination.POW:
         transaction.PoW_cached_send = False
 
-
     transaction.start_receive_timestamp = int(round(time.time() * 1000))
     try:
         transaction.transaction_hash_receiving = rpc_destination_node.receive(
