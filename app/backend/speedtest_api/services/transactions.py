@@ -163,10 +163,9 @@ def send_transaction(transaction):
     @raise: NoIncomingBlocksException: Incoming block not found on destination node. This will lead to invalid POW and balance in the destination account if not handled
     @raise: TooManyIncomingBlocksException: Incoming block not found on destination node. This will lead to invalid POW and balance in the destination account if not handled
     """
-
-    rpc_origin_node = nano.rpc.Client(transaction.origin.wallet.node.URL)
-    rpc_destination_node = nano.rpc.Client(transaction.destination.wallet.node.URL)
-
+    ##
+    # Validation was removed to increase speed of response.
+    ##
     # # Do some origin balance checking
     # origin_balance = rpc_origin_node.account_balance(account=transaction.origin.address)['balance']
     # if (origin_balance != transaction.origin.current_balance):
@@ -174,13 +173,6 @@ def send_transaction(transaction):
     #     transaction.origin.save()
     #     transaction.save()
     #     logger.info("AccountBalanceMismatch %s" % transaction.origin.address)
-
-    if (transaction.origin.current_balance - transaction.amount < 0):
-        ##Unlock accounts
-        transaction.origin.unlock()
-        transaction.destination.unlock()
-        logger.info("InsufficientNanoException %s" % transaction.origin.address)
-        raise InsufficientNanoException()
     
     # # Make sure the wallet contains the account address
     # if (not rpc_origin_node.wallet_contains(wallet=transaction.origin.wallet.wallet_id, account=transaction.origin.address)):
@@ -203,60 +195,34 @@ def send_transaction(transaction):
     #         account=transaction.destination.address
     #     )
 
+
+    rpc_origin_node = nano.rpc.Client(transaction.origin.wallet.node.URL)
+    rpc_destination_node = nano.rpc.Client(transaction.destination.wallet.node.URL)
+
+    if (transaction.origin.current_balance - transaction.amount < 0):
+        ##Unlock accounts
+        transaction.origin.unlock()
+        transaction.destination.unlock()
+        logger.info("InsufficientNanoException %s" % transaction.origin.address)
+        raise InsufficientNanoException()
+
+
     transaction.PoW_cached_send = True
-    ##Validate PoW on send
-    try:
-        frontier = rpc_origin_node.frontiers(account=transaction.origin.address, count=1)[transaction.origin.address]
-        valid_PoW = rpc_origin_node.work_validate(work=transaction.origin.POW, hash=frontier)
-    except Exception as e:
-        logger.info('PoW invalid during sending %s' % str(e))
-        valid_PoW = False
-        transaction.PoW_cached_send = False
+    pre_validation_work = transaction.origin.POW
 
-    # Make sure the POW is there (not in the POW regen queue) if not wait for it and its valid
-    count = 0
-    while not transaction.origin.POW or not valid_PoW and count < 3:
-        try:
-            POWService.enqueue_account(address=transaction.origin.address, frontier=frontier)
-            logger.info('Generated PoW during sending for: %s' % transaction.origin.address)
-            count+=1
-        except Exception as e:
-            count+=1
-            if count >= 3:
-                ##Unlock accounts
-                transaction.origin.unlock()
-                transaction.destination.unlock()
-                logger.error('Error adding address, frontier pair to POWService: %s' % str(e))
-
-
-
-        account = get_account(transaction.origin.address)
-        frontier = rpc_origin_node.frontiers(account=transaction.origin.address, count=1)[transaction.origin.address]
-        valid_PoW = rpc_origin_node.work_validate(work=transaction.origin.POW, hash=frontier)
-
-        wait_on_PoW = 0
-        while wait_on_PoW < 7 and not account.POW:
-            wait_on_PoW += 1
-            logger.info('Waiting on PoW during sending %s of 7 for: %s PoW %s' % (wait_on_PoW, transaction.origin.address, transaction.origin.POW))
-            account = get_account(transaction.origin.address)
-            time.sleep(2)
-
-        count += 1
-
-    ##Still no dPoW. Let's abort
-    frontier = rpc_origin_node.frontiers(account=transaction.origin.address, count=1)[transaction.origin.address]
-    valid_PoW = rpc_origin_node.work_validate(work=transaction.origin.POW, hash=frontier)
-    if not transaction.origin.POW or not valid_PoW:
+    if not validate_or_regenerate_PoW(transaction.origin):
         logger.error('Total faliure of dPoW. Aborting transaction account %s' % transaction.origin.address)
         transaction.origin.unlock()
         transaction.destination.unlock()
         raise InvalidPOWException()
 
+    if not pre_validation_work == transaction.origin.POW:
+        transaction.PoW_cached_send = False
+
     # Start the timestamp before we try to send out the request
     transaction.start_send_timestamp = int(round(time.time() * 1000))
 
     try:
-        logger.info("Sending")
         before_send = int(round(time.time() * 1000))
         # After this call, the nano will leave the origin
         transaction.transaction_hash_sending = rpc_origin_node.send(
@@ -269,14 +235,20 @@ def send_transaction(transaction):
         )
         transaction.POW_send = transaction.origin.POW
         after_send = int(round(time.time() * 1000))
+
+
+        # Sometimes the node hangs in response if it is busy computing a automatic receive block PoW.
+        # This should not be counted towards transaction time.
+        # Therefore we use typical response time as a correction factor.
+        # This is recorded with transaction.
+        # Author: silverstar194
+        # 3/6/2019
         if before_send + 5000 < after_send:
-            transaction.start_send_timestamp = after_send - 300 ##Node has issue, correct for it with normal call time
+            transaction.start_send_timestamp = after_send - 300
             transaction.node_send_bias = -300
             transaction.node_lag = after_send - before_send
             logger.error("LONG TIME NODE: Sent work %s block %s time %s" %(transaction.origin.POW, transaction.transaction_hash_sending, after_send - before_send))
-        else:
-            logger.info("Sent work %s block %s time %s" %(transaction.origin.POW, transaction.transaction_hash_sending, after_send - before_send))
-
+            transaction.save()
 
         # Update the balances and POW
         transaction.origin.current_balance = transaction.origin.current_balance - transaction.amount
@@ -319,80 +291,43 @@ def send_receive_block_async(transaction, rpc_destination_node):
 
     @param transaction: Managed transaction
     """
-    incoming_blocks = [transaction.transaction_hash_sending]
 
-    for block_hash in incoming_blocks:
-        ##Validate PoW on receive
-        try:
-            frontier = rpc_destination_node.frontiers(account=transaction.destination.address, count=1)[
-                transaction.destination.address]
-            valid_PoW = rpc_destination_node.work_validate(work=transaction.destination.POW, hash=frontier)
-        except Exception as e:
-            logger.info('PoW invalid during receive %s' % str(e))
-            valid_PoW = False
+    block_hash = transaction.transaction_hash_sending
 
-        # Make sure the POW is there (not in the POW regen queue) if not wait for it and its valid
-        count = 0
-        while not transaction.destination.POW or not valid_PoW and count < 3:
-            try:
-                POWService.enqueue_account(address=transaction.destination.address, frontier=frontier)
-                logger.info('Generated PoW during receive for: %s' % transaction.destination.address)
-                count += 1
-            except Exception as e:
-                count += 1
-                if count >= 3:
-                    ##Unlock accounts
-                    transaction.origin.unlock()
-                    transaction.destination.unlock()
-                    logger.error('Error adding address, frontier pair to POWService: %s' % e)
+    transaction.PoW_cached_send = True
+    pre_validation_work = transaction.destination.POW
 
-            account = get_account(transaction.destination.address)
-            frontier = rpc_destination_node.frontiers(account=transaction.destination.address, count=1)[
-                transaction.destination.address]
-            valid_PoW = rpc_destination_node.work_validate(work=transaction.destination.POW, hash=frontier)
+    if not validate_or_regenerate_PoW(transaction.destination):
+        logger.error('Total faliure of dPoW. Aborting transaction account %s' % transaction.destination.address)
+        transaction.origin.unlock()
+        transaction.destination.unlock()
+        raise InvalidPOWException()
 
-            wait_on_PoW = 0
-            while wait_on_PoW < 7 and not account.POW:
-                wait_on_PoW += 1
-                account = get_account(transaction.destination.address)
-                time.sleep(2)
+    if not pre_validation_work == transaction.destination.POW:
+        transaction.PoW_cached_send = False
 
+    transaction.start_receive_timestamp = int(round(time.time() * 1000))
+    try:
+        transaction.transaction_hash_receiving = rpc_destination_node.receive(
+            wallet=transaction.destination.wallet.wallet_id,
+            account=transaction.destination.address,
+            work=transaction.destination.POW,
+            block=block_hash,
+        )
+        transaction.POW_receive = transaction.destination.POW
+        transaction.save()
+    except nano.rpc.RPCException as e:
+        ##Unlock accounts
+        logger.error("RPCException two %s" % e)
 
-        frontier = rpc_destination_node.frontiers(account=transaction.destination.address, count=1)[
-            transaction.destination.address]
-        valid_PoW = rpc_destination_node.work_validate(work=transaction.destination.POW, hash=frontier)
-        ##Still no dPoW. Let's abort
-        if not transaction.destination.POW or not valid_PoW:
-            logger.error('Total faliure of dPoW. Aborting transaction account %s' % transaction.destination.address)
-            time.sleep(3)
-            transaction.destination.POW = None
-            frontier = rpc_destination_node.frontiers(account=transaction.destination.address, count=1)[transaction.destination.address]
-            POWService.enqueue_account(address=transaction.destination.address, frontier=frontier, wait=True)
-            raise InvalidPOWException()
+        transaction.origin.unlock()
+        transaction.destination.unlock()
 
-        transaction.start_receive_timestamp = int(round(time.time() * 1000))
-        try:
-            logger.info("Receiving")
-            transaction.transaction_hash_receiving = rpc_destination_node.receive(
-                wallet=transaction.destination.wallet.wallet_id,
-                account=transaction.destination.address,
-                work=transaction.destination.POW,
-                block=block_hash,
-            )
-            transaction.POW_receive = transaction.destination.POW
-            logger.info("Received")
-            transaction.save()
-        except nano.rpc.RPCException as e:
-            ##Unlock accounts
-            logger.error("RPCException two %s" % e)
-            transaction.origin.unlock()
-            transaction.destination.unlock()
+        transaction.destination.POW = None
+        frontier = rpc_destination_node.frontiers(account=transaction.destination.address, count=1)[transaction.destination.address]
+        POWService.enqueue_account(address=transaction.destination.address, frontier=frontier, wait=True)
 
-            time.sleep(3)
-            transaction.destination.POW = None
-            frontier = rpc_destination_node.frontiers(account=transaction.destination.address, count=1)[transaction.destination.address]
-            POWService.enqueue_account(address=transaction.destination.address, frontier=frontier, wait=True)
-            raise nano.rpc.RPCException()
+        raise nano.rpc.RPCException()
 
     # Handover control to the timing service (expecting the timestamp to be set on return)
     try:
@@ -403,12 +338,7 @@ def send_receive_block_async(transaction, rpc_destination_node):
         transaction.destination.unlock()
         logger.error('Transaction timing_receive failed, transaction.id: %s, error: %s' % (str(transaction.id), str(e)))
 
-
-    transaction.destination.POW = None
-    transaction.destination.save()
-    transaction.save()
-
-    ## Check node didn't return all "000000"
+    ## Check node didn't return all "000000..."
     frontier = transaction.transaction_hash_receiving
     count = 0
     while re.match("^[0]+$", frontier) and count < 3:
@@ -416,6 +346,12 @@ def send_receive_block_async(transaction, rpc_destination_node):
         time.sleep(1) ## Allow frontier to clear in node
         logger.error('Node returned all zeros acccount: %s. try %s of 3' % (transaction.destination.address, count))
         frontier = rpc_destination_node.frontiers(account=transaction.destination.address, count=1)[transaction.destination.address]
+
+    transaction.transaction_hash_receiving = frontier
+    transaction.destination.POW = None
+
+    transaction.destination.save()
+    transaction.save()
 
     POWService.enqueue_account(address=transaction.destination.address, frontier=frontier, wait=True)
 
@@ -449,11 +385,11 @@ def simple_send(from_account, to_address, amount, generate_PoW=True):
         if generate_PoW:
             POWService.enqueue_account(address=from_account.address, frontier=transaction_hash_sending)
 
-        count = 0
-        while not from_account.POW and count < 5: # Allows newly enqueued PoW to clear
-            count += 1
-            from_account = get_account(from_account.address)
-            time.sleep(2)
+            count = 0
+            while not from_account.POW and count < 5: # Allows newly enqueued PoW to clear
+                count += 1
+                from_account = get_account(from_account.address)
+                time.sleep(2)
 
         from_account.current_balance = from_account.current_balance - amount
         from_account.save()
