@@ -187,7 +187,8 @@ def send_batch_transactions(request):
             return JsonResponse({'message': "Please try again. No transactions generated."}, status=400)
 
         for transaction in list(transactions_queue.queue):
-            if not transaction["endSendTimestamp"] or not transaction["startSendTimestamp"] or (int(transaction["endSendTimestamp"]) - int(transaction["startSendTimestamp"])) < 0:
+            ## Catch issue with threading/clock sync
+            if not transaction["endSendTimestamp"] or not transaction["startSendTimestamp"] or (int(transaction["endSendTimestamp"]) - int(transaction["startSendTimestamp"])) < 125:
                 logger.error("Negative timing error start %s end %s" % (str(transaction["startSendTimestamp"]), str(transaction["endSendTimestamp"])))
                 return JsonResponse({'message': "Negative timing error."}, status=400)
 
