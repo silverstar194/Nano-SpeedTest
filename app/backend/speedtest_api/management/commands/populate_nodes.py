@@ -3,8 +3,7 @@ from django.core.management.base import BaseCommand, CommandError
 from ...models.account import Account
 from ...services.nodes import get_nodes
 from ...services.wallets import new_wallet, get_wallets
-from ...services._pow import POWService
-from ...services.accounts import sync_accounts, get_accounts, new_account, get_account
+from ...services.accounts import sync_accounts, get_accounts, new_account
 from ...services.transactions import simple_send
 from django.conf import settings as settings
 
