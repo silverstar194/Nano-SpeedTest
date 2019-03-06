@@ -187,13 +187,13 @@ def send_batch_transactions(request):
             return JsonResponse({'message': "Please try again. No transactions generated."}, status=400)
 
         for transaction in list(transactions_queue.queue):
-            # Sometimes the time is too low to be reasonable.
+            # Sometimes the time is too low to be reasonable. 180ms is twice ping time and seems tolerable as a cut off
             # This can be caused by clocks across nodes and backend falling out of sync
             # or threading order of execution.
             # The below is a "catch all" sanitation to prevent unreliable times. Further investigation is under way.
             # Author: silverstar194
             # 3/6/2019
-            if not transaction["endSendTimestamp"] or not transaction["startSendTimestamp"] or (int(transaction["endSendTimestamp"]) - int(transaction["startSendTimestamp"])) <= 150:
+            if not transaction["endSendTimestamp"] or not transaction["startSendTimestamp"] or (int(transaction["endSendTimestamp"]) - int(transaction["startSendTimestamp"])) <= 180:
                 logger.error("Negative timing error start %s end %s" % (str(transaction["startSendTimestamp"]), str(transaction["endSendTimestamp"])))
                 return JsonResponse({'message': "Internal timing error."}, status=400)
 
@@ -335,10 +335,10 @@ def get_transaction_statistics(request):
     # The below is a "catch all" sanitation to prevent unreliable times. Further investigation is under way.
     # Author: silverstar194
     # 3/6/2019
-    difference_set = Transaction.objects.filter(end_send_timestamp__gt=(F('start_send_timestamp')+150)).filter(start_send_timestamp__gte=int(round(time.time() * 1000))-(24*60*60*1000)).annotate(difference=(F('end_send_timestamp') - F('start_send_timestamp')))
+    difference_set = Transaction.objects.filter(end_send_timestamp__gt=(F('start_send_timestamp')+180)).filter(start_send_timestamp__gte=int(round(time.time() * 1000))-(24*60*60*1000)).annotate(difference=(F('end_send_timestamp') - F('start_send_timestamp')))
     median_delta = median_value(difference_set, "difference")
 
-    transaction_count = Transaction.objects.filter(end_receive_timestamp__gte=0, start_send_timestamp__gte=0).filter(end_send_timestamp__gt=(F('start_send_timestamp')+150)).count()
+    transaction_count = Transaction.objects.filter(end_receive_timestamp__gte=0, start_send_timestamp__gte=0).filter(end_send_timestamp__gt=(F('start_send_timestamp')+180)).count()
 
     statistics = {
         'transactions': transactions_array,

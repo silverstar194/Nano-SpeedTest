@@ -429,7 +429,7 @@ def get_recent_transactions(count=25):
     @param count: Number of most recent transactions to return
     @return: Query of transactions
     """
-    return models.Transaction.objects.filter(end_send_timestamp__gt=(F('start_send_timestamp')+150)).select_related().order_by('-id')[:count]
+    return models.Transaction.objects.filter(end_send_timestamp__gt=(F('start_send_timestamp')+180)).select_related().order_by('-id')[:count]
 
 
 def get_transaction(id):
