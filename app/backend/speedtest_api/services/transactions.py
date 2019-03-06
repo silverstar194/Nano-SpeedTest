@@ -216,6 +216,8 @@ def send_transaction(transaction):
         transaction.destination.unlock()
         raise InvalidPOWException()
 
+    transaction.origin = get_account(transaction.origin.address)
+
     if not pre_validation_work == transaction.origin.POW:
         transaction.PoW_cached_send = False
 
@@ -303,8 +305,11 @@ def send_receive_block_async(transaction, rpc_destination_node):
         transaction.destination.unlock()
         raise InvalidPOWException()
 
+    transaction.destination = get_account(transaction.destination.address)
+
     if not pre_validation_work == transaction.destination.POW:
         transaction.PoW_cached_send = False
+
 
     transaction.start_receive_timestamp = int(round(time.time() * 1000))
     try:
