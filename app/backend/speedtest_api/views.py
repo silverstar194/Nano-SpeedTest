@@ -187,7 +187,12 @@ def send_batch_transactions(request):
             return JsonResponse({'message': "Please try again. No transactions generated."}, status=400)
 
         for transaction in list(transactions_queue.queue):
-            ## Catch issue with threading/clock sync
+            # Sometimes the time is too low to be reasonable.
+            # This can be caused by clocks across nodes and backend falling out of sync
+            # or threading order of execution.
+            # The below is a "catch all" sanitation to prevent unreliable times. Further investigation is under way.
+            # Author: silverstar194
+            # 3/6/2019
             if not transaction["endSendTimestamp"] or not transaction["startSendTimestamp"] or (int(transaction["endSendTimestamp"]) - int(transaction["startSendTimestamp"])) < 125:
                 logger.error("Negative timing error start %s end %s" % (str(transaction["startSendTimestamp"]), str(transaction["endSendTimestamp"])))
                 return JsonResponse({'message': "Negative timing error."}, status=400)
