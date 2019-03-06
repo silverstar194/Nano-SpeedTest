@@ -195,7 +195,7 @@ def send_batch_transactions(request):
             # 3/6/2019
             if not transaction["endSendTimestamp"] or not transaction["startSendTimestamp"] or (int(transaction["endSendTimestamp"]) - int(transaction["startSendTimestamp"])) < 125:
                 logger.error("Negative timing error start %s end %s" % (str(transaction["startSendTimestamp"]), str(transaction["endSendTimestamp"])))
-                return JsonResponse({'message': "Negative timing error."}, status=400)
+                return JsonResponse({'message': "Internal timing error."}, status=400)
 
         sent_batch = {
             'id': batch_id,
