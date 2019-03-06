@@ -147,7 +147,9 @@ class POWService:
         @param address: Account address to generate POW for
         @param frontier: Frontier block to generate valid POW
         """
+        from .accounts import get_account
         logger.info('Enqueuing address %s frontier %s' % (address, frontier))
+        get_account(address=address).lock()
         cls._pow_queue.put((address, frontier, wait))
 
     @classmethod
