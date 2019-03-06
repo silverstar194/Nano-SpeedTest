@@ -195,7 +195,7 @@ class POWService:
                 POWService.enqueue_account(address=account.address, frontier=frontier)
                 logger.info('Enqueuing address %s' % (account.address))
             except Exception as e:
-                logger.error('Account %s dPoW generation error %s' % str(e))
+                logger.error('Account %s dPoW enqueuing error %s' % str(e))
 
     @classmethod
     def POW_accounts(cls, daemon=True):
