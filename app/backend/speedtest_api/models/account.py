@@ -1,5 +1,4 @@
 from django.db import models
-from django.core.cache import cache
 
 from .wallet import Wallet
 
@@ -15,12 +14,9 @@ class Account(models.Model):
         return u'%s' % (self.address)
 
     def lock(self):
-        cache.set(self.address, True, 60)
         self.in_use = True
         self.save()
 
     def unlock(self):
-        cache.set(self.address, False, 60)
         self.in_use = False
         self.save()
-
