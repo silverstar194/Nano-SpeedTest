@@ -1,7 +1,5 @@
 from django.db import models
 
-import nano
-
 from .wallet import Wallet
 
 

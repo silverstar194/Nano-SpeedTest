@@ -2,11 +2,8 @@ import logging
 import time
 from multiprocessing.pool import ThreadPool
 
-from django.conf import settings as settings
 from django.core.exceptions import MultipleObjectsReturned
-from django.core.cache import cache
 import nano
-
 
 from .. import models as models
 from ._pow import POWService
@@ -55,10 +52,10 @@ def get_accounts(enabled=True, node=None, in_use=None, empty=None):
     @return: Query of all accounts (filtered by enabled or node)
     """
     if in_use is not None and node:
-        return models.Account.objects.filter(wallet__node__id=node.id).filter(in_use=in_use).filter(current_balance__gt=0).filter(POW__isnull=False).select_related()
+        return models.Account.objects.filter(wallet__node__id=node.id).filter(in_use=in_use).filter(current_balance__gt=0).select_related()
 
     if in_use is not None:
-        return models.Account.objects.filter(wallet__node__enabled=enabled).filter(in_use=in_use).filter(current_balance__gt=0).filter(POW__isnull=False).select_related()
+        return models.Account.objects.filter(wallet__node__enabled=enabled).filter(in_use=in_use).filter(current_balance__gt=0).select_related()
 
     if node:
         return models.Account.objects.filter(wallet__node__id=node.id).filter(current_balance__gt=0).select_related()
@@ -153,9 +150,6 @@ def clear_frontier_async(account):
     except Exception as e:
         logger.info('RCP call failed during receive %s' % str(e))
 
-    if not pending_blocks:
-        return
-
     for block in pending_blocks:
         logger.info("Found block %s to receive for %s " % (block, account.address))
 
@@ -167,8 +161,7 @@ def clear_frontier_async(account):
             time.sleep(1)  ## Allow frontier to refresh
 
         try:
-            received_block = rpc.receive(wallet=account.wallet.wallet_id, account=account.address, work=account.POW,
-                                         block=block)
+            received_block = rpc.receive(wallet=account.wallet.wallet_id, account=account.address, work=account.POW,block=block)
             logger.info('Received block %s to %s' % (received_block, account.address))
         except nano.rpc.RPCException as e:
             logger.error('Error during clean up receive account %s block %s ' % (account.address, block, str(e)))
@@ -186,7 +179,7 @@ def validate_or_regenerate_PoW(account):
 
     # Make sure the POW is there (not in the POW regen queue) if not wait for it and its valid
     count = 0
-    while not account.POW or not valid_PoW and count < 3:
+    while not valid_PoW and count < 3:
         try:
             account.POW = None
             account.save()
@@ -200,18 +193,19 @@ def validate_or_regenerate_PoW(account):
                 logger.error('Error adding address, frontier pair to POWService: %s' % e)
 
         wait_on_PoW = 0
-        while wait_on_PoW < 7 and not account.POW:
+        while not valid_PoW and wait_on_PoW < 7:
             wait_on_PoW += 1
             account = get_account(account.address)
             valid_PoW = validate_PoW(account)
+            time.sleep(2)
 
     ##Still no dPoW....
-    if not account.POW or not valid_PoW:
-        logger.error('Total faliure of dPoW. Aborting transaction account %s' % account.address)
+    if not valid_PoW:
+        logger.error('Total failure of dPoW. Aborting transaction account %s' % account.address)
         account.POW = None
         account.save()
 
-    return (valid_PoW or not account.POW)
+    return valid_PoW
 
 def validate_PoW(account):
     """
@@ -219,6 +213,10 @@ def validate_PoW(account):
     :param account:
     :returns PoW valid on account
     """
+
+    if not account.POW:
+        return False
+
     valid_PoW = True
     rpc = nano.rpc.Client(account.wallet.node.URL)
     try:
