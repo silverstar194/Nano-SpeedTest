@@ -10,22 +10,25 @@ logger = logging.getLogger(__name__)
 
 class SpeedtestApiConfig(AppConfig):
     name = 'speedtest_api'
-    thread_pool = ThreadPool(processes=4)
+    thread_pool = ThreadPool(processes=16)
 
     def ready(self):
-        from .services.accounts import get_accounts, sync_accounts, unlock_all_accounts
+        from .services.accounts import get_accounts, sync_accounts, unlock_all_accounts, clear_receive_accounts
         from .services.nodes import get_nodes
         from .services._pow import POWService
         from .services.wallets import get_wallets
 
         logger.info('Starting check that nodes are up...')
-        ## Check that all nodes are up
+        # Check that all nodes are up
         nodes = get_nodes()
         self.thread_pool.apply_async(self.check_node_async, nodes)
 
         logger.info('Starting POWService and running POW_accounts()...')
         POWService.start()
         POWService.POW_accounts()
+
+        logger.info('Fetching any forgotten blocks on accounts...')
+        clear_receive_accounts()
 
         logger.info('Syncing account balances...')
         sync_accounts()
