@@ -30,7 +30,7 @@ from speedtest_api.services import nodes
 
 logger = logging.getLogger(__name__)
 
-# @ratelimit(key='ip', rate='5/h')
+@ratelimit(key='ip', rate='7/h')
 @api_view(['POST'])
 @csrf_exempt
 def generate_transaction(request):
@@ -123,7 +123,7 @@ def generate_transaction(request):
         return JsonResponse({'message': "The transaction format is invalid. Please try again."}, status=400)
 
 
-# @ratelimit(key='ip', rate='5/h')
+@ratelimit(key='ip', rate='7/h')
 @api_view(['POST'])
 @csrf_exempt
 def send_batch_transactions(request):
