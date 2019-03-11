@@ -44,11 +44,10 @@ class POWService:
         from .accounts import number_accounts
         temp_queue = cls.queue_to_list()
         sorted(temp_queue, key=itemgetter(1))
-        logger.info("Queue length %s" % len(temp_queue))
 
         ## High load
-        if len(temp_queue) >= number_accounts() / 4:
-            logger.debug("High load dPoW call queue length %s" % len(temp_queue))
+        if len(temp_queue) >= number_accounts() / 10:
+            logger.error("High load dPoW call queue length %s" % len(temp_queue))
             copy_queue = queue.Queue()
             [copy_queue.put(i) for i in temp_queue[1:]]
             cls._pow_queue = copy_queue
@@ -67,7 +66,7 @@ class POWService:
         temp_queue = cls.queue_to_list()
         sorted(temp_queue, key=itemgetter(1))
 
-        if((len(temp_queue) > 0 and temp_queue[0][1] + 61*1000 <= int(round(time.time() * 1000))) or len(temp_queue) >= number_accounts() / 4): ## 61 to prevent thread issuesing
+        if((len(temp_queue) > 0 and temp_queue[0][1] + 61*1000 <= int(round(time.time() * 1000))) or len(temp_queue) >= number_accounts() / 10): ## 61 to prevent thread issues
             return False
         return True
 
@@ -222,7 +221,7 @@ class POWService:
         cls._running = False
 
     @classmethod
-    def POW_account_thread_asyc(cls, account,urgent=False):
+    def POW_account_thread_asyc(cls, account, urgent=False):
         from .accounts import validate_PoW
 
         valid = validate_PoW(account)
@@ -255,7 +254,7 @@ class POWService:
 
         for account in accounts_list:
             if not cls.in_queue(account):
-                cls.thread_pool.apply_async(cls.POW_account_thread_asyc, (account,True,))
+                cls.thread_pool.apply_async(cls.POW_account_thread_asyc, (account, True,))
             else:
                 logger.error('account %s dPoW already in queue' % account.address)
         
