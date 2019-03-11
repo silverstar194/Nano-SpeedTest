@@ -216,6 +216,8 @@ def send_transaction(transaction):
         transaction.destination.unlock()
         raise InvalidPOWException()
 
+    transaction.origin = get_account(transaction.origin.address)
+
     if not pre_validation_work == transaction.origin.POW:
         transaction.PoW_cached_send = False
 
@@ -281,7 +283,7 @@ def send_transaction(transaction):
     t.start()
 
     #Regenerte PoW
-    POWService.enqueue_account(address=transaction.origin.address, frontier=transaction.transaction_hash_sending, wait=True)
+    POWService.enqueue_account(address=transaction.origin.address, frontier=transaction.transaction_hash_sending)
     return transaction
 
 
@@ -302,6 +304,8 @@ def send_receive_block_async(transaction, rpc_destination_node):
         transaction.origin.unlock()
         transaction.destination.unlock()
         raise InvalidPOWException()
+
+    transaction.destination = get_account(transaction.destination.address)
 
     if not pre_validation_work == transaction.destination.POW:
         transaction.PoW_cached_send = False
@@ -325,7 +329,7 @@ def send_receive_block_async(transaction, rpc_destination_node):
 
         transaction.destination.POW = None
         frontier = rpc_destination_node.frontiers(account=transaction.destination.address, count=1)[transaction.destination.address]
-        POWService.enqueue_account(address=transaction.destination.address, frontier=frontier, wait=True)
+        POWService.enqueue_account(address=transaction.destination.address, frontier=frontier)
 
         raise nano.rpc.RPCException()
 
@@ -353,7 +357,7 @@ def send_receive_block_async(transaction, rpc_destination_node):
     transaction.destination.save()
     transaction.save()
 
-    POWService.enqueue_account(address=transaction.destination.address, frontier=frontier, wait=True)
+    POWService.enqueue_account(address=transaction.destination.address, frontier=frontier)
 
 
 def simple_send(from_account, to_address, amount, generate_PoW=True):
@@ -383,7 +387,7 @@ def simple_send(from_account, to_address, amount, generate_PoW=True):
         from_account.save()
 
         if generate_PoW:
-            POWService.enqueue_account(address=from_account.address, frontier=transaction_hash_sending)
+            POWService.enqueue_account(address=from_account.address, frontier=transaction_hash_sending, urgent=True)
 
             count = 0
             while not from_account.POW and count < 5: # Allows newly enqueued PoW to clear
