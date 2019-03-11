@@ -1,7 +1,6 @@
-import datetime
+from operator import itemgetter
 import logging
 import queue
-import copy
 import requests
 from multiprocessing.pool import ThreadPool
 import time
@@ -25,11 +24,58 @@ class POWService:
 
     @classmethod
     def in_queue(cls, address):
-        temp_queue = copy.copy(cls._pow_queue)
-        while not temp_queue.empty():
-            if temp_queue.pop()[0] == address:
+        temp_queue = cls.queue_to_list()
+        for item in temp_queue:
+            if item[0] == address:
                 return True
         return False
+
+    @classmethod
+    def put_account(cls, data, urgent):
+
+        if urgent:
+            in_time = 0
+        else:
+            in_time = int(round(time.time() * 1000))
+        cls._pow_queue.put((data, in_time))
+
+    @classmethod
+    def get_account(cls):
+        from .accounts import number_accounts
+        temp_queue = cls.queue_to_list()
+        sorted(temp_queue, key=itemgetter(1))
+        logger.info("Queue length %s" % len(temp_queue))
+
+        ## High load
+        if len(temp_queue) >= number_accounts() / 4:
+            logger.debug("High load dPoW call queue length %s" % len(temp_queue))
+            copy_queue = queue.Queue()
+            [copy_queue.put(i) for i in temp_queue[1:]]
+            cls._pow_queue = copy_queue
+            return temp_queue[0][0]
+
+        head = temp_queue[0]
+        if head[1] + 60*1000 <= int(round(time.time() * 1000)):
+            copy_queue = queue.Queue()
+            [copy_queue.put(i) for i in temp_queue[1:]]
+            cls._pow_queue = copy_queue
+            return head[0]
+
+    @classmethod
+    def is_empty(cls):
+        from .accounts import number_accounts
+        temp_queue = cls.queue_to_list()
+        sorted(temp_queue, key=itemgetter(1))
+
+        if((len(temp_queue) > 0 and temp_queue[0][1] + 61*1000 <= int(round(time.time() * 1000))) or len(temp_queue) >= number_accounts() / 4): ## 61 to prevent thread issuesing
+            return False
+        return True
+
+    @classmethod
+    def queue_to_list(cls):
+        temp_list = []
+        for i in cls._pow_queue.queue: temp_list.append(i)
+        return temp_list
 
     @classmethod
     def get_pow(cls, address, hash):
@@ -96,22 +142,18 @@ class POWService:
         if res.status_code == 200:
             return res.json()
         else:
-            logger.error('Status %s %s' % (res.status_code, res.json()))
+            logger.error('dPoW Status %s %s' % (res.status_code, res.json()))
             raise Exception()
 
 
     @classmethod
-    def threaded_PoW_worker(cls, address, frontier, wait):
+    def threaded_PoW_worker(cls, address, frontier):
         from .accounts import get_account
         try:
-            if wait:
-                pass
-                #time.sleep(10)  ## Allow frontier block some time to clear before PoW is usable
-
             account = get_account(address=address)
             account.POW = cls.get_pow(address=address, hash=frontier)
             logger.info('Generated POW on multithread: %s for account %s' % (account.POW, account))
-            time.sleep(1) ## Don't spam dPoW
+            time.sleep(.5) ## Don't spam dPoW
 
            # Also calls save()
             account.unlock()
@@ -123,24 +165,22 @@ class POWService:
 
     @classmethod
     def _run(cls):
-        from .accounts import get_account
         try:
             while cls._running:
                 # Multi-thread this worker (our POW generation time must be less than transaction period)
-                while not cls._pow_queue.empty():
-                    address, frontier, wait = cls._pow_queue.get()
-                    cls.thread_pool.apply_async(cls.threaded_PoW_worker, args=(address, frontier, wait,))
+                while not cls.is_empty():
+                    address, frontier = cls.get_account()
+                    cls.thread_pool.apply_async(cls.threaded_PoW_worker, args=(address, frontier,))
 
                 # Run this every second
                 time.sleep(1)
         except Exception as e:
-            get_account(address=address).unlock()
-            logger.error('dPoW failure account %s unlocked without PoW' % address)
+            logger.error('dPoW failure account %s unlocked without PoW %s' % (address, e))
             logger.error("Error in _run PoW address %s", address)
 
 
     @classmethod
-    def enqueue_account(cls, address, frontier, wait=False):
+    def enqueue_account(cls, address, frontier, urgent=False):
         """
         Add an address, hash pair to the queue for POW generation (this will update the account object)
 
@@ -150,7 +190,7 @@ class POWService:
         from .accounts import get_account
         logger.info('Enqueuing address %s frontier %s' % (address, frontier))
         get_account(address=address).lock()
-        cls._pow_queue.put((address, frontier, wait))
+        cls.put_account((address, frontier), urgent)
 
     @classmethod
     def start(cls, daemon=True):
@@ -182,7 +222,7 @@ class POWService:
         cls._running = False
 
     @classmethod
-    def POW_account_thread_asyc(cls, account):
+    def POW_account_thread_asyc(cls, account,urgent=False):
         from .accounts import validate_PoW
 
         valid = validate_PoW(account)
@@ -192,7 +232,7 @@ class POWService:
             try:
                 rpc = nano.rpc.Client(account.wallet.node.URL)
                 frontier = rpc.frontiers(account=account.address, count=1)[account.address]
-                POWService.enqueue_account(address=account.address, frontier=frontier)
+                POWService.enqueue_account(address=account.address, frontier=frontier, urgent=urgent)
                 logger.info('Enqueuing address %s' % (account.address))
             except Exception as e:
                 logger.error('Account %s dPoW enqueuing error %s' % str(e))
@@ -215,7 +255,7 @@ class POWService:
 
         for account in accounts_list:
             if not cls.in_queue(account):
-                cls.thread_pool.apply_async(cls.POW_account_thread_asyc, (account,))
+                cls.thread_pool.apply_async(cls.POW_account_thread_asyc, (account,True,))
             else:
                 logger.error('account %s dPoW already in queue' % account.address)
         
@@ -223,7 +263,7 @@ class POWService:
         if not daemon:
             cls.thread_pool.join()
 
-            while not cls._pow_queue.empty():
+            while not cls.is_empty():
                 time.sleep(1)
             
             cls.stop()

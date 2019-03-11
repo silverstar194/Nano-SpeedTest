@@ -135,6 +135,9 @@ def lock_all_accounts():
     """
     models.Account.objects.all().update(in_use=True)
 
+def number_accounts():
+    return models.Account.objects.filter(wallet__node__enabled=True).count()
+
 
 def clear_frontier_async(account):
     """
@@ -184,7 +187,7 @@ def validate_or_regenerate_PoW(account):
             account.POW = None
             account.save()
             frontier = rpc.frontiers(account=account.address, count=1)[account.address]
-            POWService.enqueue_account(address=account.address, frontier=frontier)
+            POWService.enqueue_account(address=account.address, frontier=frontier, urgent=True)
             logger.info('Generating PoW during validate_PoW for: %s' % account.address)
             count += 1
         except Exception as e:
