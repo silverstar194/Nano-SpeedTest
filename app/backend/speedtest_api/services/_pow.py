@@ -54,7 +54,7 @@ class POWService:
             return temp_queue[0][0]
 
         head = temp_queue[0]
-        if head[1] + 60*1000 <= int(round(time.time() * 1000)):
+        if head[1] + 90*1000 <= int(round(time.time() * 1000)):
             copy_queue = queue.Queue()
             [copy_queue.put(i) for i in temp_queue[1:]]
             cls._pow_queue = copy_queue
@@ -66,7 +66,7 @@ class POWService:
         temp_queue = cls.queue_to_list()
         sorted(temp_queue, key=itemgetter(1))
 
-        if((len(temp_queue) > 0 and temp_queue[0][1] + 61*1000 <= int(round(time.time() * 1000))) or len(temp_queue) >= number_accounts() / 10): ## 61 to prevent thread issues
+        if((len(temp_queue) > 0 and temp_queue[0][1] + 91*1000 <= int(round(time.time() * 1000))) or len(temp_queue) >= number_accounts() / 10): ## 61 to prevent thread issues
             return False
         return True
 
