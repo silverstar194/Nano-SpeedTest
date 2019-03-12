@@ -43,7 +43,7 @@ class POWService:
     def get_account(cls):
         from .accounts import number_accounts
         temp_queue = cls.queue_to_list()
-        sorted(temp_queue, key=itemgetter(1))
+        temp_queue = sorted(temp_queue, key=itemgetter(1))
 
         ## High load
         if len(temp_queue) >= number_accounts() / 10:
@@ -64,7 +64,7 @@ class POWService:
     def is_empty(cls):
         from .accounts import number_accounts
         temp_queue = cls.queue_to_list()
-        sorted(temp_queue, key=itemgetter(1))
+        temp_queue = sorted(temp_queue, key=itemgetter(1))
 
         if((len(temp_queue) > 0 and temp_queue[0][1] + 91*1000 <= int(round(time.time() * 1000))) or len(temp_queue) >= number_accounts() / 10): ## 61 to prevent thread issues
             return False
@@ -187,7 +187,7 @@ class POWService:
         @param frontier: Frontier block to generate valid POW
         """
         from .accounts import get_account
-        logger.info('Enqueuing address %s frontier %s' % (address, frontier))
+        logger.info('Enqueuing address %s frontier %s urgent %s' % (address, frontier, urgent))
         get_account(address=address).lock()
         cls.put_account((address, frontier), urgent)
 
@@ -232,7 +232,7 @@ class POWService:
                 rpc = nano.rpc.Client(account.wallet.node.URL)
                 frontier = rpc.frontiers(account=account.address, count=1)[account.address]
                 POWService.enqueue_account(address=account.address, frontier=frontier, urgent=urgent)
-                logger.info('Enqueuing address %s' % (account.address))
+                logger.info('Generating PoW on start up address %s frontier %s' % (account.address, frontier))
             except Exception as e:
                 logger.error('Account %s dPoW enqueuing error %s' % str(e))
 
