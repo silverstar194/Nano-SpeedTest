@@ -300,7 +300,7 @@ def send_receive_block_async(transaction, rpc_destination_node):
     pre_validation_work = transaction.destination.POW
 
     if not validate_or_regenerate_PoW(transaction.destination):
-        logger.error('Total faliure of dPoW. Aborting transaction account %s' % transaction.destination.address)
+        logger.error('Total failure of dPoW. Aborting transaction account %s' % transaction.destination.address)
         transaction.origin.unlock()
         transaction.destination.unlock()
         raise InvalidPOWException()
