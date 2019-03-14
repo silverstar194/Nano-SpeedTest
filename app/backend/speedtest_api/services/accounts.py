@@ -236,13 +236,18 @@ def check_account_balance_async(account):
     :param account:
     :returns PoW valid on account
     """
-    try:
-        logger.info('Syncing account: %s' % account)
-        rpc = nano.rpc.Client(account.wallet.node.URL)
-        new_balance = rpc.account_balance(account=account.address)['balance']
-    except Exception as e:
-        logger.info('RCP call failed during balance check %s' % str(e))
-        return
+    for i in [1,2,3]:
+        try:
+            logger.info('Syncing account: %s' % account)
+            rpc = nano.rpc.Client(account.wallet.node.URL)
+            new_balance = rpc.account_balance(account=account.address)['balance']
+            break
+        except Exception as e:
+            logger.error('RCP call failed during balance check %s try %s of 3' % (str(e)), i)
+            time.sleep(.1)
+            if i >= 3:
+                return
+
 
     if not account.current_balance == new_balance:
         logger.error('Updating balance %s' % (account.address))

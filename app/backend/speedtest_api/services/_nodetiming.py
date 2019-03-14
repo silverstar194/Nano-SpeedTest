@@ -45,7 +45,7 @@ def transaction_general(node_URL, node_IP, account_address, current_hash, start_
         frontier_hash = history_curr_account[0][u'hash']
 
         if hash_of_block == frontier_hash:
-            logger.info("Used RPC %s %s" % (current_hash, account_address))
+            logger.info("Used RPC for timing hash %s account %s " % (current_hash, account_address))
             end_time = int(rpc_node.account_info(address)[u'modified_timestamp']) * 1000
             return end_time
 
