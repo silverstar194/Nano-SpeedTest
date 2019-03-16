@@ -11,6 +11,7 @@ import { withRouter } from 'react-router'; // provides access to the history and
 const Header = ({location}) => {
 	const activeTab = location && location.pathname.substring(1);
 	return (
+	<>
 		<div className='nav nav-tabs'>
 			<HeaderItem activeTab={activeTab} to='' text='Speed Test' />
 			<HeaderItem activeTab={activeTab} to='Results' text='Your Results' />
@@ -19,7 +20,16 @@ const Header = ({location}) => {
 			<HeaderItem activeTab={activeTab} to='BuildAd' text='Advertise' />
 			<HeaderItem activeTab={activeTab} to='Discover' text='Use Nano' />
 		</div>
-
+        <a  href="https://nanocenter.org/projects/bea2eee0-4504-11e9-b8fd-f1b4d2ae12dc">
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            Help fund us through the <a href="#" class="alert-link">NanoCenter</a> today.
+            Status: <i>Funding pending...</i>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Go">
+                <span aria-hidden="true">-></span>
+            </button>
+        </div>
+       </a>
+    </>
 	);
 };
 
