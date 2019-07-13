@@ -56,7 +56,8 @@ class Command(BaseCommand):
         ## Wait for funds to clear
         while funding_account.current_balance == 0:
             sync_accounts()
-            funding_account = Account.objects.filter(address=funding_account.address)[0]
+            address_nano = funding_account.address.address.replace("xrb", "nano")
+            funding_account = Account.objects.filter(address=address_nano)[0]
             time.sleep(5)
 
 

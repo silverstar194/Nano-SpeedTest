@@ -24,6 +24,7 @@ SECRET_KEY = os.environ['NANO_ST__SECRET_KEY']
 
 # Key used to access the dPoW service
 DPOW_API_KEY = os.environ["NANO_ST__DPOW__API_KEY"]
+DPOW_API_USER = os.environ["NANO_ST__DPOW__API_USER"]
 DPOW_ENDPOINT = os.environ["NANO_ST__DPOW__ENDPOINT"]
 SENDGRID_API_KEY = os.environ["NANO_ST__SENDGRID__API_KEY"]
 ADMIN_EMAIL = os.environ["NANO_ST__ADMIN_EMAIL"]
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admindocs',
+    'rest_framework_swagger',
     'corsheaders',
     'speedtest_api',
     'django_crontab',
@@ -203,4 +205,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/root/Nano-SpeedTest/app/backend/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles/")

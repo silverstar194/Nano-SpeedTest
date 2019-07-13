@@ -32,7 +32,7 @@ class POWService:
 
     @classmethod
     def put_account(cls, data, urgent):
-
+        logger.info('putting account in queue')
         if urgent:
             in_time = 0
         else:
@@ -41,6 +41,7 @@ class POWService:
 
     @classmethod
     def get_account(cls):
+        logger.info('getting account from queue')
         from .accounts import number_accounts
         temp_queue = cls.queue_to_list()
         temp_queue = sorted(temp_queue, key=itemgetter(1))
@@ -54,7 +55,7 @@ class POWService:
             return temp_queue[0][0]
 
         head = temp_queue[0]
-        if head[1] + 90*1000 <= int(round(time.time() * 1000)):
+        if head[1] + 90*1000 <= int(round(time.time() * 1000)): # 90
             copy_queue = queue.Queue()
             [copy_queue.put(i) for i in temp_queue[1:]]
             cls._pow_queue = copy_queue
@@ -91,6 +92,7 @@ class POWService:
 
         for i in range(5):
             try:
+                logger.info('getting dpow')
                 return cls._get_dpow(hash)['work']
             except Exception as e:
                 logger.error('dPoW failure: %s try %s of 4' % (str(e), i))
@@ -131,12 +133,15 @@ class POWService:
         @return: Json object containing a work property
         @raise httpError: Can't connect to dPoW, or dPoW timed out
         """
-
+        logger.error('in _get_dpow')
         data = {
-                'hash': hash,
-                'key': settings.DPOW_API_KEY
-            }
+            "user": settings.DPOW_API_USER,
+            "api_key": settings.DPOW_API_KEY,
+            "hash": hash,
+        }
         res = requests.post(url=settings.DPOW_ENDPOINT, json=data, timeout=15)
+        logger.error('dPoW Status %s %s' % (res.status_code, res.json()))
+        print('dPoW Status %s %s' % (res.status_code, res.json()))
 
         if res.status_code == 200:
             return res.json()
@@ -144,38 +149,32 @@ class POWService:
             logger.error('dPoW Status %s %s' % (res.status_code, res.json()))
             raise Exception()
 
-
-    @classmethod
-    def threaded_PoW_worker(cls, address, frontier):
-        from .accounts import get_account
-        try:
-            account = get_account(address=address)
-            account.POW = cls.get_pow(address=address, hash=frontier)
-            logger.info('Generated POW on multithread: %s for account %s' % (account.POW, account))
-            time.sleep(.5) ## Don't spam dPoW
-
-           # Also calls save()
-            account.unlock()
-        except Exception as e:
-            logger.error('Exception in POW thread: %s ' % e.message)
-            logger.error('dPoW failure account %s unlocked without PoW' % address)
-            account.unlock()  ## Prevent leaks
-
-
     @classmethod
     def _run(cls):
+        from .accounts import get_account
         try:
             while cls._running:
-                # Multi-thread this worker (our POW generation time must be less than transaction period)
                 while not cls.is_empty():
                     address, frontier = cls.get_account()
-                    cls.thread_pool.apply_async(cls.threaded_PoW_worker, args=(address, frontier,))
+
+                    try:
+                        account = get_account(address=address)
+                        account.POW = cls.get_pow(address=address, hash=frontier)
+                        logger.info('Generated POW: %s for account %s' % (account.POW, account))
+                        time.sleep(.5)  ## Don't spam dPoW
+
+                        # Also calls save()
+                        account.unlock()
+                    except Exception as e:
+                        logger.error('Exception in POW thread: %s ' % e.message)
+                        logger.error('dPoW failure account %s unlocked without PoW' % address)
+                        account.unlock()  ## Prevent leaks
 
                 # Run this every second
                 time.sleep(1)
         except Exception as e:
-            logger.error('dPoW failure account %s unlocked without PoW %s' % (address, e))
-            logger.error("Error in _run PoW address %s", address)
+            logger.error('dPoW failure account %s unlocked without PoW %s' % e)
+            logger.error("Error in _run PoW address")
 
 
     @classmethod
@@ -230,9 +229,10 @@ class POWService:
         if not valid:
             try:
                 rpc = nano.rpc.Client(account.wallet.node.URL)
-                frontier = rpc.frontiers(account=account.address, count=1)[account.address]
+                address_nano = account.address.replace("xrb", "nano")
+                frontier = rpc.frontiers(account=account.address, count=1)[address_nano]
                 POWService.enqueue_account(address=account.address, frontier=frontier, urgent=urgent)
-                logger.info('Generating PoW on start up address %s frontier %s' % (account.address, frontier))
+                logger.info('Generating PoW on start up address %s frontier %s urgent %s' % (account.address, frontier, urgent))
             except Exception as e:
                 logger.error('Account %s dPoW enqueuing error %s' % str(e))
 

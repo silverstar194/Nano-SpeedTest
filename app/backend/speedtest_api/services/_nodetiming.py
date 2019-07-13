@@ -37,7 +37,8 @@ def transaction_general(node_URL, node_IP, account_address, current_hash, start_
         address = account_address
         hash_of_block = current_hash
         try:
-            history_curr_account = rpc_node.account_history(address,count=5)  # magic assuming that if it is not 5 back it hasn't been received
+            address_nano = address.replace("xrb", "nano")
+            history_curr_account = rpc_node.account_history(address_nano,count=5)  # magic assuming that if it is not 5 back it hasn't been received
         except:
             logger.error('Unable to get history hash: %s, account: %s' % (current_hash, account_address))
             raise ValueError("Unable to get history hash: %s, account: %s" % (current_hash, account_address))
@@ -46,7 +47,8 @@ def transaction_general(node_URL, node_IP, account_address, current_hash, start_
 
         if hash_of_block == frontier_hash:
             logger.info("Used RPC for timing hash %s account %s " % (current_hash, account_address))
-            end_time = int(rpc_node.account_info(address)[u'modified_timestamp']) * 1000
+            address_nano = address.replace("xrb", "nano")
+            end_time = int(rpc_node.account_info(address_nano)[u'modified_timestamp']) * 1000
             return end_time
 
         for value in history_curr_account:
