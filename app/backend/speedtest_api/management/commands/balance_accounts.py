@@ -75,12 +75,12 @@ class Command(BaseCommand):
                 del values[lower]
                 del accounts[lower]
                 upper = upper - 1
-            
             rpc = nano.rpc.Client(accounts[lower].wallet.node.URL)
             
             # If the wallet is new, allow the balancing to happen
             try:
-                rpc.account_info(account=accounts[lower].address)
+                address_nano = accounts[lower].address.replace("xrb", "nano")
+                rpc.account_info(account=address_nano)
             except:
                 found_lower = True
                 logger.warning('Account is unopened: %s' % accounts[lower].address)

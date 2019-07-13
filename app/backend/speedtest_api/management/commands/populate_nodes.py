@@ -63,7 +63,8 @@ class Command(BaseCommand):
         rpc = nano.rpc.Client(funding_account.wallet.node.URL)
         for i in range(6):
             try:
-                frontier = rpc.frontiers(account=funding_account.address, count=1)[funding_account.address]
+                address_nano = funding_account.address.replace("xrb", "nano")
+                frontier = rpc.frontiers(account=funding_account.address, count=1)[address_nano]
                 if funding_account.POW is None or not rpc.work_validate(work=funding_account.POW, hash=frontier):
                     print("Generating PoW account %s " % (funding_account.address))
 
@@ -98,7 +99,8 @@ class Command(BaseCommand):
                 print("Skipping")
                 continue
             try:
-                frontier = rpc.frontiers(account=funding_account.address, count=1)[funding_account.address]
+                address_nano = funding_account.address.replace("xrb", "nano")
+                frontier = rpc.frontiers(account=funding_account.address, count=1)[address_nano]
                 if funding_account.POW is None or not rpc.work_validate(work=funding_account.POW, hash=frontier):
 
                     data = {
