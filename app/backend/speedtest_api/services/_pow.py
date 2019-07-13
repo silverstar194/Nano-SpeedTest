@@ -32,7 +32,6 @@ class POWService:
 
     @classmethod
     def put_account(cls, data, urgent):
-        logger.info('putting account in queue')
         if urgent:
             in_time = 0
         else:
@@ -41,7 +40,6 @@ class POWService:
 
     @classmethod
     def get_account(cls):
-        logger.info('getting account from queue')
         from .accounts import number_accounts
         temp_queue = cls.queue_to_list()
         temp_queue = sorted(temp_queue, key=itemgetter(1))
@@ -55,7 +53,7 @@ class POWService:
             return temp_queue[0][0]
 
         head = temp_queue[0]
-        if head[1] + 90*1000 <= int(round(time.time() * 1000)): # 90
+        if head[1] + 90*1000 <= int(round(time.time() * 1000)): # 90 sec. wait
             copy_queue = queue.Queue()
             [copy_queue.put(i) for i in temp_queue[1:]]
             cls._pow_queue = copy_queue
@@ -92,7 +90,6 @@ class POWService:
 
         for i in range(5):
             try:
-                logger.info('getting dpow')
                 return cls._get_dpow(hash)['work']
             except Exception as e:
                 logger.error('dPoW failure: %s try %s of 4' % (str(e), i))
@@ -133,7 +130,6 @@ class POWService:
         @return: Json object containing a work property
         @raise httpError: Can't connect to dPoW, or dPoW timed out
         """
-        logger.error('in _get_dpow')
         data = {
             "user": settings.DPOW_API_USER,
             "api_key": settings.DPOW_API_KEY,
@@ -141,7 +137,6 @@ class POWService:
         }
         res = requests.post(url=settings.DPOW_ENDPOINT, json=data, timeout=15)
         logger.error('dPoW Status %s %s' % (res.status_code, res.json()))
-        print('dPoW Status %s %s' % (res.status_code, res.json()))
 
         if res.status_code == 200:
             return res.json()

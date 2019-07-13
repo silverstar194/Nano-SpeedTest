@@ -227,7 +227,6 @@ def validate_PoW(account):
     rpc = nano.rpc.Client(account.wallet.node.URL)
     try:
         address_nano = account.address.replace("xrb", "nano")
-        print(rpc.frontiers(account=account.address, count=1))
         frontier = rpc.frontiers(account=account.address, count=1)[address_nano]
         valid_PoW = rpc.work_validate(work=account.POW, hash=frontier)
     except Exception as e:
