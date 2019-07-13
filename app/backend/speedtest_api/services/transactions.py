@@ -59,7 +59,13 @@ def new_transaction_random(batch):
     @return: New transaction object
     """
 
-    accounts_list = get_accounts(in_use=False)
+    accounts_list_temp = get_accounts(in_use=False)
+
+    ##Only use good PoW accounts
+    accounts_list = []
+    for account in accounts_list_temp:
+        if account.POW:
+            accounts_list.append(account)
 
     if len(accounts_list) == 0:
         logging.error("No accounts for origin.")

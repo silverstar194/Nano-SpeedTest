@@ -136,7 +136,7 @@ class POWService:
             "hash": hash,
         }
         res = requests.post(url=settings.DPOW_ENDPOINT, json=data, timeout=15)
-        logger.error('dPoW Status %s %s' % (res.status_code, res.json()))
+        logger.info('dPoW Status %s %s' % (res.status_code, res.json()))
 
         if res.status_code == 200:
             return res.json()
