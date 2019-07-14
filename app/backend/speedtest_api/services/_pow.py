@@ -145,26 +145,30 @@ class POWService:
             raise Exception()
 
     @classmethod
-    def _run(cls):
+    def run_on_thread(cls):
         from .accounts import get_account
+        address, frontier = cls.get_account()
+        try:
+            account = get_account(address=address)
+            account.POW = cls.get_pow(address=address, hash=frontier)
+            logger.info('Generated POW: %s for account %s' % (account.POW, account))
+            time.sleep(.5)  ## Don't spam dPoW
+
+            # Also calls save()
+            account.unlock()
+        except Exception as e:
+            logger.error('Exception in POW thread: %s ' % e.message)
+            logger.error('dPoW failure account %s unlocked without PoW' % address)
+            account.unlock()  ## Prevent leaks
+
+    @classmethod
+    def _run(cls):
+
         try:
             while cls._running:
                 while not cls.is_empty():
-                    address, frontier = cls.get_account()
-
-                    try:
-                        account = get_account(address=address)
-                        account.POW = cls.get_pow(address=address, hash=frontier)
-                        logger.info('Generated POW: %s for account %s' % (account.POW, account))
-                        time.sleep(.5)  ## Don't spam dPoW
-
-                        # Also calls save()
-                        account.unlock()
-                    except Exception as e:
-                        logger.error('Exception in POW thread: %s ' % e.message)
-                        logger.error('dPoW failure account %s unlocked without PoW' % address)
-                        account.unlock()  ## Prevent leaks
-
+                    cls.thread_pool.apply_async(cls.run_on_thread, ())
+                    
                 # Run this every second
                 time.sleep(1)
         except Exception as e:

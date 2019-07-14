@@ -61,7 +61,6 @@ def new_transaction_random(batch):
 
     accounts_list_temp = get_accounts(in_use=False)
 
-    ##Only use good PoW accounts
     accounts_list = []
     for account in accounts_list_temp:
         if account.POW:
@@ -229,6 +228,8 @@ def send_transaction(transaction):
 
     # Start the timestamp before we try to send out the request
     transaction.start_send_timestamp = int(round(time.time() * 1000))
+    logger.info("%s starting timer start %s, end %s, delta %s", transaction.origin.address, transaction.start_send_timestamp, int(round(time.time() * 1000)),
+          int(round(time.time() * 1000)) - transaction.start_send_timestamp)
 
     try:
         before_send = int(round(time.time() * 1000))
@@ -243,7 +244,7 @@ def send_transaction(transaction):
         )
         transaction.POW_send = transaction.origin.POW
         after_send = int(round(time.time() * 1000))
-
+        logger.info("%s after send start %s, end %s, delta %s", transaction.origin.address, transaction.start_send_timestamp, int(round(time.time() * 1000)),  int(round(time.time() * 1000))-transaction.start_send_timestamp)
 
         # Sometimes the node hangs in response if it is busy computing a automatic receive block PoW.
         # This should not be counted towards transaction time.
@@ -270,6 +271,9 @@ def send_transaction(transaction):
         raise nano.rpc.RPCException()
     
     # Handover control to the timing service (expecting the timestamp to be set on return)
+    logger.info("%s before timer send start %s, end %s, delta %s", transaction.origin.address, transaction.start_send_timestamp, int(round(time.time() * 1000)),
+          int(round(time.time() * 1000)) - transaction.start_send_timestamp)
+
     try:
         time_transaction_send(transaction)
     except Exception as e:
@@ -277,7 +281,8 @@ def send_transaction(transaction):
         transaction.origin.unlock()
         transaction.destination.unlock()
         logger.error('Transaction timing_send failed, transaction.id: %s, error: %s' % (str(transaction.id), str(e)))
-
+    logger.info("%s after timer send start %s, end %s, delta %s", transaction.origin.address, transaction.start_send_timestamp, int(round(time.time() * 1000)),
+    int(round(time.time() * 1000)) - transaction.start_send_timestamp)
     transaction.origin.save()
     transaction.destination.save()
     transaction.save()

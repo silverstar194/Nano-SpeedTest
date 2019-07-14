@@ -25,6 +25,7 @@ def transaction_general(node_URL, node_IP, account_address, current_hash, start_
 
     backoff_sleep_values = [.5]*35
     for sleep_value in backoff_sleep_values:
+        logger.error('in time loop start %s end %s delta %s' % (start_timestamp, int(round(time.time() * 1000)), int(round(time.time() * 1000))-start_timestamp))
         rpc_node = nano.rpc.Client(node_URL)
         # cache_key = current_hash+"_"+node_IP  # needs to be unique
         # end_time = cache.get(cache_key)  # returns None if no key-value pair
@@ -37,8 +38,10 @@ def transaction_general(node_URL, node_IP, account_address, current_hash, start_
         address = account_address
         hash_of_block = current_hash
         try:
-            address_nano = address.replace("xrb", "nano")
-            history_curr_account = rpc_node.account_history(address_nano,count=5)  # magic assuming that if it is not 5 back it hasn't been received
+            history_curr_account = rpc_node.account_history(address,count=1)
+            logger.error('fetched history_curr_account start %s end %s delta %s' % (
+			start_timestamp, int(round(time.time() * 1000)), int(round(time.time() * 1000)) - start_timestamp))
+
         except:
             logger.error('Unable to get history hash: %s, account: %s' % (current_hash, account_address))
             raise ValueError("Unable to get history hash: %s, account: %s" % (current_hash, account_address))
@@ -47,8 +50,7 @@ def transaction_general(node_URL, node_IP, account_address, current_hash, start_
 
         if hash_of_block == frontier_hash:
             logger.info("Used RPC for timing hash %s account %s " % (current_hash, account_address))
-            address_nano = address.replace("xrb", "nano")
-            end_time = int(rpc_node.account_info(address_nano)[u'modified_timestamp']) * 1000
+            end_time = int(rpc_node.account_info(address)[u'modified_timestamp']) * 1000
             return end_time
 
         for value in history_curr_account:
