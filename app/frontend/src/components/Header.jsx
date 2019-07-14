@@ -20,14 +20,6 @@ const Header = ({location}) => {
 			<HeaderItem activeTab={activeTab} to='BuildAd' text='Advertise' />
 			<HeaderItem activeTab={activeTab} to='Discover' text='Use Nano' />
 		</div>
-        <a  href="https://nanocenter.org/projects/bea2eee0-4504-11e9-b8fd-f1b4d2ae12dc">
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            Thank you for funding us! A huge shoutout to the NanoCenter for their support.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Go">
-                <span aria-hidden="true">-></span>
-            </button>
-        </div>
-       </a>
     </>
 	);
 };
