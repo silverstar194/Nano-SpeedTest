@@ -133,6 +133,7 @@ class POWService:
         data = {
             "user": settings.DPOW_API_USER,
             "api_key": settings.DPOW_API_KEY,
+            "difficulty": "FFFFFF8000000000", ##2x base
             "hash": hash,
         }
         res = requests.post(url=settings.DPOW_ENDPOINT, json=data, timeout=15)
@@ -168,7 +169,7 @@ class POWService:
                 # Run this every second
                 time.sleep(1)
         except Exception as e:
-            logger.error('dPoW failure account %s unlocked without PoW %s' % e)
+            logger.error('dPoW failure account %s' % e)
             logger.error("Error in _run PoW address")
 
 
