@@ -226,13 +226,9 @@ def send_transaction(transaction):
     if not pre_validation_work == transaction.origin.POW:
         transaction.PoW_cached_send = False
 
-    # Start the timestamp before we try to send out the request
-    transaction.start_send_timestamp = int(round(time.time() * 1000))
-    logger.info("%s starting timer start %s, end %s, delta %s", transaction.origin.address, transaction.start_send_timestamp, int(round(time.time() * 1000)),
-          int(round(time.time() * 1000)) - transaction.start_send_timestamp)
-
     try:
-        before_send = int(round(time.time() * 1000))
+        logger.info("Transaction for send block status before_send")
+        time_before = int(round(time.time() * 1000))
         # After this call, the nano will leave the origin
         transaction.transaction_hash_sending = rpc_origin_node.send(
             wallet=transaction.origin.wallet.wallet_id,
@@ -242,51 +238,40 @@ def send_transaction(transaction):
             work=transaction.origin.POW,
             id=transaction.id
         )
-        transaction.POW_send = transaction.origin.POW
-        after_send = int(round(time.time() * 1000))
-        logger.info("%s after send start %s, end %s, delta %s", transaction.origin.address, transaction.start_send_timestamp, int(round(time.time() * 1000)),  int(round(time.time() * 1000))-transaction.start_send_timestamp)
+        time_after = int(round(time.time() * 1000))
 
-        # Sometimes the node hangs in response if it is busy computing a automatic receive block PoW.
-        # This should not be counted towards transaction time.
-        # Therefore we use typical response time as a correction factor.
-        # This is recorded with transaction.
-        # Author: silverstar194
-        # 3/6/2019
-        if before_send + 5000 < after_send:
-            transaction.start_send_timestamp = after_send - 300
-            transaction.node_send_bias = -300
-            transaction.node_lag = after_send - before_send
-            logger.error("LONG TIME NODE: Sent work %s block %s time %s" %(transaction.origin.POW, transaction.transaction_hash_sending, after_send - before_send))
-            transaction.save()
+        roundtrip_time = time_after - time_before
+
+        # Start timing once block is published to node and account for time on trip back
+        transaction.start_send_timestamp = int(round(time.time() * 1000)) - roundtrip_time/2
+
+        logger.info("Transaction in status send to node %s " % transaction.transaction_hash_sending )
+        transaction.POW_send = transaction.origin.POW
 
         # Update the balances and POW
         transaction.origin.current_balance = transaction.origin.current_balance - transaction.amount
         transaction.destination.current_balance = transaction.destination.current_balance + transaction.amount
         transaction.origin.POW = None
+
     except nano.rpc.RPCException as e:
         logger.error("RPCException one %s" % e)
         ##Unlock accounts
         transaction.origin.unlock()
         transaction.destination.unlock()
         raise nano.rpc.RPCException()
-    
-    # Handover control to the timing service (expecting the timestamp to be set on return)
-    logger.info("%s before timer send start %s, end %s, delta %s", transaction.origin.address, transaction.start_send_timestamp, int(round(time.time() * 1000)),
-          int(round(time.time() * 1000)) - transaction.start_send_timestamp)
 
     try:
+        logger.info("Transaction for receive block status before_send")
         time_transaction_send(transaction)
     except Exception as e:
         ##Unlock accounts
         transaction.origin.unlock()
         transaction.destination.unlock()
         logger.error('Transaction timing_send failed, transaction.id: %s, error: %s' % (str(transaction.id), str(e)))
-    logger.info("%s after timer send start %s, end %s, delta %s", transaction.origin.address, transaction.start_send_timestamp, int(round(time.time() * 1000)),
-    int(round(time.time() * 1000)) - transaction.start_send_timestamp)
+
     transaction.origin.save()
     transaction.destination.save()
     transaction.save()
-
 
     # Return as soon as transaction_hash_receiving is available
     # Finish work on 2nd thread
@@ -321,14 +306,20 @@ def send_receive_block_async(transaction, rpc_destination_node):
     if not pre_validation_work == transaction.destination.POW:
         transaction.PoW_cached_send = False
 
-    transaction.start_receive_timestamp = int(round(time.time() * 1000))
     try:
+        logger.info("Transaction for send block status before_send")
+        time_before = int(round(time.time() * 1000))
         transaction.transaction_hash_receiving = rpc_destination_node.receive(
             wallet=transaction.destination.wallet.wallet_id,
             account=transaction.destination.address,
             work=transaction.destination.POW,
             block=block_hash,
         )
+        time_after = int(round(time.time() * 1000))
+
+        roundtrip_time = time_after - time_before
+        transaction.start_receive_timestamp = int(round(time.time() * 1000)) - roundtrip_time/2
+
         transaction.POW_receive = transaction.destination.POW
         transaction.save()
     except nano.rpc.RPCException as e:
@@ -392,7 +383,6 @@ def simple_send(from_account, to_address, amount, generate_PoW=True):
             amount=amount,
             work=from_account.POW
         )
-        print(from_account.address, to_address, amount)
 
         from_account.POW = None
         from_account.save()
