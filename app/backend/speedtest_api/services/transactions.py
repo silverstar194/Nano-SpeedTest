@@ -2,6 +2,7 @@ import logging
 import random
 import re
 import time
+import requests
 import threading
 import nano
 from decimal import *
@@ -229,15 +230,22 @@ def send_transaction(transaction):
     try:
         logger.info("Transaction for send block status before_send")
         time_before = int(round(time.time() * 1000))
-        # After this call, the nano will leave the origin
-        transaction.transaction_hash_sending = rpc_origin_node.send(
-            wallet=transaction.origin.wallet.wallet_id,
-            source=transaction.origin.address,
-            destination=transaction.destination.address,
-            amount=int(transaction.amount),
-            work=transaction.origin.POW,
-            id=transaction.id
-        )
+        # # After this call, the nano will leave the origin
+        # transaction.transaction_hash_sending = rpc_origin_node.send(
+        #     wallet=transaction.origin.wallet.wallet_id,
+        #     source=transaction.origin.address,
+        #     destination=transaction.destination.address,
+        #     amount=int(transaction.amount),
+        #     work=transaction.origin.POW,
+        #     id=transaction.id
+        # )
+
+        ##Create and process block work around
+        sent_done = create_and_process(rpc_origin_node, transaction, "send")
+        if not sent_done:
+            logger.error("Error in create and process send")
+            raise nano.rpc.RPCException()
+
         time_after = int(round(time.time() * 1000))
 
         roundtrip_time = time_after - time_before
@@ -309,12 +317,19 @@ def send_receive_block_async(transaction, rpc_destination_node):
     try:
         logger.info("Transaction for send block status before_send")
         time_before = int(round(time.time() * 1000))
-        transaction.transaction_hash_receiving = rpc_destination_node.receive(
-            wallet=transaction.destination.wallet.wallet_id,
-            account=transaction.destination.address,
-            work=transaction.destination.POW,
-            block=block_hash,
-        )
+        # transaction.transaction_hash_receiving = rpc_destination_node.receive(
+        #     wallet=transaction.destination.wallet.wallet_id,
+        #     account=transaction.destination.address,
+        #     work=transaction.destination.POW,
+        #     block=block_hash,
+        # )
+
+        ##Create and process block work around
+        receive_done = create_and_process(rpc_destination_node, transaction, "receive")
+        if not receive_done:
+            logger.error("Error in create and process receive")
+            raise nano.rpc.RPCException()
+
         time_after = int(round(time.time() * 1000))
 
         roundtrip_time = time_after - time_before
@@ -452,3 +467,98 @@ def get_transaction(id):
         return None
     except MultipleObjectsReturned:
         raise MultipleObjectsReturned()
+
+def create_and_process(rpc_node, transaction, type):
+
+    if not type == "receive" and not type == "send":
+        return False
+
+    if type == "send":
+        account_info = rpc_node.account_info(transaction.origin.address, representative=True)
+        node_url = transaction.origin.wallet.node.URL
+        work = transaction.origin.POW
+        wallet = transaction.origin.wallet.wallet_id
+        account = transaction.origin.address
+        link = transaction.destination.address
+        amount = str(int(account_info['balance']) - int(transaction.amount))
+
+    if type == "receive":
+        account_info = rpc_node.account_info(transaction.destination.address, representative=True)
+        node_url = transaction.destination.wallet.node.URL
+        work = transaction.destination.POW
+        wallet = transaction.destination.wallet.wallet_id
+        account = transaction.destination.address
+
+        link = None
+        while not link:
+            print(link)
+            link = transaction.transaction_hash_sending
+            transaction = get_transaction(transaction.id)
+            time.sleep(1)
+
+        amount = str(int(account_info['balance']) + int(transaction.amount))
+
+    headers = {
+        'Content-Type': 'application/json',
+    }
+
+    data_create_block = {
+        "action": "block_create",
+        "type": "state",
+        "previous": account_info['frontier'],
+        "account": account,
+        "representative": account_info['representative'],
+        "balance": amount,
+        "link": link,
+        "wallet": wallet,
+        "work": work,
+        "id": str(transaction.id),
+    }
+    logger.info(data_create_block)
+
+    sent_successful = False
+    count = 0
+    while not sent_successful and count < 5:
+        try:
+            response = requests.post(node_url, headers=headers, data=json.dumps(data_create_block))
+        except Exception as E:
+            logger.error("create_and_proces_send had retry %s of 4" % (count))
+            if count >= 4:
+                return sent_successful
+
+        if response.status_code == requests.codes.ok:
+            sent_successful = True
+
+
+    create_block_response = json.loads(response.text)
+    print(type, create_block_response)
+    block_for_proccessing = {
+        "action": "process",
+        "block": create_block_response['block']
+    }
+
+    sent_successful = False
+    count = 0
+    while not sent_successful and count < 5:
+
+        try:
+            response = requests.post(node_url, headers=headers, data=json.dumps(block_for_proccessing))
+            hash_value = json.loads(response.text)['hash']
+
+            if type == "send":
+                transaction.transaction_hash_sending = hash_value
+                logger.info("Send hash %s", hash_value)
+
+            if type == "receive":
+                transaction.transaction_hash_receiving = hash_value
+                logger.info("Receive hash %s", hash_value)
+
+        except Exception as E:
+            logger.error("create_and_process_send had retry on process %s of 4" % (count))
+            if count >= 4:
+                return sent_successful
+
+        if response.status_code == requests.codes.ok:
+            sent_successful = True
+
+    return sent_successful
