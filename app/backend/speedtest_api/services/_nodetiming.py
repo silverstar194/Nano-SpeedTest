@@ -18,7 +18,7 @@ def transaction_general(node_url, current_hash):
     @raise Exception for when we have missed the transaction
     """
 
-    websocket_address = "ws://"+node_url+"/call"
+    websocket_address = node_url+"/call"
     websocket = create_connection(websocket_address)
     data = {"hash": current_hash}
     logger.info("Opening websocket %s for %s" % (websocket_address, data))
@@ -95,7 +95,7 @@ def time_transaction_receive(transaction, hash_value):
     @return delta in seconds of how long it took to get the receiving block
     @raise Exception for when we have missed the transaction
     """
-    websocket_endpoint = transaction.origin.wallet.node.URL.replace("rpc", "ws").replace("https//", "")
+    websocket_endpoint = transaction.origin.wallet.node.URL.replace("rpc", "ws")
     end_time = transaction_general(websocket_endpoint, hash_value)
 
     # old timing code
@@ -122,7 +122,7 @@ def time_transaction_send(transaction, hash_value):
     @return delta in seconds of how long it took to get the sending block
     @raise Exception for when we have missed the transaction
     """
-    websocket_endpoint = transaction.destination.wallet.node.URL.replace("rpc", "ws").replace("https//", "")
+    websocket_endpoint = transaction.destination.wallet.node.URL.replace("rpc", "ws")
     print(websocket_endpoint)
     end_time = transaction_general(websocket_endpoint, hash_value)
 
