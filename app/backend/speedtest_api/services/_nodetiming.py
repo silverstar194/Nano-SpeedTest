@@ -6,7 +6,7 @@ import json
 logger = logging.getLogger(__name__)
 
 
-def transaction_general(node_url, current_hash):
+def transaction_general(node_IP, current_hash):
     """
     This to time the sending and recieving of blocks
     @return delta of how long send or receive took in seconds
@@ -18,7 +18,7 @@ def transaction_general(node_url, current_hash):
     @raise Exception for when we have missed the transaction
     """
 
-    websocket_address = node_url+":7090/call"
+    websocket_address = "ws://"+node_IP+":7090/call"
     websocket = create_connection(websocket_address)
     data = {"hash": current_hash}
     logger.info("Opening websocket %s for %s" % (websocket_address, data))
@@ -95,8 +95,8 @@ def time_transaction_receive(transaction, hash_value):
     @return delta in seconds of how long it took to get the receiving block
     @raise Exception for when we have missed the transaction
     """
-    websocket_endpoint = transaction.origin.wallet.node.URL.replace("rpc", "ws").replace("https", "http")
-    end_time = transaction_general(websocket_endpoint, hash_value)
+
+    end_time = transaction_general(transaction.origin.wallet.node.URL, hash_value)
 
     # old timing code
     # The database on the nodes is stored as UNIX time
@@ -122,8 +122,8 @@ def time_transaction_send(transaction, hash_value):
     @return delta in seconds of how long it took to get the sending block
     @raise Exception for when we have missed the transaction
     """
-    websocket_endpoint = transaction.destination.wallet.node.URL.replace("rpc", "ws").replace("https", "http")
-    end_time = transaction_general(websocket_endpoint, hash_value)
+
+    end_time = transaction_general(transaction.destination.wallet.node.IP_ADD, hash_value)
 
     # old timing code
     # The database on the nodes is stored as UNIX time
