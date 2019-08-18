@@ -203,7 +203,7 @@ def validate_or_regenerate_PoW(account):
             wait_on_PoW += 1
             account = get_account(account.address)
             valid_PoW = validate_PoW(account)
-            time.sleep(2)
+            time.sleep(.5)
 
     ##Still no dPoW....
     if not valid_PoW:
