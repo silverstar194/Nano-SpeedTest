@@ -293,7 +293,6 @@ def send_transaction(transaction):
     POWService.enqueue_account(address=transaction.origin.address, frontier=transaction.transaction_hash_sending)
     return transaction
 
-@silk_profile(name='send_receive_block_async')
 def send_receive_block_async(transaction, rpc_destination_node):
     """
     Receive funds on managed account.
