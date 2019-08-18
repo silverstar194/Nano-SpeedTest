@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'speedtest_api',
     'django_crontab',
     'cachalot',
+    'silk',
 ]
 
 MIDDLEWARE = [
@@ -64,6 +65,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'x_forwarded_for.middleware.XForwardedForMiddleware',
+    'silk.middleware.SilkyMiddleware',
 ]
 
 CRONTAB_COMMAND_PREFIX = '. $HOME/.bash_profile;'
@@ -187,6 +189,11 @@ LOGGING = {
     },
 }
 
+SILKY_PYTHON_PROFILER = True
+SILKY_AUTHENTICATION = True  # User must login
+SILKY_META = True ##track silk speed
+SILKY_INTERCEPT_PERCENT = 100 # log only 100% of requests
+
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
@@ -205,4 +212,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/root/Nano-SpeedTest/app/backend/static/'
+STATIC_ROOT = '.'

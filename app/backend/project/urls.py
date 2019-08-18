@@ -15,8 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls import url
 
 from speedtest_api import views
+
 
 urlpatterns = [
     path('admin/doc/', include('django.contrib.admindocs.urls')),
@@ -32,3 +34,6 @@ urlpatterns = [
     path('partners/info', views.get_partners),
     path('transactions/download', views.download_transaction)
 ]
+
+##for profile url
+urlpatterns += [url(r'^silk/', include('silk.urls', namespace='silk'))]

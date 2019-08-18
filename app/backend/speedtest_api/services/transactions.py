@@ -11,6 +11,7 @@ from django.conf import settings as settings
 from django.core.exceptions import MultipleObjectsReturned
 from django.db.models import F
 
+from silk.profiling.profiler import silk_profile
 
 from .. import models as models
 from .wallets import *
@@ -50,7 +51,7 @@ class NoAccountsException(Exception):
     def __init__(self, node='NA'):
         Exception.__init__(self, "The specified node (%s) does not have any accounts." % node)
 
-
+@silk_profile(name='new_transaction_random')
 def new_transaction_random(batch):
     """
     Create a new transaction with random origin, destination, and amount fields.
@@ -90,6 +91,7 @@ def new_transaction_random(batch):
 
     return new_transaction(origin_account=origin, destination_account=destination, amount=amount, batch=batch)
 
+@silk_profile(name='new_transaction_nodes')
 def new_transaction_nodes(origin_node, destination_node, batch):
     """
     Create a transaction from the given properties.
@@ -123,6 +125,7 @@ def new_transaction_nodes(origin_node, destination_node, batch):
 
     return new_transaction(origin_account=origin, destination_account=destination, amount=amount, batch=batch)
 
+@silk_profile(name='new_transaction')
 def new_transaction(origin_account, destination_account, amount, batch):
     """
     Create a transaction from the given properties.
@@ -155,6 +158,7 @@ def new_transaction(origin_account, destination_account, amount, batch):
 
     return transaction
 
+@silk_profile(name='send_transaction')
 def send_transaction(transaction):
     """
     Complete a transaction on the Nano network while timing results.
@@ -289,7 +293,7 @@ def send_transaction(transaction):
     POWService.enqueue_account(address=transaction.origin.address, frontier=transaction.transaction_hash_sending)
     return transaction
 
-
+@silk_profile(name='send_receive_block_async')
 def send_receive_block_async(transaction, rpc_destination_node):
     """
     Receive funds on managed account.
@@ -467,6 +471,7 @@ def get_transaction(id):
     except MultipleObjectsReturned:
         raise MultipleObjectsReturned()
 
+@silk_profile(name='create_and_process')
 def create_and_process(rpc_node, transaction, type):
 
     if not type == "receive" and not type == "send":
