@@ -53,7 +53,7 @@ class POWService:
             return temp_queue[0][0]
 
         head = temp_queue[0]
-        if head[1] + 90*1000 <= int(round(time.time() * 1000)): # 90 sec. wait
+        if head[1] + 30*1000 <= int(round(time.time() * 1000)): # 30 sec. wait
             copy_queue = queue.Queue()
             [copy_queue.put(i) for i in temp_queue[1:]]
             cls._pow_queue = copy_queue

@@ -68,7 +68,7 @@ def new_transaction_random(batch):
             accounts_list.append(account)
 
     if len(accounts_list) == 0:
-        logging.error("No accounts for origin.")
+        logger.error("No accounts for origin.")
         raise NoAccountsException()
 
     origin = random.choice(accounts_list)
@@ -80,7 +80,7 @@ def new_transaction_random(batch):
             account_destinations.append(account)
 
     if len(account_destinations) == 0:
-        logging.error("No accounts for destination.")
+        logger.error("No accounts for destination.")
         raise NoAccountsException()
 
     destination = random.choice(account_destinations)
@@ -104,11 +104,11 @@ def new_transaction_nodes(origin_node, destination_node, batch):
     destination_accounts_list = get_accounts(node=destination_node, in_use=False)
 
     if len(origin_accounts_list) == 0:
-        logging.error("No accounts for origin %s." % origin_node)
+        logger.error("No accounts for origin %s." % origin_node)
         raise NoAccountsException(origin_node)
     
     if len(destination_accounts_list) == 0:
-        logging.error("No accounts for destination %s." % destination_node)
+        logger.error("No accounts for destination %s." % destination_node)
         raise NoAccountsException(destination_node)
 
     origin = random.choice(origin_accounts_list)
@@ -136,7 +136,7 @@ def new_transaction(origin_account, destination_account, amount, batch):
     """
 
     if amount < 0:
-        logging.error("Cannot send negative amount %s." % amount)
+        logger.error("Cannot send negative amount %s." % amount)
         raise ValueError("Amount sent must be positive.")
 
     ##Lock origin and destination accounts
@@ -241,13 +241,12 @@ def send_transaction(transaction):
         # )
 
         ##Create and process block work around
-        sent_done = create_and_process(rpc_origin_node, transaction, "send")
+        sent_done, hash_value = create_and_process(rpc_origin_node, transaction, "send")
         if not sent_done:
             logger.error("Error in create and process send")
             raise nano.rpc.RPCException()
 
         time_after = int(round(time.time() * 1000))
-
         roundtrip_time = time_after - time_before
 
         # Start timing once block is published to node and account for time on trip back
@@ -270,7 +269,7 @@ def send_transaction(transaction):
 
     try:
         logger.info("Transaction for receive block status before_send")
-        time_transaction_send(transaction)
+        time_transaction_send(transaction, hash_value)
     except Exception as e:
         ##Unlock accounts
         transaction.origin.unlock()
@@ -325,7 +324,7 @@ def send_receive_block_async(transaction, rpc_destination_node):
         # )
 
         ##Create and process block work around
-        receive_done = create_and_process(rpc_destination_node, transaction, "receive")
+        receive_done, hash_value = create_and_process(rpc_destination_node, transaction, "receive")
         if not receive_done:
             logger.error("Error in create and process receive")
             raise nano.rpc.RPCException()
@@ -352,7 +351,7 @@ def send_receive_block_async(transaction, rpc_destination_node):
 
     # Handover control to the timing service (expecting the timestamp to be set on return)
     try:
-        time_transaction_receive(transaction)
+        time_transaction_receive(transaction, hash_value)
     except Exception as e:
         ##Unlock accounts
         transaction.origin.unlock()
@@ -491,7 +490,6 @@ def create_and_process(rpc_node, transaction, type):
 
         link = None
         while not link:
-            print(link)
             link = transaction.transaction_hash_sending
             transaction = get_transaction(transaction.id)
             time.sleep(1)
@@ -531,7 +529,6 @@ def create_and_process(rpc_node, transaction, type):
 
 
     create_block_response = json.loads(response.text)
-    print(type, create_block_response)
     block_for_proccessing = {
         "action": "process",
         "block": create_block_response['block']
@@ -553,6 +550,7 @@ def create_and_process(rpc_node, transaction, type):
                 transaction.transaction_hash_receiving = hash_value
                 logger.info("Receive hash %s", hash_value)
 
+            transaction.save()
         except Exception as E:
             logger.error("create_and_process_send had retry on process %s of 4" % (count))
             if count >= 4:
@@ -561,4 +559,4 @@ def create_and_process(rpc_node, transaction, type):
         if response.status_code == requests.codes.ok:
             sent_successful = True
 
-    return sent_successful
+    return sent_successful, hash_value

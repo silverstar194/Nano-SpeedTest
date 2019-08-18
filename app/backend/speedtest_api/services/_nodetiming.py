@@ -20,8 +20,8 @@ def transaction_general(node_IP, current_hash):
 
     websocket_address = "ws://"+node_IP+":7090/call"
     websocket = create_connection(websocket_address)
-    logger.info("Opening websocket %s " % (websocket_address))
     data = {"hash": current_hash}
+    logger.info("Opening websocket %s for %s" % (websocket_address, data))
     websocket.send(json.dumps(data))
     result = websocket.recv()
     logger.info("Websocket sent data %s" % (result))
@@ -88,14 +88,15 @@ def transaction_general(node_IP, current_hash):
     # raise Exception("Transaction never found %s " % hash_of_block)
 
 
-def time_transaction_receive(transaction):
+def time_transaction_receive(transaction, hash_value):
     """
     Will get the time delta of the receiving block
     @param transaction django model of a transaction
     @return delta in seconds of how long it took to get the receiving block
     @raise Exception for when we have missed the transaction
     """
-    end_time = transaction_general(transaction.origin.wallet.node.IP_ADD, transaction.transaction_hash_receiving)
+
+    end_time = transaction_general(transaction.origin.wallet.node.IP_ADD, hash_value)
 
     # old timing code
     # The database on the nodes is stored as UNIX time
@@ -114,14 +115,15 @@ def time_transaction_receive(transaction):
     return end_time
 
 
-def time_transaction_send(transaction):
+def time_transaction_send(transaction, hash_value):
     """
     Will get the time delta of the sendig block
     @param transaction django model of a transacton
     @return delta in seconds of how long it took to get the sending block
     @raise Exception for when we have missed the transaction
     """
-    end_time = transaction_general(transaction.destination.wallet.node.IP_ADD, transaction.transaction_hash_sending)
+
+    end_time = transaction_general(transaction.destination.wallet.node.IP_ADD, hash_value)
 
     # old timing code
     # The database on the nodes is stored as UNIX time

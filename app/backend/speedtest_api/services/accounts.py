@@ -80,7 +80,7 @@ def get_account(address):
     except models.Account.DoesNotExist:
         return None
     except MultipleObjectsReturned:
-        logging.info("MultipleObjectsReturned for account %s " % address)
+        logger.info("MultipleObjectsReturned for account %s " % address)
         return models.Account.objects.filter(address=address).first()
 
 def get_accounts_ignore_lock():
