@@ -30,7 +30,7 @@ from speedtest_api.services import nodes
 
 logger = logging.getLogger(__name__)
 
-@ratelimit(key='ip', rate='7/h')
+#@ratelimit(key='ip', rate='7/h')
 @api_view(['POST'])
 @csrf_exempt
 def generate_transaction(request):
@@ -123,7 +123,7 @@ def generate_transaction(request):
         return JsonResponse({'message': "The transaction format is invalid. Please try again."}, status=400)
 
 
-@ratelimit(key='ip', rate='7/h')
+#@ratelimit(key='ip', rate='7/h')
 @api_view(['POST'])
 @csrf_exempt
 def send_batch_transactions(request):
@@ -338,7 +338,7 @@ def get_transaction_statistics(request):
     difference_set = Transaction.objects.filter(end_send_timestamp__gt=(F('start_send_timestamp')+180)).filter(start_send_timestamp__gte=int(round(time.time() * 1000))-(24*60*60*1000)).annotate(difference=(F('end_send_timestamp') - F('start_send_timestamp')))
     median_delta = median_value(difference_set, "difference")
 
-    transaction_count = Transaction.objects.filter(end_receive_timestamp__gte=0, start_send_timestamp__gte=0).filter(end_send_timestamp__gt=(F('start_send_timestamp')+180)).count()
+    transaction_count = Transaction.objects.filter(start_send_timestamp__gte=0).filter(end_send_timestamp__gt=(F('start_send_timestamp')+180)).count()
 
     statistics = {
         'transactions': transactions_array,
