@@ -65,7 +65,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'x_forwarded_for.middleware.XForwardedForMiddleware',
-    'silk.middleware.SilkyMiddleware',
 ]
 
 CRONTAB_COMMAND_PREFIX = '. $HOME/.bash_profile;'
