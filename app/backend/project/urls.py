@@ -21,6 +21,7 @@ from speedtest_api import views
 urlpatterns = [
     path('admin/doc/', include('django.contrib.admindocs.urls')),
     path('admin/', admin.site.urls),
+    path('transactions/medians', views.get_medians),
     path('transactions/send', views.send_batch_transactions),
     path('transactions', views.generate_transaction),
     path('header/random', views.get_random_advertisement),

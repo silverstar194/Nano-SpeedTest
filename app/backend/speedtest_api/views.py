@@ -349,6 +349,22 @@ def get_transaction_statistics(request):
     return JsonResponse(statistics, status=200)
 
 @api_view(['GET'])
+def get_medians(request):
+
+    times = [1, 24, 24*7, 24*7*30, 24*7*365]
+    times_str = ["1h_median", "24h_median", "1w_median", "1m_median", "1y_median"]
+    count_str = ["1h_count", "24h_count", "1w_count", "1m_count", "1y_count"]
+    statistics = {}
+
+    for i in range(len(times)):
+        difference_set = Transaction.objects.filter(end_send_timestamp__gt=(F('start_send_timestamp')+180)).filter(start_send_timestamp__gte=int(round(time.time() * 1000))-(times[i]*60*60*1000)).annotate(difference=(F('end_send_timestamp') - F('start_send_timestamp')))
+        median_delta, count = median_value(difference_set, "difference")
+        statistics[times_str[i]] = median_delta
+        statistics[count_str[i]] = count
+
+    return JsonResponse(statistics, status=200)
+
+@api_view(['GET'])
 def get_partners(request):
     partners_all = partners.get_partners()
 
@@ -476,6 +492,6 @@ def median_value(queryset, term):
     count = queryset.count()
     values = queryset.values_list(term, flat=True).order_by(term)
     if count % 2 == 1:
-        return values[int(round(count/2))]
+        return (int(values[int(round(count/2))]), count)
     else:
-        return sum(values[count/2-1:count/2+1])/Decimal(2.0)
+        return (int(sum(values[count/2-1:count/2+1])/Decimal(2.0)), count)
