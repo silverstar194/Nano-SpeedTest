@@ -351,7 +351,7 @@ def get_transaction_statistics(request):
 @api_view(['GET'])
 def get_medians(request):
 
-    times = [1, 24, 24*7, 24*7*30, 24*7*365]
+    times = [1, 24, 7*24, 30*24, 365*24]
     times_str = ["1h_median", "24h_median", "1w_median", "1m_median", "1y_median"]
     count_str = ["1h_count", "24h_count", "1w_count", "1m_count", "1y_count"]
     statistics = {}
