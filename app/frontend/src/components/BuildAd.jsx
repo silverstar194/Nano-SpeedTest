@@ -320,7 +320,7 @@ class BuildAd extends Component {
                       <div className='form-group'>
                             <label htmlFor='email'><b>E-mail Address</b></label>
                             <input
-                                type='text'
+                                type='email'
                                 className='form-control'
                                 name='email'
                                 value={email}
