@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import HeaderItem from './HeaderItem';
 import { withRouter } from 'react-router'; // provides access to the history and location
 
 /**
@@ -8,24 +7,32 @@ import { withRouter } from 'react-router'; // provides access to the history and
  * to: url to navigate to
  * text: display name of the tab
  */
-const Header = ({location}) => {
-	const activeTab = location && location.pathname.substring(1);
+const Header = () => {
 	return (
-	<>
-		<div className='nav nav-tabs'>
-			<HeaderItem activeTab={activeTab} to='' text='Speed Test' />
-			<HeaderItem activeTab={activeTab} to='Results' text='Your Results' />
-			<HeaderItem activeTab={activeTab} to='Stats' text='Global Statistics' />
-			<HeaderItem activeTab={activeTab} to='Info' text='More Info' />
-			<HeaderItem activeTab={activeTab} to='BuildAd' text='Advertise' />
-			<HeaderItem activeTab={activeTab} to='Discover' text='Use Nano' />
-		</div>
-    </>
+	<Fragment>
+         <header className="header">
+            <div className="header__nanologo"></div>
+            <div className="header__learnmoretext__mobile">Nano is a next-generation cryptocurrency.</div>
+            <div className="header__learnmoretext__desktop">Nano is a next-generation cryptocurrency created in 2015. It's unique block-lattice structure enables fast, fee-less transactions over a secure, decentralized network.</div>
+            <div className="header__learnmorebutton">Learn More</div>
+            <div className="header__exitbutton">
+               <i className="fas fa-times header__exitbutton-close"></i>
+            </div>
+         </header>
+         <aside className="sidenav">
+            <div className="sidenav__close-icon">
+               <i className="fas fa-times fa-2x sidenav__brand-close"></i>
+            </div>
+            <div className="sidebar__logo"></div>
+            <ul className="sidenav__list">
+               <li className="sidenav__list-item">Global Statistics</li>
+               <li className="sidenav__list-item">Use Nano</li>
+               <li className="sidenav__list-item">FAQ</li>
+               <li className="sidenav__list-item">Advertise</li>
+            </ul>
+         </aside>
+    </Fragment>
 	);
 };
 
-Header.propTypes = {
-	location: PropTypes.object.isRequired
-};
-
-export default withRouter(Header);
+export default Header;

@@ -3,15 +3,10 @@ import 'styles/Footer.css';
 
 const Footer = () => {
 	return (
-	    <footer className='footer'>
-			<span className='text-muted'>
-				<a
-				  className='footer-item'
-				  href={'https://github.com/silverstar194/Nano-SpeedTest'}
-				  target='_blank'
-				  rel='noopener noreferrer'>{'❤️ Our Github'}</a>
-      		</span>
-	    </footer>
+	     <footer className="footer">
+            <div className="footer__copyright">2019 Nanospeed</div>
+            <div className="footer__signature">Made with love by SilverStar194</div>
+         </footer>
 	);
 };
 

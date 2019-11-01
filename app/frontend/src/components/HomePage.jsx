@@ -1,13 +1,18 @@
-import React, { Component } from 'react';
-import Ad from './Ad';
+import React, { Component, Fragment } from 'react';
 import AdvancedModal from './AdvancedModal';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchTransaction } from '../actions/table';
 import '../styles/HomePage.css';
+import '../styles/nanospeed.css';
+import {addPastResults} from 'actions/pastResults';
 import { openAdvSettings } from '../actions/advancedModal';
+import UserResultsPage from 'components/UserResultsPage';
 import LocationDropdowns from './LocationDropdowns';
 import { Helmet } from "react-helmet";
+import PastResultsTable from './HistoricalData/PastResultsTable';
+import NavBar from './NavBar';
+import CurrentTransactionsView from 'components/CurrentTransactions/CurrentTransactionsView';
 
 class HomePage extends Component {
     // component specific state -- don't need to add to redux store
@@ -62,30 +67,24 @@ class HomePage extends Component {
         this.setState(() => ({ modalOpen: false }));
     };
 
-    nodeIdToLocation = (nodeId, nodes) => {
-        for (let i = 0; i < nodes.length; i++) {
-            if (nodes[i].id === parseInt(nodeId)) {
-                return nodes[i].location;
-            }
-        }
-    };
-
-    drawMessage(advSettingsForm, nodes) {
-        const { values } = (advSettingsForm && advSettingsForm.advSettings) || {};
-        if (values) {
-            if (values.numTransactions) { // multi transaction message
-                this.showDropdowns = false;
-                return <h2 className='greeting'>Hit GO to send {values.numTransactions} random Transactions!</h2>;
-            } else if (values.origin && values.destination) { // two city message
-                this.showDropdowns = true;
-                return <h3 className='greeting'>Hit GO to send Nano from {this.nodeIdToLocation(values.origin, nodes)}
-                    &nbsp;to {this.nodeIdToLocation(values.destination, nodes)}!</h3>;
-            }
-        }
-    }
-
     render() {
+        const { numToRerun, table, isFetchingTiming, isFetchingTransaction } = this.props;
+
         const { advSettingsForm, nodes } = this.props;
+        const {pastTransactions, totalTransactions, globalAverage, nodeLocations} = this.props;
+        const plotData = [];
+        pastTransactions.sort((a,b) => a.endSendTimestamp - b.endSendTimestamp)
+        .forEach((transaction, i) => {
+            plotData.push({
+                x: i,
+                y: transaction.elapsedTime,
+                date: transaction.endSendTimestamp,
+                origin: transaction.origin.nodeLocation,
+                destination: transaction.destination.nodeLocation,
+                PoWCached: transaction.PoWCached,
+            });
+        });
+
 
         return (
             <div className='HomePage'>
@@ -97,67 +96,32 @@ class HomePage extends Component {
                     content="The fastest way to try out Nano. Run a speed test instantly. No wallets, accounts or sign up."
                  />
             </Helmet>
-
-                <Ad/>
-                <AdvancedModal
-                    open={this.state.modalOpen}
-                    handleLocationSettings={this.handleLocationSettings}
-                    handleMultiSettings={this.handleMultiSettings}
-                    nodes={nodes}
-                    settings={advSettingsForm}
+        <main className="index-main">
+            <NavBar />
+            <div className="index-main-area-one">
+               <div className="index-main-header__heading center-horizontally max-width">This site demonstrates how Nano can be used to send money globally without fees, long waits, or hassle.</div>
+                <LocationDropdowns
+                  nodes={nodes}
+                  settings={advSettingsForm}
+                  show={this.showDropdowns}
                 />
-                <h1 className='greeting page-header text-center'>Welcome to NanoSpeed.live!</h1>
-                <div className='container'>
-                    <div className='row justify-content-end'>
-                        <div className='col-12 text-center'>
-                            {this.drawMessage(advSettingsForm, nodes)}
-                            <LocationDropdowns
-                                nodes={nodes}
-                                settings={advSettingsForm}
-                                show={this.showDropdowns}
-                            />
-
-                            <button type='button' className='btn btn-success btn-circle btn-xl' onClick={this.onClick}>
-                                Go
-                            </button>
-                            <br/>
-
-                            <button id='advanced-btn' type='button' className='btn btn-primary'
-                                    onClick={this.onAdvancedClick}>Advanced
-                            </button>
-                            <br/>
-                            <p className='greeting'>Run your live test now.</p>
-                        </div>
-
-                    </div>
-                    <div/>
-                    <div id="alert-info" className="alert alert-success alert-dismissible fade show" role="alert">
-                        <h4 className="alert-heading">Welcome!</h4>
-                            <p>Press the 'GO' button to send a small random amount of Nano between various locations worldwide using funds in our demo wallets.
-                                This site demonstrates how Nano can be used to send money internationally without fees, long waits, or hassle.
-                                All transactions are executed as you see them live and provide you with an insight into the speed and efficiency of Nano.</p>
-                                <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={this.dismiss}>
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                                <a href="/Info">More Info</a>
-                    </div>
-
-                    <div className="shadow-none p-3 mb-5 bg-light rounded">
-                        <h5>What is Nano?</h5>
-                        Nano is a next-generation cryptocurrency created in 2015. It's unique block-lattice structure enables fast, fee-less transactions over a secure, decentralized network.
-                    </div>
-                </div>
             </div>
+            <div className="index-main-area-two">
+               <div className="ad__wrapper center-horizontally max-width">
+                  <div className="ad__text">💥 Insert your Nano project here. Gain traction at a low cost. Support our servers with 90% discounted ad.</div>
+                  <div className="ad__community__link">AD</div>
+               </div>
+                <UserResultsPage />
+            </div>
+            <div className="index-main-area-three">
+              <PastResultsTable tableData={pastTransactions}/>
+            </div>
+         </main>
+         </div>
+
         );
     }
 }
-
-const mapStateToProps = (state) => {
-    return {
-        advSettingsForm: state.form,
-        nodes: state.nodes
-    };
-};
 
 const mapDispatchToProps = (dispatch) => {
     return {
@@ -184,7 +148,21 @@ const mapDispatchToProps = (dispatch) => {
         },
         onAdvPressed() {
             dispatch(openAdvSettings());
+        },
+        fetchedPastData(data) {
+          dispatch(addPastResults(data));
         }
+    };
+};
+
+const mapStateToProps = (state) => {
+    return {
+        advSettingsForm: state.form,
+        nodes: state.nodes,
+        pastTransactions: state.pastResults.pastTransactions,
+        totalTransactions: state.pastResults.totalTransactions,
+        globalAverage: state.pastResults.globalAverage,
+        nodeLocations: state.nodes
     };
 };
 
@@ -192,7 +170,16 @@ HomePage.propTypes = {
     history: PropTypes.object.isRequired,
     onGoPressed: PropTypes.func.isRequired,
     advSettingsForm: PropTypes.object,
-    nodes: PropTypes.array
+    nodes: PropTypes.array,
+    pastTransactions: PropTypes.array.isRequired,
+    totalTransactions: PropTypes.number,
+    globalAverage: PropTypes.number,
+    nodeLocations: PropTypes.array
+};
+
+HomePage.defaultProps = {
+    totalTransactions: 0,
+    globalAverage: 0,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

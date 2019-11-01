@@ -20,11 +20,11 @@ const TableRow = ({
     });
     return (
         <tr>
-            <td>{origin.nodeLocation}</td>
+            <td>{date}</td>
             <td>{destination.nodeLocation}</td>
+            <td>{origin.nodeLocation}</td>
             <td>{amount} nano</td>
             <td>{(endSendTimestamp - startSendTimestamp)/1000} Seconds</td>
-            <td>{date}</td>
             <td className='block-col text-ellipsis'>
                 <a
                     href={`https://www.nanode.co/block/${transactionHashSending}`}

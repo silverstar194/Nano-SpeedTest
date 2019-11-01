@@ -6,19 +6,14 @@ import fetchAndUpdateAd from 'util/fetchAndUpdateAd';
 const onSwitchTab = (e, to, activeTab) => {
 	if (to === activeTab) {
 		e.preventDefault();
-	} else if (to !== 'BuildAd') {
-		fetchAndUpdateAd();
 	}
 };
 
 const HeaderItem = ({activeTab, to, text}) => {
 	const active = (activeTab === to ? ' active' : '');
-	const buildAd = (to === 'BuildAd' ? ' font-weight-bold' : '');
-	const styles = 'nav-link' + active + buildAd;
+	const styles = 'general-navbar-item' + active;
     return (
-      	<li className='nav-item'>
-			<Link className={styles} to={to} onClick={(e) => onSwitchTab(e, to, activeTab)}> {text} </Link>
-      	</li>
+		<div className={styles}>{text}</div>
     );
 };
 

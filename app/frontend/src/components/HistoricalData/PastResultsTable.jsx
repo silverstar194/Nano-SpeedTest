@@ -63,20 +63,21 @@ class PastResultsTable extends React.Component {
         const prevClass = 'page-item' + (disablePrev ? ' disabled' : '');
         const nextClass = 'page-item' + (disableNext ? ' disabled' : '');
         return (
-            <div className='nano-container table-responsive'>
-                <h2 className='map-header text-left'>Past Transactions <h5> Please limit to 5 tests per hour.</h5></h2>
-                <table className='table'>
-                    <thead>
-                    <tr>
-                        <th scope='col'>Origin</th>
-                        <th scope='col'>Destination</th>
-                        <th scope='col'>Amount</th>
-                        <th scope='col'>Elapsed Time</th>
-                        <th scope='col'>Date</th>
-                        <th scope='col' className='block-col'>Sending Block</th>
-                    </tr>
-                    </thead>
-                    <tbody>
+              <div className="your-transations-wrapper">
+                  <div className="past__transactions_title__wrapper center-horizontally max-width">
+                     <div className="past-transations-title">Past users transactions</div>
+                     <div className="past__transactions__link">See More</div>
+                  </div>
+                  <table className="past-transactions-table max-width">
+                  <tbody>
+                        <tr>
+                           <th className="border_bottom">Date</th>
+                           <th className="border_bottom">Origin</th>
+                           <th className="border_bottom">Destination</th>
+                           <th className="border_bottom">Amount</th>
+                           <th className="border_bottom">Elapsed Time</th>
+                           <th className="border_bottom">Sending Block</th>
+                        </tr>
                     { tableData &&
                         tableData.sort((a,b) => b.endSendTimestamp - a.endSendTimestamp)
                         .slice(startIndex, end).map((transactionData) => {
@@ -84,30 +85,8 @@ class PastResultsTable extends React.Component {
                         })
                     }
                     </tbody>
-                </table>
-                <div className='row'>
-                    <div className='col-sm-auto'>
-                            Showing {startIndex + 1} to {end} of {tableData.length} transactions.
-                    </div>
-                    <div className='col-sm-auto'>
-                        <nav aria-label='Table navigation'>
-                            <ul className='pagination'>
-                                <li className={prevClass}>
-                                    <button className='page-link' onClick={this.prevPage}>
-                                        Prev
-                                    </button>
-                                </li>
-                                <li className={nextClass}>
-                                    <button className='page-link' onClick={this.nextPage}>
-                                        Next
-                                    </button>
-                                </li>
-                            </ul>
-                         </nav>
-                    </div>
-                </div>
-
-            </div>
+                  </table>
+               </div>
         );
     }
 }

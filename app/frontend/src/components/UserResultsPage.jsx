@@ -8,26 +8,12 @@ import CurrentTransactionsView from 'components/CurrentTransactions/CurrentTrans
 
 const UserStatsPage = ({numToRerun, table, pastTransactions, isFetchingTransaction, isFetchingTiming}) => {
     return (
-        <div className='UserStatsPage'>
-            <div className='container-fluid'>
-                <div className='row'>
-                    <div className='col'>
-                        <CurrentTransactionsView
+        <CurrentTransactionsView
                             numToRerun={numToRerun}
                             table={table}
                             isFetchingTiming={isFetchingTiming}
                             isFetchingTransaction={isFetchingTransaction}
-                        />
-                    </div>
-                </div>
-                <div className='row'>
-                    <div className='col'>
-                        <PastResultsTable tableData={pastTransactions} />
-                    </div>
-                </div>
-                  Please do not use bots to access site. Excessive testing or spam will result in a swift 24 hour ban.
-            </div>
-        </div>
+        />
     );
 };
 

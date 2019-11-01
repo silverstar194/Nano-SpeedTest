@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 const TableRow = ({
@@ -12,41 +12,15 @@ const TableRow = ({
     transactionHashReceiving,
     transactionHashSending
 }) => {
-    const classStyle = error ? 'table-danger' : '';
     return (
-        <tr className={classStyle}>
-            <td>{origin.nodeLocation}</td>
+        <tr>
+            <td><span className="completed">Completed</span></td>
             <td>{destination.nodeLocation}</td>
+            <td>{origin.nodeLocation}</td>
             <td>{amount} nano</td>
-            { completed ?
-                <Fragment>
-                { error ?
-                    <Fragment>
-                        <td>NO DATA</td>
-                        <td>ERROR</td>
-                        <td>NO DATA</td>
-                        <td>NO DATA</td>
-                    </Fragment> : <Fragment>
-                        <td>{(endSendTimestamp - startSendTimestamp)/1000} Seconds</td>
-                        <td>Completed</td>
-                        <td className='block-col text-ellipsis'>
-                            <a
-                                href={`https://www.nanode.co/block/${transactionHashSending}`}
-                                target='_blank'
-                                rel='noopener noreferrer'>
-                                {transactionHashSending}
-                            </a>
-                        </td>
-                    </Fragment>
-                }
-                </Fragment>
-                : <Fragment>
-                    <td>Pending...</td>
-                    <td>Pending...</td>
-                    <td>Pending...</td>
-                </Fragment>
-            }
-        </tr>
+            <td>{(endSendTimestamp - startSendTimestamp)/1000}s</td>
+            <td><a href={`https://www.nanode.co/block/${transactionHashSending}`} target='_blank' rel='noopener noreferrer'>{transactionHashSending}</a></td>
+         </tr>
     );
 };
 

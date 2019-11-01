@@ -1,12 +1,9 @@
-import React, { Component, Fragment } from 'react';
-import Ad from 'components/Ad';
-import Map from './Map';
+import React, { Component } from 'react';
 import Table from './Table';
 import NoTableEntries from './NoTableEntries';
 import '../../styles/CurrentTransactionsView.css';
 import { connect } from 'react-redux';
 import { fetchTransaction } from '../../actions/table';
-import { Helmet } from "react-helmet";
 
 const loader = (
     <div className='loading-container'>
@@ -35,55 +32,8 @@ class CurrentTransactionsView extends Component {
         const sendMessage = mostRecent && mostRecent[0].completed ? 'Sent' : 'Sending';
         // render the jsx
 
-        const shouldShowTable = (isFetchingTransaction || mostRecent.length || isFetchingTiming);
         return (
-            <Fragment>
-            <Helmet>
-                <title>NanoSpeed.live - Current Transaction Information</title>
-                <meta name="keywords" content="Nano,speed test,cryptocurrency,bitcoin,instant,feeless" />
-                <meta
-                    name="description"
-                    content="View statistics about your speed tests and transactions."
-                 />
-            </Helmet>
-                <Ad/>
-                <h1 className='map-header page-header text-left d-inline-block'>Your Transactions</h1>
-                {errorMessage(mostRecent, isFetchingTransaction)} {/*Displays an error message if fetching the transaction fails*/}
-                {(shouldShowTable) ?  // this is pretty ugly and should be refactored in V2
-                    <Fragment>{
-                        (isFetchingTransaction || !mostRecent) ? loader // show loader if no data or is getting a transaction
-                            : <Fragment>
-                                <div className='nano-container float-right'>
-                                    <button id='rerun' className='btn btn-primary' onClick={
-                                        () => this.props.onRerun(numToRerun,table)
-                                    }>Rerun Test
-                                    </button>
-                                </div>
-                                <Table tableData={table}/>
-                                <h2 className='map-header page-header text-center'>
-                                    {sendMessage} from: {
-                                        mostRecent.map((trans) => {
-                                            const cites = `${trans.origin.nodeLocation} to ${trans.destination.nodeLocation}`;
-                                            return mostRecent.length === 1 ?
-                                                cites
-                                                : <React.Fragment key={trans.id}><br/>{cites}</React.Fragment>;
-                                        })
-                                    }
-                                    {isFetchingTiming &&
-                                    <Fragment>
-                                        <p/>
-                                        Hold tight. We're hard at work. 🕑 💰
-                                    </Fragment>
-                                    }
-                                </h2>
-                                <div className='nano-container map-container text-center>'>
-                                    <Map transactions={mostRecent}/>
-                                </div>
-                            </Fragment>
-                    }</Fragment>
-                    : <NoTableEntries/>
-                }
-            </Fragment>
+            <Table tableData={table}/>             
         );
     }
 }
