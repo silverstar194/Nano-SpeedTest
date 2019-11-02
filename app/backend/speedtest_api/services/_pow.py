@@ -133,6 +133,7 @@ class POWService:
         data = {
             "user": settings.DPOW_API_USER,
             "api_key": settings.DPOW_API_KEY,
+            "difficulty": "fffffff000000000", ##4x base
             "hash": hash,
         }
         res = requests.post(url=settings.DPOW_ENDPOINT, json=data, timeout=15)
