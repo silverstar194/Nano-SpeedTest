@@ -15,5 +15,11 @@ class Command(BaseCommand):
         """
         Get POW for all accounts
         """
+        ## Pick up any changes
+        #accounts.clear_receive_accounts()
+        #accounts.sync_accounts()
 
+        ## get new pow
+        accounts.clear_all_POW()
+        POWService.start()
         POWService.POW_accounts(daemon=False)

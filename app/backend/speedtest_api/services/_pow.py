@@ -256,6 +256,7 @@ class POWService:
         
         # If we are running this from the command, don't stop the main thread until we are done
         if not daemon:
+            cls.thread_pool.close()
             cls.thread_pool.join()
 
             while not cls.is_empty():

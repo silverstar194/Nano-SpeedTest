@@ -261,3 +261,11 @@ def check_account_balance_async(account):
 
     account.save()
     account.unlock()
+
+def clear_all_POW():
+    """
+    Clear all POW for regeneration
+    :return:
+    """
+    qs = models.Account.objects.all()
+    qs.update(POW=None)
