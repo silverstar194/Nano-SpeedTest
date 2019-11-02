@@ -540,7 +540,8 @@ def create_and_process(transaction, account_info, type):
 
         try:
             response = requests.post(node_url, headers=headers, data=json.dumps(block_for_proccessing))
-            hash_value = json.loads(response.text)['hash']
+            response = json.loads(response.text)
+            hash_value = response['hash']
 
             if type == "send":
                 transaction.transaction_hash_sending = hash_value
@@ -552,6 +553,7 @@ def create_and_process(transaction, account_info, type):
 
             transaction.save()
         except Exception as E:
+            time.sleep(.5)
             logger.exception("create_and_process_send had retry on process %s of 4" % (count))
             if count >= 4:
                 return sent_successful
