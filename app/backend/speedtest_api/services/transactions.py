@@ -229,6 +229,7 @@ def send_transaction(transaction):
 
     try:
         logger.info("Transaction for send block status before_send")
+        account_info = rpc_origin_node.account_info(transaction.destination.address, representative=True)
         time_before = int(round(time.time() * 1000))
         # # After this call, the nano will leave the origin
         # transaction.transaction_hash_sending = rpc_origin_node.send(
@@ -241,7 +242,7 @@ def send_transaction(transaction):
         # )
 
         ##Create and process block work around
-        sent_done, hash_value = create_and_process(rpc_origin_node, transaction, "send")
+        sent_done, hash_value = create_and_process(transaction, account_info, "send")
         if not sent_done:
             logger.error("Error in create and process send")
             raise nano.rpc.RPCException()
@@ -315,6 +316,7 @@ def send_receive_block_async(transaction, rpc_destination_node):
 
     try:
         logger.info("Transaction for send block status before_send")
+        account_info = rpc_destination_node.account_info(transaction.origin.address, representative=True)
         time_before = int(round(time.time() * 1000))
         # transaction.transaction_hash_receiving = rpc_destination_node.receive(
         #     wallet=transaction.destination.wallet.wallet_id,
@@ -324,7 +326,7 @@ def send_receive_block_async(transaction, rpc_destination_node):
         # )
 
         ##Create and process block work around
-        receive_done, hash_value = create_and_process(rpc_destination_node, transaction, "receive")
+        receive_done, hash_value = create_and_process(transaction, account_info, "receive")
         if not receive_done:
             logger.error("Error in create and process receive")
             raise nano.rpc.RPCException()
@@ -467,13 +469,12 @@ def get_transaction(id):
     except MultipleObjectsReturned:
         raise MultipleObjectsReturned()
 
-def create_and_process(rpc_node, transaction, type):
+def create_and_process(transaction, account_info, type):
 
     if not type == "receive" and not type == "send":
         return False
 
     if type == "send":
-        account_info = rpc_node.account_info(transaction.origin.address, representative=True)
         node_url = transaction.origin.wallet.node.URL
         work = transaction.origin.POW
         wallet = transaction.origin.wallet.wallet_id
@@ -482,7 +483,6 @@ def create_and_process(rpc_node, transaction, type):
         amount = str(int(account_info['balance']) - int(transaction.amount))
 
     if type == "receive":
-        account_info = rpc_node.account_info(transaction.destination.address, representative=True)
         node_url = transaction.destination.wallet.node.URL
         work = transaction.destination.POW
         wallet = transaction.destination.wallet.wallet_id
@@ -492,7 +492,7 @@ def create_and_process(rpc_node, transaction, type):
         while not link:
             link = transaction.transaction_hash_sending
             transaction = get_transaction(transaction.id)
-            time.sleep(1)
+            time.sleep(.2)
 
         amount = str(int(account_info['balance']) + int(transaction.amount))
 
