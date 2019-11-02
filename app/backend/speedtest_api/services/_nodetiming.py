@@ -96,7 +96,7 @@ def time_transaction_receive(transaction, hash_value):
     @raise Exception for when we have missed the transaction
     """
 
-    end_time = transaction_general(transaction.origin.wallet.node.URL, hash_value)
+    end_time = transaction_general(transaction.origin.wallet.node.IP_ADD, hash_value)
 
     # old timing code
     # The database on the nodes is stored as UNIX time

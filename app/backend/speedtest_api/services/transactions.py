@@ -356,7 +356,7 @@ def send_receive_block_async(transaction, rpc_destination_node):
         ##Unlock accounts
         transaction.origin.unlock()
         transaction.destination.unlock()
-        logger.error('Transaction timing_receive failed, transaction.id: %s, error: %s' % (str(transaction.id), str(e)))
+        logger.exception('Transaction timing_receive failed, transaction.id: %s, error: %s' % (str(transaction.id), str(e)))
 
     ## Check node didn't return all "000000..."
     frontier = transaction.transaction_hash_receiving
@@ -520,7 +520,7 @@ def create_and_process(rpc_node, transaction, type):
         try:
             response = requests.post(node_url, headers=headers, data=json.dumps(data_create_block))
         except Exception as E:
-            logger.error("create_and_proces_send had retry %s of 4" % (count))
+            logger.exception("create_and_proces_send had retry %s of 4" % (count))
             if count >= 4:
                 return sent_successful
 
@@ -552,7 +552,7 @@ def create_and_process(rpc_node, transaction, type):
 
             transaction.save()
         except Exception as E:
-            logger.error("create_and_process_send had retry on process %s of 4" % (count))
+            logger.exception("create_and_process_send had retry on process %s of 4" % (count))
             if count >= 4:
                 return sent_successful
 
