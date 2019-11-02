@@ -541,6 +541,8 @@ def create_and_process(transaction, account_info, type):
         try:
             response = requests.post(node_url, headers=headers, data=json.dumps(block_for_proccessing))
             response = json.loads(response.text)
+            logger.info("create_and_process_send response from post %s", response)
+            logger.info("block %s", block_for_proccessing)
             hash_value = response['hash']
 
             if type == "send":
