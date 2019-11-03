@@ -90,15 +90,14 @@ class POWService:
 
         for i in range(5):
             try:
-                return cls._get_dpow(hash)['work']
+                POW = cls._get_dpow(hash)['work']
+                if POW:
+                    return POW
             except Exception as e:
                 logger.exception('dPoW failure for hash %s: %s try %s of 4' % (hash, str(e), i))
-                time.sleep(3)
                 if i == 4:
                     logger.error('dPoW failure account %s' % address)
-
-        rpc_node = nano.rpc.Client(account.wallet.node.URL)
-        POW = None
+            time.sleep(3)
 
         ## Moved PoW to nodes as work peers
         # for i in range(5):
@@ -116,7 +115,7 @@ class POWService:
 
         if POW is None:
             account.unlock()
-            logger.error('dPoW failure account %s unlocked without PoW' % address)
+            logger.error('dPoW get failure account %s unlocked without PoW' % address)
             raise Exception()
 
         return POW
@@ -133,7 +132,7 @@ class POWService:
         data = {
             "user": settings.DPOW_API_USER,
             "api_key": settings.DPOW_API_KEY,
-            "difficulty": "fffffff000000000", ##4x base
+            "multiplier": 4.0, ##4x base
             "hash": hash,
         }
         res = requests.post(url=settings.DPOW_ENDPOINT, json=data, timeout=15)
@@ -157,9 +156,9 @@ class POWService:
                         account = get_account(address=address)
                         account.POW = cls.get_pow(address=address, hash=frontier)
                         logger.info('Generated POW: %s for account %s' % (account.POW, account))
-                        time.sleep(.5)  ## Don't spam dPoW
+                        time.sleep(.1)  ## Don't spam dPoW
 
-                        # Also calls save()
+                        account.save()
                         account.unlock()
                     except Exception as e:
                         logger.error('Exception in POW thread: %s ' % e.message)

@@ -221,6 +221,7 @@ def validate_PoW(account):
     """
 
     if not account.POW:
+        logger.error('PoW empty %s' % account.POW)
         return False
 
     valid_PoW = True
@@ -232,6 +233,10 @@ def validate_PoW(account):
     except Exception as e:
         logger.exception('PoW invalid during validate_PoW %s' % str(e))
         valid_PoW = False
+
+    if not valid_PoW:
+        logger.error('PoW invalid work %s frontier %s' % (account.POW, frontier))
+
     return valid_PoW
 
 def check_account_balance_async(account):

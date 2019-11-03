@@ -298,11 +298,8 @@ def send_receive_block_async(transaction, rpc_destination_node):
     @param transaction: Managed transaction
     """
 
-    block_hash = transaction.transaction_hash_sending
-
     transaction.PoW_cached_send = True
     pre_validation_work = transaction.destination.POW
-
     if not validate_or_regenerate_PoW(transaction.destination):
         logger.error('Total failure of dPoW. Aborting transaction account %s' % transaction.destination.address)
         transaction.origin.unlock()
@@ -557,6 +554,7 @@ def create_and_process(transaction, account_info, type):
         except Exception as E:
             time.sleep(.5)
             logger.exception("create_and_process_send had retry on process %s of 4" % (count))
+            count += 1
             if count >= 4:
                 return sent_successful
 
