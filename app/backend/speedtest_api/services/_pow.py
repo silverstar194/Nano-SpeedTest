@@ -92,7 +92,7 @@ class POWService:
             try:
                 return cls._get_dpow(hash)['work']
             except Exception as e:
-                logger.error('dPoW failure: %s try %s of 4' % (str(e), i))
+                logger.exception('dPoW failure for hash %s: %s try %s of 4' % (hash, str(e), i))
                 time.sleep(3)
                 if i == 4:
                     logger.error('dPoW failure account %s' % address)
@@ -133,7 +133,7 @@ class POWService:
         data = {
             "user": settings.DPOW_API_USER,
             "api_key": settings.DPOW_API_KEY,
-            "difficulty": "FFFFFF8000000000", ##2x base
+            "difficulty": "fffffff000000000", ##4x base
             "hash": hash,
         }
         res = requests.post(url=settings.DPOW_ENDPOINT, json=data, timeout=15)

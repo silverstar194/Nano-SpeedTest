@@ -153,7 +153,7 @@ def clear_frontier_async(account):
         address_nano = account.address.replace("xrb", "nano")
         pending_blocks = rpc.accounts_pending([account.address])[address_nano]
     except Exception as e:
-        logger.info('RCP call failed during receive %s' % str(e.message))
+        logger.exception('RCP call failed during receive %s' % str(e.message))
 
     for block in pending_blocks:
         logger.info("Found block %s to receive for %s " % (block, account.address))
@@ -169,7 +169,7 @@ def clear_frontier_async(account):
             received_block = rpc.receive(wallet=account.wallet.wallet_id, account=account.address, work=account.POW, block=block)
             logger.info('Received block %s to %s' % (received_block, account.address))
         except nano.rpc.RPCException as e:
-            logger.error('Error during clean up receive account %s block %s ' % (account.address, block, str(e)))
+            logger.exception('Error during clean up receive account %s block %s ' % (account.address, block, str(e)))
 
 
 def validate_or_regenerate_PoW(account):
@@ -230,7 +230,7 @@ def validate_PoW(account):
         frontier = rpc.frontiers(account=account.address, count=1)[address_nano]
         valid_PoW = rpc.work_validate(work=account.POW, hash=frontier)
     except Exception as e:
-        logger.error('PoW invalid during validate_PoW %s' % str(e))
+        logger.exception('PoW invalid during validate_PoW %s' % str(e))
         valid_PoW = False
     return valid_PoW
 
@@ -248,7 +248,7 @@ def check_account_balance_async(account):
             new_balance = rpc.account_balance(account=address_nano)['balance']
             break
         except Exception as e:
-            logger.error('RCP call failed during balance check %s try %s of 3' % (str(e)), i)
+            logger.exception('RCP call failed during balance check %s try %s of 3' % (str(e)), i)
             time.sleep(.1)
             if i >= 3:
                 return
