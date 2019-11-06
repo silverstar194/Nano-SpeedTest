@@ -28,7 +28,7 @@ const errorMessage = (mostRecent, isFetchingTransaction) =>
 class CurrentTransactionsView extends Component {
     render() {
         const { numToRerun, table, isFetchingTiming, isFetchingTransaction } = this.props;
-        const mostRecent = table.length && table.slice(table.length - numToRerun); // get the last numToRerun transactions
+        const mostRecent = table && table.length && table.slice(table.length - numToRerun); // get the last numToRerun transactions
         const sendMessage = mostRecent && mostRecent[0].completed ? 'Sent' : 'Sending';
         // render the jsx
 

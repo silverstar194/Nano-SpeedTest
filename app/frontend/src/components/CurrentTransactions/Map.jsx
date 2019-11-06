@@ -4,13 +4,7 @@ import 'styles/GoogleMaps.css';
 
 const base = 'https://maps.googleapis.com/maps/api/staticmap';
 const scale = '2';
-let sizeTemp = '1200x400';
-
-const w = window.innerWidth;
-
-if(w && w !== 0 && w < 800){
-    sizeTemp = w+'x'+(w*3);
-}
+let sizeTemp = '1100x310';
 
 const size = sizeTemp;
 
@@ -43,24 +37,26 @@ const countUses = (transaction, transactions, isOrigin) => {
 const Map = ({transactions}) => {
     let transactionPairs = [];
     let markerPairs = []
-
-    transactions.forEach((trans) => {
+    if(transactions.rows.length > 0){
+    transactions.rows.forEach((trans) => {
         transactionPairs.push(`${makeCoordinate(trans.origin)}|${makeCoordinate(trans.destination)}`);
-        markerPairs.push(`markers=color:0x4A90E2|label:${countUses(trans, transactions, true)}|${makeCoordinate(trans.origin)}&markers=color:0x4A90E2|label:${countUses(trans, transactions, false)}|${makeCoordinate(trans.destination)}`);
+        markerPairs.push(`markers=color:0x4A90E2|${makeCoordinate(trans.origin)}&markers=color:0x4A90E2|label:${countUses(trans, transactions, false)}|${makeCoordinate(trans.destination)}`);
     });
 
     const paths = transactionPairs.join('&path='); // each needs to be draw separately
     const markers = markerPairs.join("&")
 
     return (
-        <img className='GoogleMap'
+        <img className="transaction-box-map"
         src={`${base}?size=${size}&scale=${scale}&${markers}&path=${paths}&key=${googleKey}`}
         alt={'Google Map Showing Destination and Origin'} />
     );
+}
+    return(<div></div>)
+
 };
 
 Map.propTypes = {
-    transactions: PropTypes.array.isRequired
 };
 
 export default Map;

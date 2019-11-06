@@ -2,15 +2,16 @@ import React, { Component, Fragment } from 'react';
 import AdvancedModal from './AdvancedModal';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import { fetchTransaction } from '../actions/table';
 import '../styles/HomePage.css';
 import '../styles/nanospeed.css';
 import {addPastResults} from 'actions/pastResults';
 import { openAdvSettings } from '../actions/advancedModal';
-import UserResultsPage from 'components/UserResultsPage';
 import LocationDropdowns from './LocationDropdowns';
 import { Helmet } from "react-helmet";
 import PastResultsTable from './HistoricalData/PastResultsTable';
+import UserResultsPage from 'components/UserResultsPage';
 import NavBar from './NavBar';
 import CurrentTransactionsView from 'components/CurrentTransactions/CurrentTransactionsView';
 
@@ -68,10 +69,9 @@ class HomePage extends Component {
     };
 
     render() {
-        const { numToRerun, table, isFetchingTiming, isFetchingTransaction } = this.props;
+        const { advSettingsForm, nodes, history } = this.props;
+        const {pastTransactions, table, totalTransactions, globalAverage, nodeLocations} = this.props;
 
-        const { advSettingsForm, nodes } = this.props;
-        const {pastTransactions, totalTransactions, globalAverage, nodeLocations} = this.props;
         const plotData = [];
         pastTransactions.sort((a,b) => a.endSendTimestamp - b.endSendTimestamp)
         .forEach((transaction, i) => {
@@ -102,6 +102,8 @@ class HomePage extends Component {
                <div className="index-main-header__heading center-horizontally max-width">This site demonstrates how Nano can be used to send money globally without fees, long waits, or hassle.</div>
                 <LocationDropdowns
                   nodes={nodes}
+                  table={table}
+                  history={history}
                   settings={advSettingsForm}
                   show={this.showDropdowns}
                 />
@@ -160,6 +162,7 @@ const mapStateToProps = (state) => {
         advSettingsForm: state.form,
         nodes: state.nodes,
         pastTransactions: state.pastResults.pastTransactions,
+        table: state.table,
         totalTransactions: state.pastResults.totalTransactions,
         globalAverage: state.pastResults.globalAverage,
         nodeLocations: state.nodes
@@ -167,11 +170,11 @@ const mapStateToProps = (state) => {
 };
 
 HomePage.propTypes = {
-    history: PropTypes.object.isRequired,
     onGoPressed: PropTypes.func.isRequired,
     advSettingsForm: PropTypes.object,
     nodes: PropTypes.array,
     pastTransactions: PropTypes.array.isRequired,
+    table : PropTypes.array,
     totalTransactions: PropTypes.number,
     globalAverage: PropTypes.number,
     nodeLocations: PropTypes.array

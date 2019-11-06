@@ -15,8 +15,8 @@ const TableRow = ({
     return (
         <tr>
             <td><span className="completed">Completed</span></td>
-            <td>{destination.nodeLocation}</td>
             <td>{origin.nodeLocation}</td>
+            <td>{destination.nodeLocation}</td>
             <td>{amount} nano</td>
             <td>{(endSendTimestamp - startSendTimestamp)/1000}s</td>
             <td><a href={`https://www.nanode.co/block/${transactionHashSending}`} target='_blank' rel='noopener noreferrer'>{transactionHashSending}</a></td>

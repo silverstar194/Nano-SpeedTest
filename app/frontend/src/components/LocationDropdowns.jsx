@@ -1,9 +1,12 @@
 import React, { Component, Fragment } from 'react';
 import { Field, reduxForm } from 'redux-form';
+import PropTypes from 'prop-types';
 import { change } from 'redux-form';
 import '../styles/LocationDropdowns.css';
 import { connect } from 'react-redux';
 import '../styles/Field.css';
+import { fetchTransaction } from '../actions/table';
+import Map from './CurrentTransactions/Map';
 
 
 class LocationDropdowns extends Component {
@@ -50,7 +53,7 @@ class LocationDropdowns extends Component {
             }
             button.classList.add("selection-button-one");
             if(values){
-                this.props.dispatch(change('advSettings', 'origin', button.value.replace("origin"), ""));
+                this.props.dispatch(change('advSettings', 'origin', parseInt(button.value.replace("origin"), "")));
             }
 
         }
@@ -64,7 +67,7 @@ class LocationDropdowns extends Component {
             }  
             button.classList.add("selection-button-two");
             if(values){
-                this.props.dispatch(change('advSettings', 'destination', button.value.replace("destination"), ""));
+                this.props.dispatch(change('advSettings', 'destination', parseInt(button.value.replace("destination"), "")));
             }
         }
 
@@ -82,6 +85,22 @@ class LocationDropdowns extends Component {
                     buttons[i].disabled = true;
                 }
             }
+        }
+    }
+
+    sendTransaction(advSettingsForm, button){
+        button.preventDefault();
+        
+        const { values } = (advSettingsForm && advSettingsForm.advSettings) || {};
+        if(values){
+                this.props.dispatch(fetchTransaction(1, {
+                        transactions: [{
+                        originNodeId: values.origin,
+                        destinationNodeId: values.destination
+                    }]
+                }));
+            var card = document.getElementsByClassName("card")[0];
+            card.classList.add('is-flipped')
         }
     }
 
@@ -103,7 +122,7 @@ class LocationDropdowns extends Component {
       );
     }
 
-    generateNodeOrginsList(nodes) {
+    generateNodeOriginsList(nodes) {
       var indents = [];
       for (var i = 0; i < nodes.length; i++) {
         var el = null;
@@ -141,8 +160,9 @@ class LocationDropdowns extends Component {
     };
 
     render() {
-        const { nodes, settings, show } = this.props;
-        const nodeOriginsList = this.generateNodeOrginsList(this.props.nodes);
+        const { nodes, table, history, settings, show } = this.props;
+
+        const nodeOriginsList = this.generateNodeOriginsList(this.props.nodes);
         const nodeDestinationsList = this.generateNodeDestinationList(this.props.nodes);
         const drawMessage = this.drawMessage(this.props.settings, this.props.nodes)
         this.initButtons();
@@ -150,11 +170,12 @@ class LocationDropdowns extends Component {
         return (
             <Fragment>
             <form>
-            <div className="index-main-header__transaction-box center-horizontally max-width">
+            <div className="card">
+                <div className="index-main-header__transaction-box center-horizontally max-width">
                 <div className="transaction-box__text center-horizontally"> 
                 {drawMessage}
                   </div>
-                  <div className="transaction-box__go__button center-horizontally">GO</div>
+                  <button className="transaction-box__go__button center-horizontally" onClick={(e) => this.sendTransaction(this.props.settings, e)}>GO</button>
                   <div className="transaction-box__choice__button__one__wrapper button center-horizontally">
                      <div className="transaction-box__choice__header__text">ORIGIN</div>
                       {nodeOriginsList}
@@ -163,12 +184,32 @@ class LocationDropdowns extends Component {
                      <div className="transaction-box__choice__header__text">DESTINATION</div>
                       {nodeDestinationsList}
                   </div>
-               </div>
+                </div>
+                <div className="index-main-header__transaction-box center-horizontally max-width transaction-box-back">
+                    <Map transactions={table} />
+                    <div className="transaction-box-footer">
+                        <div className="transaction-box-footer-location">
+                            <div className="transaction-box-footer-location-origin">
+                            Origin
+                            </div>
+                            <div><hr className="location-line"></hr></div>
+                            <div className="transaction-box-footer-location-destination">
+                            Destination
+                            </div>
+
+                        </div>
+                        <div className="transaction-box-footer-time">Transaction time: <div className="transaction-box-footer-text ">1.2s</div></div>
+                        <div className="transaction-box-footer-try-again">Try Again</div>
+                    </div>
+                </div>
+            </div>
              </form>
             </Fragment>
         );
     }
 }
+
+
 // Allows form to communicate with store
 LocationDropdowns = reduxForm({
     // a unique name for the form

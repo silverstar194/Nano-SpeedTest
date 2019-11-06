@@ -278,6 +278,91 @@ th {
   border: 1px solid #4A90E2;
 }
 
+ .transaction-box-footer-location-origin {
+    text-align: left;
+    color: #EA891F;
+    padding-left: 10px;
+    padding-right: 10px;
+    line-height: 50px;
+  }
+
+  .transaction-box-footer-location-destination {
+    text-align: right;
+    color: #4A90E2;
+    padding-right: 10px;
+    padding-left: 10px;
+    line-height: 50px;
+  }
+
+  .transaction-box-footer-location {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    border-radius: 0 0 0 10px;
+  }
+
+  .transaction-box-footer-time {
+    display: inline;
+    border: 1px solid #E2E2E2;
+    border-radius: 5px;
+    padding: 5px;
+    height: 30px;
+    font-size: 14px;
+    color: #949494;
+    text-align: center;
+    line-height: 30px;
+  }
+
+  .transaction-box-map {
+    display: grid;
+    grid-column: 1 / 3;
+    max-width: 100%;
+    border-radius: 10px 10px 0 0;
+    object-fit: cover; 
+  }
+
+  .transaction-box-footer-text {
+    display: inline;
+    color: black;
+    font-size: 14px;
+    text-align: center;
+    line-height: 30px;
+  }
+
+  .transaction-box-footer-try-again {
+    border: 1px solid #4A90E2;
+    color: #4A90E2;
+    border-radius: 5px;
+    padding: 5px;
+    height: 30px;
+    margin-right: 15px;
+    text-align: center;
+    line-height: 30px;
+    font-weight: bold;
+  }
+
+
+  .transaction-box-footer {
+    display: grid;
+    background-color: white;
+    grid-template-columns: 318fr 196fr 126fr;
+    grid-gap: 10px;
+    grid-row-start: 2;
+    padding-top: 5px;
+    grid-column: 1 / 3;
+    height: 100%;
+    border-radius: 0 0 10px 10px;
+  }
+
+
+  .location-line {
+    border-top: 1px solid #E2E2E2;
+    background-color: #E2E2E2;
+    margin-right: 0;
+    margin-left: 0;
+    width: 100%;
+    margin-top: 24px;
+  }
+
 .transaction-box__choice__button__two__wrapper {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -441,12 +526,42 @@ th {
 .index-main-header__transaction-box {
   display: grid;
   grid-template-columns: 1fr;
+  transition: transform 1s;
+  transform-style: preserve-3d;
   background-color: white;
   min-height: 390px;
   align-items: center;
   max-width: 750px;
   box-shadow: 20px 0px 40px rgba(0, 0, 0, 0.50);
+  backface-visibility: hidden;
   border-radius: 10px;
+}
+
+.card {
+  transition: transform 1s;
+  transform-style: preserve-3d;
+}
+
+.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.card__face--back {
+  background: blue;
+  transform: rotateY(180deg);
+}
+
+.transaction-box-back {
+  display: grid;
+  grid-template-rows: 1fr 50px;
+  margin-top:-390px;
+  transform: rotateY(180deg);
+}
+
+.transaction-box-footer {
+  display: grid;
+  height: 100%;
+  border-radius: 0 0 10px 10px;
 }
 
 .header__learnmorebutton {
@@ -639,8 +754,10 @@ th {
     height: 390px;
     border-radius: 5px;
     box-shadow: 20px 0px 40px rgba(0, 0, 0, 0.23);
+    backface-visibility: hidden;
     border-radius: 10px;
   }
+
   .sidenav__close-icon {
     visibility: hidden;
   }
