@@ -87,6 +87,7 @@ class POWService:
         """
         from .accounts import get_account
         account = get_account(address=address)
+        POW = None
 
         for i in range(5):
             try:

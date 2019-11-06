@@ -312,7 +312,7 @@ def send_receive_block_async(transaction, rpc_destination_node):
         transaction.PoW_cached_send = False
 
     try:
-        logger.info("Transaction for send block status before_send")
+        logger.info("Transaction for receive block status before_receive")
         account_info = rpc_destination_node.account_info(transaction.destination.address, representative=True)
         time_before = int(round(time.time() * 1000))
         # transaction.transaction_hash_receiving = rpc_destination_node.receive(
@@ -357,22 +357,12 @@ def send_receive_block_async(transaction, rpc_destination_node):
         transaction.destination.unlock()
         logger.exception('Transaction timing_receive failed, transaction.id: %s, error: %s' % (str(transaction.id), str(e)))
 
-    ## Check node didn't return all "000000..."
-    frontier = transaction.transaction_hash_receiving
-    count = 0
-    while re.match("^[0]+$", frontier) and count < 3:
-        count += 1
-        time.sleep(1) ## Allow frontier to clear in node
-        logger.error('Node returned all zeros acccount: %s. try %s of 3' % (transaction.destination.address, count))
-        frontier = rpc_destination_node.frontiers(account=transaction.destination.address, count=1)[transaction.destination.address]
-
-    transaction.transaction_hash_receiving = frontier
+    transaction.transaction_hash_receiving = hash_value
     transaction.destination.POW = None
 
     transaction.destination.save()
     transaction.save()
-
-    POWService.enqueue_account(address=transaction.destination.address, frontier=frontier)
+    POWService.enqueue_account(address=transaction.destination.address, frontier=transaction.transaction_hash_receiving)
 
 
 def simple_send(from_account, to_address, amount, generate_PoW=True):
