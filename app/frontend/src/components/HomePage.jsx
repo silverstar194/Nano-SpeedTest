@@ -174,7 +174,7 @@ HomePage.propTypes = {
     advSettingsForm: PropTypes.object,
     nodes: PropTypes.array,
     pastTransactions: PropTypes.array.isRequired,
-    table : PropTypes.array,
+    table : PropTypes.object,
     totalTransactions: PropTypes.number,
     globalAverage: PropTypes.number,
     nodeLocations: PropTypes.array
