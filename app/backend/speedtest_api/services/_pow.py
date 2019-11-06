@@ -76,12 +76,12 @@ class POWService:
         return temp_list
 
     @classmethod
-    def get_pow(cls, address, hash):
+    def get_pow(cls, address, hash_value):
         """
         Get a POW, first try the dPoW, on failure, use a node
 
         @param address: Address for node lookup
-        @param hash: Hash to generate PoW for
+        @param hash_value: Hash to generate PoW for
         @return: POW as a string
         @raise RPCException: RPC Failure
         """
@@ -90,14 +90,14 @@ class POWService:
 
         for i in range(5):
             try:
-                POW = cls._get_dpow(hash)['work']
+                POW = cls._get_dpow(hash_value)['work']
                 if POW:
                     return POW
             except Exception as e:
-                logger.exception('dPoW failure for hash %s: %s try %s of 4' % (hash, str(e), i))
+                logger.exception('dPoW failure for hash %s: %s try %s of 4' % (hash_value, str(e), i))
                 if i == 4:
                     logger.error('dPoW failure account %s' % address)
-            time.sleep(3)
+            time.sleep(.5)
 
         ## Moved PoW to nodes as work peers
         # for i in range(5):
@@ -121,11 +121,11 @@ class POWService:
         return POW
 
     @classmethod
-    def _get_dpow(cls, hash):
+    def _get_dpow(cls, hash_value):
         """
         Generate a PoW using the distributed endpoint.
 
-        @param hash: Hash to generate PoW for
+        @param hash_value: Hash to generate PoW for
         @return: Json object containing a work property
         @raise httpError: Can't connect to dPoW, or dPoW timed out
         """
@@ -133,7 +133,7 @@ class POWService:
             "user": settings.DPOW_API_USER,
             "api_key": settings.DPOW_API_KEY,
             "multiplier": 4.0, ##4x base
-            "hash": hash,
+            "hash": hash_value,
         }
         res = requests.post(url=settings.DPOW_ENDPOINT, json=data, timeout=15)
         logger.info('dPoW Status %s %s' % (res.status_code, res.json()))
@@ -154,19 +154,19 @@ class POWService:
                     address, frontier = cls.get_account()
                     try:
                         account = get_account(address=address)
-                        account.POW = cls.get_pow(address=address, hash=frontier)
+                        account.POW = cls.get_pow(address=address, hash_value=frontier)
                         logger.info('Generated POW: %s for account %s' % (account.POW, account))
-                        time.sleep(.1)  ## Don't spam dPoW
+                        time.sleep(.5)  ## Don't spam dPoW
 
                         account.save()
                         account.unlock()
                     except Exception as e:
-                        logger.error('Exception in POW thread: %s ' % e.message)
+                        logger.error('Exception in POW thread: %s ' % e)
                         logger.error('dPoW failure account %s unlocked without PoW' % address)
                         account.unlock()  ## Prevent leaks
 
                 # Run this every second
-                time.sleep(1)
+                time.sleep(.1)
         except Exception as e:
             logger.error('dPoW failure account %s' % e)
             logger.error("Error in _run PoW address")
@@ -259,7 +259,7 @@ class POWService:
             cls.thread_pool.join()
 
             while not cls.is_empty():
-                time.sleep(1)
+                time.sleep(.1)
             
             cls.stop()
             cls.thread.join()

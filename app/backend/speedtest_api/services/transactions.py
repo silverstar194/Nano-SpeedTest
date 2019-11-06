@@ -229,7 +229,7 @@ def send_transaction(transaction):
 
     try:
         logger.info("Transaction for send block status before_send")
-        account_info = rpc_origin_node.account_info(transaction.destination.address, representative=True)
+        account_info = rpc_origin_node.account_info(transaction.origin.address, representative=True)
         time_before = int(round(time.time() * 1000))
         # # After this call, the nano will leave the origin
         # transaction.transaction_hash_sending = rpc_origin_node.send(
@@ -313,7 +313,7 @@ def send_receive_block_async(transaction, rpc_destination_node):
 
     try:
         logger.info("Transaction for send block status before_send")
-        account_info = rpc_destination_node.account_info(transaction.origin.address, representative=True)
+        account_info = rpc_destination_node.account_info(transaction.destination.address, representative=True)
         time_before = int(round(time.time() * 1000))
         # transaction.transaction_hash_receiving = rpc_destination_node.receive(
         #     wallet=transaction.destination.wallet.wallet_id,
@@ -537,10 +537,8 @@ def create_and_process(transaction, account_info, type):
 
         try:
             response = requests.post(node_url, headers=headers, data=json.dumps(block_for_proccessing))
-            response = json.loads(response.text)
-            logger.info("create_and_process_send response from post %s", response)
-            logger.info("block %s", block_for_proccessing)
-            hash_value = response['hash']
+            response_json = json.loads(response.text)
+            hash_value = response_json['hash']
 
             if type == "send":
                 transaction.transaction_hash_sending = hash_value
