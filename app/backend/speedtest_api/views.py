@@ -149,7 +149,6 @@ def send_batch_transactions(request):
         return JsonResponse({'message': 'Batch ' + str(batch_id) + ' not found.'}, status=404)
 
     else:
-
         count = 0 ## Must retry here to take threading and database lag into account
         transactions_queue = Queue()
         while not len(list(transactions_queue.queue)) and count < 3:

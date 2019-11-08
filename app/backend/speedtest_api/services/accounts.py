@@ -203,7 +203,7 @@ def validate_or_regenerate_PoW(account):
             wait_on_PoW += 1
             account = get_account(account.address)
             valid_PoW = validate_PoW(account)
-            time.sleep(.5)
+            time.sleep(1)
 
     ##Still no dPoW....
     if not valid_PoW:
@@ -221,6 +221,7 @@ def validate_PoW(account):
     """
 
     if not account.POW:
+        logger.error('PoW empty %s' % account.POW)
         return False
 
     valid_PoW = True
@@ -232,6 +233,10 @@ def validate_PoW(account):
     except Exception as e:
         logger.exception('PoW invalid during validate_PoW %s' % str(e))
         valid_PoW = False
+
+    if not valid_PoW:
+        logger.error('PoW invalid work %s frontier %s' % (account.POW, frontier))
+
     return valid_PoW
 
 def check_account_balance_async(account):
@@ -261,3 +266,11 @@ def check_account_balance_async(account):
 
     account.save()
     account.unlock()
+
+def clear_all_POW():
+    """
+    Clear all POW for regeneration
+    :return:
+    """
+    qs = models.Account.objects.all()
+    qs.update(POW=None)
