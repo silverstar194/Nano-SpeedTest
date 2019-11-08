@@ -251,7 +251,7 @@ def send_transaction(transaction):
         roundtrip_time = time_after - time_before
 
         # Start timing once block is published to node and account for time on trip back
-        transaction.start_send_timestamp = int(round(time.time() * 1000)) - roundtrip_time/2
+        transaction.start_send_timestamp = int(round(time.time() * 1000)) - (roundtrip_time * .75)
 
         logger.info("Transaction in status send to node %s " % transaction.transaction_hash_sending )
         transaction.POW_send = transaction.origin.POW
@@ -331,10 +331,9 @@ def send_receive_block_async(transaction, rpc_destination_node):
         time_after = int(round(time.time() * 1000))
 
         roundtrip_time = time_after - time_before
-        transaction.start_receive_timestamp = int(round(time.time() * 1000)) - roundtrip_time/2
+        transaction.start_receive_timestamp = int(round(time.time() * 1000)) - (roundtrip_time * .75)
 
         transaction.POW_receive = transaction.destination.POW
-        transaction.save()
     except nano.rpc.RPCException as e:
         ##Unlock accounts
         logger.error("RPCException two %s" % e)
@@ -450,7 +449,7 @@ def get_transaction(id):
     """
 
     try:
-        return models.Transaction.objects.get(id=id)
+        return models.Transaction.objects.get(id=id).prefetch_related()
     except models.Transaction.DoesNotExist:
         return None
     except MultipleObjectsReturned:
@@ -540,7 +539,6 @@ def create_and_process(transaction, account_info, type):
 
             transaction.save()
         except Exception as E:
-            time.sleep(.5)
             logger.exception("create_and_process_send had retry on process %s of 4" % (count))
             count += 1
             if count >= 4:
