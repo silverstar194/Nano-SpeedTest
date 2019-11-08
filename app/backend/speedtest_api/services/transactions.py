@@ -229,7 +229,7 @@ def send_transaction(transaction):
 
     try:
         logger.info("Transaction for send block status before_send")
-        account_info = rpc_origin_node.account_info(transaction.destination.address, representative=True)
+        account_info = rpc_origin_node.account_info(transaction.origin.address, representative=True)
         time_before = int(round(time.time() * 1000))
         # # After this call, the nano will leave the origin
         # transaction.transaction_hash_sending = rpc_origin_node.send(
@@ -251,7 +251,7 @@ def send_transaction(transaction):
         roundtrip_time = time_after - time_before
 
         # Start timing once block is published to node and account for time on trip back
-        transaction.start_send_timestamp = int(round(time.time() * 1000)) - roundtrip_time/2
+        transaction.start_send_timestamp = int(round(time.time() * 1000)) - (roundtrip_time * .75)
 
         logger.info("Transaction in status send to node %s " % transaction.transaction_hash_sending )
         transaction.POW_send = transaction.origin.POW
@@ -298,11 +298,8 @@ def send_receive_block_async(transaction, rpc_destination_node):
     @param transaction: Managed transaction
     """
 
-    block_hash = transaction.transaction_hash_sending
-
     transaction.PoW_cached_send = True
     pre_validation_work = transaction.destination.POW
-
     if not validate_or_regenerate_PoW(transaction.destination):
         logger.error('Total failure of dPoW. Aborting transaction account %s' % transaction.destination.address)
         transaction.origin.unlock()
@@ -315,8 +312,8 @@ def send_receive_block_async(transaction, rpc_destination_node):
         transaction.PoW_cached_send = False
 
     try:
-        logger.info("Transaction for send block status before_send")
-        account_info = rpc_destination_node.account_info(transaction.origin.address, representative=True)
+        logger.info("Transaction for receive block status before_receive")
+        account_info = rpc_destination_node.account_info(transaction.destination.address, representative=True)
         time_before = int(round(time.time() * 1000))
         # transaction.transaction_hash_receiving = rpc_destination_node.receive(
         #     wallet=transaction.destination.wallet.wallet_id,
@@ -334,10 +331,9 @@ def send_receive_block_async(transaction, rpc_destination_node):
         time_after = int(round(time.time() * 1000))
 
         roundtrip_time = time_after - time_before
-        transaction.start_receive_timestamp = int(round(time.time() * 1000)) - roundtrip_time/2
+        transaction.start_receive_timestamp = int(round(time.time() * 1000)) - (roundtrip_time * .75)
 
         transaction.POW_receive = transaction.destination.POW
-        transaction.save()
     except nano.rpc.RPCException as e:
         ##Unlock accounts
         logger.error("RPCException two %s" % e)
@@ -360,22 +356,12 @@ def send_receive_block_async(transaction, rpc_destination_node):
         transaction.destination.unlock()
         logger.exception('Transaction timing_receive failed, transaction.id: %s, error: %s' % (str(transaction.id), str(e)))
 
-    ## Check node didn't return all "000000..."
-    frontier = transaction.transaction_hash_receiving
-    count = 0
-    while re.match("^[0]+$", frontier) and count < 3:
-        count += 1
-        time.sleep(1) ## Allow frontier to clear in node
-        logger.error('Node returned all zeros acccount: %s. try %s of 3' % (transaction.destination.address, count))
-        frontier = rpc_destination_node.frontiers(account=transaction.destination.address, count=1)[transaction.destination.address]
-
-    transaction.transaction_hash_receiving = frontier
+    transaction.transaction_hash_receiving = hash_value
     transaction.destination.POW = None
 
     transaction.destination.save()
     transaction.save()
-
-    POWService.enqueue_account(address=transaction.destination.address, frontier=frontier)
+    POWService.enqueue_account(address=transaction.destination.address, frontier=transaction.transaction_hash_receiving)
 
 
 def simple_send(from_account, to_address, amount, generate_PoW=True):
@@ -463,7 +449,7 @@ def get_transaction(id):
     """
 
     try:
-        return models.Transaction.objects.get(id=id)
+        return models.Transaction.objects.get(id=id).prefetch_related()
     except models.Transaction.DoesNotExist:
         return None
     except MultipleObjectsReturned:
@@ -540,10 +526,8 @@ def create_and_process(transaction, account_info, type):
 
         try:
             response = requests.post(node_url, headers=headers, data=json.dumps(block_for_proccessing))
-            response = json.loads(response.text)
-            logger.info("create_and_process_send response from post %s", response)
-            logger.info("block %s", block_for_proccessing)
-            hash_value = response['hash']
+            response_json = json.loads(response.text)
+            hash_value = response_json['hash']
 
             if type == "send":
                 transaction.transaction_hash_sending = hash_value
@@ -555,8 +539,8 @@ def create_and_process(transaction, account_info, type):
 
             transaction.save()
         except Exception as E:
-            time.sleep(.5)
             logger.exception("create_and_process_send had retry on process %s of 4" % (count))
+            count += 1
             if count >= 4:
                 return sent_successful
 
