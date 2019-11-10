@@ -3,9 +3,10 @@
 body,
 html {
   height: 100%;
-  font-family: 'Rubik', sans-serif;
+  font-family: 'Mukta', sans-serif;
   font-weight: 300;
   font-size: 16px;
+  margin: 0;
 }
 
 p {
@@ -22,10 +23,8 @@ table {
 }
 
 td {
-  padding-top: 5px;
-  padding-bottom: 0px;
-  padding-right: 0px;
-  line-height: 23px;
+  padding: 15px 0 5px 0;
+  line-height: 150%;
   color: #8D8D8D;
   text-align: center;
   white-space: nowrap;
@@ -37,8 +36,8 @@ td {
 tr {
   text-align: left;
   color: #8D8D8D;
-  font-size: 16px;
-  line-height: 16px;
+  font-size: 14px;
+  line-height: 14px;
   font-weight: normal;
   min-width: 50px;
 }
@@ -48,11 +47,12 @@ th {
   font-weight: bold;
   padding-bottom: 5px;
   line-height: 30px;
-  color: #D1D0D0;
+  color: #a7a7a7;
   min-width: 100px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  letter-spacing: 2px;
 }
 
 /* Global Components */
@@ -129,6 +129,10 @@ th {
   border-bottom: 1px solid #E9E9E9;
 }
 
+td {
+  text-align: left;
+}
+
 .completed {
   background-color: gray;
   background: #F5F5F5;
@@ -146,11 +150,13 @@ th {
 .active-one {
   display: inline-block;
   color: #EA891F;
+  text-transform: uppercase;
 }
 
 .active-two {
   display: inline-block;
   color: #4A90E2;
+  text-transform: uppercase;
 }
 
 .past-transactions-table {
@@ -159,8 +165,8 @@ th {
 .past__transactions_title__wrapper {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
-  height: 50px;
-  border-radius: 5px;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 .your-transations-title {
@@ -168,6 +174,8 @@ th {
   font-size: 32px;
   line-height: 53px;
   font-weight: bold;
+  margin-top: 30px;
+  margin-bottom: 20px;
 }
 
 .past-transations-title {
@@ -182,16 +190,15 @@ th {
   display: grid;
   grid-column: 3;
   justify-self: end;
-  padding-right: 29px;
   line-height: 53px;
   color: #AEAEAE;
+  font-size: 16px;
 }
 
 .transactions-table {}
 
 .ad__text {
-  padding-left: 10px;
-  font-size: 20px;
+  font-size: 14px;
   color: white;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -200,6 +207,8 @@ th {
 
 .ad__community__link {
   text-align: right;
+  font-size:12px;
+  font-weight:500;
   padding-right: 10px;
   color: white;
   text-overflow: ellipsis;
@@ -214,6 +223,7 @@ th {
   align-content: space-around;
   background: #4A90E2;
   height: 50px;
+  padding: 0 30px;
   border-radius: 5px;
 }
 
@@ -223,6 +233,8 @@ th {
   width: 80%;
   height: 19%;
   min-height: 76px;
+  align-self: center;
+  margin: 10px auto;
 }
 
 .transaction-box__choice__header__text {
@@ -230,27 +242,34 @@ th {
   grid-column-end: 4;
   color: #D1D0D0;
   font-weight: bold;
-  font-size: 18px;
+  font-size: 16px;
+  letter-spacing: 2px;
 }
 
 .transaction-box__choice__button {
+  display:flex;
+  align-items: center;
   text-align: center;
-  vertical-align: middle;
-  line-height: 40px;
-  align-self: center;
-  justify-self: center;
+  justify-content: center;
   width: 90%;
-  border: 1px solid #E9E9E9;
-  font-size: 20px;
-  border-radius: 5px;
   max-width: 150px;
-  max-height: 60px;
-  min-height: 40px;
+  border: 1px solid #E9E9E9;
+  border-radius: 5px;
+  height:38px;
   color: #717171;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  background-color:#FFF;
+  font-size:16px;
+  font-family: 'Mukta', sans-serif;
 }
+
+.transaction-box__choice__button[disabled] {
+  opacity: 0.5; 
+  cursor: not-allowed;
+}
+
 
 .selection-button-one {
   color: #EA891F;
@@ -266,18 +285,19 @@ th {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   width: 80%;
-  min-height: 76px;
+  align-self: center;
+  margin: 10px auto;
+
 }
 
 .transaction-box__text {
-  min-height: 73px;
   width: 80%;
-  margin-top: 25px;
   text-align: center;
   font-weight: bold;
   font-size: 20px;
   line-height: 33px;
   color: #1B204C;
+  margin: 15px auto;
 }
 
 .transaction-box__go__button {
@@ -291,6 +311,7 @@ th {
   line-height: 76px;
   font-weight: bold;
   color: #FFFFFF;
+  margin: 15px auto;
 }
 
 .grid-container {
@@ -316,6 +337,7 @@ th {
   background-color: #0F1121;
   transform: translateX(-110%);
   transition: all .6s ease-in-out;
+  z-index: 5;
 }
 
 .sidenav.active {
@@ -357,14 +379,12 @@ th {
 }
 
 .header__nanologo {
-  margin-left: 15px;
   min-height: 50px;
   min-width: 115px;
   background: #FFFFFF url(../img/nano_logo.png);
 }
 
 .header__exitbutton {
-  margin-right: 50px;
   width: 40px;
   height: 40px;
   min-height: 40px;
@@ -381,8 +401,8 @@ th {
   width: 100%;
   height: 40px;
   background: #FFFFFF;
-  text-align: center;
-  font-size: 20px;
+  text-align: left;
+  font-size: 16px;
   overflow: auto;
   line-height: 40px;
   display: inline;
@@ -396,24 +416,27 @@ th {
 
 .index-main-header__heading {
   color: #FFFFFF;
-  font-size: 30px;
+  font-size: 28px;
   line-height: 42px;
   font-weight: bold;
   text-align: center;
-  height: 171px;
+  height: 125px;
   padding-top: 45px;
-  padding-bottom: 22px;
+  padding-bottom: 25px;
+  align-items:center;
 }
 
 .index-main-header__transaction-box {
   display: grid;
   grid-template-columns: 1fr;
   background-color: white;
-  min-height: 390px;
+  min-height: 290px;
+  padding: 25px 10px;
   align-items: center;
   max-width: 750px;
   box-shadow: 20px 0px 40px rgba(0, 0, 0, 0.50);
   border-radius: 10px;
+  z-index:3;
 }
 
 .header__learnmorebutton {
@@ -426,8 +449,9 @@ th {
   text-align: center;
   font-weight: bold;
   vertical-align: middle;
-  font-size: 20px;
+  font-size: 14px;
   line-height: 40px;
+  text-transform: uppercase;
 }
 
 .header__learnmoretext__desktop {
@@ -443,8 +467,7 @@ th {
 
 .index-main {
   display: grid;
-  grid-template-rows: 95px 640fr 462fr 833fr;
-  min-height: 2192px;
+  grid-template-rows: 95px 640fr auto auto;
 }
 
 .faq-main {
@@ -467,7 +490,8 @@ th {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #FFFFFF
+  background-color: #FFFFFF;
+  padding: 10px;
 }
 
 .sidenav__list {
@@ -494,17 +518,15 @@ th {
 
 .index-main-area-one {
   display: grid;
-  background: #0F1121 url(../img/wave.png) no-repeat;
-  background-position: bottom;
-  background-size: contain;
+  background: #0F1121 ;
   padding-bottom: 60px;
 }
 
 .index-main-area-two {
   display: grid;
-  grid-template-rows: 114fr 348fr;
+  grid-template-rows: auto 348fr;
   margin: 0px;
-  padding: 20px;
+  padding: 50px;
   background-color: #FFFFFF;
   border: 1px solid #E2E2E2;
   background-color: white;
@@ -513,8 +535,28 @@ th {
 .index-main-area-three {
   display: grid;
   margin: 0px;
-  padding: 20px;
+  padding: 50px;
   background-color: #F9F9FB;
+}
+
+.index-wave {
+  position: relative;
+  display: inline-block;
+  margin-bottom: -70px;
+}
+
+.index-wave-1 {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+.index-wave-2 {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  z-index: 2;
 }
 
 .sidebar__logo {
@@ -539,50 +581,56 @@ th {
   }
   .transaction-box__choice__button__one__wrapper {
     grid-area: transaction-box__choice__button__one__wrapper;
-    width: 93%;
+    width: 100%;
     min-height: 76px;
     margin-left: 0;
+    align-self: center;
+    margin: 0 auto;
   }
   .index-main-header__heading {
     display: grid;
     color: #FFFFFF;
-    font-size: 40px;
+    font-size: 38px;
     min-height: 171px;
-    padding-bottom: 22px;
+    padding-bottom: 25px;
+    padding-top: 15px;
   }
   .transaction-box__choice__button__two__wrapper {
     grid-area: transaction-box__choice__button__two__wrapper;
-    width: 93%;
+    width: 100%;
     min-height: 76px;
     margin-left: 0;
+    align-self: center;
+    margin: 0 auto;
   }
   .transaction-box__text {
     grid-area: transaction-box__text;
-    min-height: 73px;
     width: 80%;
     font-size: 20px;
     line-height: 33px;
     color: #1B204C;
+    margin:0 auto;
   }
   .transaction-box__go__button {
     grid-area: transaction-box__go__button;
-    height: 250px;
-    width: 250px;
+    height: 200px;
+    width: 200px;
     align-items: center;
-    background-image: url(../img/Circle.png);
+    background-image: url(../img/Circle.svg);
     background-size: cover;
     background-color: #FFFFFF;
     color: rgba(0, 0, 0, 0.0);
+    border:none;
+    margin-left: 0;
+    cursor:pointer;
   }
-  .header__exitbutton {
-    margin-right: 83px;
-  }
+
   .header__learnmoretext__desktop {
     width: 100%;
     height: 40px;
     background: #FFFFFF;
     text-align: center;
-    font-size: 20px;
+    font-size: 14px;
     line-height: 40px;
     display: inline;
     padding-left: 8px;
@@ -592,6 +640,7 @@ th {
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     color: #AEAEAE;
+    text-align: left;
   }
   .header__exitbutton-close {
     color: #B8B8B8;
@@ -601,13 +650,15 @@ th {
   }
   .index-main-header__transaction-box {
     display: grid;
-    grid-template-columns: 325fr 375fr;
+    grid-template-columns: 190fr 375fr;
     grid-template-areas: "transaction-box__text transaction-box__text" "transaction-box__go__button transaction-box__choice__button__one__wrapper" "transaction-box__go__button transaction-box__choice__button__two__wrapper";
     background-color: white;
-    height: 390px;
+    height: 290px;
+    padding: 50px;
     border-radius: 5px;
     box-shadow: 20px 0px 40px rgba(0, 0, 0, 0.23);
     border-radius: 10px;
+    z-index: 3;
   }
   .sidenav__close-icon {
     visibility: hidden;

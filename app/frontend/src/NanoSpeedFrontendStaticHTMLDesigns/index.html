@@ -2,16 +2,13 @@
 <html>
    <head>
       <link rel="stylesheet" type="text/css" href="index.css">
-      <link href="https://fonts.googleapis.com/css?family=Rubik&display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css?family=Mukta&display=swap" rel="stylesheet">
       <script src="https://kit.fontawesome.com/d58c524d0b.js" crossorigin="anonymous"></script>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" crossorigin="anonymous"></script>
       <script type="text/javascript" src="index.js"></script>
    </head>
    <body>
       <div class="grid-container">
-         <div class="menu-icon">
-            <i class="fas fa-bars fa-2x"></i>
-         </div>
          <header class="header">
             <div class="header__nanologo"></div>
             <div class="header__learnmoretext__mobile">Nano is a next-generation cryptocurrency.</div>
@@ -43,6 +40,9 @@
                   <div class="general-navbar-item">FAQ</div>
                   <div class="general-navbar-item">Adverise</div>
                 </div>
+                <div class="menu-icon">
+                  <i class="fas fa-bars fa-2x"></i>
+               </div>
               </div>
             </div>
             <div class="index-main-area-one">
@@ -68,39 +68,73 @@
                      <div class="transaction-box__choice__button">Bangalore</div>
                   </div>
                </div>
+               <div class="index-wave">
+                  <div class="index-wave-1">
+                     <svg width="100%" height="172" viewBox="0 0 100% 172" fill="none">
+                        <path fill="rgba(234, 137, 31, 0.69)">
+                           <animate repeatCount="indefinite" fill="freeze" attributeName="d" dur="8s"
+                                    values="M0 25.9086C277 84.5821 433 65.736 720 25.9086C934.818 -3.9019 1214.06 -5.23669 1442 8.06597C2079 45.2421 2208 63.5007 2560 25.9088V171.91L0 171.91V25.9086Z;
+                        
+                                             M0 86.3149C316 86.315 444 159.155 884 51.1554C1324 -56.8446 1320.29 34.1214 1538 70.4063C1814 116.407 2156 188.408 2560 86.315V232.317L0 232.316V86.3149Z;
+                        
+                                             M0 53.6584C158 11.0001 213 0 363 0C513 0 855.555 115.001 1154 115.001C1440 115.001 1626 -38.0004 2560 53.6585V199.66L0 199.66V53.6584Z;
+                        
+                                             M0 25.9086C277 84.5821 433 65.736 720 25.9086C934.818 -3.9019 1214.06 -5.23669 1442 8.06597C2079 45.2421 2208 63.5007 2560 25.9088V171.91L0 171.91V25.9086Z;" />
+                        </path>
+                     </svg>
+                  </div>
+                  <div class="index-wave-2">
+                     <svg width="100%" height="172" viewBox="0 0 100% 172" fill="none">
+                        <path fill="#ea891f">
+                           <animate repeatCount="indefinite" fill="freeze" attributeName="d" dur="20s"
+                                    values="M0 25.9086C277 84.5821 433 65.736 720 25.9086C934.818 -3.9019 1214.06 -5.23669 1442 8.06597C2079 45.2421 2208 63.5007 2560 25.9088V171.91L0 171.91V25.9086Z;
+                        
+                                             M0 86.3149C316 86.315 444 159.155 884 51.1554C1324 -56.8446 1320.29 34.1214 1538 70.4063C1814 116.407 2156 188.408 2560 86.315V232.317L0 232.316V86.3149Z;
+                        
+                                             M0 53.6584C158 11.0001 213 0 363 0C513 0 855.555 115.001 1154 115.001C1440 115.001 1626 -38.0004 2560 53.6585V199.66L0 199.66V53.6584Z;
+                        
+                                             M0 25.9086C277 84.5821 433 65.736 720 25.9086C934.818 -3.9019 1214.06 -5.23669 1442 8.06597C2079 45.2421 2208 63.5007 2560 25.9088V171.91L0 171.91V25.9086Z;" />
+                        </path>
+                     </svg>
+                  </div>
+               </div>
             </div>
             <div class="index-main-area-two">
                <div class="ad__wrapper center-horizontally max-width">
                   <div class="ad__text">💥 Insert your Nano project here. Gain traction at a low cost. Support our servers with 90% discounted ad.</div>
-                  <div class="ad__community__link">AD</div>
+                  <div class="ad__community__link">Community AD</div>
                </div>
                <div class="your-transations-wrapper">
                   <div class="your-transations-title center-horizontally max-width">Your transactions</div>
                   <table class="transactions-table max-width">
-                     <tr>
-                        <th class="border_bottom">Status</th>
-                        <th class="border_bottom">Origin</th>
-                        <th class="border_bottom">Destination</th>
-                        <th class="border_bottom">Amount</th>
-                        <th class="border_bottom">Elapsed Time</th>
-                        <th class="border_bottom">Sending Block</th>
-                     </tr>
-                     <tr>
-                        <td><span class="completed">Completed</span></td>
-                        <td>New York</td>
-                        <td>Bangalore</td>
-                        <td>.009 NANO</td>
-                        <td>1.53s</td>
-                        <td>afgaadfasdga</td>
-                     </tr>
-                     <tr>
-                        <td><span class="completed">Completed</span></td>
-                        <td>New York</td>
-                        <td>Bangalore</td>
-                        <td>.005 NANO</td>
-                        <td>1.30s</td>
-                        <td>afgaadfasdga</td>
-                     </tr>
+                     <thead>
+                        <tr>
+                           <th class="border_bottom">Status</th>
+                           <th class="border_bottom">Origin</th>
+                           <th class="border_bottom">Destination</th>
+                           <th class="border_bottom">Amount</th>
+                           <th class="border_bottom">Elapsed Time</th>
+                           <th class="border_bottom">Sending Block</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td class="align-left"><span class="completed">Completed</span></td>
+                           <td>New York</td>
+                           <td>Bangalore</td>
+                           <td>.009 NANO</td>
+                           <td>1.53s</td>
+                           <td>afgaadfasdga</td>
+                        </tr>
+                        <tr>
+                           <td ><span class="completed">Completed</span></td>
+                           <td>New York</td>
+                           <td>Bangalore</td>
+                           <td>.005 NANO</td>
+                           <td>1.30s</td>
+                           <td>afgaadfasdga</td>
+                        </tr>
+                     </tbody>
                   </table>
                </div>
             </div>
@@ -128,6 +162,62 @@
                         <td>Bangalore</td>
                         <td>.004 NANO</td>
                         <td>1.34s</td>
+                        <td>afgaadfasdga</td>
+                     </tr>
+                     <tr>
+                        <td>01/01/2019 10:42</td>
+                        <td>New York</td>
+                        <td>Bangalore</td>
+                        <td>.001 NANO</td>
+                        <td>1.32s</td>
+                        <td>afgaadfasdga</td>
+                     </tr>
+                     <tr>
+                        <td>01/01/2019 10:42</td>
+                        <td>New York</td>
+                        <td>Bangalore</td>
+                        <td>.001 NANO</td>
+                        <td>1.32s</td>
+                        <td>afgaadfasdga</td>
+                     </tr>
+                     <tr>
+                        <td>01/01/2019 10:42</td>
+                        <td>New York</td>
+                        <td>Bangalore</td>
+                        <td>.001 NANO</td>
+                        <td>1.32s</td>
+                        <td>afgaadfasdga</td>
+                     </tr>
+                     <tr>
+                        <td>01/01/2019 10:42</td>
+                        <td>New York</td>
+                        <td>Bangalore</td>
+                        <td>.001 NANO</td>
+                        <td>1.32s</td>
+                        <td>afgaadfasdga</td>
+                     </tr>
+                     <tr>
+                        <td>01/01/2019 10:42</td>
+                        <td>New York</td>
+                        <td>Bangalore</td>
+                        <td>.001 NANO</td>
+                        <td>1.32s</td>
+                        <td>afgaadfasdga</td>
+                     </tr>
+                     <tr>
+                        <td>01/01/2019 10:42</td>
+                        <td>New York</td>
+                        <td>Bangalore</td>
+                        <td>.001 NANO</td>
+                        <td>1.32s</td>
+                        <td>afgaadfasdga</td>
+                     </tr>
+                     <tr>
+                        <td>01/01/2019 10:42</td>
+                        <td>New York</td>
+                        <td>Bangalore</td>
+                        <td>.001 NANO</td>
+                        <td>1.32s</td>
                         <td>afgaadfasdga</td>
                      </tr>
                      <tr>
