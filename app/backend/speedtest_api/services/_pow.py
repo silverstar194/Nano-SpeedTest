@@ -97,26 +97,12 @@ class POWService:
             except Exception as e:
                 logger.exception('dPoW failure for hash %s: %s try %s of 4' % (hash_value, str(e), i))
                 if i == 4:
-                    logger.error('dPoW failure account %s' % address)
+                    logger.exception('dPoW failure account %s' % address)
             time.sleep(.5)
-
-        ## Moved PoW to nodes as work peers
-        # for i in range(5):
-        #     try:
-        #         POW = rpc_node.work_generate(hash)
-        #         break
-        #     except Exception as e:
-        #         logger.error('Node work_generate error: %s try %s of 4' % (e, i))
-        #         time.sleep(30)
-        #         if i == 4:
-        #             logger.error('dPoW failure account %s unlocked without PoW' % address)
-        #             account.unlock()
-        
-        # Add third POW that cannot fail (if it does our account object becomes broken)
 
         if POW is None:
             account.unlock()
-            logger.error('dPoW get failure account %s unlocked without PoW' % address)
+            logger.exception('dPoW get failure account %s unlocked without PoW' % address)
             raise Exception()
 
         return POW
@@ -142,7 +128,7 @@ class POWService:
         if res.status_code == 200:
             return res.json()
         else:
-            logger.error('dPoW Status %s %s' % (res.status_code, res.json()))
+            logger.exception('dPoW Status %s %s' % (res.status_code, res.json()))
             raise Exception()
 
     @classmethod
@@ -162,11 +148,10 @@ class POWService:
                         account.save()
                         account.unlock()
                     except Exception as e:
-                        logger.error('Exception in POW thread: %s ' % e)
-                        logger.error('dPoW failure account %s unlocked without PoW' % address)
+                        logger.exception('Exception in POW thread: %s ' % e)
+                        logger.exception('dPoW failure account %s unlocked without PoW' % address)
                         account.unlock()  ## Prevent leaks
 
-                # Run this every second
                 time.sleep(.1)
         except Exception as e:
             logger.error('dPoW failure account %s' % e)
@@ -230,7 +215,7 @@ class POWService:
                 POWService.enqueue_account(address=account.address, frontier=frontier, urgent=urgent)
                 logger.info('Generating PoW on start up address %s frontier %s urgent %s' % (account.address, frontier, urgent))
             except Exception as e:
-                logger.error('Account %s dPoW enqueuing error %s' % str(e))
+                logger.exception('Account %s dPoW enqueuing error %s' % str(e))
 
     @classmethod
     def POW_accounts(cls, daemon=True):
