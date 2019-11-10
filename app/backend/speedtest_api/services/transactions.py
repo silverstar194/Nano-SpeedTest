@@ -68,7 +68,7 @@ def new_transaction_random(batch):
             accounts_list.append(account)
 
     if len(accounts_list) == 0:
-        logger.error("No accounts for origin.")
+        logger.exception("No accounts for origin.")
         raise NoAccountsException()
 
     origin = random.choice(accounts_list)
@@ -80,7 +80,7 @@ def new_transaction_random(batch):
             account_destinations.append(account)
 
     if len(account_destinations) == 0:
-        logger.error("No accounts for destination.")
+        logger.exception("No accounts for destination.")
         raise NoAccountsException()
 
     destination = random.choice(account_destinations)
@@ -136,7 +136,7 @@ def new_transaction(origin_account, destination_account, amount, batch):
     """
 
     if amount < 0:
-        logger.error("Cannot send negative amount %s." % amount)
+        logger.exception("Cannot send negative amount %s." % amount)
         raise ValueError("Amount sent must be positive.")
 
     ##Lock origin and destination accounts
@@ -169,38 +169,6 @@ def send_transaction(transaction):
     @raise: NoIncomingBlocksException: Incoming block not found on destination node. This will lead to invalid POW and balance in the destination account if not handled
     @raise: TooManyIncomingBlocksException: Incoming block not found on destination node. This will lead to invalid POW and balance in the destination account if not handled
     """
-    ##
-    # Validation was removed to increase speed of response.
-    ##
-    # # Do some origin balance checking
-    # origin_balance = rpc_origin_node.account_balance(account=transaction.origin.address)['balance']
-    # if (origin_balance != transaction.origin.current_balance):
-    #     transaction.origin.current_balance = origin_balance
-    #     transaction.origin.save()
-    #     transaction.save()
-    #     logger.info("AccountBalanceMismatch %s" % transaction.origin.address)
-    
-    # # Make sure the wallet contains the account address
-    # if (not rpc_origin_node.wallet_contains(wallet=transaction.origin.wallet.wallet_id, account=transaction.origin.address)):
-    #     ##Unlock accounts
-    #     transaction.origin.unlock()
-    #     transaction.destination.unlock()
-    #     logger.info("AddressDoesNotExistException %s" % transaction.origin.address)
-    #     raise AddressDoesNotExistException(
-    #         wallet=transaction.origin.wallet,
-    #         account=transaction.origin.address
-    #     )
-    #
-    # if (not rpc_destination_node.wallet_contains(wallet=transaction.destination.wallet.wallet_id, account=transaction.destination.address)):
-    #     ##Unlock accounts
-    #     transaction.origin.unlock()
-    #     transaction.destination.unlock()
-    #     logger.info("AddressDoesNotExistException %s" % transaction.destination.address)
-    #     raise AddressDoesNotExistException(
-    #         wallet=transaction.destination.wallet,
-    #         account=transaction.destination.address
-    #     )
-
 
     rpc_origin_node = nano.rpc.Client(transaction.origin.wallet.node.URL)
     rpc_destination_node = nano.rpc.Client(transaction.destination.wallet.node.URL)
@@ -231,18 +199,10 @@ def send_transaction(transaction):
         logger.info("Transaction for send block status before_send")
         account_info = rpc_origin_node.account_info(transaction.origin.address, representative=True)
         time_before = int(round(time.time() * 1000))
-        # # After this call, the nano will leave the origin
-        # transaction.transaction_hash_sending = rpc_origin_node.send(
-        #     wallet=transaction.origin.wallet.wallet_id,
-        #     source=transaction.origin.address,
-        #     destination=transaction.destination.address,
-        #     amount=int(transaction.amount),
-        #     work=transaction.origin.POW,
-        #     id=transaction.id
-        # )
 
         ##Create and process block work around
         sent_done, hash_value = create_and_process(transaction, account_info, "send")
+
         if not sent_done:
             logger.error("Error in create and process send")
             raise nano.rpc.RPCException()
@@ -262,7 +222,7 @@ def send_transaction(transaction):
         transaction.origin.POW = None
 
     except nano.rpc.RPCException as e:
-        logger.error("RPCException one %s" % e)
+        logger.exception("RPCException one %s" % e)
         ##Unlock accounts
         transaction.origin.unlock()
         transaction.destination.unlock()
@@ -315,17 +275,11 @@ def send_receive_block_async(transaction, rpc_destination_node):
         logger.info("Transaction for receive block status before_receive")
         account_info = rpc_destination_node.account_info(transaction.destination.address, representative=True)
         time_before = int(round(time.time() * 1000))
-        # transaction.transaction_hash_receiving = rpc_destination_node.receive(
-        #     wallet=transaction.destination.wallet.wallet_id,
-        #     account=transaction.destination.address,
-        #     work=transaction.destination.POW,
-        #     block=block_hash,
-        # )
 
         ##Create and process block work around
         receive_done, hash_value = create_and_process(transaction, account_info, "receive")
         if not receive_done:
-            logger.error("Error in create and process receive")
+            logger.exception("Error in create and process receive")
             raise nano.rpc.RPCException()
 
         time_after = int(round(time.time() * 1000))
@@ -336,7 +290,7 @@ def send_receive_block_async(transaction, rpc_destination_node):
         transaction.POW_receive = transaction.destination.POW
     except nano.rpc.RPCException as e:
         ##Unlock accounts
-        logger.error("RPCException two %s" % e)
+        logger.exception("RPCException two %s" % e)
 
         transaction.origin.unlock()
         transaction.destination.unlock()
@@ -396,12 +350,12 @@ def simple_send(from_account, to_address, amount, generate_PoW=True):
             while not from_account.POW and count < 5: # Allows newly enqueued PoW to clear
                 count += 1
                 from_account = get_account(from_account.address)
-                time.sleep(2)
+                time.sleep(.2)
 
         from_account.current_balance = from_account.current_balance - amount
         from_account.save()
     except Exception as e:
-        logger.error("Error in simple_send account %s to account %s %s", from_account.address, to_address, str(e))
+        logger.exception("Error in simple_send account %s to account %s %s", from_account.address, to_address, str(e))
 
     from_account.unlock()
 
