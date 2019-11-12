@@ -472,8 +472,7 @@ td {
 
 .faq-main {
   display: grid;
-  grid-template-rows: 95px 140px 350fr 290fr 348fr 180fr 675fr;
-  min-height: 2600px;
+  grid-template-rows: 95px 140px auto;
 }
 
 .footer {
@@ -679,9 +678,7 @@ td {
 
 .faq-main {
   display: grid;
-  grid-template-rows: 95px 140px 360fr 290fr 348fr minmax(200px, 400fr) 675fr;
-  min-height: 2900px;
-  overflow: scroll;
+  grid-template-rows: 95px 140px auto;
 }
 
 .faq-main-area-one {
@@ -694,6 +691,7 @@ td {
   line-height: 53px;
   color: #000000;
   font-weight: bold;
+  padding-bottom:20px;
 }
 
 .faq-header-two {
@@ -701,6 +699,7 @@ td {
   font-size: 18px;
   line-height: 30px;
   color: #000000;
+  padding-bottom:10px;
 }
 
 .faq-main-area-two {
@@ -731,31 +730,34 @@ td {
 
 .faq-main-area-five {
   display: grid;
-  grid-template-rows: 1fr 1fr;
   background-color: #4A90E2;
+  padding: 50px 0 25px 0;
+  margin-top: 50px;
 }
 
 .social-header {
   color: #FFFFFF;
   font-weight: 600;
-  font-size: 18px;
+  font-size: 14px;
   line-height: 23px;
   display: flex;
   justify-content: center;
   align-items: center;
+  letter-spacing:1px;
 }
 
 .social-icons {
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100px;
 }
 
 .social-icon-one {
   display: inline-block;
   width: 25%;
   height: 100%;
-  background: url(../img/Reddit.png) no-repeat left;
+  background: url(img/Reddit.svg) no-repeat left;
   background-size: contain;
 }
 
@@ -763,7 +765,7 @@ td {
   display: inline-block;
   width: 25%;
   height: 100%;
-  background: url(../img/Discord.png) no-repeat left;
+  background: url(img/Discord.svg) no-repeat left;
   background-size: contain;
 }
 
@@ -771,7 +773,7 @@ td {
   display: inline-block;
   width: 25%;
   height: 100%;
-  background: url(../img/NanoFoundation.png) no-repeat left;
+  background: url(img/Facebook.svg) no-repeat left;
   background-size: contain;
 }
 
@@ -779,12 +781,12 @@ td {
   display: inline-block;
   width: 25%;
   height: 100%;
-  background: url(../img/Twitter.png) no-repeat left;
+  background: url(img/Twitter.svg) no-repeat left;
   background-size: contain;
 }
 
 .faq-main-area-six {
-  margin-top: 4%;
+  margin-top: 50px;
   background-color: #FFFFFF;
   background-color: #FFFFFF;
   align-items: center;
@@ -1071,6 +1073,7 @@ td {
   line-height: 53px;
   color: black;
   margin-top: 4%;
+  padding-bottom:20px;
 }
 
 .partner-header-text {
@@ -1083,6 +1086,7 @@ td {
   font-weight: 600;
   font-size: 18px;
   line-height: 30px;
+  padding-bottom:20px;
 }
 
 .partner-button-lg {
