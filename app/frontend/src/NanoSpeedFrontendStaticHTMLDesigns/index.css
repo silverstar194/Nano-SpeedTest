@@ -945,8 +945,7 @@ td {
 
 .usenano-main {
   display: grid;
-  grid-template-rows: 95px 140px 138fr 780fr;
-  min-height: 1255px;
+  grid-template-rows: 95px 140px auto 780fr;
 }
 
 .usenano-main-area-two {
@@ -954,27 +953,27 @@ td {
 }
 
 .usenano-partner-info-wrapper {
-  display: grid;
+  display: flex;
   height: 100%;
-  grid-template-columns: 608fr auto minmax(140px, 206fr);
-  grid-gap: 10px;
-  grid-template-areas: "usenano__text usenano__button";
-  align-content: center;
+  align-items: center;
+  flex-direction:column;
+  justify-content: space-evenly;
+  text-align:center;
+  padding: 20px 0;
 }
 
 .usenano__text {
-  display: grid;
-  grid-area: usenano__text;
+  display: flex;
+  align-items: center;
   line-height: 23px;
   padding-left: 20px;
   color: #707070;
+  width: 100%;
+  margin-right: 35px;
 }
 
 .usenano__button {
-  grid-area: usenano__button;
-  grid-column: 3;
   height: 40px;
-
   font-weight: bold;
   padding-top: 6px;
   line-height: 23px;
@@ -984,10 +983,13 @@ td {
   text-align: center;
   text-transform: uppercase;
   color: #4A90E2;
-  width: 100%;
+  width: 360px;
+  padding: 0 0px;
   position: relative;
-  top: 50%;
-  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
 }
 
 .usenano-main-area-three {
@@ -995,7 +997,9 @@ td {
   margin-top: 30px;
 }
 
-.usenano-main-three-wrapper-outer {}
+.usenano-main-three-wrapper-outer {
+  margin-bottom: 30px;
+}
 
 .usenano-main-area-three-wrapper {
   display: grid;
@@ -1004,8 +1008,9 @@ td {
 }
 
 .usenano-card {
-  display: grid;
-  height: 291px;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 300px;
   background: #FFFFFF;
   border: 1px solid #E9E9E9;
   box-sizing: border-box;
@@ -1030,7 +1035,13 @@ td {
 }
 
 .usernano-card-bottom {
-  height: 200px;
+  height: auto;
+  min-height: 170px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-content: stretch;
 }
 
 .card-img-header {
@@ -1040,19 +1051,45 @@ td {
 }
 
 .usernano-card-title {
-  margin-top: 13px;
-  margin-left: 23px;
   font-weight: 600;
   font-size: 18px;
   line-height: 30px;
+  align-self: flex-start;
+  margin-top: auto;
+  flex:0 1 auto;
 }
 
 .usernano-card-text {
 
   line-height: 23px;
-  margin-left: 23px;
   color: #707070;
+  flex:1 1 auto;
 }
+
+a.usernano-card-link {
+  color: #4A90E2;
+  font-size:14px;
+  font-weight:600;
+  text-decoration: none;
+  flex: 0 1 auto;
+}
+
+@media screen and (min-width: 1024px) {
+  .usenano-partner-info-wrapper {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    align-items: center;
+    justify-content: space-around;
+    text-align:left;
+    padding: 50px 0;
+  }
+  .usenano__button {
+    margin-top: 0;
+  }
+}
+
+
 
 /* Partner.html */
 
