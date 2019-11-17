@@ -1,0 +1,26 @@
+version: "3"
+services:
+  app:
+    restart: always
+    build: . # Current directory!
+    command: "gunicorn project.wsgi:application --bind 0.0.0.0:8000"
+    ports:
+      - 8000:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    environment:
+      - NANO_ST__DPOW__API_USER=${NANO_ST__DPOW__API_USER}
+      - NANO_ST__DPOW__API_KEY=${NANO_ST__DPOW__API_KEY}
+      - NANO_ST__SECRET_KEY=${NANO_ST__SECRET_KEY}
+      - NANO_ST__DPOW__ENDPOINT=${NANO_ST__DPOW__ENDPOINT}
+      - NANO_ST__DB__NAME=${NANO_ST__DB__NAME}
+      - NANO_ST__DB__USER=${NANO_ST__DB__USER}
+      - NANO_ST__COST_PER_SLOT=${NANO_ST__COST_PER_SLOT}
+      - NANO_ST__DB__PASSWORD=${NANO_ST__DB__PASSWORD}
+      - NANO_ST__DB__HOST=${NANO_ST__DB__HOST}
+      - NANO_ST__SENDGRID__API_KEY=${NANO_ST__SENDGRID__API_KEY}
+      - NANO_ST__ADMIN_EMAIL=${NANO_ST__ADMIN_EMAIL}
+      - NANO_ST__DB__SSL__CA__CERT=${NANO_ST__DB__SSL__CA__CERT} 
+
