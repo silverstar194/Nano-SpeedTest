@@ -117,6 +117,21 @@ th {
   justify-self: end;
 }
 
+.burger-menu {
+  display: grid;
+  grid-column: 4;
+  grid-row: 1;
+  visibility: visible;
+  height: 100px;
+  width: 100px;
+}
+
+.bars {
+  color: #FFFFFF;
+  font-size: 40px;
+  text-align: right;
+}
+
 .general-navbar-logo {
   display: grid;
   background: url(../img/nanospeed_logo.png);
@@ -126,13 +141,33 @@ th {
   justify-self: start;
 }
 
-.general-navbar-item {
+.general-navbar-item:link {
+  display: grid;
+  padding-left: 54px;
+  color: #FFFFFF;
+  text-decoration:none;
+  font-size: 16px;
+  font-weight: normal;
+  line-height: 44px;
+}
+
+.general-navbar-item:visited {
   display: inline-grid;
+  text-decoration:none;
   padding-left: 54px;
   color: #FFFFFF;
   font-size: 16px;
   font-weight: normal;
   line-height: 44px;
+}
+
+.general-navbar-item:hover {
+  background-color: rgba(255, 255, 255, .1);
+  color: orange;
+}
+
+.active:link {
+  color: green;
 }
 
 /* General Components */
@@ -459,22 +494,8 @@ th {
   padding-right: 20px;
 }
 
-.menu-icon {
-  position: fixed;
-  display: flex;
-  top: 5px;
-  left: 10px;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  z-index: 1;
-  cursor: pointer;
-  padding: 12px;
-  background-color: #B8B8B8;
-  opacity: .8;
-}
-
 .header__nanologo {
+  display: grid; 
   margin-left: 15px;
   min-height: 50px;
   min-width: 115px;
@@ -482,6 +503,7 @@ th {
 }
 
 .header__exitbutton {
+  display: grid; 
   margin-right: 50px;
   width: 40px;
   height: 40px;
@@ -565,9 +587,9 @@ th {
 }
 
 .header__learnmorebutton {
-  margin-right: 11px;
-  min-width: 150px;
-  min-height: 40px;
+  grid-column: 3;
+  width: 150px;
+  height: 40px;
   background: #F5F5F5;
   border-radius: 5px;
   color: #B8B8B8;
@@ -583,10 +605,6 @@ th {
 }
 
 /* Give every child element its grid name */
-
-.header {
-  grid-area: header;
-}
 
 .index-main {
   display: grid;
@@ -610,7 +628,14 @@ th {
   color: #C7C7C7;
 }
 
-.header,
+.header {
+  display: grid;
+  grid-template-columns: 130px auto 150px 40px;
+  grid-gap: 6px;
+  align-items: center;
+
+}
+
 .footer {
   display: flex;
   align-items: center;
@@ -681,6 +706,20 @@ th {
   .general-navbar-items {
     visibility: visible;
   }
+
+  .general-navbar-item:link {
+    display: inline-grid;
+  }
+
+  .general-navbar-item:hover {
+    color: orange;
+    background-color: #0F1121;
+  }
+
+  .burger-menu {
+    visibility: hidden;
+  }
+
   .menu-icon {
     visibility: hidden;
   }
@@ -723,6 +762,8 @@ th {
   }
   .header__exitbutton {
     margin-right: 83px;
+    float: right;
+    margin-right: 0;
   }
   .header__learnmoretext__desktop {
     width: 100%;

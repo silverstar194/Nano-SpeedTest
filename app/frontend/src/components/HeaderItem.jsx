@@ -13,12 +13,13 @@ const HeaderItem = ({activeTab, to, text}) => {
 	const active = (activeTab === to ? ' active' : '');
 	const styles = 'general-navbar-item' + active;
     return (
-		<div className={styles}>{text}</div>
+		 <Link className={styles} to={to} onClick={(e) => onSwitchTab(e, to, activeTab)}> {text} </Link>
+
     );
 };
 
 HeaderItem.propTypes = {
-	activeTab: PropTypes.string.isRequired,
+	activeTab: PropTypes.string,
 	to: PropTypes.string.isRequired,
 	text: PropTypes.string.isRequired
 };

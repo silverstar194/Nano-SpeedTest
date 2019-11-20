@@ -10,17 +10,33 @@ import HeaderItem from './HeaderItem';
  */
 const NavBar = ({location}) => {
 	const activeTab = location && location.pathname.substring(1);
+
+  function toggleClassName(el, className) {
+    if (el.classList.contains(className)) {
+      el.classList.remove(className);
+    } else {
+      el.classList.add(className);
+    }
+  }
+         
+  function toggleMenu(e) {
+     var x = document.getElementsByClassName("burger-menu");
+     var sideBar = document.getElementsByClassName("sidenav")[0]
+     toggleClassName(sideBar, 'active');
+  }
+
 	return (
       <Fragment>
       <div className="general-main-area-navbar">
         <div className="general-navbar center-horizontally max-width">
           <div className="general-navbar-logo"></div>
-          <div className="general-navbar-items">
-            <HeaderItem activeTab={activeTab} to='Global Statistic' text='Global Statistic' />
+          <ul className="general-navbar-items">
+            <HeaderItem activeTab={activeTab} to='Stats' text='Global Statistic' />
             <HeaderItem activeTab={activeTab} to='Use Nano' text='Use Nano' />
             <HeaderItem activeTab={activeTab} to='FAQ' text='FAQ' />
             <HeaderItem activeTab={activeTab} to='Adverise' text='Adverise' />
-          </div>
+          </ul>
+          <div className="burger-menu menu-icon" onClick={(e) => toggleMenu(e)}><i class="fas fa-bars bars"></i></div>
         </div>
       </div>
       </Fragment>
