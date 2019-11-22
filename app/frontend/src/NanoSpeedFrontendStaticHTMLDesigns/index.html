@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
    <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
       <link rel="stylesheet" type="text/css" href="index.css">
       <link href="https://fonts.googleapis.com/css?family=Mukta&display=swap" rel="stylesheet">
       <script src="https://kit.fontawesome.com/d58c524d0b.js" crossorigin="anonymous"></script>
@@ -106,7 +107,7 @@
                </div>
                <div class="your-transations-wrapper">
                   <div class="your-transations-title center-horizontally max-width">Your transactions</div>
-                  <table class="transactions-table max-width">
+                  <!--<table class="transactions-table max-width">
                      <thead>
                         <tr>
                            <th class="border_bottom">Status</th>
@@ -135,7 +136,37 @@
                            <td>afgaadfasdga</td>
                         </tr>
                      </tbody>
-                  </table>
+                  </table>-->
+                  <table role="table" class="max-width">
+                     <thead role="rowgroup">
+                       <tr role="row">
+                         <th role="columnheader">Status</th>
+                         <th role="columnheader">Origin</th>
+                         <th role="columnheader">Destination</th>
+                         <th role="columnheader">Amount</th>
+                         <th role="columnheader">Elapsed Time</th>
+                         <th role="columnheader">Sending Block</th>
+                       </tr>
+                     </thead>
+                     <tbody role="rowgroup">
+                       <tr role="row">
+                         <td role="cell"><span class="completed">Completed</span></td>
+                         <td role="cell">New York</td>
+                         <td role="cell">Bangalore</td>
+                         <td role="cell">.004 NANO</td>
+                         <td role="cell">1.34s</td>
+                         <td role="cell">afgaadfasdga</td>
+                       </tr>
+                       <tr role="row">
+                         <td role="cell"><span class="completed">Completed</span></td>
+                         <td role="cell">New York</td>
+                         <td role="cell">Bangalore</td>
+                         <td role="cell">.005 NANO</td>
+                         <td role="cell">1.30s</td>
+                         <td role="cell">afgaadfasdga</td>
+                       </tr>
+                     </tbody>
+                   </table>
                </div>
             </div>
             <div class="index-main-area-three">
@@ -144,7 +175,7 @@
                      <div class="past-transations-title">Past users transactions</div>
                      <div class="past__transactions__link">View All</div>
                   </div>
-                  <table class="past-transactions-table">
+                  <!--<table class="past-transactions-table">
                      <div class="table-title">
                         <tr>
                            <th class="border_bottom">Date</th>
@@ -229,7 +260,77 @@
                         <td>afgaadfasdga</td>
                      </tr>
                   </tbody>
-                  </table>
+                  </table>-->
+                  <table role="table">
+                     <thead role="rowgroup">
+                       <tr role="row">
+                         <th role="columnheader">Date</th>
+                         <th role="columnheader">Origin</th>
+                         <th role="columnheader">Destination</th>
+                         <th role="columnheader">Amount</th>
+                         <th role="columnheader">Elapsed Time</th>
+                         <th role="columnheader">Sending Block</th>
+                       </tr>
+                     </thead>
+                     <tbody role="rowgroup">
+                       <tr role="row">
+                         <td role="cell" class="date">01/01/2019 10:42</td>
+                         <td role="cell">New York</td>
+                         <td role="cell">Bangalore</td>
+                         <td role="cell">.004 NANO</td>
+                         <td role="cell">1.34s</td>
+                         <td role="cell">afgaadfasdga</td>
+                       </tr>
+                       <tr role="row">
+                        <td role="cell" class="date">01/01/2019 10:42</td>
+                        <td role="cell">New York</td>
+                         <td role="cell">Bangalore</td>
+                         <td role="cell">.005 NANO</td>
+                         <td role="cell">1.30s</td>
+                         <td role="cell">afgaadfasdga</td>
+                       </tr>
+                       <tr role="row">
+                        <td role="cell" class="date">01/01/2019 10:42</td>
+                        <td role="cell">New York</td>
+                        <td role="cell">Bangalore</td>
+                        <td role="cell">.005 NANO</td>
+                        <td role="cell">1.30s</td>
+                        <td role="cell">afgaadfasdga</td>
+                      </tr>
+                      <tr role="row">
+                        <td role="cell" class="date">01/01/2019 10:42</td>
+                        <td role="cell">New York</td>
+                        <td role="cell">Bangalore</td>
+                        <td role="cell">.005 NANO</td>
+                        <td role="cell">1.30s</td>
+                        <td role="cell">afgaadfasdga</td>
+                      </tr>
+                      <tr role="row">
+                        <td role="cell" class="date">01/01/2019 10:42</td>
+                        <td role="cell">New York</td>
+                        <td role="cell">Bangalore</td>
+                        <td role="cell">.005 NANO</td>
+                        <td role="cell">1.30s</td>
+                        <td role="cell">afgaadfasdga</td>
+                      </tr>
+                      <tr role="row">
+                        <td role="cell" class="date">01/01/2019 10:42</td>
+                        <td role="cell">New York</td>
+                        <td role="cell">Bangalore</td>
+                        <td role="cell">.005 NANO</td>
+                        <td role="cell">1.30s</td>
+                        <td role="cell">afgaadfasdga</td>
+                      </tr>
+                      <tr role="row">
+                        <td role="cell" class="date">01/01/2019 10:42</td>
+                        <td role="cell">New York</td>
+                        <td role="cell">Bangalore</td>
+                        <td role="cell">.005 NANO</td>
+                        <td role="cell">1.30s</td>
+                        <td role="cell">afgaadfasdga</td>
+                      </tr>
+                     </tbody>
+                   </table>
                </div>
           </div>
          </main>

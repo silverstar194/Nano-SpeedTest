@@ -534,7 +534,7 @@ td {
   display: grid;
   margin: 0px;
   padding: 50px;
-  background-color: #f9f9fb;
+  /*background-color: #f9f9fb;*/
 }
 
 .index-wave {
@@ -1306,3 +1306,72 @@ a.usernano-card-link {
     width: 50%;
   }
 }
+
+
+/* Table redesign */
+
+	@media
+	  only screen 
+    and (max-width: 760px), (min-device-width: 768px) 
+    and (max-device-width: 1024px)  {
+
+		table, thead, tbody, th, td, tr {
+			display: block;
+		}
+
+		thead tr {
+			position: absolute;
+			top: -9999px;
+			left: -9999px;
+		}
+
+    tr {
+      margin: 0 0 .5rem 0;
+    }
+      
+    tr:nth-child(odd) {
+      background: #fbfbfb;
+      padding: 20px;
+    }
+
+    tr:nth-child(even) {
+      background: #FFF;
+      padding: 20px;
+    }
+    
+		td {
+      border: none;
+      position: relative;
+      padding-left: 55%;
+      padding-top: 10px;
+      padding-bottom: 5px;
+		}
+
+		td:before {
+      position: absolute;
+      top: 10px;
+      left: 20px;
+      width: 100%;
+      padding-right: 10px;
+      text-transform: uppercase;
+      font-weight: bold;
+      color: #a7a7a7;
+      white-space: nowrap;
+      letter-spacing: 2px;
+    }
+
+    .completed {
+      background-color: transparent;
+      padding: 0;
+      margin: 0;
+      border: 0;
+    }
+    
+		td:nth-of-type(1):before { content: "Status"; }
+		td:nth-of-type(2):before { content: "Origin"; }
+		td:nth-of-type(3):before { content: "Destination"; }
+		td:nth-of-type(4):before { content: "Amount"; }
+		td:nth-of-type(5):before { content: "Elapsed Time"; }
+    td:nth-of-type(6):before { content: "Sending Block"; }
+    td.date:before { content: "Date"; }
+	}
