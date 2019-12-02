@@ -471,7 +471,8 @@ def create_and_process(transaction, account_info, type):
     create_block_response = json.loads(response.text)
     block_for_proccessing = {
         "action": "process",
-        "block": create_block_response['block']
+        "block": create_block_response['block'],
+        "watch_work": False
     }
 
     sent_successful = False
