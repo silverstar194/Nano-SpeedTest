@@ -45,30 +45,30 @@ class HistoricalDataView extends React.Component {
                     content="View statistics about past speed tests and transactions."
                  />
             </Helmet>
-             <main class="stats-main">
+             <main className="stats-main">
              <NavBar />
-            <div class="general-main-area-one">
-               <div class="general-header-main center-horizontally max-width">
+            <div className="general-main-area-one">
+               <div className="general-header-main center-horizontally max-width">
                   Global Statistics
                </div>
             </div>
-            <div class="stats-main-area-two">
-               <div class="stats-main-area-two-inner center-horizontally max-width">
-                  <div class="stats-box">
-                     <div class="statsbox__one">
-                        <div class="statsbox__title">Total Transactions</div>
-                        <div class="statsbox__value">{totalTransactions}</div>
+            <div className="stats-main-area-two">
+               <div className="stats-main-area-two-inner center-horizontally max-width">
+                  <div className="stats-box">
+                     <div className="statsbox__one">
+                        <div className="statsbox__title">Total Transactions</div>
+                        <div className="statsbox__value">{totalTransactions}</div>
                      </div>
-                     <div class="statsbox__two">
-                        <div class="statsbox__title">All-Time Median</div>
-                        <div class="statsbox__value">TODO</div>
+                     <div className="statsbox__two">
+                        <div className="statsbox__title">All-Time Median</div>
+                        <div className="statsbox__value">TODO</div>
                      </div>
-                     <div class="statsbox__three">
-                        <div class="statsbox__title">24 Hour Median</div>
-                        <div class="statsbox__value">{globalAverage.toFixed(3)}</div>
+                     <div className="statsbox__three">
+                        <div className="statsbox__title">24 Hour Median</div>
+                        <div className="statsbox__value">{globalAverage.toFixed(3)}</div>
                      </div>
                   </div>
-                  <div class="statsgraph">           {
+                  <div className="statsgraph">           {
                                 plotData && plotData.length ?
                                 <ScatterView plotData={plotData}/>
                                 : null
@@ -76,21 +76,21 @@ class HistoricalDataView extends React.Component {
                   </div>
                </div>
             </div>
-            <div class="stats-main-area-three max-width">
-               <div class="stats-main-area-three-inner">
-                  <div class="past__transactions_title__wrapper">
-                     <div class="past-transations-title">Past users transactions</div>
-                     <div class="past__transactions__link">View All</div>
+            <div className="stats-main-area-three max-width">
+               <div className="stats-main-area-three-inner">
+                  <div className="past__transactions_title__wrapper">
+                     <div className="past-transations-title">Past users transactions</div>
+                     <div className="past__transactions__link">View All</div>
                   </div>
-                  <table class="past-transactions-table">
-                     <div class="table-title">
+                  <table className="past-transactions-table">
+                     <div className="table-title">
                         <tr>
-                           <th class="border_bottom">Date</th>
-                           <th class="border_bottom">Origin</th>
-                           <th class="border_bottom">Destination</th>
-                           <th class="border_bottom">Amount</th>
-                           <th class="border_bottom">Elapsed Time</th>
-                           <th class="border_bottom">Sending Block</th>
+                           <th className="border_bottom">Date</th>
+                           <th className="border_bottom">Origin</th>
+                           <th className="border_bottom">Destination</th>
+                           <th className="border_bottom">Amount</th>
+                           <th className="border_bottom">Elapsed Time</th>
+                           <th className="border_bottom">Sending Block</th>
                         </tr>
                      </div>
                      <tr>
@@ -160,7 +160,7 @@ class HistoricalDataView extends React.Component {
                   </table>
                </div>
             </div>
-            <div class="stats-button-more">
+            <div className="stats-button-more">
                LEARN MORE
             </div>
          </main>

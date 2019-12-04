@@ -9,7 +9,7 @@ import NavBar from './NavBar';
 class MoreInfoPage extends Component {
     render() {
         return (
-            <div classNameName="MoreInfoPage">
+            <div className="MoreInfoPage">
              <Helmet>
                 <title>NanoSpeed.live - Learn more about Nano currency.</title>
                 <meta name="keywords" content="Nano,speed test,cryptocurrency,bitcoin,instant,feeless" />

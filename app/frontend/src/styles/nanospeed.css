@@ -4,6 +4,10 @@
     outline: 0 !important;
 }
 
+a:link {
+    text-decoration: none;
+}
+
 body,
 html {
   height: 100%;
@@ -584,6 +588,10 @@ td {
   text-transform: uppercase;
 }
 
+.header__learnmorebutton:hover {
+  background-color: lightgray;
+}
+
 .header__learnmoretext__desktop {
   display: none;
 }
@@ -699,6 +707,10 @@ td {
   transform: translateY(0);
 }
 
+.active {
+  color: orange;
+}
+
 /* Non-mobile styles, 1024px breakpoint */
 
 @media screen and (min-width: 1024px) {
@@ -774,6 +786,11 @@ td {
   .header__exitbutton-close {
     color: #b8b8b8;
   }
+
+  .header__exitbutton:hover {
+    background-color: lightgray;
+  }
+
   .header__learnmoretext__mobile {
     display: none;
   }

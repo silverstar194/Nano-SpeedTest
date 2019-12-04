@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router'; // provides access to the history and location
 import HeaderItem from './HeaderItem';
+import { Link } from 'react-router-dom';
 
 /**
  * location: has pathname to current url which is used on the tab
@@ -30,7 +31,7 @@ const Header = ({location}) => {
          <header className="header">
             <div className="header__nanologo"></div>
             <div className="header__learnmoretext__desktop">Nano is a next-generation cryptocurrency created in 2015. It's unique block-lattice structure enables fast, fee-less transactions over a secure, decentralized network.</div>
-            <div className="header__learnmorebutton">Learn More</div>
+            <Link className="header__learnmorebutton" to='Info' onClick={(e) => (function(e){e.preventDefault()})}>Learn More</Link>
             <div className="header__exitbutton">
                <i className="fas fa-times header__exitbutton-close"></i>
             </div>
