@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router'; // provides access to the history and location
-import HeaderItem from './HeaderItem';
+import HeaderItem from './HeaderItem'
+import { Link } from 'react-router-dom';
 
 /**
  * location: has pathname to current url which is used on the tab
@@ -29,14 +30,14 @@ const NavBar = ({location}) => {
       <Fragment>
       <div className="general-main-area-navbar">
         <div className="general-navbar center-horizontally max-width">
-          <div className="general-navbar-logo"></div>
+          <Link className="general-navbar-logo" to='' onClick={(e) => (function(e){e.preventDefault()})}></Link>
           <ul className="general-navbar-items">
             <HeaderItem activeTab={activeTab} to='Stats' text='Global Statistic' />
-            <HeaderItem activeTab={activeTab} to='Use Nano' text='Use Nano' />
-            <HeaderItem activeTab={activeTab} to='FAQ' text='FAQ' />
-            <HeaderItem activeTab={activeTab} to='Adverise' text='Adverise' />
+            <HeaderItem activeTab={activeTab} to='Discover' text='Use Nano' />
+            <HeaderItem activeTab={activeTab} to='Info' text='FAQ' />
+            <HeaderItem activeTab={activeTab} to='BuildAd' text='Adverise' />
           </ul>
-          <div className="burger-menu menu-icon" onClick={(e) => toggleMenu(e)}><i class="fas fa-bars bars"></i></div>
+          <div className="burger-menu menu-icon" onClick={(e) => toggleMenu(e)}><i className="fas fa-bars bars"></i></div>
         </div>
       </div>
       </Fragment>

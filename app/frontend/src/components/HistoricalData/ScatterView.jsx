@@ -47,10 +47,10 @@ const CustomTooltip = ({active, payload}) => {
 const ScatterView = ({plotData}) => {
 
     return (
-        <ResponsiveContainer width='100%' height={500}>
+        <ResponsiveContainer width='95%' height={500} style="padding">
             <ScatterChart>
                 <XAxis
-                    label={{ value: 'Ordered Chronologically By Date', position: 'insideBottom' }}
+                    label={{ value: '', position: 'insideBottom' }}
                     dataKey='x'
                     name={xName}
                     domain={['auto', 'auto']}
@@ -59,7 +59,7 @@ const ScatterView = ({plotData}) => {
                 />
                 <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
                 <YAxis
-                    label={{ value: 'Time in Seconds', angle: -90, position: 'insideLeft' }}
+                    label={{ value: 'Seconds', angle: -90, position: 'insideLeft'}}
                     dataKey='y'
                     domain={['auto', 'auto']}
                     name={yName}
@@ -67,7 +67,6 @@ const ScatterView = ({plotData}) => {
                     scale={scale}
                 />
                 <Tooltip content={<CustomTooltip/>} cursor={{ strokeDasharray: '3 3' }} />
-                <Legend />
                 <Scatter name='Transactions' data={plotData} fill='#8884d8' />
             </ScatterChart>
         </ResponsiveContainer>

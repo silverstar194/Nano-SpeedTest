@@ -4,6 +4,7 @@ import { fetchWrapper } from 'util/helpers';
 import { makeToast } from 'util/toasts';
 import 'styles/AdBuild.css';
 import { Helmet } from "react-helmet";
+import NavBar from './NavBar';
 
 const TITLE_MAX_LEN = 40;
 const DESCRIPTION_MAX_LEN = 120;
@@ -164,182 +165,118 @@ class BuildAd extends Component {
     render() {
         const {title, description, url, project, email, selectedSlot, errors} = this.state;
         return (
-         <div className='AdBuild'>
-            <Helmet>
-                <title>NanoSpeed.live - Build a community ad.</title>
-                <meta name="keywords" content="Nano,speed test,cryptocurrency,bitcoin,instant,feeless" />
-                <meta
-                    name="description"
-                    content="Build a community ad using out interactive ad builder. Ads are a fixed monthly cost."
-                 />
-            </Helmet>
-
-                { this.state.showSpinner ?
-                    <div className='loading-container'>
-                        <div className='loader-container d-flex justify-content-center'>
-                            <div className='loader'></div>
-                        </div>
-                        <div>
-                            <p className='text-center'>Processing Request. Please Wait</p>
-                        </div>
-                    </div>
-                : <div className='form-container'>
-                    <h1>Create Ad</h1>
-
-                    <div id="alert-info" className="alert alert-primary alert-dismissible fade show" role="alert">
-                        <h4 className="alert-heading">About our Ads</h4>
-                            <h5>Where and how often are the ads shown?</h5>
-                            <p>Our ads show up directly at the top of each page.
-                               <br/>
-                               Each time the page changes a new ad is selected.
-                                <br/>
-                               1 slot represents 5% of the total monthly views.
-                            </p>
-                            <a href="mailto:iliketoemail@ymail.com?Subject=Ad Information: NanoSpeed" target="_top">Please contact us with any questions.</a>
-                            <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={this.dismiss}>
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                    </div>
-
-                    <b>Live Preview</b>
-                    <EditableAd
-                        title={title.length ? title : defaults.title}
-                        description={description.length ? description : defaults.description}
-                        url={url}
-                    />
-                    <br/>
-
-                   <h2>Ad Content</h2>
-                   <form onSubmit={this.onSubmit} >
-
-                      <div className='form-group'>
-                        <label htmlFor='title'>Title</label>
-                        <small> (max. {TITLE_MAX_LEN} chars)</small>
-                        <input
-                            type='text'
-                            className='form-control'
-                            name='title'
-                            value={title}
-                            onChange={this.onEditField}
-                            placeholder='Enter title'
-                        />
-                        {errors.titleError && <div className='badge-warning'>
-                           Please enter a title
-                        </div>}
-                        {errors.titleTooLong && <div className='badge-warning'>
-                           {TITLE_MAX_LEN} Character Max
-                        </div>}
-                      </div>
-
-                     <div className='form-group'>
-                        <label>Description</label>
-                        <small> (max. {DESCRIPTION_MAX_LEN} chars)</small>
-                        <input
-                            type='text'
-                            name='description'
-                            className='form-control'
-                            value={description}
-                            onChange={this.onEditField}
-                            placeholder='Enter description'
-                        />
-                        {errors.descriptionError && <div className='badge-warning'>
-                           Please enter a description
-                        </div>}
-                        {errors.descriptionTooLong && <div className='badge-warning'>
-                           {DESCRIPTION_MAX_LEN} Character Max
-                        </div>}
-                      </div>
-
-                      <div className='form-group'>
-                        <label>Destination URL</label>
-                        <input
-                            type='url'
-                            name='url'
-                            className='form-control'
-                            value={url}
-                            onChange={this.onEditField}
-                            placeholder='Enter URL'>
-                        </input>
-                        {errors.urlError && <div className='badge-warning'>
-                           Please enter a URL
-                        </div>}
-                        {errors.needsHTTP && <div className='badge-warning'>
-                           Make sure to include http:// or https://
-                        </div>}
-                      </div>
-
-                      <h2>Timing & Pricing</h2>
-                      <p>Your ad will run from <b>{new Date(Date.now()  + 1000 * 60 * 60 * 24 * 1).toLocaleDateString({}, dateOptions)}</b> to <b>{ // tomorrow
-                            new Date(Date.now() + 1000 * 60 * 60 * 24 * 31).toLocaleDateString({}, dateOptions) // 31 days later
-                        }</b>
-                      </p>
-
-                      <h3>Ad Slots</h3>
-                      <p>Each Slot represents 5% of all nanospeed.live impressions for the month and are available on a first-come, first-served basis. You may purchase up to 5 slots.</p>
-
-                         <div className='form-group'>
-                              <div className='col-sm-10'>
-                                {
-                                    SLOTS.map((slot) => ( // create NUM_SLOTS number of radio buttons
-                                        <div key={slot} className='form-check'>
-                                            <input
-                                                className='form-check-input'
-                                                type='radio'
-                                                value={slot}
-                                                onChange={this.onRadioChange}
-                                                checked={selectedSlot === slot}
-                                            />
-                                            <label className='form-check-label'>
-                                               <b>{slot} Slot{slot > 1 ? 's' : ''}</b> <strike><b>({this.state.costPerSlot * slot  / .1} Nano)</b></strike>
-                                                 <div className="text-success"><i>({this.state.costPerSlot * slot } Nano)</i></div>
-                                            </label>
-                                        </div>
-                                    ))
-                                }
-                            </div>
-                          </div>
-
-                         <h2>Contact Info</h2>
-                         <div className='form-group'>
-                            <label><b>Project Name</b></label>
-                            <br/>
-                            <small>Used only for reference, will not part of ad.</small>
-                            <input
-                                type='text'
-                                className='form-control'
-                                name='project'
-                                value={project}
-                                onChange={this.onEditField}
-                                placeholder='Enter Project Name'
-                            />
-                            {errors.projectError && <div className='badge-warning'>
-                                Please enter a Project Name
-                            </div>}
-                      </div>
-
-                      <div className='form-group'>
-                            <label htmlFor='email'><b>E-mail Address</b></label>
-                            <input
-                                type='email'
-                                className='form-control'
-                                name='email'
-                                value={email}
-                                onChange={this.onEditField}
-                                placeholder='Enter Email'>
-                            </input>
-                            {errors.emailError && <div className='badge-warning'>
-                                Please enter an email
-                            </div>}
-                      </div>
-
-                       <p>Your ad will be reviewed within 24 hours and you'll receive an e-mail.
-                           <b> If your ad is approved, you must submit payment in order to secure your ad slot(s).</b>
-                        </p>
-                      <button onClick={this.onSubmit} type='submit' className='btn btn-success submit-button'>Submit</button>
-                    </form>
-                </div>
-                }
-          </div>
+        <main class="ads-main">
+        <NavBar />
+         <div class="general-main-area-one">
+            <div class="general-header-main center-horizontally max-width">
+               Advertise
+            </div>
+         </div>
+         <div class="ads-main-area-two center-horizontally">
+            <div class="ads-main-area-two-wrapper center-horizontally max-width">
+               <div class="ads-header">
+                  About our ads
+               </div>
+               <div class="half-col">
+                  Our ads show up directly at the top of the page. Each time the page changes a new ad is selected. 1 slot represents 5% of the total monthly views.
+               </div>
+               <div class="input-section">
+                  <div class="ads-title">
+                     Contact Info
+                  </div>
+                  <div class="ads-input-text">
+                     Project Name - Used only for reference, will not part of ad.
+                  </div>
+                  <br></br>
+                  <input type="text" class="ads-input" placeholder="Enter Project Name" name="fname" />
+               </div>
+               <br></br>
+               <div class="input-section">
+                  <div class="ads-input-text">
+                     E-mail Address
+                  </div>
+                  <br></br>
+                  <input type="email" class="ads-input" placeholder="Enter E-mail Address" name="fname" />
+               </div>
+               <div class="input-section">
+                  <div class="ads-title">
+                     Add content
+                  </div>
+                  <div class="ads-input-text">
+                     Title (max 40 chars.)
+                  </div>
+                  <br></br>
+                  <input type="text" class="ads-input" placeholder="Enter Title" name="fname" />
+               </div>
+               <br></br>
+               <div class="input-section">
+                  <div class="ads-input-text">
+                     Decription (max 120 chars.)
+                  </div>
+                  <br></br>
+                  <input type="text" class="ads-input" placeholder="Enter Decription" name="fname" />
+               </div>
+               <br></br>
+               <div class="input-section">
+                  <div class="ads-input-text">
+                     Decription URL
+                  </div>
+                  <br></br>
+                  <input type="text" class="ads-input" placeholder="Enter URL" name="fname" />
+               </div>
+               <div class="ads-title">
+                  Live Preview
+               </div>
+               <div class="ad__wrapper max-width">
+                  <div class="ad__text">💥 Insert your Nano project here. </div>
+                  <div class="ad__community__link">AD</div>
+               </div>
+               <div class="ads-title">
+                  Period
+               </div>
+               <div class="ads-period">
+                  Your ad will run from 
+                  <div class="ad-date-hightlight">&nbsp;July 29th&nbsp;</div>
+                  to 
+                  <div class="ad-date-hightlight">&nbsp;July 31th </div>
+               </div>
+               <div class="ads-title">
+                  Ad slots
+               </div>
+               <div class="ads-input-text">
+                  Each Slot represents 5% of all nanospeed.live impressions for the month and are available on a first-come, first-served basis. You may purchase up to 5 slots.
+               </div>
+               <div class="ad-slot-cards-wrapper">
+                  <div class="ad-slot-card">
+                     <div class="ad-slot">1 slot</div>
+                     <div class="ad-cost">4 nano</div>
+                  </div>
+                  <div class="ad-slot-card">
+                     <div class="ad-slot">2 slots</div>
+                     <div class="ad-cost">8 nano</div>
+                  </div>
+                  <div class="ad-slot-card">
+                     <div class="ad-slot">3 slots</div>
+                     <div class="ad-cost">16 nano</div>
+                  </div>
+                  <div class="ad-slot-card active-card">
+                     <div class="ad-slot active-card">4 slots</div>
+                     <div class="ad-cost active-card">20 nano</div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="ads-main-area-three">
+            <div class="ads-main-area-three-wrapper center-horizontally max-width">
+               <div class="ad-text">
+                  Your ad will be reviewed within 24 hours and you'll receive an e-mail. If your ad is approved, you must submit payment in order to secure your ad slot(s).
+               </div>
+               <div class="ads-main-area-three-button">
+                  Submit
+               </div>
+            </div>
+         </div>
+        </main>
         );
     }
 }

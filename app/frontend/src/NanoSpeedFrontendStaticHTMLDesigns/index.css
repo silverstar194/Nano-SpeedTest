@@ -432,7 +432,6 @@ td {
   min-height: 290px;
   padding: 25px 10px;
   align-items: center;
-  max-width: 750px;
   box-shadow: 20px 0px 40px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
   z-index: 3;

@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import 'styles/GoogleMaps.css';
 
 const base = 'https://maps.googleapis.com/maps/api/staticmap';
-const scale = '2';
-let sizeTemp = '1100x310';
+const scale = '4';
+let sizeTemp = '500x390';
 
 const size = sizeTemp;
 
@@ -14,33 +14,13 @@ const makeCoordinate = (point) => {
     return `${point.latitude},${point.longitude}`;
 };
 
-const countUses = (transaction, transactions, isOrigin) => {
-    let duplicatesCountOrigin = 0
-    let duplicatesCountDestination = 0
-    for(let i = 0; i < transactions.length; i++){
-       if(transaction.origin.nodeLocation === transactions[i].origin.nodeLocation || transaction.origin.nodeLocation === transactions[i].destination.nodeLocation){
-            duplicatesCountOrigin+=1;
-       }
-
-        if(transaction.destination.nodeLocation === transactions[i].destination.nodeLocation || transaction.destination.nodeLocation === transactions[i].origin.nodeLocation){
-            duplicatesCountDestination+=1;
-       }
-    }
-
-    if(isOrigin){
-        return duplicatesCountOrigin
-    }
-
-    return duplicatesCountDestination;
-}
-
 const Map = ({transactions}) => {
     let transactionPairs = [];
     let markerPairs = []
     if(transactions.rows.length > 0){
     transactions.rows.forEach((trans) => {
         transactionPairs.push(`${makeCoordinate(trans.origin)}|${makeCoordinate(trans.destination)}`);
-        markerPairs.push(`markers=color:0x4A90E2|${makeCoordinate(trans.origin)}&markers=color:0x4A90E2|label:${countUses(trans, transactions, false)}|${makeCoordinate(trans.destination)}`);
+        markerPairs.push(`markers=color:0x4A90E2|${makeCoordinate(trans.origin)}&markers=color:0x4A90E2|${makeCoordinate(trans.destination)}`);
     });
 
     const paths = transactionPairs.join('&path='); // each needs to be draw separately
@@ -48,7 +28,7 @@ const Map = ({transactions}) => {
 
     return (
         <img className="transaction-box-map"
-        src={`${base}?size=${size}&scale=${scale}&${markers}&path=${paths}&key=${googleKey}`}
+        src={`${base}?size=${size}&zoom=2&scale=${scale}&${markers}&path=${paths}&key=${googleKey}`}
         alt={'Google Map Showing Destination and Origin'} />
     );
 }

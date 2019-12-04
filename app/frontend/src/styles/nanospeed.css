@@ -1,5 +1,9 @@
 /* Global Components */
 
+*:focus {
+    outline: 0 !important;
+}
+
 body,
 html {
   height: 100%;
@@ -118,6 +122,7 @@ th {
   color: #ffffff;
   font-size: 16px;
   font-weight: normal;
+  text-decoration: none;
   line-height: 44px;
 }
 
@@ -315,12 +320,20 @@ td {
     line-height: 30px;
   }
 
-  .transaction-box-map {
+  .map-container {
     display: grid;
-    grid-column: 1 / 3;
-    max-width: 100%;
-    border-radius: 10px 10px 0 0;
-    object-fit: cover; 
+    grid-column-start: 1;
+    grid-column-end: 3;
+    border-radius: 10px;
+    background-color: #FFFFFF;
+    height: 350px;
+  }
+
+  .transaction-box-map {
+    width: 100%;
+    border-radius: 10px;
+    height: 390px;
+    object-fit: cover;
   }
 
   .transaction-box-footer-text {
@@ -516,10 +529,9 @@ td {
   transition: transform 1s;
   transform-style: preserve-3d;
   background-color: white;
-  min-height: 290px;
+  min-height: 390px;
   padding: 25px 10px;
   align-items: center;
-  max-width: 750px;
   box-shadow: 20px 0px 40px rgba(0, 0, 0, 0.50);
   backface-visibility: hidden;
   border-radius: 10px;
@@ -543,8 +555,12 @@ td {
 .transaction-box-back {
   display: grid;
   grid-template-rows: 1fr 50px;
-  margin-top:-390px;
+  margin-top:-500px;
   transform: rotateY(180deg);
+  height: 390px;
+  padding: 50px;
+  border-radius: 5px;
+  box-shadow: 20px 0px 40px rgba(0, 0, 0, 0.23);
 }
 
 .transaction-box-footer {
@@ -766,7 +782,7 @@ td {
     grid-template-columns: 190fr 375fr;
     grid-template-areas: "transaction-box__text transaction-box__text" "transaction-box__go__button transaction-box__choice__button__one__wrapper" "transaction-box__go__button transaction-box__choice__button__two__wrapper";
     background-color: white;
-    height: 290px;
+    height: 390px;
     padding: 50px;
     border-radius: 5px;
     box-shadow: 20px 0px 40px rgba(0, 0, 0, 0.23);

@@ -9,6 +9,7 @@ import HeatMap from './HeatMap';
 import {addPastResults} from 'actions/pastResults';
 import {fetchPastResults} from 'util/helpers';
 import { Helmet } from "react-helmet";
+import NavBar from '../NavBar';
 
 class HistoricalDataView extends React.Component {
     componentDidMount() {
@@ -44,57 +45,126 @@ class HistoricalDataView extends React.Component {
                     content="View statistics about past speed tests and transactions."
                  />
             </Helmet>
-
-                <Ad />
-
-                <div className='container-fluid'>
-                        <div className='row form-group'>
-                        <div className='container-fluid'>
-                        <h1 className='map-header'>
-                            Some Stats
-                        </h1>
-                            <div className='row form-group'>
-
-                                <div className='col-auto'>
-                                    <h3 className='map-header'>
-                                        Total Transactions Sent: {totalTransactions}
-                                    </h3>
-                                </div>
-                                <div className='col-auto'>
-                                    <h3 className='map-header'>
-                                        Median 24h: {globalAverage.toFixed(3)} Seconds
-                                    </h3>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className='row'>
-                        <div className='col-xs-12 col-sm-12 col-lg-6'>
-                            <h2 className='map-header text-center'>
-                                Scatter Chart of Last 250 Transactions
-                            </h2>
-                            {
+             <main class="stats-main">
+             <NavBar />
+            <div class="general-main-area-one">
+               <div class="general-header-main center-horizontally max-width">
+                  Global Statistics
+               </div>
+            </div>
+            <div class="stats-main-area-two">
+               <div class="stats-main-area-two-inner center-horizontally max-width">
+                  <div class="stats-box">
+                     <div class="statsbox__one">
+                        <div class="statsbox__title">Total Transactions</div>
+                        <div class="statsbox__value">{totalTransactions}</div>
+                     </div>
+                     <div class="statsbox__two">
+                        <div class="statsbox__title">All-Time Median</div>
+                        <div class="statsbox__value">TODO</div>
+                     </div>
+                     <div class="statsbox__three">
+                        <div class="statsbox__title">24 Hour Median</div>
+                        <div class="statsbox__value">{globalAverage.toFixed(3)}</div>
+                     </div>
+                  </div>
+                  <div class="statsgraph">           {
                                 plotData && plotData.length ?
                                 <ScatterView plotData={plotData}/>
                                 : null
                             }
-                        </div>
-                        <div className='col-xs-12 col-sm-12 col-lg-6'>
-                            <h2 className='map-header text-center'>
-                                Locations of Our Nano Nodes
-                            </h2>
-                            { nodeLocations && nodeLocations.length ?
-                                <HeatMap nodeLocations={nodeLocations} /> : null
-                            }
-                        </div>
-                    </div>
-                    <div className="row">
-                     <div className='col-12'>
-                            <PastResultsTable tableData={pastTransactions}/>
+                  </div>
+               </div>
+            </div>
+            <div class="stats-main-area-three max-width">
+               <div class="stats-main-area-three-inner">
+                  <div class="past__transactions_title__wrapper">
+                     <div class="past-transations-title">Past users transactions</div>
+                     <div class="past__transactions__link">View All</div>
+                  </div>
+                  <table class="past-transactions-table">
+                     <div class="table-title">
+                        <tr>
+                           <th class="border_bottom">Date</th>
+                           <th class="border_bottom">Origin</th>
+                           <th class="border_bottom">Destination</th>
+                           <th class="border_bottom">Amount</th>
+                           <th class="border_bottom">Elapsed Time</th>
+                           <th class="border_bottom">Sending Block</th>
+                        </tr>
                      </div>
-                     </div>
-                     Please do not use bots to access site. Excessive testing or spam will result in a swift 24 hour ban.
-                </div>
+                     <tr>
+                        <td>01/01/2019 10:42</td>
+                        <td>New York</td>
+                        <td>Bangalore</td>
+                        <td>.004 NANO</td>
+                        <td>1.34s</td>
+                        <td>afgaadfasdga</td>
+                     </tr>
+                     <tr>
+                        <td>01/01/2019 10:42</td>
+                        <td>New York</td>
+                        <td>Bangalore</td>
+                        <td>.001 NANO</td>
+                        <td>1.32s</td>
+                        <td>afgaadfasdga</td>
+                     </tr>
+                     <tr>
+                        <td>01/01/2019 10:42</td>
+                        <td>New York</td>
+                        <td>Bangalore</td>
+                        <td>.004 NANO</td>
+                        <td>1.34s</td>
+                        <td>afgaadfasdga</td>
+                     </tr>
+                     <tr>
+                        <td>01/01/2019 10:42</td>
+                        <td>New York</td>
+                        <td>Bangalore</td>
+                        <td>.001 NANO</td>
+                        <td>1.32s</td>
+                        <td>afgaadfasdga</td>
+                     </tr>
+                     <tr>
+                        <td>01/01/2019 10:42</td>
+                        <td>New York</td>
+                        <td>Bangalore</td>
+                        <td>.004 NANO</td>
+                        <td>1.34s</td>
+                        <td>afgaadfasdga</td>
+                     </tr>
+                     <tr>
+                        <td>01/01/2019 10:42</td>
+                        <td>New York</td>
+                        <td>Bangalore</td>
+                        <td>.001 NANO</td>
+                        <td>1.32s</td>
+                        <td>afgaadfasdga</td>
+                     </tr>
+                     <tr>
+                        <td>01/01/2019 10:42</td>
+                        <td>New York</td>
+                        <td>Bangalore</td>
+                        <td>.004 NANO</td>
+                        <td>1.34s</td>
+                        <td>afgaadfasdga</td>
+                     </tr>
+                     <tr>
+                        <td>01/01/2019 10:42</td>
+                        <td>New York</td>
+                        <td>Bangalore</td>
+                        <td>.001 NANO</td>
+                        <td>1.32s</td>
+                        <td>afgaadfasdga</td>
+                     </tr>
+                  </table>
+               </div>
+            </div>
+            <div class="stats-button-more">
+               LEARN MORE
+            </div>
+         </main>
+              
             </div>
         );
     }

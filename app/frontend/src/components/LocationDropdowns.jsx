@@ -170,8 +170,8 @@ class LocationDropdowns extends Component {
         return (
             <Fragment>
             <form>
-            <div className="card">
-                <div className="index-main-header__transaction-box center-horizontally max-width">
+            <div className="max-width center-horizontally card">
+                <div className="index-main-header__transaction-box ">
                 <div className="transaction-box__text center-horizontally"> 
                 {drawMessage}
                   </div>
@@ -185,8 +185,8 @@ class LocationDropdowns extends Component {
                       {nodeDestinationsList}
                   </div>
                 </div>
-                <div className="index-main-header__transaction-box center-horizontally max-width transaction-box-back">
-                    <Map transactions={table} />
+                <div className="transaction-box-back center-horizontally">
+                    <div className="map-container"><Map transactions={table}/></div>
                     <div className="transaction-box-footer">
                         <div className="transaction-box-footer-location">
                             <div className="transaction-box-footer-location-origin">
