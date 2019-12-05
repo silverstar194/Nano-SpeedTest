@@ -8,6 +8,11 @@ a:link {
     text-decoration: none;
 }
 
+.hidden {
+  visibility: hidden;
+  height: 0;
+}
+
 body,
 html {
   height: 100%;
@@ -413,6 +418,14 @@ td {
   font-weight: bold;
   color: #ffffff;
   margin: 15px auto;
+}
+
+.hidden-grid-container-header {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 0 1fr 50px;
+  grid-template-areas: "header" "main" "footer";
+  height: 100vh;
 }
 
 .grid-container {

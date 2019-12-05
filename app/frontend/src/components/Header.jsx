@@ -19,6 +19,16 @@ const Header = ({location}) => {
       el.classList.add(className);
     }
   }
+
+  function hideHeader(e){
+      var x = document.getElementsByClassName("header")[0];
+      var gc = document.getElementsByClassName("grid-container")[0];
+
+      toggleClassName(x, "hidden");
+      toggleClassName(gc, "grid-container");
+      toggleClassName(gc, "hidden-grid-container-header");
+
+  }
          
   function toggleMenu(e) {
      var x = document.getElementsByClassName("burger-menu");
@@ -31,9 +41,9 @@ const Header = ({location}) => {
          <header className="header">
             <div className="header__nanologo"></div>
             <div className="header__learnmoretext__desktop">Nano is a next-generation cryptocurrency created in 2015. It's unique block-lattice structure enables fast, fee-less transactions over a secure, decentralized network.</div>
-            <Link className="header__learnmorebutton" to='Info' onClick={(e) => (function(e){e.preventDefault()})}>Learn More</Link>
+            <Link className="header__learnmorebutton" to='Info'>Learn More</Link>
             <div className="header__exitbutton">
-               <i className="fas fa-times header__exitbutton-close"></i>
+               <i className="fas fa-times header__exitbutton-close" onClick={(e) => hideHeader(e)}></i>
             </div>
          </header>
          <aside className="sidenav">
