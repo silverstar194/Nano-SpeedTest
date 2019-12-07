@@ -490,7 +490,10 @@ def send_transaction_async(transaction, out_queue):
 def median_value(queryset, term):
     count = queryset.count()
     values = queryset.values_list(term, flat=True).order_by(term)
-    if count % 2 == 1:
+
+    if count == 0:
+        return (0.0, 0.0)
+    elif count % 2 == 1:
         return (int(values[int(round(count/2))]), count)
     else:
         return (int(sum(values[count/2-1:count/2+1])/Decimal(2.0)), count)

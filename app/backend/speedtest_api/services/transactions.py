@@ -403,7 +403,7 @@ def get_transaction(id):
     """
 
     try:
-        return models.Transaction.objects.get(id=id).prefetch_related()
+        return models.Transaction.objects.get(id=id)
     except models.Transaction.DoesNotExist:
         return None
     except MultipleObjectsReturned:
