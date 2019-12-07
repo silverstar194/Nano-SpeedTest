@@ -423,13 +423,14 @@ td {
   min-height: 76px;
   border-radius: 10px;
   align-items: center;
-  background-color: #c6dcf5;
+  background-color: rgb(74, 144, 226);
   text-align: center;
   font-size: 43px;
   line-height: 76px;
   font-weight: bold;
   color: #ffffff;
   margin: 15px auto;
+  animation: shadow-pulse 1.7s infinite;
 }
 
 .hidden-grid-container-header {
@@ -744,6 +745,16 @@ td {
   color: orange;
 }
 
+@keyframes shadow-pulse
+{
+  0% {
+    box-shadow: 0 0 0 0px rgba(0, 0, 0, 0.4);
+  }
+  100% {
+    box-shadow: 0 0 0 50px rgba(0, 0, 0, 0);
+  }
+}
+
 /* Non-mobile styles, 1024px breakpoint */
 
 @media screen and (min-width: 1024px) {
@@ -806,11 +817,13 @@ td {
     align-items: center;
     background-image: url(../img/Circle.svg);
     background-size: cover;
-    background-color: #ffffff;
+    background-color: rgb(74, 144, 226);
     color: rgba(0, 0, 0, 0);
     border: none;
     margin-left: 0;
     cursor: pointer;
+    border-radius: 100px;
+    animation: shadow-pulse 1.7s infinite;
   }
 
   .header__learnmoretext__desktop {

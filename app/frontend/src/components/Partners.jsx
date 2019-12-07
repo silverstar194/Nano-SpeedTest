@@ -8,6 +8,7 @@ import { Helmet } from "react-helmet";
 import NavBar from './NavBar';
 import card_nano_center from '../img/card_nano_center.png'
 import card_nano_crawler from '../img/card_nano_crawler.png'
+import { Link } from 'react-router-dom';
 
 class Partners extends Component {
 
@@ -26,9 +27,7 @@ class Partners extends Component {
                <div class="usenano__text">
                   Interested in taking the next step with Nano? Visit any of our partner sites and try Nano out in the real world: buy goods, start accounts, discover Nano projects, and other ideas.
                </div>
-               <div class="usenano__button">
-                  Become a Partner
-               </div>
+                <Link className="usenano__button" to='PartnerInfo'>Become a Partner</Link>
             </div>
          </div>
          <div class="usenano-main-area-three">

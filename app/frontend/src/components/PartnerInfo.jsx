@@ -39,7 +39,7 @@ class PartnerInfo extends Component {
                </div>
                <br></br>
                <br></br>
-               <div className="partner-header-small">Step 1</div>
+               <div className="partner-header-small">First and Only Step</div>
                <div className="partner-header-text">Add the button style that works best for your site. Lastly, email us at sean@NanoSpeed.live to be added to the Partner Cards.</div>
                <br></br>
                <div className="partner-header-text">These buttons don't fit the current style of your site? That's fine! You're still welcome to join the Partner Program. Feel free to design your own button. Your button should direct users to <a href="https://NanoSpeed.live">NanoSpeed.live</a></div>
