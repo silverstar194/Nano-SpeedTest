@@ -4,7 +4,7 @@ import 'styles/GoogleMaps.css';
 
 const base = 'https://maps.googleapis.com/maps/api/staticmap';
 const scale = '4';
-let sizeTemp = '500x390';
+let sizeTemp = '1500x390';
 
 const size = sizeTemp;
 

@@ -125,14 +125,29 @@ th {
   justify-self: start;
 }
 
-.general-navbar-item {
-  display: inline-grid;
+.general-navbar-item:link {
+  display: grid;
   padding-left: 54px;
-  color: #ffffff;
+  color: #FFFFFF;
+  text-decoration:none;
   font-size: 16px;
   font-weight: normal;
-  text-decoration: none;
   line-height: 44px;
+}
+
+.general-navbar-item:visited {
+  display: inline-grid;
+  text-decoration:none;
+  padding-left: 54px;
+  color: #FFFFFF;
+  font-size: 16px;
+  font-weight: normal;
+  line-height: 44px;
+}
+
+.general-navbar-item:hover {
+  background-color: rgba(255, 255, 255, .1);
+  color: orange;
 }
 
 /* General Components */
@@ -329,20 +344,14 @@ td {
     line-height: 30px;
   }
 
-  .map-container {
+  .transaction-box-map {
     display: grid;
     grid-column-start: 1;
     grid-column-end: 3;
-    border-radius: 10px;
-    background-color: #FFFFFF;
-    height: 350px;
-  }
-
-  .transaction-box-map {
-    width: 100%;
-    border-radius: 10px;
+    border-radius: 10px 10px 0 0;
     height: 390px;
-    object-fit: cover;
+    background-size: cover;
+    width: 100%;
   }
 
   .transaction-box-footer-text {
@@ -363,6 +372,9 @@ td {
     text-align: center;
     line-height: 30px;
     font-weight: bold;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;    
   }
 
 
@@ -477,28 +489,15 @@ td {
   padding-right: 20px;
 }
 
-.menu-icon {
-  position: fixed;
-  display: flex;
-  top: 5px;
-  left: 10px;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  z-index: 1;
-  cursor: pointer;
-  padding: 12px;
-  background-color: #b8b8b8;
-  opacity: 0.8;
-}
-
 .header__nanologo {
+  display: grid; 
   min-height: 50px;
   min-width: 115px;
   background: #ffffff url(../img/nano_logo.png);
 }
 
 .header__exitbutton {
+  display: grid; 
   width: 40px;
   height: 40px;
   min-height: 40px;
@@ -509,6 +508,7 @@ td {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-left: 5px;
 }
 
 .header__learnmoretext__mobile {
@@ -541,6 +541,7 @@ td {
 }
 
 .index-main-header__transaction-box {
+  position: relative;
   display: grid;
   grid-template-columns: 1fr;
   transition: transform 1s;
@@ -556,8 +557,11 @@ td {
 }
 
 .card {
+  position: relative;
   transition: transform 1s;
   transform-style: preserve-3d;
+  margin-top: 20px;
+  z-index: 3;
 }
 
 .is-flipped {
@@ -569,15 +573,18 @@ td {
   transform: rotateY(180deg);
 }
 
+.active-burger {
+  color: orange;
+}
+
 .transaction-box-back {
   display: grid;
   grid-template-rows: 1fr 50px;
   margin-top:-500px;
   transform: rotateY(180deg);
-  height: 390px;
+  height: 440px;
   padding: 50px;
   border-radius: 5px;
-  box-shadow: 20px 0px 40px rgba(0, 0, 0, 0.23);
 }
 
 .transaction-box-footer {
@@ -587,10 +594,10 @@ td {
 }
 
 .header__learnmorebutton {
-  margin-right: 11px;
-  min-width: 150px;
-  min-height: 40px;
+  width: 150px;
+  height: 40px;
   background: #f5f5f5;
+  grid-column: 3;
   border-radius: 5px;
   color: #b8b8b8;
   text-align: center;
@@ -599,6 +606,8 @@ td {
   font-size: 14px;
   line-height: 40px;
   text-transform: uppercase;
+  padding: 0 5px 0 5px;
+  margin-left: auto;
 }
 
 .header__learnmorebutton:hover {
@@ -611,9 +620,19 @@ td {
 
 /* Give every child element its grid name */
 
-.header {
-  grid-area: header;
-  background-color: #648ca6;
+.burger-menu {
+  display: grid;
+  grid-column: 4;
+  grid-row: 1;
+  visibility: visible;
+  height: 100px;
+  width: 100px;
+}
+
+.bars {
+  color: #FFFFFF;
+  font-size: 40px;
+  text-align: right;
 }
 
 .index-main {
@@ -667,6 +686,7 @@ td {
 }
 
 .index-main-area-one {
+  position: relative;
   display: grid;
   background: #0f1121;
   padding-bottom: 60px;
@@ -692,21 +712,21 @@ td {
 .index-wave {
   position: relative;
   display: inline-block;
-  margin-bottom: -70px;
+  margin-bottom: -10px;
 }
 
 .index-wave-1 {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  z-index: 1;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    z-index: 1;
 }
 
 .index-wave-2 {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  z-index: 2;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    z-index: 2;
 }
 
 .sidebar__logo {
@@ -730,6 +750,20 @@ td {
   .general-navbar-items {
     visibility: visible;
   }
+
+  .general-navbar-item:link {
+    display: inline-grid;
+  }
+
+  .general-navbar-item:hover {
+    color: orange;
+    background-color: #0F1121;
+  }
+
+  .burger-menu {
+    visibility: hidden;
+  }
+
   .menu-icon {
     visibility: hidden;
   }

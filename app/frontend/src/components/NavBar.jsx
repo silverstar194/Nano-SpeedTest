@@ -21,8 +21,9 @@ const NavBar = ({location}) => {
   }
          
   function toggleMenu(e) {
-     var x = document.getElementsByClassName("burger-menu");
+     var x = document.getElementsByClassName("bars")[0];
      var sideBar = document.getElementsByClassName("sidenav")[0]
+     toggleClassName(x, 'active-burger');
      toggleClassName(sideBar, 'active');
   }
 

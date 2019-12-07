@@ -164,8 +164,7 @@ class HistoricalDataView extends React.Component {
                LEARN MORE
             </div>
          </main>
-              
-            </div>
+        </div>
         );
     }
 }
