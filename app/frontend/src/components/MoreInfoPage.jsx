@@ -99,7 +99,7 @@ class MoreInfoPage extends Component {
                             Reddit
                         </a> </li>
                         <li><a
-                            href='https://discordapp.com/invite/JphbBas'
+                            href='https://chat.nano.org'
                             target='_blank'
                             rel='noopener noreferrer'>
                             Discord Main
