@@ -7,7 +7,7 @@ import logging
 logging.basicConfig(filename='droplet_resize.log', format='%(asctime)s - %(message)s', level=logging.INFO)
 
 ##constants
-UNCHECKED_LIMIT = 5000
+UNCHECKED_LIMIT = 1000
 UNSYNC_LIMIT = 99.9
 instance_large = "s-3vcpu-1gb"
 instance_small = "s-1vcpu-2gb"
