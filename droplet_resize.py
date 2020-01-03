@@ -81,6 +81,14 @@ if len(sys.argv) - 1 == 0:
 	sys.exit()
 
 resize = sys.argv[1]
+
+if resize == "boot_nodes":
+	for droplet in node_droplets:
+		logger.info("Powering on {0}".format(location))
+		power_on(droplet)
+		time.sleep(1)
+	sys.exit()
+
 for droplet in node_droplets:
 	location, node_url, droplet = generate_droplet_info(droplet)
 	
@@ -100,5 +108,6 @@ for droplet in node_droplets:
 		droplet.resize(instance_small, disk=False, return_dict=False)
 		wait_on_resize(droplet)
 		power_on(droplet)
+	time.sleep(1)
 	logger.info("Powering on {0}".format(location))
 	power_on(droplet)
