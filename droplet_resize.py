@@ -93,11 +93,12 @@ for droplet in node_droplets:
 		logger.info("Resizing {0} to {1}".format(location, instance_large))
 		droplet.resize(instance_large, disk=False, return_dict=False)
 		wait_on_resize(droplet)
-		power_on(droplet)
+		
 
 	if percent_sync > UNSYNC_LIMIT and unchecked < UNCHECKED_LIMIT and droplet.size['slug'] != instance_small and resize == "downsize":
 		logger.info("Resizing {0} to {1}".format(location, instance_small))
 		droplet.resize(instance_small, disk=False, return_dict=False)
 		wait_on_resize(droplet)
 		power_on(droplet)
-
+	logger.info("Powering on {0}".format(location))
+	power_on(droplet)
