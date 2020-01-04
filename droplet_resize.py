@@ -84,6 +84,7 @@ resize = sys.argv[1]
 
 if resize == "boot_nodes":
 	for droplet in node_droplets:
+		location, node_url, droplet = generate_droplet_info(droplet)
 		logger.info("Powering on {0}".format(location))
 		power_on(droplet)
 		time.sleep(1)
