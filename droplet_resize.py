@@ -96,7 +96,7 @@ for droplet in node_droplets:
 	ninja_block_count = get_ninja_blocks()
 	unchecked, block_count = get_node_blocks(node_url)
 	percent_sync = (block_count/ninja_block_count) * 100
-	logger.info("Current status for node in {0} \n\t Percent Synced: {1} \n\t Unchecked Blocks: {2}".format(location, percent_sync, unchecked))
+	logger.info("Current status for node in {0} size {1} \n\t Percent Synced: {2} \n\t Unchecked Blocks: {3}".format(location, droplet.size['slug'], percent_sync, unchecked))
 
 	if (percent_sync < UNSYNC_LIMIT or unchecked > UNCHECKED_LIMIT) and (droplet.size['slug'] != instance_large and resize == "upsize"):
 		logger.info("Resizing {0} from {1} to {2}".format(location, droplet.size['slug'], instance_large))
