@@ -104,47 +104,40 @@ th {
 }
 
 .general-navbar {
-  display: grid;
-  grid-template-columns: 195px auto 1fr;
-  margin-top: 49px;
-  height: 95px;
+  display: flex;
+  align-content: center;
+  height: 45px;
+  padding: 25px 50px;
 }
 
 .general-navbar-items {
-  grid-column: 3;
-  visibility: hidden;
-  justify-self: end;
+  display: flex;
+  flex: 1 1 auto;
+  display: none;
+  justify-content: flex-end;
 }
 
 .general-navbar-logo {
-  display: grid;
+  display: flex;
   background: url(../img/nanospeed_logo.png);
   background-repeat: no-repeat;
-  width: 195px;
-  height: 95px;
-  justify-self: start;
+  height: 45px;
+  flex: 0 1 auto;
+  width: auto;
+  min-width: 300px;
 }
 
-.general-navbar-item:link {
-  display: grid;
+.general-navbar-item:link, .general-navbar-item:visited {
   padding-left: 54px;
   color: #FFFFFF;
   text-decoration:none;
   font-size: 16px;
   font-weight: normal;
   line-height: 44px;
+  padding-top:0;
+  padding-bottom:0;
+  margin:0;
 }
-
-.general-navbar-item:visited {
-  display: inline-grid;
-  text-decoration:none;
-  padding-left: 54px;
-  color: #FFFFFF;
-  font-size: 16px;
-  font-weight: normal;
-  line-height: 44px;
-}
-
 .general-navbar-item:hover {
   background-color: rgba(255, 255, 255, .1);
   color: orange;
@@ -451,33 +444,39 @@ td {
 }
 
 .sidenav {
+  margin-top:64px;
   grid-area: sidenav;
   display: flex;
   flex-direction: column;
-  height: 100%;
-  width: 50%;
-  position: fixed;
-  overflow-y: auto;
+  height: 100vh;
+  width: 25%;
+  min-width:300px;
+  top:0;
+  right:-100%;
+  position: absolute;
+  overflow-y: none;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
   z-index: 2;
   /* Needs to sit above the hamburger menu icon */
   background-color: #0f1121;
-  transform: translateX(-110%);
-  transition: all 0.6s ease-in-out;
+  transition: all 0.3s ease-in-out;
   z-index: 5;
+  padding-top: 100px;
+  
 }
 
+
 .sidenav.active {
-  transform: translateX(0);
+  right: 0;
 }
 
 .sidenav__close-icon {
   position: absolute;
   visibility: visible;
-  top: 8px;
-  right: 12px;
+  top: 45px;
+  right: 36px;
   cursor: pointer;
-  font-size: 15px;
+  font-size: 24px;
   color: #ffffff;
   opacity: 0.4;
 }
@@ -628,12 +627,12 @@ td {
 /* Give every child element its grid name */
 
 .burger-menu {
-  display: grid;
-  grid-column: 4;
-  grid-row: 1;
-  visibility: visible;
+  display: flex;
   height: 100px;
   width: 100px;
+  cursor: pointer;
+  flex: 1 1 auto;
+  justify-content: flex-end;
 }
 
 .bars {
@@ -674,6 +673,8 @@ td {
   padding: 0;
   margin-top: 30px;
   list-style-type: none;
+  display: flex;
+  flex-direction: column;
 }
 
 .sidenav__list-item {
@@ -737,7 +738,7 @@ td {
 }
 
 .sidebar__logo {
-  display: flex;
+  display: none;
   align-items: center;
   height: 100px;
   background: #0f1121 url(../img/nanospeed_logo.png) no-repeat center;
@@ -765,11 +766,13 @@ td {
 
 @media screen and (min-width: 1024px) {
   .general-navbar-items {
-    visibility: visible;
+    display: flex;
+    padding:0;
+    margin:0;
   }
 
   .general-navbar-item:link {
-    display: inline-grid;
+    display: flex;
   }
 
   .general-navbar-item:hover {
@@ -778,11 +781,11 @@ td {
   }
 
   .burger-menu {
-    visibility: hidden;
+    display:none;
   }
 
   .menu-icon {
-    visibility: hidden;
+    display:none;
   }
   .transaction-box__choice__button__one__wrapper {
     grid-area: transaction-box__choice__button__one__wrapper;
@@ -1526,6 +1529,10 @@ a.usernano-card-link {
 
 /* Table redesign */
 
+  table a {
+    color: #4A90E2;
+  }
+
 	@media
 	  only screen 
     and (max-width: 760px), (min-device-width: 768px) 
@@ -1533,8 +1540,8 @@ a.usernano-card-link {
 
 		table, thead, tbody, th, td, tr {
 			display: block;
-		}
-
+    }
+    
 		thead tr {
 			position: absolute;
 			top: -9999px;

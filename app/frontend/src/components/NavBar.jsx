@@ -30,13 +30,13 @@ const NavBar = ({location}) => {
 	return (
       <Fragment>
       <div className="general-main-area-navbar">
-        <div className="general-navbar center-horizontally max-width">
+        <div className="general-navbar">
           <Link className="general-navbar-logo" to='' onClick={(e) => (function(e){e.preventDefault()})}></Link>
           <ul className="general-navbar-items">
             <HeaderItem activeTab={activeTab} to='Stats' text='Global Statistic' />
             <HeaderItem activeTab={activeTab} to='Discover' text='Use Nano' />
             <HeaderItem activeTab={activeTab} to='Info' text='FAQ' />
-            <HeaderItem activeTab={activeTab} to='BuildAd' text='Adverise' />
+            <HeaderItem activeTab={activeTab} to='BuildAd' text='Advertise' />
           </ul>
           <div className="burger-menu menu-icon" onClick={(e) => toggleMenu(e)}><i className="fas fa-bars bars"></i></div>
         </div>
