@@ -19,7 +19,7 @@ def transaction_general(node_IP, current_hash):
     """
 
     websocket_address = "ws://"+node_IP+":7090/call"
-    websocket = create_connection(websocket_address, timeout=10)
+    websocket = create_connection(websocket_address, timeout=120)
     data = {"hash": current_hash}
     logger.info("Opening websocket %s for %s" % (websocket_address, data))
     websocket.send(json.dumps(data))
