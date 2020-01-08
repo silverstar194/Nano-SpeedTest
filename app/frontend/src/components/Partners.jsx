@@ -44,7 +44,7 @@ class Partners extends Component {
                            <div class="usernano-card-text">
                               The most advanced network explorer and node monitor for Nano.
                            </div>
-                        <a href="#" class="usernano-card-link">Visit nanocrawler.cc</a>
+                        <a href="#" class="usernano-card-link arrow-link">Visit nanocrawler.cc </a>
                      </div>
                   </div>
                   <div class="usenano-card">
@@ -58,7 +58,7 @@ class Partners extends Component {
                         <div class="usernano-card-text">
                            The Nano Center assists in the funding and ongoing support of Nano-related projects.
                         </div>
-                        <a href="#" class="usernano-card-link">Visit nanocenter.org</a>
+                        <a href="#" class="usernano-card-link arrow-link">Visit nanocenter.org</a>
                      </div>
                   </div>
                   <div class="usenano-card">
@@ -72,7 +72,7 @@ class Partners extends Component {
                         <div class="usernano-card-text">
                            Find anything Nano related like wallets, exchanges, projects, applications, information, services and news.
                         </div>
-                        <a href="#" class="usernano-card-link">Visit nanolinks.info</a>
+                        <a href="#" class="usernano-card-link arrow-link">Visit nanolinks.info</a>
                      </div>
                   </div>
                   <div class="usenano-card">
@@ -86,7 +86,7 @@ class Partners extends Component {
                         <div class="usernano-card-text">
                            The most advanced network explorer and node monitor for Nano.
                         </div>
-                        <a href="#" class="usernano-card-link">Visit Nanocrawler.cc</a>
+                        <a href="#" class="usernano-card-link arrow-link">Visit Nanocrawler.cc</a>
                      </div>
                   </div>
                </div>

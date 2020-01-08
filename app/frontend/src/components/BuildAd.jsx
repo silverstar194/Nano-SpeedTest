@@ -187,7 +187,6 @@ class BuildAd extends Component {
                   <div class="ads-input-text">
                      Project Name - Used only for reference, will not part of ad.
                   </div>
-                  <br></br>
                   <input type="text" class="ads-input" placeholder="Enter Project Name" name="fname" />
                </div>
                <br></br>
@@ -195,7 +194,6 @@ class BuildAd extends Component {
                   <div class="ads-input-text">
                      E-mail Address
                   </div>
-                  <br></br>
                   <input type="email" class="ads-input" placeholder="Enter E-mail Address" name="fname" />
                </div>
                <div class="input-section">
@@ -205,7 +203,6 @@ class BuildAd extends Component {
                   <div class="ads-input-text">
                      Title (max 40 chars.)
                   </div>
-                  <br></br>
                   <input type="text" class="ads-input" placeholder="Enter Title" name="fname" />
                </div>
                <br></br>
@@ -213,7 +210,6 @@ class BuildAd extends Component {
                   <div class="ads-input-text">
                      Decription (max 120 chars.)
                   </div>
-                  <br></br>
                   <input type="text" class="ads-input" placeholder="Enter Decription" name="fname" />
                </div>
                <br></br>
@@ -221,7 +217,6 @@ class BuildAd extends Component {
                   <div class="ads-input-text">
                      Decription URL
                   </div>
-                  <br></br>
                   <input type="text" class="ads-input" placeholder="Enter URL" name="fname" />
                </div>
                <div class="ads-title">
