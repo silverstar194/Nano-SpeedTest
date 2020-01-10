@@ -15,23 +15,23 @@ const makeCoordinate = (point) => {
 };
 
 const Map = ({transactions}) => {
-    let transactionPairs = [];
-    let markerPairs = []
-    if(transactions.rows.length > 0){
-    transactions.rows.forEach((trans) => {
-        transactionPairs.push(`${makeCoordinate(trans.origin)}|${makeCoordinate(trans.destination)}`);
-        markerPairs.push(`markers=color:0x4A90E2|${makeCoordinate(trans.origin)}&markers=color:0x4A90E2|${makeCoordinate(trans.destination)}`);
-    });
+//     let transactionPairs = [];
+//     let markerPairs = []
+//     if(transactions.rows.length > 0){
+//     transactions.rows.forEach((trans) => {
+//         transactionPairs.push(`${makeCoordinate(trans.origin)}|${makeCoordinate(trans.destination)}`);
+//         markerPairs.push(`markers=color:0x4A90E2|${makeCoordinate(trans.origin)}&markers=color:0x4A90E2|${makeCoordinate(trans.destination)}`);
+//     });
 
-    const paths = transactionPairs.join('&path='); // each needs to be draw separately
-    const markers = markerPairs.join("&")
+//     const paths = transactionPairs.join('&path='); // each needs to be draw separately
+//     const markers = markerPairs.join("&")
 
-    return (
-        <img className="transaction-box-map"
-        src={`${base}?size=${size}&zoom=2&scale=${scale}&${markers}&path=${paths}&key=${googleKey}`}
-        alt={'Google Map Showing Destination and Origin'} />
-    );
-}
+//     return (
+//         <img className="transaction-box-map"
+//         src={`${base}?size=${size}&zoom=2&scale=${scale}&${markers}&path=${paths}&key=${googleKey}`}
+//         alt={'Google Map Showing Destination and Origin'} />
+//     );
+// }
     return(<div></div>)
 
 };
