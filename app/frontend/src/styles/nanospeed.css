@@ -356,8 +356,24 @@ td {
   }
 
   .transaction-box-footer-try-again {
-    border: 1px solid #4A90E2;
-    color: #4A90E2;
+    background-color:  #4A90E2;
+    color: #FFF;
+    border-radius: 25px;
+    padding: 5px;
+    height: 30px;
+    margin-right: 15px;
+    text-align: center;
+    line-height: 30px;
+    font-weight: bold;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    cursor: pointer;
+  }
+
+  .transaction-box-footer-try-again:hover {
+    color: #FFF;
+    background-color: #3379ca;
     border-radius: 5px;
     padding: 5px;
     height: 30px;
@@ -369,6 +385,8 @@ td {
     white-space: nowrap;
     text-overflow: ellipsis;    
   }
+
+
 
 
   .transaction-box-footer {
@@ -417,6 +435,7 @@ td {
   border-radius: 10px;
   align-items: center;
   background-color: rgb(74, 144, 226);
+  border: 1px solid rgba(74,144,226);
   text-align: center;
   font-size: 43px;
   line-height: 76px;
@@ -444,9 +463,9 @@ td {
 }
 
 .sidenav {
+  display:none;
   margin-top:64px;
   grid-area: sidenav;
-  display: flex;
   flex-direction: column;
   height: 100vh;
   width: 25%;
@@ -468,6 +487,7 @@ td {
 
 .sidenav.active {
   right: 0;
+  display:flex;
 }
 
 .sidenav__close-icon {
@@ -509,6 +529,7 @@ td {
   justify-content: center;
   align-items: center;
   margin-left: 5px;
+  cursor:pointer;
 }
 
 .header__learnmoretext__mobile {
@@ -605,7 +626,7 @@ td {
   background: #f5f5f5;
   grid-column: 3;
   border-radius: 5px;
-  color: #b8b8b8;
+  color: #6f6f6f;
   text-align: center;
   font-weight: bold;
   vertical-align: middle;
@@ -617,7 +638,7 @@ td {
 }
 
 .header__learnmorebutton:hover {
-  background-color: lightgray;
+  color: #4A90E2;
 }
 
 .header__learnmoretext__desktop {
@@ -758,7 +779,7 @@ td {
     box-shadow: 0 0 0 0px rgba(0, 0, 0, 0.4);
   }
   100% {
-    box-shadow: 0 0 0 50px rgba(0, 0, 0, 0);
+    box-shadow: 0 0 0 35px rgba(0, 0, 0, 0);
   }
 }
 
@@ -833,6 +854,15 @@ td {
     cursor: pointer;
     border-radius: 100px;
     animation: shadow-pulse 1.7s infinite;
+    -webkit-transition: background-color 150ms ease-in-out, -webkit-transform 250ms ease-out;
+    transition: background-color 150ms ease-in-out, 
+    -webkit-transform 250ms ease-out;
+    transition: transform 250ms ease-out, background-color 150ms ease-in-out, 
+    -webkit-transform 250ms ease-out;
+  }
+
+  .transaction-box__go__button:hover {
+    transform: scale(1.25);
   }
 
   .header__learnmoretext__desktop {
@@ -852,12 +882,12 @@ td {
     color: #aeaeae;
     text-align: left;
   }
-  .header__exitbutton-close {
-    color: #b8b8b8;
+  .header__exitbutton {
+    color: #6f6f6f;
   }
 
   .header__exitbutton:hover {
-    background-color: lightgray;
+    color: #4A90E2;
   }
 
   .header__learnmoretext__mobile {
@@ -887,7 +917,6 @@ td {
     transform: translateY(0);
     display: none;
   }
-  x-direction: column;
 }
 
 /* Index.html*/
@@ -1212,23 +1241,29 @@ td {
 }
 
 .usenano__button {
-  height: 40px;
+  height: 50px;
   font-weight: bold;
-  padding-top: 6px;
   line-height: 23px;
-  border: 1px solid #4a90e2;
   box-sizing: border-box;
-  border-radius: 5px;
+  border-radius: 25px;
   text-align: center;
   text-transform: uppercase;
-  color: #4a90e2;
+  color: #FFF;
+  background-color:#4a90e2;
   width: 360px;
-  padding: 0 0px;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-top: 20px;
+  transition: all .250s ease-in-out;
+  -webkit-transition: all .250s ease-in-out;
+
+}
+
+.usenano__button:hover {
+  background-color:#3379ca;
+  color:#FFF;
 }
 
 .usenano-main-area-three {
@@ -1281,6 +1316,27 @@ td {
   flex-direction: column;
   justify-content: flex-start;
   align-content: stretch;
+}
+
+.arrow-link {
+  text-decoration : none;
+}
+
+.arrow-link:after {
+  z-index : 1;
+  font-size : 18px;
+  position : relative;
+  margin-left:3px;
+  content : "\2192";
+  color : #d0d0d0;
+  bottom : -1px;
+  display : inline-block;
+  -webkit-transition: all .250s ease-in-out;
+}
+
+.arrow-link:hover:after {
+  transform : translateX(10px);
+  color : #4A90E2;
 }
 
 .card-img-header {
@@ -1390,8 +1446,7 @@ a.usernano-card-link {
 
 .ads-main {
   display: grid;
-  grid-template-rows: 95px 140px 1fr;
-  min-height: 1700px;
+  grid-template-rows: 95px 140px auto 780fr;
 }
 
 .ads-main-area-two {
@@ -1404,6 +1459,7 @@ a.usernano-card-link {
   background: #f9f9fb;
   border-top: 1px solid #e2e2e2;
   border-bottom: 1px solid #e2e2e2;
+  margin-top: 30px;
 }
 
 .ads-main-area-three-wrapper {
@@ -1464,7 +1520,6 @@ a.usernano-card-link {
 .ads-input-text {
   color: #707070;
   margin-top: 10px;
-  margin-bottom: -10px;
 }
 
 ::placeholder {
@@ -1554,12 +1609,12 @@ a.usernano-card-link {
       
     tr:nth-child(odd) {
       background: #fbfbfb;
-      padding: 20px;
+      padding: 0;
     }
 
     tr:nth-child(even) {
       background: #FFF;
-      padding: 20px;
+      padding: 20px 0;
     }
     
 		td {
@@ -1597,4 +1652,54 @@ a.usernano-card-link {
 		td:nth-of-type(5):before { content: "Elapsed Time"; }
     td:nth-of-type(6):before { content: "Sending Block"; }
     td.date:before { content: "Date"; }
+
+    /* Test nanospeed Card */
+
+    .index-main {
+      display: grid;
+      grid-template-rows: 95px 850px auto auto;
+    }
+
+    .index-main-header__transaction-box {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .index-main-area-one {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .transaction-box-back {
+      grid-template-rows: 1fr 1fr;
+      margin-top: -500px;
+      -webkit-transform: rotateY(180deg);
+      transform: rotateY(180deg);
+      height: 440px;
+      padding: 25px;
+      border-radius: 5px;
+    }
+
+    .transaction-box-footer {
+      display: flex;
+      height: auto;
+      flex-direction: column;
+      border-radius: 0 0 10px 10px;
+      padding: 20px 20px;
+    }
+
+    .card {
+      margin-top:70px;
+    }
+
+    .transaction-box-footer-time {
+      margin-top:10px;
+    }
+
+    .transaction-box-footer-try-again {
+      margin-top: 15px;
+    }
+
 	}

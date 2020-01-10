@@ -42,8 +42,8 @@ const Header = ({location}) => {
             <div className="header__nanologo"></div>
             <div className="header__learnmoretext__desktop">Nano is a next-generation cryptocurrency created in 2015. It's unique block-lattice structure enables fast, fee-less transactions over a secure, decentralized network.</div>
             <Link className="header__learnmorebutton" to='Info'>Learn More</Link>
-            <div className="header__exitbutton">
-               <i className="fas fa-times header__exitbutton-close" onClick={(e) => hideHeader(e)}></i>
+            <div className="header__exitbutton" onClick={(e) => hideHeader(e)}>
+               <i className="fas fa-times header__exitbutton-close"></i>
             </div>
          </header>
          <aside className="sidenav">
