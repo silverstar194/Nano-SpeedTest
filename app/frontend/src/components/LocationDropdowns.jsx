@@ -7,28 +7,9 @@ import { connect } from 'react-redux';
 import '../styles/Field.css';
 import { fetchTransaction } from '../actions/table';
 import Map from './CurrentTransactions/Map';
-
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 class LocationDropdowns extends Component {
-    state = { time : 0 };
-
-    getDerivedStateFromProps(prevProps, current_state) {
-        const { nodes, table, history, settings, show } = this.props;
-        
-        var newTransaction = null;
-        if(table.length > 0){
-            newTransaction = table[0];
-        } else 
-        {
-            newTransaction = {}
-            newTransaction.endSendTimestamp = 0;
-            newTransaction.startSendTimestamp = 0;
-        }
-
-        if((newTransaction.endSendTimestamp - newTransaction.startSendTimestamp)/1000 != this.state.time){
-            this.setState({time: (newTransaction.endSendTimestamp - newTransaction.startSendTimestamp)/1000})
-        }
-    }
 
     initButtons(){
         var buttons = document.getElementsByClassName("transaction-box__choice__button");
@@ -201,8 +182,19 @@ class LocationDropdowns extends Component {
     };
 
     render() {
+
+        const {isFetchingTiming, isFetchingTransaction, latestTransaction, pastTransactions } = this.props;
+        const sendMessage = isFetchingTiming && !isFetchingTransaction ? 'Sending' : 'Send Again';
+        // render the jsx
         const { nodes, table, history, settings, show } = this.props;
-        
+        const mostRecent = pastTransactions && pastTransactions.length && pastTransactions.slice(pastTransactions.length - 1)[0]; // get the last numToRerun transactions
+        console.log(mostRecent)
+
+        var time = "-";
+        if(!isFetchingTransaction && !isFetchingTiming){
+            time = (mostRecent.endSendTimestamp - mostRecent.startSendTimestamp) / 1000.0 + "s"
+        }
+
         const nodeOriginsList = this.generateNodeOriginsList(this.props.nodes);
         const nodeDestinationsList = this.generateNodeDestinationList(this.props.nodes);
         const drawMessage = this.drawMessage(this.props.settings, this.props.nodes)
@@ -236,14 +228,16 @@ class LocationDropdowns extends Component {
                             <div className="transaction-box-footer-location-origin">
                             {origin}
                             </div>
-                            <div><hr className="location-line"></hr></div>
+                            <div>
+                                <LinearProgress className="loader-custom" variant="indeterminate" value={0}/>
+                            </div>
                             <div className="transaction-box-footer-location-destination">
                             {destination}
                             </div>
 
                         </div>
-                        <div className="transaction-box-footer-time">Transaction time: {this.state.time}s<div className="transaction-box-footer-text ">1.2s</div></div>
-                        <div className="transaction-box-footer-try-again">Send Again</div>
+                        <div className="transaction-box-footer-time">Transaction time: <div className="transaction-box-footer-text ">{time}</div></div>
+                        <div className="transaction-box-footer-try-again">{sendMessage}</div>
                     </div>
                 </div>
             </div>
@@ -253,6 +247,22 @@ class LocationDropdowns extends Component {
     }
 }
 
+const mapStateToProps = (state) => {
+    console.log(state)
+    return {
+        numToRerun: state.table.num,
+        table: state.table.rows,
+        pastTransactions: state.pastResults.pastTransactions,
+        isFetchingTransaction: state.transactions.isFetchingTransaction,
+        isFetchingTiming: state.transactions.isFetchingTiming,
+        latestTransaction: state.pastResults.pastTransactions && state.pastResults.pastTransactions.length > 0 ? state.pastResults.pastTransactions.length [0] : undefined,
+        initialValues: {
+            origin: Object.keys(state.nodes).length ? state.nodes[Object.keys(state.nodes)[0]].id : undefined,
+            destination: Object.keys(state.nodes).length ? state.nodes[Object.keys(state.nodes)[2]].id : undefined
+        }
+    };
+};
+
 
 // Allows form to communicate with store
 LocationDropdowns = reduxForm({
@@ -260,13 +270,6 @@ LocationDropdowns = reduxForm({
     form: 'advSettings',
     enableReinitialize: true
 })(LocationDropdowns);
-// now set initialValues using data from your store state
-LocationDropdowns = connect(
-    state => ({
-        initialValues: {
-            origin: Object.keys(state.nodes).length ? state.nodes[Object.keys(state.nodes)[0]].id : undefined,
-            destination: Object.keys(state.nodes).length ? state.nodes[Object.keys(state.nodes)[2]].id : undefined,
-        }
-    }),
-)(LocationDropdowns);
-export default LocationDropdowns;
+
+
+export default connect(mapStateToProps)(LocationDropdowns);

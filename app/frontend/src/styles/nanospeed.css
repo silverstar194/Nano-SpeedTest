@@ -582,7 +582,7 @@ td {
   transition: transform 1s;
   transform-style: preserve-3d;
   margin-top: 20px;
-  z-index: 3;
+  z-index: 4;
 }
 
 .is-flipped {
@@ -592,6 +592,11 @@ td {
 .card__face--back {
   background: blue;
   transform: rotateY(180deg);
+}
+
+.loader-custom {
+  top: 20px;
+   color: orange;
 }
 
 .active-burger {
@@ -605,6 +610,7 @@ td {
   transform: rotateY(180deg);
   height: 440px;
   padding: 50px;
+  backface-visibility: hidden;
   border-radius: 5px;
 }
 

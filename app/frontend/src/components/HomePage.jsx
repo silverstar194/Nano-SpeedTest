@@ -108,8 +108,8 @@ class HomePage extends Component {
                   show={this.showDropdowns}
                 />
             </div>
-            <div class="index-wave">
-                <div class="index-wave-1">
+            <div className="index-wave">
+                <div className="index-wave-1">
                     <svg width="100%" height="172" viewBox="0 0 100% 172" fill="none">
                         <path fill="rgba(234, 137, 31, 0.69)">
                            <animate repeatCount="indefinite" fill="freeze" attributeName="d" dur="8s"
@@ -123,7 +123,7 @@ class HomePage extends Component {
                         </path>
                      </svg>
                   </div>
-                  <div class="index-wave-2">
+                  <div className="index-wave-2">
                      <svg width="100%" height="172" viewBox="0 0 100% 172" fill="none">
                         <path fill="#ea891f">
                            <animate repeatCount="indefinite" fill="freeze" attributeName="d" dur="20s"
