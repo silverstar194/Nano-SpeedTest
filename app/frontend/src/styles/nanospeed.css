@@ -171,14 +171,32 @@ td {
 
 .active-one {
   display: inline-block;
-  color: #ea891f;
+  background-color: rgba(234, 137, 31, 0.2);
+  color: rgba(234, 137, 31, 1);
+  padding: 0 10px;
+  letter-spacing: 2px;
   text-transform: uppercase;
+  margin: 0 2px;
 }
 
 .active-two {
   display: inline-block;
-  color: #4a90e2;
+  background-color: rgba(74, 144, 226,0.2);
+  color: rgba(74, 144, 226,1);
+  padding: 0 10px;
+  letter-spacing: 2px;
   text-transform: uppercase;
+  margin: 0 2px;
+}
+
+.active-one {
+  display: inline-block;
+  background-color: rgba(234, 137, 31, 0.18);
+  color: rgba(234, 137, 31, 1);
+  padding: 0 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 0 2px;
 }
 
 .past-transactions-table {
@@ -267,6 +285,7 @@ td {
   font-weight: bold;
   font-size: 16px;
   letter-spacing: 2px;
+  margin-bottom:10px;
 }
 
 .transaction-box__choice__button {
@@ -277,8 +296,8 @@ td {
   width: 90%;
   max-width: 150px;
   border: 1px solid #e9e9e9;
-  border-radius: 5px;
-  height: 38px;
+  border-radius: 25px;
+  height: 46px;
   color: #717171;
   overflow: hidden;
   white-space: nowrap;
@@ -286,6 +305,11 @@ td {
   background-color: #fff;
   font-size: 16px;
   font-family: "Mukta", sans-serif;
+  cursor:pointer;
+}
+
+button.transaction-box__choice__button:hover {
+  border: 1px solid #d6d6d6;
 }
 
 .transaction-box__choice__button[disabled] {
@@ -293,14 +317,14 @@ td {
   cursor: not-allowed;
 }
 
-.selection-button-one {
+.selection-button-one, .selection-button-one:hover {
   color: #ea891f;
-  border: 1px solid #ea891f;
+  border: 1px solid #ea891f !important;
 }
 
-.selection-button-two {
+.selection-button-two, .selection-button-two:hover {
   color: #4a90e2;
-  border: 1px solid #4a90e2;
+  border: 1px solid #4a90e2 !important;;
 }
 
  .transaction-box-footer-location-origin {
@@ -311,6 +335,11 @@ td {
     line-height: 50px;
   }
 
+  .transaction-box-footer-location-origin .active-one {
+    background-color:#FFF;
+    font-weight: 600;
+  }
+
   .transaction-box-footer-location-destination {
     text-align: right;
     color: #4A90E2;
@@ -319,11 +348,24 @@ td {
     line-height: 50px;
   }
 
+  .transaction-box-footer-location-destination .active-two {
+    background-color:#FFF;
+    font-weight: 600;
+  }
+
   .transaction-box-footer-location {
     display: grid;
     grid-template-columns: auto 1fr auto;
     border-radius: 0 0 0 10px;
   }
+
+  .MuiLinearProgress-colorPrimary {
+    background-color: rgb(226, 226, 226);
+  }
+
+  .MuiLinearProgress-barColorPrimary {
+    background-color: #0f1121;
+}
 
   .transaction-box-footer-time {
     display: inline;
@@ -353,6 +395,7 @@ td {
     font-size: 14px;
     text-align: center;
     line-height: 30px;
+    font-weight: 600;
   }
 
   .transaction-box-footer-try-again {
@@ -568,7 +611,7 @@ td {
   transition: transform 1s;
   transform-style: preserve-3d;
   background-color: white;
-  min-height: 390px;
+  min-height: 360px;
   padding: 25px 10px;
   align-items: center;
   box-shadow: 20px 0px 40px rgba(0, 0, 0, 0.50);
@@ -776,7 +819,7 @@ td {
 @keyframes shadow-pulse
 {
   0% {
-    box-shadow: 0 0 0 0px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 0 0px rgba(74, 144, 226, 0.43);
   }
   100% {
     box-shadow: 0 0 0 35px rgba(0, 0, 0, 0);
@@ -850,7 +893,7 @@ td {
     background-color: rgb(74, 144, 226);
     color: rgba(0, 0, 0, 0);
     border: none;
-    margin-left: 0;
+    margin-left: 40px;
     cursor: pointer;
     border-radius: 100px;
     animation: shadow-pulse 1.7s infinite;
@@ -895,11 +938,11 @@ td {
   }
   .index-main-header__transaction-box {
     display: grid;
-    grid-template-columns: 190fr 375fr;
+    grid-template-columns: 250fr 375fr;
     grid-template-areas: "transaction-box__text transaction-box__text" "transaction-box__go__button transaction-box__choice__button__one__wrapper" "transaction-box__go__button transaction-box__choice__button__two__wrapper";
     background-color: white;
-    height: 390px;
-    padding: 50px;
+    height: 360px;
+    padding: 25px 50px;
     border-radius: 5px;
     box-shadow: 20px 0px 40px rgba(0, 0, 0, 0.23);
     backface-visibility: hidden;
@@ -1689,6 +1732,15 @@ a.usernano-card-link {
       border-radius: 0 0 10px 10px;
       padding: 20px 20px;
     }
+
+    .transaction-box-footer-try-again {
+      margin-right: 0;
+    }
+
+    .transaction-box-footer-try-again:hover {
+      border-radius:25px;
+      margin-right: 0;
+  }
 
     .card {
       margin-top:70px;
