@@ -1733,6 +1733,7 @@ a.usernano-card-link {
       padding: 20px 20px;
     }
 
+
     .transaction-box-footer-try-again {
       margin-right: 0;
     }
@@ -1740,8 +1741,7 @@ a.usernano-card-link {
     .transaction-box-footer-try-again:hover {
       border-radius:25px;
       margin-right: 0;
-  }
-
+    }
     .card {
       margin-top:70px;
     }
