@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import EditableAd from './EditableAd';
 import { fetchWrapper } from 'util/helpers';
 import { makeToast } from 'util/toasts';
-import 'styles/AdBuild.css';
 import NavBar from './NavBar';
 
 const TITLE_MAX_LEN = 40;

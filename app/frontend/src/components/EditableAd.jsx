@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import '../styles/Ad.css';
 
 const EditableAd = ({title, description, url}) => {
     return (

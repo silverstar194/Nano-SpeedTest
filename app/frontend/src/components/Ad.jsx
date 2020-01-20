@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import '../styles/Ad.css';
 
 const Ad = ({title, message, url}) => {
     return (

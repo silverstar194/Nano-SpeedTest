@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchTransaction } from '../actions/table';
-import '../styles/HomePage.css';
 import '../styles/nanospeed.css';
 import {addPastResults} from 'actions/pastResults';
 import { openAdvSettings } from '../actions/advancedModal';

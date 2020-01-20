@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { fetchWrapper } from 'util/helpers';
 import { makeToast } from 'util/toasts';
-import 'styles/Cards.css';
 import { Helmet } from "react-helmet";
 import NavBar from './NavBar';
 import { Link } from 'react-router-dom';

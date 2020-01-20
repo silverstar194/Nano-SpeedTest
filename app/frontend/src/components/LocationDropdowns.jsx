@@ -1,9 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { reduxForm } from 'redux-form';
 import { change } from 'redux-form';
-import '../styles/LocationDropdowns.css';
 import { connect } from 'react-redux';
-import '../styles/Field.css';
 import { fetchTransaction } from '../actions/table';
 import Map from './CurrentTransactions/Map';
 import LinearProgress from '@material-ui/core/LinearProgress';
@@ -182,12 +180,12 @@ class LocationDropdowns extends Component {
 
     render() {
 
-        const {table, numToRerun, isFetchingTiming, isFetchingTransaction, pastTransactions } = this.props;
+        const {table, isFetchingTiming, isFetchingTransaction, pastTransactions } = this.props;
         var sendMessage = 'Send Again';
         sendMessage = !isFetchingTiming && isFetchingTransaction ? "Processing" : sendMessage;
         sendMessage = isFetchingTiming && !isFetchingTransaction ? "Sending" : sendMessage;
         // render the jsx
-        const mostRecent = pastTransactions && pastTransactions.length && pastTransactions.slice(pastTransactions.length - 1)[0]; // get the last numToRerun transactions
+        const mostRecent = pastTransactions && pastTransactions.length && pastTransactions.slice(pastTransactions.length - 1)[0]; // get the last transaction
         console.log(mostRecent)
 
         var time = "-";
@@ -246,7 +244,7 @@ class LocationDropdowns extends Component {
                         </div>
                         <div className="transaction-box-footer-time">Transaction time: <div className="transaction-box-footer-text ">{time}</div></div>
                         <div className="transaction-box-footer-try-again" onClick={
-                                        () => this.props.onRerun(numToRerun, table, isFetchingTransaction, isFetchingTiming)}>{sendMessage}</div>
+                                        () => this.props.onRerun(table, isFetchingTransaction, isFetchingTiming)}>{sendMessage}</div>
                     </div>
                 </div>
             </div>
@@ -258,7 +256,6 @@ class LocationDropdowns extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        numToRerun: state.table.num,
         table: state.table.rows,
         pastTransactions: state.pastResults.pastTransactions,
         isFetchingTransaction: state.transactions.isFetchingTransaction,
@@ -273,25 +270,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onRerun(multi, table, isFetchingTransaction, isFetchingTiming) {
-            if(isFetchingTransaction || isFetchingTiming)
+        onRerun(table, isFetchingTransaction, isFetchingTiming) {
+            if(!isFetchingTransaction && !isFetchingTiming)
             {
-            return;
-            }
-
-            if (multi > 1) {
-                let transactions = [];
-                for (let i = 1; i <= multi; i++) {
-                    transactions.push({
-                        originNodeId: table[table.length - i].origin.id.toString(),
-                        destinationNodeId: table[table.length - i].destination.id.toString(),
-                    });
-                }
-                transactions = transactions.reverse();
-                dispatch(fetchTransaction(multi, {
-                    transactions
-                }));
-            } else {
                 dispatch(fetchTransaction(1, {
                     transactions: [{
                         originNodeId: table[table.length - 1].origin.id.toString(),

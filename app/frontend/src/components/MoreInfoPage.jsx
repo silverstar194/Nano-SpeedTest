@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import '../styles/HomePage.css';
 import Ad from './Ad';
 import { Helmet } from "react-helmet";
 import NavBar from './NavBar';

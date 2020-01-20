@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import 'styles/UserResultsPage.css';
 
 import {connect} from 'react-redux';
 import CurrentTransactionsView from 'components/CurrentTransactions/CurrentTransactionsView';
@@ -8,7 +7,6 @@ import CurrentTransactionsView from 'components/CurrentTransactions/CurrentTrans
 const UserStatsPage = ({numToRerun, table, pastTransactions, isFetchingTransaction, isFetchingTiming}) => {
     return (
         <CurrentTransactionsView
-                            numToRerun={numToRerun}
                             table={table}
                             isFetchingTiming={isFetchingTiming}
                             isFetchingTransaction={isFetchingTransaction}
@@ -18,7 +16,6 @@ const UserStatsPage = ({numToRerun, table, pastTransactions, isFetchingTransacti
 
 const mapStateToProps = (state) => {
     return {
-        numToRerun: state.table.num,
         table: state.table.rows,
         pastTransactions: state.pastResults.pastTransactions,
         isFetchingTransaction: state.transactions.isFetchingTransaction,

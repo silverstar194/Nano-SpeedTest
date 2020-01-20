@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import 'styles/GoogleMaps.css';
 import { connect } from 'react-redux';
 
 

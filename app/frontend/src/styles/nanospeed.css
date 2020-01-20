@@ -1786,3 +1786,149 @@ a.usernano-card-link {
     }
 
 	}
+
+/* Google Map styles */
+.custom-tooltip {
+    padding: 2px;
+    border-radius: 16px;
+}
+
+
+.GoogleMap {
+    height: 400px;
+}
+
+.GoogleHeatMap {
+    width: 100%;
+    /* max-width: 800px; */
+    height: 80%;
+}
+
+#MapPlaceholder {
+    max-width: 800;
+    height: 400px;
+}
+
+/* Tooltip styles */
+.custom-tooltip {
+    padding: 2px;
+    border-radius: 16px;
+}
+
+/* Toasts styles */
+.toast__padding {
+	padding: .5rem;
+	background-color: #333;
+    color: #fff;
+    text-align: center;
+	border-radius: 18px;
+	list-style-type: none;
+}
+
+.toast {
+    align-items: flex-start;
+    border-radius: 8px;
+    display: flex;
+	padding: 1rem;
+	margin-bottom: 0;
+    -webkit-animation: fadein 0.5s;
+    animation: fadein 0.5s;
+}
+
+.toast:not(:last-child) {
+    margin: 0 0 12px;
+}
+
+.toast__content {
+    flex: 1 1 auto;
+    margin: 0 .5rem 0 0;
+}
+
+.toast__dismiss {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: transparent;
+    border: 0;
+    color: inherit;
+    cursor: pointer;
+    display: block;
+    flex: 0 0 auto;
+    font: inherit;
+	padding: 0;
+}
+
+.toasts {
+    bottom: 5%;
+    position: fixed;
+	left: 25%;
+	right: 25%;
+}
+
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 5%; opacity: 1;}
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 5%; opacity: 1;}
+}
+
+
+.toast__padding {
+	padding: .5rem;
+	background-color: #333;
+    color: #fff;
+    text-align: center;
+	border-radius: 18px;
+	list-style-type: none;
+}
+
+.toast {
+    align-items: flex-start;
+    border-radius: 8px;
+    display: flex;
+	padding: 1rem;
+	margin-bottom: 0;
+    -webkit-animation: fadein 0.5s;
+    animation: fadein 0.5s;
+}
+
+.toast:not(:last-child) {
+    margin: 0 0 12px;
+}
+
+.toast__content {
+    flex: 1 1 auto;
+    margin: 0 .5rem 0 0;
+}
+
+.toast__dismiss {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: transparent;
+    border: 0;
+    color: inherit;
+    cursor: pointer;
+    display: block;
+    flex: 0 0 auto;
+    font: inherit;
+	padding: 0;
+}
+
+.toasts {
+    bottom: 5%;
+    position: fixed;
+	left: 25%;
+	right: 25%;
+}
+
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 5%; opacity: 1;}
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 5%; opacity: 1;}
+}

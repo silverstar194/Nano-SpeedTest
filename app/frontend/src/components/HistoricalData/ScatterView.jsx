@@ -8,7 +8,7 @@ import {
     Tooltip,
     CartesianGrid,
 } from 'recharts';
-import 'styles/ScatterTooltip.css';
+import 'styles/nanospeed.css';
 import {scaleLog} from 'd3-scale'
 
 const xName = 'Date';

@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import PastResultsTableRow from './PastResultsTableRow';
 import uuid from 'uuid';
-import 'styles/PastResults.css';
 
 class PastResultsTable extends React.Component {
     constructor(props) {
