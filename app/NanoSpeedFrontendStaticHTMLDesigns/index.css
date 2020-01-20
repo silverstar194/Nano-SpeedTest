@@ -1327,7 +1327,7 @@ a.usernano-card-link {
     tr {
       margin: 0 0 .5rem 0;
     }
-      
+
     tr:nth-child(odd) {
       background: #fbfbfb;
       padding: 20px;
@@ -1337,7 +1337,7 @@ a.usernano-card-link {
       background: #FFF;
       padding: 20px;
     }
-    
+
 		td {
       border: none;
       position: relative;
@@ -1365,7 +1365,7 @@ a.usernano-card-link {
       margin: 0;
       border: 0;
     }
-    
+
 		td:nth-of-type(1):before { content: "Status"; }
 		td:nth-of-type(2):before { content: "Origin"; }
 		td:nth-of-type(3):before { content: "Destination"; }
