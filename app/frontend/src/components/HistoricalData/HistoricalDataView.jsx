@@ -4,6 +4,8 @@ import {connect} from 'react-redux';
 
 import Ad from 'components/Ad';
 import PastResultsTable from './PastResultsTable';
+import PastResultsTableRow from './PastResultsTableRow';
+import uuid from 'uuid';
 import ScatterView from './ScatterView';
 import HeatMap from './HeatMap';
 import {addPastResults} from 'actions/pastResults';
@@ -21,7 +23,7 @@ class HistoricalDataView extends React.Component {
         });
     }
     render() {
-        const {pastTransactions, totalTransactions, globalAverage, nodeLocations} = this.props;
+        const {pastTransactions, totalTransactions, globalAverage, nodeLocations, overallGlobalAverage} = this.props;
         const plotData = [];
         pastTransactions.sort((a,b) => a.endSendTimestamp - b.endSendTimestamp)
         .forEach((transaction, i) => {
@@ -35,6 +37,7 @@ class HistoricalDataView extends React.Component {
             });
         });
 
+        var listTransactions = pastTransactions.slice(0,20)
         return (
             <div className='HistoricalData'>
              <Helmet>
@@ -61,7 +64,7 @@ class HistoricalDataView extends React.Component {
                      </div>
                      <div className="statsbox__two">
                         <div className="statsbox__title">All-Time Median</div>
-                        <div className="statsbox__value">TODO</div>
+                        <div className="statsbox__value">{overallGlobalAverage.toFixed(3)}</div>
                      </div>
                      <div className="statsbox__three">
                         <div className="statsbox__title">24 Hour Median</div>
@@ -80,10 +83,11 @@ class HistoricalDataView extends React.Component {
                <div className="stats-main-area-three-inner">
                   <div className="past__transactions_title__wrapper">
                      <div className="past-transations-title">Past users transactions</div>
-                     <div className="past__transactions__link">View All</div>
                   </div>
-                  <table className="past-transactions-table">
-                     <div className="table-title">
+
+
+                  <table className="transactions-table max-width">
+                     <div className="hidden-on-mobile">
                         <tr>
                            <th className="border_bottom">Date</th>
                            <th className="border_bottom">Origin</th>
@@ -93,76 +97,21 @@ class HistoricalDataView extends React.Component {
                            <th className="border_bottom">Sending Block</th>
                         </tr>
                      </div>
-                     <tr>
-                        <td>01/01/2019 10:42</td>
-                        <td>New York</td>
-                        <td>Bangalore</td>
-                        <td>.004 NANO</td>
-                        <td>1.34s</td>
-                        <td>afgaadfasdga</td>
-                     </tr>
-                     <tr>
-                        <td>01/01/2019 10:42</td>
-                        <td>New York</td>
-                        <td>Bangalore</td>
-                        <td>.001 NANO</td>
-                        <td>1.32s</td>
-                        <td>afgaadfasdga</td>
-                     </tr>
-                     <tr>
-                        <td>01/01/2019 10:42</td>
-                        <td>New York</td>
-                        <td>Bangalore</td>
-                        <td>.004 NANO</td>
-                        <td>1.34s</td>
-                        <td>afgaadfasdga</td>
-                     </tr>
-                     <tr>
-                        <td>01/01/2019 10:42</td>
-                        <td>New York</td>
-                        <td>Bangalore</td>
-                        <td>.001 NANO</td>
-                        <td>1.32s</td>
-                        <td>afgaadfasdga</td>
-                     </tr>
-                     <tr>
-                        <td>01/01/2019 10:42</td>
-                        <td>New York</td>
-                        <td>Bangalore</td>
-                        <td>.004 NANO</td>
-                        <td>1.34s</td>
-                        <td>afgaadfasdga</td>
-                     </tr>
-                     <tr>
-                        <td>01/01/2019 10:42</td>
-                        <td>New York</td>
-                        <td>Bangalore</td>
-                        <td>.001 NANO</td>
-                        <td>1.32s</td>
-                        <td>afgaadfasdga</td>
-                     </tr>
-                     <tr>
-                        <td>01/01/2019 10:42</td>
-                        <td>New York</td>
-                        <td>Bangalore</td>
-                        <td>.004 NANO</td>
-                        <td>1.34s</td>
-                        <td>afgaadfasdga</td>
-                     </tr>
-                     <tr>
-                        <td>01/01/2019 10:42</td>
-                        <td>New York</td>
-                        <td>Bangalore</td>
-                        <td>.001 NANO</td>
-                        <td>1.32s</td>
-                        <td>afgaadfasdga</td>
-                     </tr>
+
+                      {
+                        listTransactions.sort((a,b) => (a.endSendTimestamp || Date.now()) - (b.endSendTimestamp || Date.now()))
+                        .map((transactionData) => {
+                        return <PastResultsTableRow key={uuid(transactionData.id)} {...transactionData}/>;
+                    })
+            }
+
+
                   </table>
                </div>
             </div>
-            <div className="stats-button-more">
+            <a className="stats-button-more" href="/Info">
                LEARN MORE
-            </div>
+            </a>
          </main>
         </div>
         );
@@ -174,6 +123,7 @@ const mapStateToProps = (state) => {
         pastTransactions: state.pastResults.pastTransactions,
         totalTransactions: state.pastResults.totalTransactions,
         globalAverage: state.pastResults.globalAverage,
+        overallGlobalAverage: state.pastResults.overallGlobalAverage,
         nodeLocations: state.nodes
     };
 };
@@ -189,13 +139,14 @@ const mapDispatchToProps = (dispatch) => {
 HistoricalDataView.propTypes = {
     pastTransactions: PropTypes.array.isRequired,
     totalTransactions: PropTypes.number,
-    globalAverage: PropTypes.number,
+    overallGlobalAverage: PropTypes.number,
     nodeLocations: PropTypes.array
 };
 
 HistoricalDataView.defaultProps = {
     totalTransactions: 0,
     globalAverage: 0,
+    overallGlobalAverage: 0,
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(HistoricalDataView);
+export default connect(mapStateToProps, mapDispatchToProps)(HistoricalDataView);

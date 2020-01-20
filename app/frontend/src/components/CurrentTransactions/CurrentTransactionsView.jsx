@@ -1,20 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component,  Fragment } from 'react';
 import Table from './Table';
 import NoTableEntries from './NoTableEntries';
 import '../../styles/CurrentTransactionsView.css';
 import { connect } from 'react-redux';
 import { fetchTransaction } from '../../actions/table';
-
-const loader = (
-    <div className='loading-container'>
-        <div className='loader-container d-flex justify-content-center'>
-            <div className='loader'></div>
-        </div>
-        <div>
-            <p className='text-center'>Your transaction is processing. Please wait.</p>
-        </div>
-    </div>
-);
 
 const errorMessage = (mostRecent, isFetchingTransaction) =>
     (mostRecent && mostRecent[0].error && !isFetchingTransaction) ?
@@ -32,8 +21,20 @@ class CurrentTransactionsView extends Component {
         const sendMessage = mostRecent && mostRecent[0].completed ? 'Sent' : 'Sending';
         // render the jsx
 
+        var output;
+        if((table && table.length)){
+            output = ""
+        }
+        else
+        {
+            output = <div className="center-horizontally max-width">You haven't tried a transaction yet, feel free to send one by clicking on the button above.</div>
+        }
+
         return (
-            <Table tableData={table}/>             
+        <Fragment>
+           <Table tableData={table}/>
+           {output}
+         </Fragment>
         );
     }
 }

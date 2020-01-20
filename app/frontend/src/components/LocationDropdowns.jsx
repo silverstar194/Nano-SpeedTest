@@ -183,10 +183,11 @@ class LocationDropdowns extends Component {
 
     render() {
 
-        const {isFetchingTiming, isFetchingTransaction, latestTransaction, pastTransactions } = this.props;
-        const sendMessage = isFetchingTiming && !isFetchingTransaction ? 'Sending' : 'Send Again';
+        const {nodes, table, history, settings, show, numToRerun, isFetchingTiming, isFetchingTransaction, latestTransaction, pastTransactions } = this.props;
+        var sendMessage = 'Send Again';
+        sendMessage = !isFetchingTiming && isFetchingTransaction ? "Processing" : sendMessage;
+        sendMessage = isFetchingTiming && !isFetchingTransaction ? "Sending" : sendMessage;
         // render the jsx
-        const { nodes, table, history, settings, show } = this.props;
         const mostRecent = pastTransactions && pastTransactions.length && pastTransactions.slice(pastTransactions.length - 1)[0]; // get the last numToRerun transactions
         console.log(mostRecent)
 
@@ -200,6 +201,14 @@ class LocationDropdowns extends Component {
         const drawMessage = this.drawMessage(this.props.settings, this.props.nodes)
         const destination = this.drawDestination(this.props.settings, this.props.nodes);
         const origin = this.drawOrigin(this.props.settings, this.props.nodes);
+
+         var loader;
+         if(isFetchingTransaction || isFetchingTiming){
+            loader = <LinearProgress className="loader-custom" variant="indeterminate" value={0}/>
+         }else{
+            loader = <div className="loader-custom"></div>
+         }
+
 
         this.initButtons();
 
@@ -222,14 +231,14 @@ class LocationDropdowns extends Component {
                   </div>
                 </div>
                 <div className="transaction-box-back center-horizontally">
-                    <Map transactions={table}/>
+                    <Map />
                     <div className="transaction-box-footer">
                         <div className="transaction-box-footer-location">
                             <div className="transaction-box-footer-location-origin">
                             {origin}
                             </div>
                             <div>
-                                <LinearProgress className="loader-custom" variant="indeterminate" value={0}/>
+                               {loader}
                             </div>
                             <div className="transaction-box-footer-location-destination">
                             {destination}
@@ -237,7 +246,8 @@ class LocationDropdowns extends Component {
 
                         </div>
                         <div className="transaction-box-footer-time">Transaction time: <div className="transaction-box-footer-text ">{time}</div></div>
-                        <div className="transaction-box-footer-try-again">{sendMessage}</div>
+                        <div className="transaction-box-footer-try-again" onClick={
+                                        () => this.props.onRerun(numToRerun, table, isFetchingTransaction, isFetchingTiming)}>{sendMessage}</div>
                     </div>
                 </div>
             </div>
@@ -248,7 +258,6 @@ class LocationDropdowns extends Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state)
     return {
         numToRerun: state.table.num,
         table: state.table.rows,
@@ -263,6 +272,38 @@ const mapStateToProps = (state) => {
     };
 };
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onRerun(multi, table, isFetchingTransaction, isFetchingTiming) {
+            if(isFetchingTransaction || isFetchingTiming)
+            {
+            return;
+            }
+
+            if (multi > 1) {
+                let transactions = [];
+                for (let i = 1; i <= multi; i++) {
+                    transactions.push({
+                        originNodeId: table[table.length - i].origin.id.toString(),
+                        destinationNodeId: table[table.length - i].destination.id.toString(),
+                    });
+                }
+                transactions = transactions.reverse();
+                dispatch(fetchTransaction(multi, {
+                    transactions
+                }));
+            } else {
+                dispatch(fetchTransaction(1, {
+                    transactions: [{
+                        originNodeId: table[table.length - 1].origin.id.toString(),
+                        destinationNodeId: table[table.length - 1].destination.id.toString(),
+                    }]
+                }));
+            }
+        }
+    };
+ }
+
 
 // Allows form to communicate with store
 LocationDropdowns = reduxForm({
@@ -272,4 +313,4 @@ LocationDropdowns = reduxForm({
 })(LocationDropdowns);
 
 
-export default connect(mapStateToProps)(LocationDropdowns);
+export default connect(mapStateToProps, mapDispatchToProps)(LocationDropdowns);

@@ -25,6 +25,7 @@ export const fetchPastResults = () => {
     return fetchWrapper('transactions/statistics?count=250', {
         method: 'GET'
     }).then((data) => {
+
         const transactions = data.transactions.filter((transaction) => {
             return transaction.endSendTimestamp && transaction.endSendTimestamp - transaction.startSendTimestamp > 0;
         });
@@ -32,10 +33,12 @@ export const fetchPastResults = () => {
             transaction.elapsedTime = transaction.endSendTimestamp - transaction.startSendTimestamp;
         });
         const average = data.average/1000;
+        const globalAverage = data.overallGlobalAverage/1000;
         return {
             pastTransactions: transactions,
             totalTransactions: data.count,
-            globalAverage: average
+            globalAverage: average,
+            overallGlobalAverage: globalAverage
         };
     }).catch((err) => {
         console.warn('Error fetching past results data');

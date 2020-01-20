@@ -10,7 +10,6 @@ a:link {
 
 .hidden {
   visibility: hidden;
-  height: 0;
 }
 
 body,
@@ -638,9 +637,26 @@ button.transaction-box__choice__button:hover {
 }
 
 .loader-custom {
-  top: 20px;
-   color: orange;
+    display: block;
+    margin-top: 20px;
+    background-color: orange;
+    transparent: .5;
+    height: 5px;
+    border-radius: 2.5px;
 }
+
+.loader {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  position: relative;
+  top: 20%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  margin-left: auto;
+  margin-right: auto;
+}
+
 
 .active-burger {
   color: orange;
@@ -826,6 +842,12 @@ button.transaction-box__choice__button:hover {
   }
 }
 
+ .hidden-on-mobile {
+    visibility: hidden;
+    height: 0;
+  }
+
+
 /* Non-mobile styles, 1024px breakpoint */
 
 @media screen and (min-width: 1024px) {
@@ -833,6 +855,11 @@ button.transaction-box__choice__button:hover {
     display: flex;
     padding:0;
     margin:0;
+  }
+
+  .hidden-on-mobile {
+    visibility: visible;
+    height: 100%;
   }
 
   .general-navbar-item:link {
@@ -940,7 +967,6 @@ button.transaction-box__choice__button:hover {
     display: grid;
     grid-template-columns: 250fr 375fr;
     grid-template-areas: "transaction-box__text transaction-box__text" "transaction-box__go__button transaction-box__choice__button__one__wrapper" "transaction-box__go__button transaction-box__choice__button__two__wrapper";
-    background-color: white;
     height: 360px;
     padding: 25px 50px;
     border-radius: 5px;

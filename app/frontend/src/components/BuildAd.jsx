@@ -165,115 +165,172 @@ class BuildAd extends Component {
     render() {
         const {title, description, url, project, email, selectedSlot, errors} = this.state;
         return (
-        <main class="ads-main">
+        <main className="ads-main">
         <NavBar />
-         <div class="general-main-area-one">
-            <div class="general-header-main center-horizontally max-width">
+         <div className="general-main-area-one">
+            <div className="general-header-main center-horizontally max-width">
                Advertise
             </div>
          </div>
-         <div class="ads-main-area-two center-horizontally">
-            <div class="ads-main-area-two-wrapper center-horizontally max-width">
-               <div class="ads-header">
+         <div className="ads-main-area-two center-horizontally">
+            <div className="ads-main-area-two-wrapper center-horizontally max-width">
+               <div className="ads-header">
                   About our ads
                </div>
-               <div class="half-col">
+               <div className="half-col">
                   Our ads show up directly at the top of the page. Each time the page changes a new ad is selected. 1 slot represents 5% of the total monthly views.
                </div>
-               <div class="input-section">
-                  <div class="ads-title">
+               <form>
+               <div className="input-section">
+                  <div className="ads-title">
                      Contact Info
                   </div>
-                  <div class="ads-input-text">
+                  <div className="ads-input-text">
                      Project Name - Used only for reference, will not part of ad.
                   </div>
-                  <input type="text" class="ads-input" placeholder="Enter Project Name" name="fname" />
+                  <input
+                      type='text'
+                      className='form-control ads-input'
+                      name='project'
+                      value={project}
+                      onChange={this.onEditField}
+                      placeholder='Enter Project Name'
+                  />
+                  {errors.projectError && <div className='badge-warning'>
+                                Please enter a Project Name
+                  </div>
+                  }
                </div>
                <br></br>
-               <div class="input-section">
-                  <div class="ads-input-text">
+               <div className="input-section">
+                  <div className="ads-input-text">
                      E-mail Address
                   </div>
-                  <input type="email" class="ads-input" placeholder="Enter E-mail Address" name="fname" />
+                 <input
+                        type='email'
+                        className='form-control ads-input'
+                        name='email'
+                        value={email}
+                        onChange={this.onEditField}
+                        placeholder='Enter Email'
+                 />
+                  {errors.emailError && <div className='badge-warning'>Please enter an email</div>}       
                </div>
-               <div class="input-section">
-                  <div class="ads-title">
+               <div className="input-section">
+                  <div className="ads-title">
                      Add content
                   </div>
-                  <div class="ads-input-text">
-                     Title (max 40 chars.)
+                  <div className="ads-input-text">
+                     Title (max {TITLE_MAX_LEN} chars.)
                   </div>
-                  <input type="text" class="ads-input" placeholder="Enter Title" name="fname" />
+                  <input
+                      type='text'
+                      className='form-control ads-input'
+                      name='title'
+                      value={title}
+                      onChange={this.onEditField}
+                      placeholder='Enter title'
+                  />
+                  {errors.titleError && <div className='badge-warning'>Please enter a title</div>}
+                  {errors.titleTooLong && <div className='badge-warning'>
+                     {TITLE_MAX_LEN} Character Max
+                  </div>
+                  }
                </div>
                <br></br>
-               <div class="input-section">
-                  <div class="ads-input-text">
-                     Decription (max 120 chars.)
+               <div className="input-section">
+                  <div className="ads-input-text">
+                     Decription (max {DESCRIPTION_MAX_LEN} chars.)
                   </div>
-                  <input type="text" class="ads-input" placeholder="Enter Decription" name="fname" />
+                  <input
+                      type='text'
+                      name='description'
+                      className='form-control ads-input'
+                      value={description}
+                      onChange={this.onEditField}
+                      placeholder='Enter description'
+                  />
+                  {errors.descriptionError && <div className='badge-warning'>
+                     Please enter a description
+                  </div>}
+                  {errors.descriptionTooLong && <div className='badge-warning'>
+                     {DESCRIPTION_MAX_LEN} Character Max
+                  </div>}               
                </div>
                <br></br>
-               <div class="input-section">
-                  <div class="ads-input-text">
+               <div className="input-section">
+                  <div className="ads-input-text">
                      Decription URL
                   </div>
-                  <input type="text" class="ads-input" placeholder="Enter URL" name="fname" />
-               </div>
+              <input
+                  type='url'
+                  name='url'
+                  className='form-control ads-input'
+                  value={url}
+                  onChange={this.onEditField}
+                  placeholder='Enter URL'
+              />
+              {errors.urlError && <div className='badge-warning'>
+                 Please enter a URL
+              </div>}
+              {errors.needsHTTP && <div className='badge-warning'>
+                 Make sure to include http:// or https://
+              </div>}               
+              </div>
                <div class="ads-title">
                   Live Preview
                </div>
-               <div class="ad__wrapper max-width">
-                  <div class="ad__text">💥 Insert your Nano project here. </div>
-                  <div class="ad__community__link">AD</div>
-               </div>
-               <div class="ads-title">
+               <EditableAd
+                        title={title.length ? title : defaults.title}
+                        description={description.length ? description : defaults.description}
+                        url={url}
+               />
+               <div className="ads-title">
                   Period
                </div>
-               <div class="ads-period">
+               <div className="ads-period">
                   Your ad will run from 
-                  <div class="ad-date-hightlight">&nbsp;July 29th&nbsp;</div>
+                  <div className="ad-date-hightlight">&nbsp;{new Date(Date.now()  + 1000 * 60 * 60 * 24 * 1).toLocaleDateString({}, dateOptions)}&nbsp;</div>
                   to 
-                  <div class="ad-date-hightlight">&nbsp;July 31th </div>
+                  <div className="ad-date-hightlight">&nbsp;{new Date(Date.now() + 1000 * 60 * 60 * 24 * 31).toLocaleDateString({}, dateOptions)}</div>
                </div>
-               <div class="ads-title">
+               <div className="ads-title">
                   Ad slots
                </div>
-               <div class="ads-input-text">
+               <div className="ads-input-text">
                   Each Slot represents 5% of all nanospeed.live impressions for the month and are available on a first-come, first-served basis. You may purchase up to 5 slots.
                </div>
-               <div class="ad-slot-cards-wrapper">
-                  <div class="ad-slot-card">
-                     <div class="ad-slot">1 slot</div>
-                     <div class="ad-cost">4 nano</div>
-                  </div>
-                  <div class="ad-slot-card">
-                     <div class="ad-slot">2 slots</div>
-                     <div class="ad-cost">8 nano</div>
-                  </div>
-                  <div class="ad-slot-card">
-                     <div class="ad-slot">3 slots</div>
-                     <div class="ad-cost">16 nano</div>
-                  </div>
-                  <div class="ad-slot-card active-card">
-                     <div class="ad-slot active-card">4 slots</div>
-                     <div class="ad-cost active-card">20 nano</div>
-                  </div>
+               <div className="ad-slot-cards-wrapper">
+                 {
+                  SLOTS.map((slot) => ( // create NUM_SLOTS number of radio buttons
+                      <div key={slot} className="ad-slot-card">
+                          <input
+                              className='form-check-input'
+                              type='radio'
+                              value={slot}
+                              onChange={this.onRadioChange}
+                              checked={selectedSlot === slot}
+                          />
+                           <div className="ad-slot">{slot} Slot{slot > 1 ? 's' : ''}</div>
+                           <div className="ad-cost">{this.state.costPerSlot * slot } nano</div>
+                      </div>
+                  ))
+                 }
                </div>
-            </div>
-         </div>
-         <div class="ads-main-area-three">
-            <div class="ads-main-area-three-wrapper center-horizontally max-width">
-               <div class="ad-text">
+         <div className="ads-main-area-three">
+            <div className="ads-main-area-three-wrapper center-horizontally max-width">
+               <div className="ad-text">
                   Your ad will be reviewed within 24 hours and you'll receive an e-mail. If your ad is approved, you must submit payment in order to secure your ad slot(s).
                </div>
-               <div class="ads-main-area-three-button">
-                  Submit
-               </div>
+              <button onClick={this.onSubmit} type='submit' className='ads-main-area-three-button'>Submit</button>
             </div>
          </div>
-        </main>
-        );
-    }
+        </form>
+      </div>
+    </div>
+  </main>
+ );
+}
 }
 
 export default BuildAd;

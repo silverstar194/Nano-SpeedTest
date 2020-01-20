@@ -13,6 +13,7 @@ import { Helmet } from "react-helmet";
 import PastResultsTable from './HistoricalData/PastResultsTable';
 import UserResultsPage from 'components/UserResultsPage';
 import NavBar from './NavBar';
+import Ad from 'components/Ad';
 import CurrentTransactionsView from 'components/CurrentTransactions/CurrentTransactionsView';
 
 class HomePage extends Component {
@@ -139,11 +140,8 @@ class HomePage extends Component {
                 </div>
             </div>
             <div className="index-main-area-two">
-               <div className="ad__wrapper center-horizontally max-width">
-                  <div className="ad__text">💥 Insert your Nano project here. Gain traction at a low cost. Support our servers with 90% discounted ad.</div>
-                  <div className="ad__community__link">AD</div>
-               </div>
-                <UserResultsPage />
+               <Ad/>
+               <UserResultsPage />
             </div>
             <div className="index-main-area-three">
               <PastResultsTable tableData={pastTransactions}/>
