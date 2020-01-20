@@ -41,6 +41,7 @@ class BuildAd extends Component {
         this.onEditField = this.onEditField.bind(this);
         this.onRadioChange = this.onRadioChange.bind(this);
     }
+
     componentDidMount() {
         fetchWrapper('header/info')
         .then((response) => {
@@ -94,9 +95,11 @@ class BuildAd extends Component {
                         ...initValues
                     });
                     makeToast({
-                        text: 'Your Ad has been saved!',
+                        text: 'Your Ad has been submitted!',
                         status: 'success'
                     });
+                    alert('Your Ad has been submitted!')
+                    window.location.href = "/";
                 } else {
                     this.setState({
                         showSpinner: false,
@@ -275,7 +278,7 @@ class BuildAd extends Component {
                  Make sure to include http:// or https://
               </div>}               
               </div>
-               <div class="ads-title">
+               <div className="ads-title">
                   Live Preview
                </div>
                <EditableAd
