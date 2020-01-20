@@ -1,13 +1,12 @@
 import React, { Component,  Fragment } from 'react';
 import Table from './Table';
-import NoTableEntries from './NoTableEntries';
 import '../../styles/CurrentTransactionsView.css';
 import { connect } from 'react-redux';
 import { fetchTransaction } from '../../actions/table';
 
 const errorMessage = (mostRecent, isFetchingTransaction) =>
     (mostRecent && mostRecent[0].error && !isFetchingTransaction) ?
-        <div className='alert alert-danger' role='alert'>
+        <div className='alert alert-danger center-horizontally max-width' role='alert'>
             Something went wrong while trying to send the transaction.
             This is an issue with our servers and not the Nano network. Hold tight and try again.
         </div>
@@ -16,10 +15,8 @@ const errorMessage = (mostRecent, isFetchingTransaction) =>
 
 class CurrentTransactionsView extends Component {
     render() {
-        const { numToRerun, table, isFetchingTiming, isFetchingTransaction } = this.props;
+        const { numToRerun, table, isFetchingTransaction } = this.props;
         const mostRecent = table && table.length && table.slice(table.length - numToRerun); // get the last numToRerun transactions
-        const sendMessage = mostRecent && mostRecent[0].completed ? 'Sent' : 'Sending';
-        // render the jsx
 
         var output;
         if((table && table.length)){
@@ -34,6 +31,7 @@ class CurrentTransactionsView extends Component {
         <Fragment>
            <Table tableData={table}/>
            {output}
+           {errorMessage(mostRecent, isFetchingTransaction)}
          </Fragment>
         );
     }

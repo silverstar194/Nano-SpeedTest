@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Field, reduxForm } from 'redux-form';
-import PropTypes from 'prop-types';
+import { reduxForm } from 'redux-form';
 import { change } from 'redux-form';
 import '../styles/LocationDropdowns.css';
 import { connect } from 'react-redux';
@@ -25,13 +24,13 @@ class LocationDropdowns extends Component {
             }
         }
 
-        for(var i = 0; i < buttons.length; i++){
+        for(i = 0; i < buttons.length; i++){
             var buttonId = buttons[i].value.replace("origin", "").replace("destination", "");
-            if(buttons[i].value.includes("destination") && buttonId == origin.value.replace("origin", "")){
+            if(buttons[i].value.includes("destination") && buttonId === origin.value.replace("origin", "")){
                 buttons[i].disabled = true;
             }
 
-            if(buttons[i].value.includes("origin") && buttonId == destination.value.replace("destination", "")){
+            if(buttons[i].value.includes("origin") && buttonId === destination.value.replace("destination", "")){
                 buttons[i].disabled = true;
             }
         }
@@ -59,7 +58,7 @@ class LocationDropdowns extends Component {
         }
 
         if(button.value.includes("destination")){
-            for(var i = 0; i < buttons.length; i++){
+            for(i = 0; i < buttons.length; i++){
                 buttons[i].classList.remove("selection-button-two");
                 if(buttons[i].value.includes("origin")){
                     buttons[i].disabled = false;
@@ -72,16 +71,16 @@ class LocationDropdowns extends Component {
         }
 
         if(button.value.includes("origin")){
-            for(var i = 0; i < buttons.length; i++){
-                if(buttons[i].value.includes("destination") && button.value.replace("origin") == buttons[i].value.replace("destination")){
+            for(i = 0; i < buttons.length; i++){
+                if(buttons[i].value.includes("destination") && button.value.replace("origin") === buttons[i].value.replace("destination")){
                     buttons[i].disabled = true;
                 }
             }
         }
 
         if(button.value.includes("destination")){
-            for(var i = 0; i < buttons.length; i++){
-                if(buttons[i].value.includes("origin") && button.value.replace("destination") == buttons[i].value.replace("origin")){
+            for(i = 0; i < buttons.length; i++){
+                if(buttons[i].value.includes("origin") && button.value.replace("destination") === buttons[i].value.replace("origin")){
                     buttons[i].disabled = true;
                 }
             }
@@ -108,7 +107,7 @@ class LocationDropdowns extends Component {
       var indents = [];
       for (var i = 0; i < nodes.length; i++) {
         var el = null;
-        if(i == 2){
+        if(i === 2){
           el = <button className="transaction-box__choice__button selection-button-two" value={nodes[i].id+"destination"} key={nodes[i].id+"destination"} onClick={(e) => this.handleButton(e)}>{nodes[i].location}</button>;
         } else {
           el = <button className="transaction-box__choice__button" value={nodes[i].id+"destination"} key={nodes[i].id+"destination"} onClick={(e) => this.handleButton(e)}>{nodes[i].location}</button>;
@@ -126,7 +125,7 @@ class LocationDropdowns extends Component {
       var indents = [];
       for (var i = 0; i < nodes.length; i++) {
         var el = null;
-        if(i == 0){
+        if(i === 0){
           el = <button className="transaction-box__choice__button selection-button-one" value={nodes[i].id+"origin"} key={nodes[i].id+"origin"} onClick={(e) => this.handleButton(e)}>{nodes[i].location} </button>;
         } else {
           el = <button className="transaction-box__choice__button" value={nodes[i].id+"origin"} key={nodes[i].id+"origin"} onClick={(e) => this.handleButton(e)}>{nodes[i].location} </button>;
@@ -183,7 +182,7 @@ class LocationDropdowns extends Component {
 
     render() {
 
-        const {nodes, table, history, settings, show, numToRerun, isFetchingTiming, isFetchingTransaction, latestTransaction, pastTransactions } = this.props;
+        const {table, numToRerun, isFetchingTiming, isFetchingTransaction, pastTransactions } = this.props;
         var sendMessage = 'Send Again';
         sendMessage = !isFetchingTiming && isFetchingTransaction ? "Processing" : sendMessage;
         sendMessage = isFetchingTiming && !isFetchingTransaction ? "Sending" : sendMessage;
@@ -264,7 +263,7 @@ const mapStateToProps = (state) => {
         pastTransactions: state.pastResults.pastTransactions,
         isFetchingTransaction: state.transactions.isFetchingTransaction,
         isFetchingTiming: state.transactions.isFetchingTiming,
-        latestTransaction: state.pastResults.pastTransactions && state.pastResults.pastTransactions.length > 0 ? state.pastResults.pastTransactions.length [0] : undefined,
+        latestTransaction: state.pastResults.pastTransactions && state.pastResults.pastTransactions.length > 0 ? state.pastResults.pastTransactions.length[0] : undefined,
         initialValues: {
             origin: Object.keys(state.nodes).length ? state.nodes[Object.keys(state.nodes)[0]].id : undefined,
             destination: Object.keys(state.nodes).length ? state.nodes[Object.keys(state.nodes)[2]].id : undefined

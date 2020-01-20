@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import 'styles/GoogleMaps.css';
 import { connect } from 'react-redux';
 
@@ -23,7 +22,7 @@ class Map extends Component  {
     render() {
          let transactionPairs = [];
          let markerPairs = []
-         const {isFetchingTiming, numToRerun, table, isFetchingTransaction, latestTransaction, pastTransactions } = this.props;
+         const {numToRerun, table } = this.props;
          const mostRecent = table && table.length && table.slice(table.length - numToRerun); // get the last numToRerun transactions
 
          console.log(mostRecent)
@@ -52,10 +51,6 @@ const mapStateToProps = (state) => {
     return {
         numToRerun: state.table.num,
         table: state.table.rows,
-        pastTransactions: state.pastResults.pastTransactions,
-        isFetchingTransaction: state.transactions.isFetchingTransaction,
-        isFetchingTiming: state.transactions.isFetchingTiming,
-        latestTransaction: state.pastResults.pastTransactions && state.pastResults.pastTransactions.length > 0 ? state.pastResults.pastTransactions.length [0] : undefined,
         initialValues: {
             origin: Object.keys(state.nodes).length ? state.nodes[Object.keys(state.nodes)[0]].id : undefined,
             destination: Object.keys(state.nodes).length ? state.nodes[Object.keys(state.nodes)[2]].id : undefined

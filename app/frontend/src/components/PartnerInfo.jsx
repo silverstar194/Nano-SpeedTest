@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import 'styles/PartnerInfo.css';
 import ReactEmbedGist from 'react-embed-gist';
 import { Helmet } from "react-helmet";
-import Ad from 'components/Ad';
 import NavBar from './NavBar';
 
 class PartnerInfo extends Component {

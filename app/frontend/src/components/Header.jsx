@@ -1,6 +1,4 @@
-import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
-import { withRouter } from 'react-router'; // provides access to the history and location
+import React, { Fragment } from 'react';
 import HeaderItem from './HeaderItem';
 import { Link } from 'react-router-dom';
 
@@ -31,7 +29,6 @@ const Header = ({location}) => {
   }
          
   function toggleMenu(e) {
-     var x = document.getElementsByClassName("burger-menu");
      var sideBar = document.getElementsByClassName("sidenav")[0]
      toggleClassName(sideBar, 'active');
   }

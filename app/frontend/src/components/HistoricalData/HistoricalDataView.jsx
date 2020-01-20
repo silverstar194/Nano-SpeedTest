@@ -3,15 +3,15 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
 import Ad from 'components/Ad';
-import PastResultsTable from './PastResultsTable';
 import PastResultsTableRow from './PastResultsTableRow';
 import uuid from 'uuid';
 import ScatterView from './ScatterView';
-import HeatMap from './HeatMap';
 import {addPastResults} from 'actions/pastResults';
 import {fetchPastResults} from 'util/helpers';
 import { Helmet } from "react-helmet";
 import NavBar from '../NavBar';
+
+const viewItems = 20;
 
 class HistoricalDataView extends React.Component {
     componentDidMount() {
@@ -23,7 +23,7 @@ class HistoricalDataView extends React.Component {
         });
     }
     render() {
-        const {pastTransactions, totalTransactions, globalAverage, nodeLocations, overallGlobalAverage} = this.props;
+        const {pastTransactions, totalTransactions, globalAverage, overallGlobalAverage} = this.props;
         const plotData = [];
         pastTransactions.sort((a,b) => a.endSendTimestamp - b.endSendTimestamp)
         .forEach((transaction, i) => {
@@ -37,7 +37,7 @@ class HistoricalDataView extends React.Component {
             });
         });
 
-        var listTransactions = pastTransactions.slice(0,20)
+        var listTransactions = pastTransactions.slice(0,viewItems)
         return (
             <div className='HistoricalData'>
              <Helmet>
@@ -79,6 +79,7 @@ class HistoricalDataView extends React.Component {
                   </div>
                </div>
             </div>
+            <Ad />
             <div className="stats-main-area-three max-width">
                <div className="stats-main-area-three-inner">
                   <div className="past__transactions_title__wrapper">
@@ -124,7 +125,6 @@ const mapStateToProps = (state) => {
         totalTransactions: state.pastResults.totalTransactions,
         globalAverage: state.pastResults.globalAverage,
         overallGlobalAverage: state.pastResults.overallGlobalAverage,
-        nodeLocations: state.nodes
     };
 };
 
@@ -140,7 +140,6 @@ HistoricalDataView.propTypes = {
     pastTransactions: PropTypes.array.isRequired,
     totalTransactions: PropTypes.number,
     overallGlobalAverage: PropTypes.number,
-    nodeLocations: PropTypes.array
 };
 
 HistoricalDataView.defaultProps = {

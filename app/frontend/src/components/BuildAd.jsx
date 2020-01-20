@@ -3,7 +3,6 @@ import EditableAd from './EditableAd';
 import { fetchWrapper } from 'util/helpers';
 import { makeToast } from 'util/toasts';
 import 'styles/AdBuild.css';
-import { Helmet } from "react-helmet";
 import NavBar from './NavBar';
 
 const TITLE_MAX_LEN = 40;

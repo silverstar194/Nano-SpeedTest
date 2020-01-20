@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import 'styles/UserResultsPage.css';
 
 import {connect} from 'react-redux';
-import PastResultsTable from 'components/HistoricalData/PastResultsTable';
 import CurrentTransactionsView from 'components/CurrentTransactions/CurrentTransactionsView';
 
 const UserStatsPage = ({numToRerun, table, pastTransactions, isFetchingTransaction, isFetchingTiming}) => {

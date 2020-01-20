@@ -87,6 +87,7 @@ th {
 
 .general-main-area-one {
   background-color: #0f1121;
+  margin-bottom: 15px;
 }
 
 .general-header-main {
@@ -1151,6 +1152,7 @@ button.transaction-box__choice__button:hover {
   background-color: #f9f9fb;
   justify-items: center;
   padding-top: 20px;
+  margin-bottom: 15px;
 }
 
 .stats-main-area-two-inner {
@@ -1287,6 +1289,7 @@ button.transaction-box__choice__button:hover {
 
 .usenano-main-area-two {
   background: #f9f9fb;
+  margin-bottom: 15px;
 }
 
 .usenano-partner-info-wrapper {
@@ -1412,6 +1415,8 @@ button.transaction-box__choice__button:hover {
   position: relative;
   top: 50%;
   transform: translateY(-50%);
+  width: 100%;
+  border-radius: 5px 5px 0px 0px;
 }
 
 .usernano-card-title {
