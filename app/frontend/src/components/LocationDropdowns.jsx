@@ -186,7 +186,6 @@ class LocationDropdowns extends Component {
         sendMessage = isFetchingTiming && !isFetchingTransaction ? "Sending" : sendMessage;
         // render the jsx
         const mostRecent = pastTransactions && pastTransactions.length && pastTransactions.slice(pastTransactions.length - 1)[0]; // get the last transaction
-        console.log(mostRecent)
 
         var time = "-";
         if(!isFetchingTransaction && !isFetchingTiming){
