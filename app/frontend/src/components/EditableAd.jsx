@@ -1,17 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import '../styles/Ad.css';
 
 const EditableAd = ({title, description, url}) => {
     return (
         <div className='container'>
-            <div className='jumbotron'>
-                <div id='ad-content'>
-                    <a href={url} target='_blank' rel='noopener noreferrer' className='row'>
-                        <b>{title}</b>&nbsp;{description}
-                    </a>
-                    <p className='row'>COMMUNITY AD</p>
-                </div>
+            <div className="ad__wrapper max-width">
+                  <div className="ad__text"><a href={url} target='_blank' rel='noopener noreferrer' className='ad__community__link'>
+                        <b></b>{title} {description}
+                    </a></div>
+                  <a className="ad__community__link" href="/BuildAd">AD</a>
             </div>
         </div>
     );

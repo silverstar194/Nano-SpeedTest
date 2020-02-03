@@ -10,7 +10,7 @@ const Table = ({tableData}) => {
           <div className="your-transations-title center-horizontally max-width">Your transactions</div>
           <table className="transactions-table max-width">
           <tbody>
-             <tr>
+             <tr className="hidden-on-mobile">
                 <th className="border_bottom">Status</th>
                 <th className="border_bottom">Origin</th>
                 <th className="border_bottom">Destination</th>

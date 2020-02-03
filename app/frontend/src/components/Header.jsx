@@ -1,6 +1,4 @@
-import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
-import { withRouter } from 'react-router'; // provides access to the history and location
+import React, { Fragment } from 'react';
 import HeaderItem from './HeaderItem';
 import { Link } from 'react-router-dom';
 
@@ -31,7 +29,6 @@ const Header = ({location}) => {
   }
          
   function toggleMenu(e) {
-     var x = document.getElementsByClassName("burger-menu");
      var sideBar = document.getElementsByClassName("sidenav")[0]
      toggleClassName(sideBar, 'active');
   }
@@ -53,9 +50,9 @@ const Header = ({location}) => {
             <div className="sidebar__logo"></div>
             <ul className="sidenav__list">
                <HeaderItem activeTab={activeTab} to='Stats' text='Global Statistics' />
-               <HeaderItem activeTab={activeTab} to='Info' text='Use Nano' />
-               <HeaderItem activeTab={activeTab} to='FAQ' text='FAQ' />
-               <HeaderItem activeTab={activeTab} to='Advertise' text='Advertise' />
+               <HeaderItem activeTab={activeTab} to='Discover' text='Use Nano' />
+               <HeaderItem activeTab={activeTab} to='Info' text='FAQ' />
+               <HeaderItem activeTab={activeTab} to='BuildAd' text='Advertise' />
             </ul>
          </aside>
     </Fragment>

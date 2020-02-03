@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`renders snapshot correctly 1`] = `
-<img
-  alt="Google Map Showing Destination and Origin"
-  className="GoogleMap"
-  src="https://maps.googleapis.com/maps/api/staticmap?size=1200x400&scale=2&markers=size:small|1.293100,103.850100|40.804300,-74.012100&path=1.293100,103.850100|40.804300,-74.012100&key=AIzaSyAovwwttuLBsvolc97QUc5pejsbwfLPPZs"
-/>
-`;

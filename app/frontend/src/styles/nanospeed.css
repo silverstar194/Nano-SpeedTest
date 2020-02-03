@@ -10,7 +10,6 @@ a:link {
 
 .hidden {
   visibility: hidden;
-  height: 0;
 }
 
 body,
@@ -88,6 +87,7 @@ th {
 
 .general-main-area-one {
   background-color: #0f1121;
+  margin-bottom: 15px;
 }
 
 .general-header-main {
@@ -643,9 +643,26 @@ button.transaction-box__choice__button:hover {
 }
 
 .loader-custom {
-  top: 20px;
-   color: orange;
+    display: block;
+    margin-top: 20px;
+    background-color: orange;
+    transparent: .5;
+    height: 5px;
+    border-radius: 2.5px;
 }
+
+.loader {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  position: relative;
+  top: 20%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  margin-left: auto;
+  margin-right: auto;
+}
+
 
 .active-burger {
   color: orange;
@@ -831,6 +848,12 @@ button.transaction-box__choice__button:hover {
   }
 }
 
+ .hidden-on-mobile {
+    visibility: hidden;
+    height: 0;
+  }
+
+
 /* Non-mobile styles, 1024px breakpoint */
 
 @media screen and (min-width: 1024px) {
@@ -838,6 +861,11 @@ button.transaction-box__choice__button:hover {
     display: flex;
     padding:0;
     margin:0;
+  }
+
+  .hidden-on-mobile {
+    visibility: visible;
+    height: 100%;
   }
 
   .general-navbar-item:link {
@@ -1130,6 +1158,7 @@ button.transaction-box__choice__button:hover {
   background-color: #f9f9fb;
   justify-items: center;
   padding-top: 20px;
+  margin-bottom: 15px;
 }
 
 .stats-main-area-two-inner {
@@ -1266,6 +1295,7 @@ button.transaction-box__choice__button:hover {
 
 .usenano-main-area-two {
   background: #f9f9fb;
+  margin-bottom: 15px;
 }
 
 .usenano-partner-info-wrapper {
@@ -1400,6 +1430,8 @@ button.transaction-box__choice__button:hover {
   position: relative;
   top: 50%;
   transform: translateY(-50%);
+  width: 100%;
+  border-radius: 5px 5px 0px 0px;
 }
 
 .usernano-card-title {
@@ -1769,3 +1801,150 @@ a.usernano-card-link {
     }
 
 	}
+
+/* Google Map styles */
+.custom-tooltip {
+    padding: 2px;
+    border-radius: 16px;
+}
+
+
+.GoogleMap {
+    height: 400px;
+}
+
+.GoogleHeatMap {
+    width: 100%;
+    /* max-width: 800px; */
+    height: 80%;
+}
+
+#MapPlaceholder {
+    max-width: 800;
+    height: 400px;
+}
+
+/* Tooltip styles */
+.custom-tooltip {
+    padding: 2px;
+    border-radius: 16px;
+}
+
+/* Toasts styles */
+.toast__padding {
+	padding: .5rem;
+	background-color: #333;
+    color: #fff;
+    text-align: center;
+	border-radius: 18px;
+	list-style-type: none;
+}
+
+.toast {
+    align-items: flex-start;
+    border-radius: 8px;
+    display: flex;
+	padding: 1rem;
+	margin-bottom: 0;
+    -webkit-animation: fadein 0.5s;
+    animation: fadein 0.5s;
+}
+
+.toast:not(:last-child) {
+    margin: 0 0 12px;
+}
+
+.toast__content {
+    flex: 1 1 auto;
+    margin: 0 .5rem 0 0;
+}
+
+.toast__dismiss {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: transparent;
+    border: 0;
+    color: inherit;
+    cursor: pointer;
+    display: block;
+    flex: 0 0 auto;
+    font: inherit;
+	padding: 0;
+}
+
+.toasts {
+    bottom: 5%;
+    position: fixed;
+	left: 25%;
+	right: 25%;
+}
+
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 5%; opacity: 1;}
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 5%; opacity: 1;}
+}
+
+
+.toast__padding {
+	padding: .5rem;
+	background-color: #333;
+    color: #fff;
+    text-align: center;
+	border-radius: 18px;
+	list-style-type: none;
+}
+
+.toast {
+    align-items: flex-start;
+    border-radius: 8px;
+    display: flex;
+	padding: 1rem;
+	margin-bottom: 0;
+    -webkit-animation: fadein 0.5s;
+    animation: fadein 0.5s;
+}
+
+.toast:not(:last-child) {
+    margin: 0 0 12px;
+}
+
+.toast__content {
+    flex: 1 1 auto;
+    margin: 0 .5rem 0 0;
+}
+
+.toast__dismiss {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: transparent;
+    border: 0;
+    color: inherit;
+    cursor: pointer;
+    display: block;
+    flex: 0 0 auto;
+    font: inherit;
+	padding: 0;
+}
+
+.toasts {
+    bottom: 5%;
+    position: fixed;
+	left: 25%;
+	right: 25%;
+	z-index: 999;
+}
+
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 5%; opacity: 1;}
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 5%; opacity: 1;}
+}

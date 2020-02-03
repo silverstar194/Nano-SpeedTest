@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Toast from './Toast';
 import { removeToast } from 'actions/toasts';
-import 'styles/Toasts.css';
+import 'styles/nanospeed.css';
 
 const Toasts = ({ removeToastClicked, toasts }) => {
   return (

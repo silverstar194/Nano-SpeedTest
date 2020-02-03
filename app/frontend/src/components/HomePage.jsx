@@ -1,10 +1,7 @@
-import React, { Component, Fragment } from 'react';
-import AdvancedModal from './AdvancedModal';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 import { fetchTransaction } from '../actions/table';
-import '../styles/HomePage.css';
 import '../styles/nanospeed.css';
 import {addPastResults} from 'actions/pastResults';
 import { openAdvSettings } from '../actions/advancedModal';
@@ -13,7 +10,9 @@ import { Helmet } from "react-helmet";
 import PastResultsTable from './HistoricalData/PastResultsTable';
 import UserResultsPage from 'components/UserResultsPage';
 import NavBar from './NavBar';
-import CurrentTransactionsView from 'components/CurrentTransactions/CurrentTransactionsView';
+import Ad from 'components/Ad';
+
+const viewItems = 20;
 
 class HomePage extends Component {
     // component specific state -- don't need to add to redux store
@@ -70,10 +69,10 @@ class HomePage extends Component {
 
     render() {
         const { advSettingsForm, nodes, history } = this.props;
-        const {pastTransactions, table, totalTransactions, globalAverage, nodeLocations} = this.props;
-
+        const {pastTransactions, table} = this.props;
+        var pastTransactionsTemp = pastTransactions.slice(0, viewItems)
         const plotData = [];
-        pastTransactions.sort((a,b) => a.endSendTimestamp - b.endSendTimestamp)
+        pastTransactionsTemp.sort((a,b) => a.endSendTimestamp - b.endSendTimestamp)
         .forEach((transaction, i) => {
             plotData.push({
                 x: i,
@@ -139,14 +138,11 @@ class HomePage extends Component {
                 </div>
             </div>
             <div className="index-main-area-two">
-               <div className="ad__wrapper center-horizontally max-width">
-                  <div className="ad__text">💥 Insert your Nano project here. Gain traction at a low cost. Support our servers with 90% discounted ad.</div>
-                  <div className="ad__community__link">AD</div>
-               </div>
-                <UserResultsPage />
+               <Ad/>
+               <UserResultsPage />
             </div>
             <div className="index-main-area-three">
-              <PastResultsTable tableData={pastTransactions}/>
+              <PastResultsTable tableData={pastTransactionsTemp}/>
             </div>
          </main>
          </div>
@@ -193,9 +189,6 @@ const mapStateToProps = (state) => {
         nodes: state.nodes,
         pastTransactions: state.pastResults.pastTransactions,
         table: state.table,
-        totalTransactions: state.pastResults.totalTransactions,
-        globalAverage: state.pastResults.globalAverage,
-        nodeLocations: state.nodes
     };
 };
 
@@ -205,14 +198,6 @@ HomePage.propTypes = {
     nodes: PropTypes.array,
     pastTransactions: PropTypes.array.isRequired,
     table : PropTypes.object,
-    totalTransactions: PropTypes.number,
-    globalAverage: PropTypes.number,
-    nodeLocations: PropTypes.array
-};
-
-HomePage.defaultProps = {
-    totalTransactions: 0,
-    globalAverage: 0,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

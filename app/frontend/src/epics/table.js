@@ -34,7 +34,6 @@ export const fetchTransaction = action$ => action$.pipe(
 	        }else{
 		
 	   	        console.warn('Error: Failed to Create Transaction');
-          	    console.log(err);
 	   	        makeToast({
                 	text: 'Something went wrong while creating the transaction',
                 	status: 'danger'

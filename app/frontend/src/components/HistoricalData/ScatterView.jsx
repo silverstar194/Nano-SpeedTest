@@ -7,9 +7,8 @@ import {
     YAxis,
     Tooltip,
     CartesianGrid,
-    Legend
 } from 'recharts';
-import 'styles/ScatterTooltip.css';
+import 'styles/nanospeed.css';
 import {scaleLog} from 'd3-scale'
 
 const xName = 'Date';
@@ -47,7 +46,7 @@ const CustomTooltip = ({active, payload}) => {
 const ScatterView = ({plotData}) => {
 
     return (
-        <ResponsiveContainer width='95%' height={500} style="padding">
+        <ResponsiveContainer width='95%' height={500}>
             <ScatterChart>
                 <XAxis
                     label={{ value: '', position: 'insideBottom' }}

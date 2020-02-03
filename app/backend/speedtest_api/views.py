@@ -337,12 +337,20 @@ def get_transaction_statistics(request):
     difference_set = Transaction.objects.filter(end_send_timestamp__gt=(F('start_send_timestamp')+180)).filter(start_send_timestamp__gte=int(round(time.time() * 1000))-(24*60*60*1000)).annotate(difference=(F('end_send_timestamp') - F('start_send_timestamp')))
     median_delta, count = median_value(difference_set, "difference")
 
+    difference_set_all = Transaction.objects.filter(end_send_timestamp__gt=(F('start_send_timestamp') + 180)).filter(
+        start_send_timestamp__gte=int(round(time.time() * 1000)) - (365*24 * 60 * 60 * 1000)).annotate(
+        difference=(F('end_send_timestamp') - F('start_send_timestamp')))
+
+    median_delta, count = median_value(difference_set, "difference")
+    median_delta_all, count_all = median_value(difference_set_all, "difference")
+
     transaction_count = Transaction.objects.filter(start_send_timestamp__gte=0).filter(end_send_timestamp__gt=(F('start_send_timestamp')+180)).count()
 
     statistics = {
         'transactions': transactions_array,
         'count': transaction_count,
-        'average': median_delta
+        'average': median_delta,
+        'overallGlobalAverage': median_delta_all,
     }
 
     return JsonResponse(statistics, status=200)

@@ -1,10 +1,7 @@
 import React, { Component, Fragment } from 'react';
-import { Field, reduxForm } from 'redux-form';
-import PropTypes from 'prop-types';
+import { reduxForm } from 'redux-form';
 import { change } from 'redux-form';
-import '../styles/LocationDropdowns.css';
 import { connect } from 'react-redux';
-import '../styles/Field.css';
 import { fetchTransaction } from '../actions/table';
 import Map from './CurrentTransactions/Map';
 import LinearProgress from '@material-ui/core/LinearProgress';
@@ -25,13 +22,13 @@ class LocationDropdowns extends Component {
             }
         }
 
-        for(var i = 0; i < buttons.length; i++){
+        for(i = 0; i < buttons.length; i++){
             var buttonId = buttons[i].value.replace("origin", "").replace("destination", "");
-            if(buttons[i].value.includes("destination") && buttonId == origin.value.replace("origin", "")){
+            if(buttons[i].value.includes("destination") && buttonId === origin.value.replace("origin", "")){
                 buttons[i].disabled = true;
             }
 
-            if(buttons[i].value.includes("origin") && buttonId == destination.value.replace("destination", "")){
+            if(buttons[i].value.includes("origin") && buttonId === destination.value.replace("destination", "")){
                 buttons[i].disabled = true;
             }
         }
@@ -59,7 +56,7 @@ class LocationDropdowns extends Component {
         }
 
         if(button.value.includes("destination")){
-            for(var i = 0; i < buttons.length; i++){
+            for(i = 0; i < buttons.length; i++){
                 buttons[i].classList.remove("selection-button-two");
                 if(buttons[i].value.includes("origin")){
                     buttons[i].disabled = false;
@@ -72,16 +69,16 @@ class LocationDropdowns extends Component {
         }
 
         if(button.value.includes("origin")){
-            for(var i = 0; i < buttons.length; i++){
-                if(buttons[i].value.includes("destination") && button.value.replace("origin") == buttons[i].value.replace("destination")){
+            for(i = 0; i < buttons.length; i++){
+                if(buttons[i].value.includes("destination") && button.value.replace("origin") === buttons[i].value.replace("destination")){
                     buttons[i].disabled = true;
                 }
             }
         }
 
         if(button.value.includes("destination")){
-            for(var i = 0; i < buttons.length; i++){
-                if(buttons[i].value.includes("origin") && button.value.replace("destination") == buttons[i].value.replace("origin")){
+            for(i = 0; i < buttons.length; i++){
+                if(buttons[i].value.includes("origin") && button.value.replace("destination") === buttons[i].value.replace("origin")){
                     buttons[i].disabled = true;
                 }
             }
@@ -108,7 +105,7 @@ class LocationDropdowns extends Component {
       var indents = [];
       for (var i = 0; i < nodes.length; i++) {
         var el = null;
-        if(i == 2){
+        if(i === 2){
           el = <button className="transaction-box__choice__button selection-button-two" value={nodes[i].id+"destination"} key={nodes[i].id+"destination"} onClick={(e) => this.handleButton(e)}>{nodes[i].location}</button>;
         } else {
           el = <button className="transaction-box__choice__button" value={nodes[i].id+"destination"} key={nodes[i].id+"destination"} onClick={(e) => this.handleButton(e)}>{nodes[i].location}</button>;
@@ -126,7 +123,7 @@ class LocationDropdowns extends Component {
       var indents = [];
       for (var i = 0; i < nodes.length; i++) {
         var el = null;
-        if(i == 0){
+        if(i === 0){
           el = <button className="transaction-box__choice__button selection-button-one" value={nodes[i].id+"origin"} key={nodes[i].id+"origin"} onClick={(e) => this.handleButton(e)}>{nodes[i].location} </button>;
         } else {
           el = <button className="transaction-box__choice__button" value={nodes[i].id+"origin"} key={nodes[i].id+"origin"} onClick={(e) => this.handleButton(e)}>{nodes[i].location} </button>;
@@ -183,12 +180,12 @@ class LocationDropdowns extends Component {
 
     render() {
 
-        const {isFetchingTiming, isFetchingTransaction, latestTransaction, pastTransactions } = this.props;
-        const sendMessage = isFetchingTiming && !isFetchingTransaction ? 'Sending' : 'Send Again';
+        const {table, isFetchingTiming, isFetchingTransaction, pastTransactions } = this.props;
+        var sendMessage = 'Send Again';
+        sendMessage = !isFetchingTiming && isFetchingTransaction ? "Processing" : sendMessage;
+        sendMessage = isFetchingTiming && !isFetchingTransaction ? "Sending" : sendMessage;
         // render the jsx
-        const { nodes, table, history, settings, show } = this.props;
-        const mostRecent = pastTransactions && pastTransactions.length && pastTransactions.slice(pastTransactions.length - 1)[0]; // get the last numToRerun transactions
-        console.log(mostRecent)
+        const mostRecent = pastTransactions && pastTransactions.length && pastTransactions.slice(pastTransactions.length - 1)[0]; // get the last transaction
 
         var time = "-";
         if(!isFetchingTransaction && !isFetchingTiming){
@@ -200,6 +197,14 @@ class LocationDropdowns extends Component {
         const drawMessage = this.drawMessage(this.props.settings, this.props.nodes)
         const destination = this.drawDestination(this.props.settings, this.props.nodes);
         const origin = this.drawOrigin(this.props.settings, this.props.nodes);
+
+         var loader;
+         if(isFetchingTransaction || isFetchingTiming){
+            loader = <LinearProgress className="loader-custom" variant="indeterminate" value={0}/>
+         }else{
+            loader = <div className="loader-custom"></div>
+         }
+
 
         this.initButtons();
 
@@ -222,14 +227,14 @@ class LocationDropdowns extends Component {
                   </div>
                 </div>
                 <div className="transaction-box-back center-horizontally">
-                    <Map transactions={table}/>
+                    <Map />
                     <div className="transaction-box-footer">
                         <div className="transaction-box-footer-location">
                             <div className="transaction-box-footer-location-origin">
                             {origin}
                             </div>
                             <div>
-                                <LinearProgress className="loader-custom" variant="indeterminate" value={0}/>
+                               {loader}
                             </div>
                             <div className="transaction-box-footer-location-destination">
                             {destination}
@@ -237,7 +242,8 @@ class LocationDropdowns extends Component {
 
                         </div>
                         <div className="transaction-box-footer-time">Transaction time: <div className="transaction-box-footer-text ">{time}</div></div>
-                        <div className="transaction-box-footer-try-again">{sendMessage}</div>
+                        <div className="transaction-box-footer-try-again" onClick={
+                                        () => this.props.onRerun(table, isFetchingTransaction, isFetchingTiming)}>{sendMessage}</div>
                     </div>
                 </div>
             </div>
@@ -248,20 +254,34 @@ class LocationDropdowns extends Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state)
     return {
-        numToRerun: state.table.num,
         table: state.table.rows,
         pastTransactions: state.pastResults.pastTransactions,
         isFetchingTransaction: state.transactions.isFetchingTransaction,
         isFetchingTiming: state.transactions.isFetchingTiming,
-        latestTransaction: state.pastResults.pastTransactions && state.pastResults.pastTransactions.length > 0 ? state.pastResults.pastTransactions.length [0] : undefined,
+        latestTransaction: state.pastResults.pastTransactions && state.pastResults.pastTransactions.length > 0 ? state.pastResults.pastTransactions.length[0] : undefined,
         initialValues: {
             origin: Object.keys(state.nodes).length ? state.nodes[Object.keys(state.nodes)[0]].id : undefined,
             destination: Object.keys(state.nodes).length ? state.nodes[Object.keys(state.nodes)[2]].id : undefined
         }
     };
 };
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onRerun(table, isFetchingTransaction, isFetchingTiming) {
+            if(!isFetchingTransaction && !isFetchingTiming)
+            {
+                dispatch(fetchTransaction(1, {
+                    transactions: [{
+                        originNodeId: table[table.length - 1].origin.id.toString(),
+                        destinationNodeId: table[table.length - 1].destination.id.toString(),
+                    }]
+                }));
+            }
+        }
+    };
+ }
 
 
 // Allows form to communicate with store
@@ -272,4 +292,4 @@ LocationDropdowns = reduxForm({
 })(LocationDropdowns);
 
 
-export default connect(mapStateToProps)(LocationDropdowns);
+export default connect(mapStateToProps, mapDispatchToProps)(LocationDropdowns);

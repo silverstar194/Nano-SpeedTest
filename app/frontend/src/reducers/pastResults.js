@@ -11,6 +11,7 @@ export default (state = INITIAL_STATE, action) => {
             const newState = {};
             newState.totalTransactions = action.totalTransactions;
             newState.globalAverage = action.globalAverage;
+            newState.overallGlobalAverage = action.overallGlobalAverage;
 
             // use the old state value if nothing has updated to prevent re-render
             newState.pastTransactions = action.pastTransactions || state.pastTransactions;

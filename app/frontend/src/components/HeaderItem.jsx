@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import fetchAndUpdateAd from 'util/fetchAndUpdateAd';
 
 const onSwitchTab = (e, to, activeTab) => {
 	if (to === activeTab) {
