@@ -8,6 +8,9 @@ import { Helmet } from "react-helmet";
 import NavBar from './NavBar';
 import card_nano_center from '../img/card_nano_center.png'
 import card_nano_crawler from '../img/card_nano_crawler.png'
+import card_nano_usenano from '../img/card_nano_usenano.png'
+import card_nano_nanolinks from '../img/card_nano_nanolinks.png'
+import card_nano_alilnano from '../img/card_nano_alilnano.png'
 import { Link } from 'react-router-dom';
 
 class Partners extends Component {
@@ -62,8 +65,22 @@ class Partners extends Component {
                      </div>
                   </div>
                   <div class="usenano-card">
-                     <div class="usernano-card-top usernano-card-top-dark">
-                        Nano Links
+                     <div class="usernano-card-top usernano-card-top-white">
+                        <img class="card-img-header" src={card_nano_usenano} />
+                     </div>
+                     <div class="usernano-card-bottom">
+                        <div class="usernano-card-title">
+                           Use Nano
+                        </div>
+                        <div class="usernano-card-text">
+                        UseNano.org lists all known merchants that accept Nano as payment, both physical and online stores.
+                        </div>
+                        <a href="#" class="usernano-card-link arrow-link">Visit usenano.org</a>
+                     </div>
+                  </div>
+                  <div class="usenano-card">
+                     <div class="usernano-card-top usernano-card-top-white">
+                        <img class="card-img-header" src={card_nano_nanolinks} />
                      </div>
                      <div class="usernano-card-bottom">
                         <div class="usernano-card-title">
@@ -76,17 +93,17 @@ class Partners extends Component {
                      </div>
                   </div>
                   <div class="usenano-card">
-                     <div class="usernano-card-top usernano-card-top-dark">
-                        <img class="card-img-header" src={card_nano_crawler} />
+                     <div class="usernano-card-top usernano-card-top-grey">
+                        <img class="card-img-header" src={card_nano_alilnano} />
                      </div>
                      <div class="usernano-card-bottom">
                         <div class="usernano-card-title">
-                           Nano Crawler
+                           A Lil Nano
                         </div>
                         <div class="usernano-card-text">
-                           The most advanced network explorer and node monitor for Nano.
+                           A simple faucet with random payouts for NANO
                         </div>
-                        <a href="#" class="usernano-card-link arrow-link">Visit Nanocrawler.cc</a>
+                        <a href="#" class="usernano-card-link arrow-link">Visit alilnano.com</a>
                      </div>
                   </div>
                </div>

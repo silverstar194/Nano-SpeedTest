@@ -233,6 +233,11 @@ td {
   line-height: 53px;
   color: #aeaeae;
   font-size: 16px;
+  cursor:pointer;
+}
+
+.past__transactions__link:hover {
+  color: #4A90E2;
 }
 
 .transactions-table {
@@ -1328,7 +1333,7 @@ button.transaction-box__choice__button:hover {
   display: flex;
   flex-direction: column;
   flex: 1 1 300px;
-  background: #ffffff;
+  background: #fff;
   border: 1px solid #e9e9e9;
   box-sizing: border-box;
   border-radius: 5px;
@@ -1342,15 +1347,24 @@ button.transaction-box__choice__button:hover {
   background: #2c3e50;
 }
 
-.usernano-card-top {
-  text-align: center;
-  line-height: 91px;
-  font-weight: 600;
-  color: #ffffff;
-  height: 91px;
-  border-radius: 5px 5px 0px 0px;
+.usernano-card-top-grey {
+  background: #363636;
 }
 
+.usernano-card-top-white {
+  background: #FFF;
+}
+
+.usernano-card-top {
+  text-align: center;
+  font-weight: 600;
+  color: #fff;
+  padding: 20px;
+  height: 100%;
+  border-bottom: 1px solid #e1e1e1;
+  border-radius: 5px 5px 0 0;
+}
+  
 .usernano-card-bottom {
   height: auto;
   min-height: 170px;

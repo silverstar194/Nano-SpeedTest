@@ -66,7 +66,7 @@ class PastResultsTable extends React.Component {
               <div className="your-transations-wrapper">
                   <div className="past__transactions_title__wrapper center-horizontally max-width">
                      <div className="past-transations-title">Past users transactions</div>
-                     <div className="past__transactions__link">See More</div>
+                     <a className="past__transactions__link">See More</a>
                   </div>
                   <table className="past-transactions-table max-width">
                   <tbody>
