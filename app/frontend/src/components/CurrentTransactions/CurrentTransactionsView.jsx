@@ -23,7 +23,7 @@ class CurrentTransactionsView extends Component {
         }
         else
         {
-            output = <div className="center-horizontally max-width">You haven't tried a transaction yet, feel free to send one by clicking on the button above.</div>
+            output = <div className="your-transactions-empty center-horizontally max-width">You haven't tried a transaction yet, feel free to send one by clicking on the button above.</div>
         }
 
         return (

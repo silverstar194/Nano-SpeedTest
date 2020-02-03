@@ -104,7 +104,7 @@ class Partners extends Component {
                            <div class="usernano-card-text">
                               The most advanced network explorer and node monitor for Nano.
                            </div>
-                        <a href="#" class="usernano-card-link arrow-link">Visit nanocrawler.cc </a>
+                        <a href="https://nanocrawler.cc/" target="_BLANK" class="usernano-card-link arrow-link">Visit nanocrawler.cc </a>
                      </div>
                   </div>
                   <div class="usenano-card">
@@ -118,7 +118,7 @@ class Partners extends Component {
                         <div class="usernano-card-text">
                            The Nano Center assists in the funding and ongoing support of Nano-related projects.
                         </div>
-                        <a href="#" class="usernano-card-link arrow-link">Visit nanocenter.org</a>
+                        <a href="https://nanocenter.org/" target="_BLANK" class="usernano-card-link arrow-link">Visit nanocenter.org</a>
                      </div>
                   </div>
                   <div class="usenano-card">
@@ -132,7 +132,7 @@ class Partners extends Component {
                         <div class="usernano-card-text">
                         UseNano.org lists all known merchants that accept Nano as payment, both physical and online stores.
                         </div>
-                        <a href="#" class="usernano-card-link arrow-link">Visit usenano.org</a>
+                        <a href="https://usenano.org/" target="_BLANK" class="usernano-card-link arrow-link">Visit usenano.org</a>
                      </div>
                   </div>
                   <div class="usenano-card">
@@ -146,7 +146,7 @@ class Partners extends Component {
                         <div class="usernano-card-text">
                            Find anything Nano related like wallets, exchanges, projects, applications, information, services and news.
                         </div>
-                        <a href="#" class="usernano-card-link arrow-link">Visit nanolinks.info</a>
+                        <a href="https://nanolinks.info/" target="_BLANK" class="usernano-card-link arrow-link">Visit nanolinks.info</a>
                      </div>
                   </div>
                   <div class="usenano-card">
@@ -160,16 +160,9 @@ class Partners extends Component {
                         <div class="usernano-card-text">
                            A simple faucet with random payouts for NANO
                         </div>
-                        <a href="#" class="usernano-card-link arrow-link">Visit alilnano.com</a>
+                        <a href="https://www.alilnano.com/" target="_BLANK" class="usernano-card-link arrow-link">Visit alilnano.com</a>
                      </div>
                   </div>
-            </div>
-            <div className="usenano-main-area-three">
-               <div className="usenano-main-three-wrapper-outer center-horizontally max-width">
-                  <div className="usenano-main-area-three-wrapper">
-                     {goldCards}
-                  </div>
-               </div>
             </div>
          </div>
          </div>

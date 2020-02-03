@@ -87,7 +87,7 @@ th {
 
 .general-main-area-one {
   background-color: #0f1121;
-  margin-bottom: 15px;
+  padding-bottom: 15px;
 }
 
 .general-header-main {
@@ -209,6 +209,11 @@ td {
   margin-bottom: 20px;
 }
 
+.your-transactions-empty {
+  margin-top:20px;
+  color: #8d8d8d;
+}
+
 .your-transations-title {
   justify-self: start;
   font-size: 32px;
@@ -241,6 +246,7 @@ td {
 }
 
 .transactions-table {
+  width: 100%;
 }
 
 .ad__text {
@@ -1025,8 +1031,11 @@ button.transaction-box__choice__button:hover {
   padding-bottom: 10px;
 }
 
+.faq-main-ad {
+  margin-top:40px;
+}
+
 .faq-main-area-two {
-  margin-top: 25px;
   background-color: #ffffff;
   align-items: center;
   line-height: 23px;
@@ -1109,7 +1118,7 @@ button.transaction-box__choice__button:hover {
 }
 
 .faq-main-area-six {
-  margin-top: 50px;
+  margin-top: 20px;
   background-color: #ffffff;
   background-color: #ffffff;
   align-items: center;
@@ -1254,7 +1263,7 @@ button.transaction-box__choice__button:hover {
     background-color: #f9f9fb;
     justify-items: center;
     padding-bottom: 60px;
-    padding-top: 40px;
+    padding-top: 20px;
 }
 
   .stats-main-area-two-inner {
@@ -1546,9 +1555,9 @@ a.usernano-card-link {
 
 .ads-main-area-three {
   background: #f9f9fb;
-  border-top: 1px solid #e2e2e2;
-  border-bottom: 1px solid #e2e2e2;
+  border: 1px solid #e2e2e2;
   margin-top: 30px;
+  border-radius: 5px;
 }
 
 .ads-main-area-three-wrapper {

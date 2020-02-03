@@ -88,8 +88,8 @@ class HistoricalDataView extends React.Component {
 
 
                   <table className="transactions-table max-width">
-                     <div className="hidden-on-mobile">
-                        <tr>
+                     <tbody>
+                        <tr className="hidden-on-mobile">
                            <th className="border_bottom">Date</th>
                            <th className="border_bottom">Origin</th>
                            <th className="border_bottom">Destination</th>
@@ -97,7 +97,6 @@ class HistoricalDataView extends React.Component {
                            <th className="border_bottom">Elapsed Time</th>
                            <th className="border_bottom">Sending Block</th>
                         </tr>
-                     </div>
 
                       {
                         listTransactions.sort((a,b) => (a.endSendTimestamp || Date.now()) - (b.endSendTimestamp || Date.now()))
@@ -106,7 +105,7 @@ class HistoricalDataView extends React.Component {
                     })
             }
 
-
+                     </tbody>
                   </table>
                </div>
             </div>
