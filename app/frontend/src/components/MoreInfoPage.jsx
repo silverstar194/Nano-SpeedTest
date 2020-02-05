@@ -22,7 +22,9 @@ class MoreInfoPage extends Component {
                   Frequently Asked Questions
                </div>
             </div>
-            <Ad />
+            <div class="faq-main-ad">
+               <Ad /> 
+            </div>
             <div className="faq-main-area-two max-width">
                <div className="faq-header">What is Nano?</div>
                Launched in 2015, Nano (formerly RaiBlocks) describes itself as an open source, sustainable, and secure next-generation digital currency focused on removing perceived inefficiencies present in existing cryptocurrencies. Designed to solve peer to peer transfer of value, Nano aims to revolutionize the world economy through an ultrafast and fee-less network that is open and accessible to everyone. 
