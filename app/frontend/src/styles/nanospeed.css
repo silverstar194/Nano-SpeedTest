@@ -204,7 +204,7 @@ td {
 
 .past__transactions_title__wrapper {
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns: 2fr auto 1fr;
   align-items: center;
   margin-bottom: 20px;
 }
@@ -620,6 +620,11 @@ ul.sidenav__list a {
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   color: #aeaeae;
+}
+
+.index-main {
+  display:grid;
+  grid-template-rows: 95px auto auto auto;
 }
 
 .index-main-header__heading {
@@ -1060,42 +1065,31 @@ ul.sidenav__list a {
 
 .social-icons {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   height: 100px;
 }
 
-.social-icon-one {
-  display: inline-block;
-  width: 25%;
-  height: 100%;
-  background: url(../img/Reddit.svg) no-repeat left;
+.social-icon {
+  display: flex;
+  width: 50px;
   background-size: contain;
+  color:rgba(255, 255, 255, 0.55);
+  padding-left:60px;
+  font-weight:bold;
 }
 
-.social-icon-two {
-  display: inline-block;
-  width: 25%;
-  height: 100%;
-  background: url(../img/Discord.svg) no-repeat left;
-  background-size: contain;
+.social-icon:hover {
+  color:#FFF;
 }
 
-.social-icon-three {
-  display: inline-block;
-  width: 25%;
-  height: 100%;
-  background: url(../img/Facebook.svg) no-repeat left;
-  background-size: contain;
-}
+.social-icon-one {  background: url(../img/Reddit.svg) no-repeat left;}
 
-.social-icon-four {
-  display: inline-block;
-  width: 25%;
-  height: 100%;
-  background: url(../img/Twitter.svg) no-repeat left;
-  background-size: contain;
-}
+.social-icon-two {  background: url(../img/Discord.svg) no-repeat left;}
+
+.social-icon-three { background: url(../img/Facebook.svg) no-repeat left;}
+
+.social-icon-four { background: url(../img/Twitter.svg) no-repeat left;}
 
 .faq-main-area-six {
   margin-top: 20px;
@@ -1534,9 +1528,8 @@ a.usernano-card-link {
 }
 
 .ads-main-area-three {
-  background: #f9f9fb;
-  border: 1px solid #e2e2e2;
-  margin-top: 30px;
+  border-top: 1px solid #e2e2e2;
+  margin-top: 40px;
   border-radius: 5px;
 }
 
@@ -1544,21 +1537,40 @@ a.usernano-card-link {
   padding-bottom: 20px;
   color: #c4c4c4;
   line-height: 23px;
-  margin-top: 20px;
+  margin-top: 40px;
+}
+
+.ads-main-area-three-wrapper button {
+  margin-top:20px;
 }
 
 .ads-main-area-three-button {
-  border: 1px solid #4a90e2;
+  height: 50px;
+  font-weight: bold;
+  line-height: 23px;
   box-sizing: border-box;
-  border-radius: 5px;
-  height: 35px;
-  width: 129px;
-  line-height: 35px;
-  align-items: center;
+  border-radius: 25px;
   text-align: center;
-  color: #4a90e2;
+  text-transform: uppercase;
+  color: #FFF;
+  background-color:#4a90e2;
+  width: 360px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-top: 20px;
+  transition: all .250s ease-in-out;
+  -webkit-transition: all .250s ease-in-out;
+  border:0;
+  cursor:pointer;
 }
+
+.ads-main-area-three-button:hover {
+  background-color:#3379ca;
+  color:#FFF;
+}
+
 
 .ads-header {
   font-weight: bold;
@@ -1622,17 +1634,45 @@ a.usernano-card-link {
   grid-template-columns: repeat(auto-fill, 208px);
 }
 
+.ad-slot-cards-wrapper  input[type="radio"] {
+  opacity: 0;
+  position: fixed;
+  width: 0;
+}
+
+.ad-slot-cards-wrapper  label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color:#FFF;
+    font-size: 16px;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #e9e9e9;
+    border-radius:5px;
+}
+
+.ad-slot-cards-wrapper  label:hover {
+  border: 1px solid #4A90E2;
+}
+
+.ad-slot-cards-wrapper  input[type="radio"]:focus + label {
+    border: 1px dashed #4A90E2;
+}
+
+.ad-slot-cards-wrapper input[type="radio"]:checked + label {
+  border: 1px solid #4A90E2;
+  }
+
 .ad-slot-card {
   display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  padding: 20px;
+  padding: 0 0;
   height: 125px;
   background: #ffffff;
   border: 1px solid #e9e9e9;
   box-sizing: border-box;
   border-radius: 5px;
-  align-items: center;
+  text-align: center;
 }
 
 .ad-slot {
@@ -1656,6 +1696,12 @@ a.usernano-card-link {
 @media screen and (min-width: 1024px) {
   .half-col {
     width: 50%;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .ad-slot-cards-wrapper {
+    grid-template-columns: none;
   }
 }
 
@@ -1687,7 +1733,7 @@ a.usernano-card-link {
       
     tr:nth-child(odd) {
       background: #fbfbfb;
-      padding: 0;
+      padding: 10px 0px;
     }
 
     tr:nth-child(even) {
@@ -1722,6 +1768,14 @@ a.usernano-card-link {
       margin: 0;
       border: 0;
     }
+
+    .index-main-area-three, .index-main-area-two {
+      padding: 30px 10px;
+    }
+
+    .past__transactions_title__wrapper, .your-transations-title {
+      width: 100%;
+    }
     
 		td:nth-of-type(1):before { content: "Status"; }
 		td:nth-of-type(2):before { content: "Origin"; }
@@ -1731,6 +1785,10 @@ a.usernano-card-link {
     td:nth-of-type(6):before { content: "Sending Block"; }
     td.date:before { content: "Date"; }
 
+    .your-transations-wrapper {
+      margin: 30px 20px 0 20px;
+    }
+
     /* Test nanospeed Card */
 
     .index-main {
@@ -1738,10 +1796,15 @@ a.usernano-card-link {
       grid-template-rows: 95px 850px auto auto;
     }
 
+
       @media (max-device-width: 1024px) and (min-device-width: 768px), only screen and (max-width: 760px){
         .index-main {
           display: grid;
         grid-template-rows: 95px auto auto auto;
+        }
+
+        .transaction-box-map {
+          height: 275px;
         }
       }
 
@@ -1786,15 +1849,16 @@ a.usernano-card-link {
       position: relative;
       display: flex;
       flex-direction: column;
+      padding-bottom: 120px;
     }
 
     .transaction-box-back {
       grid-template-rows: 1fr 1fr;
-      margin-top: -500px;
+      margin-top: -470px;
       -webkit-transform: rotateY(180deg);
       transform: rotateY(180deg);
       height: 440px;
-      padding: 25px;
+      padding: 0px;
       border-radius: 5px;
     }
 
@@ -1816,7 +1880,7 @@ a.usernano-card-link {
       margin-right: 0;
     }
     .card {
-      margin-top:70px;
+      margin-top:30px;
     }
 
     .transaction-box-footer-time {

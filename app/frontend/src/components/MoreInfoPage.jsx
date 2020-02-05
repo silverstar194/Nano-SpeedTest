@@ -71,10 +71,10 @@ class MoreInfoPage extends Component {
                   Nano has one of the largest and most active communities of any cryptocurrency. If you’d like to get involved with Nano or simply learn more, please join us on any of our multiple platforms.
                </div>
                <div className="social-icons center-horizontally max-width">
-                  <div className="social-icon-one"></div>
-                  <div className="social-icon-two"></div>
-                  <div className="social-icon-three"></div>
-                  <div className="social-icon-four"></div>
+                  <a href="https://reddit.com/r/nanocurrency" target="_BLANK" className="social-icon social-icon-one"> r&#x2F;nanocurrency</a>
+                  <a href="https://chat.nano.org/" target="_BLANK" className="social-icon social-icon-two"> chat.nano.org </a>
+                  <a href="https://facebook.com/nanofoundation" target="_BLANK" className="social-icon social-icon-three"> /nanofoundation </a>
+                  <a href="https://twitter.com/nano" target="_BLANK" className="social-icon social-icon-four"> @nano </a>
                </div>
             </div>
             <div className="faq-main-area-six max-width">
