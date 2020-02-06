@@ -1796,13 +1796,11 @@ a.usernano-card-link {
       grid-template-rows: 95px 850px auto auto;
     }
 
-
-      @media (max-device-width: 1024px) and (min-device-width: 768px), only screen and (max-width: 760px){
+@media (max-device-width: 1024px) and (min-device-width: 768px), only screen and (max-width: 760px){
         .index-main {
           display: grid;
         grid-template-rows: 95px auto auto auto;
         }
-
         .transaction-box-map {
           height: 275px;
         }
