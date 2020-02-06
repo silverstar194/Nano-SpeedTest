@@ -185,7 +185,7 @@ class LocationDropdowns extends Component {
 
     render() {
 
-        const {table, isFetchingTiming, isFetchingTransaction, pastTransactions } = this.props;
+        const { isFetchingTiming, isFetchingTransaction, pastTransactions } = this.props;
         var sendMessage = 'Send Again';
         sendMessage = !isFetchingTiming && isFetchingTransaction ? "Processing" : sendMessage;
         sendMessage = isFetchingTiming && !isFetchingTransaction ? "Sending" : sendMessage;
