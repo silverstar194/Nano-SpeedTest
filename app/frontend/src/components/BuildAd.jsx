@@ -312,14 +312,16 @@ class BuildAd extends Component {
                               onChange={this.onRadioChange}
                               checked={selectedSlot === slot}
                           />
+                          <label htmlFor={slot}>
                            <div className="ad-slot">{slot} Slot{slot > 1 ? 's' : ''}</div>
                            <div className="ad-cost">{this.state.costPerSlot * slot } nano</div>
+                          </label>
                       </div>
                   ))
                  }
                </div>
          <div className="ads-main-area-three">
-            <div className="ads-main-area-three-wrapper center-horizontally max-width">
+            <div className="ads-main-area-three-wrapper center-horizontally">
                <div className="ad-text">
                   Your ad will be reviewed within 24 hours and you'll receive an e-mail. If your ad is approved, you must submit payment in order to secure your ad slot(s).
                </div>
