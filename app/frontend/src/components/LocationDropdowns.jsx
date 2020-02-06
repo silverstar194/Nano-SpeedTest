@@ -271,22 +271,6 @@ const mapStateToProps = (state) => {
     };
 };
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        onRerun(table, isFetchingTransaction, isFetchingTiming) {
-            if(!isFetchingTransaction && !isFetchingTiming)
-            {
-                dispatch(fetchTransaction(1, {
-                    transactions: [{
-                        originNodeId: table[table.length - 1].origin.id.toString(),
-                        destinationNodeId: table[table.length - 1].destination.id.toString(),
-                    }]
-                }));
-            }
-        }
-    };
- }
-
 
 // Allows form to communicate with store
 LocationDropdowns = reduxForm({
@@ -296,4 +280,4 @@ LocationDropdowns = reduxForm({
 })(LocationDropdowns);
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(LocationDropdowns);
+export default connect(mapStateToProps)(LocationDropdowns);
