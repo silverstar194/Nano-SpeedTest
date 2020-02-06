@@ -88,6 +88,7 @@ th {
 .general-main-area-one {
   background-color: #0f1121;
   padding-bottom: 15px;
+  padding: 50px 0px;
 }
 
 .general-header-main {
@@ -96,7 +97,6 @@ th {
   font-weight: bold;
   font-size: 38px;
   line-height: 42px;
-  margin-top: 56px;
 }
 
 .general-main-area-navbar {
@@ -204,7 +204,7 @@ td {
 
 .past__transactions_title__wrapper {
   display: grid;
-  grid-template-columns: 2fr auto 1fr;
+  grid-template-columns: auto 1fr;
   align-items: center;
   margin-bottom: 20px;
 }
@@ -245,32 +245,33 @@ td {
   color: #4A90E2;
 }
 
-.transactions-table {
-  width: 100%;
-}
-
 .ad__text {
   font-size: 14px;
   color: white;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  text-decoration: none;
+}
+
+.ad__text a {
+  text-decoration: none !important;
 }
 
 a.ad__community__link {
   cursor:pointer;
+  text-decoration: underline;
 }
 
 .ad__community__link {
   text-align: right;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
   padding-right: 10px;
   color: white;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  text-decoration: underline !important;
 }
 
 .ad__wrapper {
@@ -757,11 +758,6 @@ ul.sidenav__list a {
   text-align: right;
 }
 
-.faq-main {
-  display: grid;
-  grid-template-rows: 95px 140px auto;
-}
-
 .footer {
   grid-area: footer;
   background-color: #648ca6;
@@ -859,6 +855,7 @@ ul.sidenav__list a {
 /* Non-mobile styles, 1024px breakpoint */
 
 @media screen and (min-width: 1024px) {
+  
   .general-navbar-items {
     display: flex;
     padding:0;
@@ -992,7 +989,7 @@ ul.sidenav__list a {
 
 .faq-main {
   display: grid;
-  grid-template-rows: 95px 140px auto;
+  grid-template-rows: 95px auto auto;
 }
 
 .faq-main-area-one {
@@ -1121,7 +1118,7 @@ ul.sidenav__list a {
 
 .stats-main {
   display: grid;
-  grid-template-rows: 95px 140px auto 780fr;
+  grid-template-rows: 95px auto auto 780fr;
 }
 
 .stats-main-area-one {
@@ -1157,7 +1154,6 @@ ul.sidenav__list a {
 
 .stats-main-area-three {
   align-items: center;
-
   line-height: 23px;
   color: #707070;
   justify-self: center;
@@ -1165,6 +1161,8 @@ ul.sidenav__list a {
 
 .stats-main-area-three-inner {
   margin-top: 4%;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .stats-button-more {
@@ -1273,7 +1271,7 @@ ul.sidenav__list a {
 
 .usenano-main {
   display: grid;
-  grid-template-rows: 95px 140px auto 780fr;
+  grid-template-rows: 95px auto auto 780fr;
 }
 
 .usenano-main-area-two {
@@ -1459,7 +1457,7 @@ a.usernano-card-link {
 
 .partner-main {
   display: grid;
-  grid-template-rows: 95px 140px auto auto;
+  grid-template-rows: 95px auto auto auto;
 }
 
 .partner-main-area-two {
@@ -1518,13 +1516,13 @@ a.usernano-card-link {
 
 .ads-main {
   display: grid;
-  grid-template-rows: 95px 140px auto 780fr;
+  grid-template-rows: 95px auto auto 780fr;
 }
 
 .ads-main-area-two {
   overflow: auto;
   padding-bottom: 20px;
-  width: 90%;
+  width: 100%;
 }
 
 .ads-main-area-three {
@@ -1717,8 +1715,14 @@ a.usernano-card-link {
     and (max-width: 760px), (min-device-width: 768px) 
     and (max-device-width: 1024px)  {
 
-		table, thead, tbody, th, td, tr {
-			display: block;
+
+    .general-navbar {
+      padding: 25px;
+    }
+
+    tr, tbody{
+      display:flex;
+      flex-direction: column;
     }
     
 		thead tr {
@@ -1732,7 +1736,7 @@ a.usernano-card-link {
     }
       
     tr:nth-child(odd) {
-      background: #fbfbfb;
+      background: #f4f4f4;
       padding: 10px 0px;
     }
 
@@ -1741,18 +1745,17 @@ a.usernano-card-link {
       padding: 20px 0;
     }
     
-		td {
+    td {
       border: none;
       position: relative;
-      padding-left: 55%;
-      padding-top: 10px;
-      padding-bottom: 5px;
-		}
+      padding: 10px 0;
+      width: 90%;
+      display: flex;
+      margin: 0 auto;
+    }
 
 		td:before {
-      position: absolute;
-      top: 10px;
-      left: 20px;
+      position: relative;
       width: 100%;
       padding-right: 10px;
       text-transform: uppercase;
@@ -1769,9 +1772,10 @@ a.usernano-card-link {
       border: 0;
     }
 
-    .index-main-area-three, .index-main-area-two {
+    .index-main-area-two {
       padding: 30px 10px;
     }
+
 
     .past__transactions_title__wrapper, .your-transations-title {
       width: 100%;
@@ -1804,7 +1808,21 @@ a.usernano-card-link {
         .transaction-box-map {
           height: 275px;
         }
+        .social-icons {
+          justify-content: space-between;
+          height: auto;
+          flex-direction: column;
+          align-items: start;
+          margin-top: 20px;
+          margin-bottom: 10px;
+        }
+        .social-icons a {
+          margin: 15px;
+        }
+
       }
+
+
 
       @media (max-device-width: 1024px) and (min-device-width: 768px), only screen and (max-width: 760px){
       .ad__wrapper {
@@ -1817,7 +1835,7 @@ a.usernano-card-link {
         flex-wrap: wrap-reverse;
         justify-content: center;
         text-align: center;
-        flex-direction: column-reverse;
+        flex-direction: column;
       }
       .ad__text {
         font-size: 14px;
