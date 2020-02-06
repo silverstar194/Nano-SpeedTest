@@ -49,23 +49,6 @@ class Partners extends Component {
 
 
     render() {
-
-      let goldCards = this.state.titleGold.map((title, index) =>
-        <div className="usenano-card">
-         <div className="usernano-card-top usernano-card-top-dark">
-            <img className="card-img-header" src={this.state.imgGold[index]} alt="Partner {title}" />
-         </div>
-         <div className="usernano-card-bottom">
-               <div className="usernano-card-title">
-                  {title}
-               </div>
-               <div className="usernano-card-text">
-                {this.state.textGold[index]}               
-               </div>
-            <a href={this.state.linkGold[index]} className="usernano-card-link arrow-link">Visit  {title}</a>
-         </div>
-      </div>
-      )
        return (
         <main className="usenano-main">
             <Helmet>
@@ -90,77 +73,77 @@ class Partners extends Component {
                 <Link className="usenano__button" to='PartnerInfo'>Become a Partner</Link>
             </div>
          </div>
-         <div class="usenano-main-area-three">
-            <div class="usenano-main-three-wrapper-outer center-horizontally max-width">
-               <div class="usenano-main-area-three-wrapper">
-                  <div class="usenano-card">
-                     <div class="usernano-card-top usernano-card-top-dark">
-                        <img class="card-img-header" src={card_nano_crawler} />
+         <div className="usenano-main-area-three">
+            <div className="usenano-main-three-wrapper-outer center-horizontally max-width">
+               <div className="usenano-main-area-three-wrapper">
+                  <div className="usenano-card">
+                     <div className="usernano-card-top usernano-card-top-dark">
+                        <img className="card-img-header" src={card_nano_crawler} alt="" />
                      </div>
-                     <div class="usernano-card-bottom">
-                           <div class="usernano-card-title">
+                     <div className="usernano-card-bottom">
+                           <div className="usernano-card-title">
                               Nano Crawler
                            </div>
-                           <div class="usernano-card-text">
+                           <div className="usernano-card-text">
                               The most advanced network explorer and node monitor for Nano.
                            </div>
-                        <a href="https://nanocrawler.cc/" target="_BLANK" class="usernano-card-link arrow-link">Visit nanocrawler.cc </a>
+                        <a href="https://nanocrawler.cc/" target="_BLANK" rel="noopener noreferrer" className="usernano-card-link arrow-link">Visit nanocrawler.cc </a>
                      </div>
                   </div>
-                  <div class="usenano-card">
-                     <div class="usernano-card-top usernano-card-top-light">
-                        <img class="card-img-header" src={card_nano_center} />
+                  <div className="usenano-card">
+                     <div className="usernano-card-top usernano-card-top-light">
+                        <img className="card-img-header" src={card_nano_center} alt="" />
                      </div>
-                     <div class="usernano-card-bottom">
-                        <div class="usernano-card-title">
+                     <div className="usernano-card-bottom">
+                        <div className="usernano-card-title">
                            The Nano Center
                         </div>
-                        <div class="usernano-card-text">
+                        <div className="usernano-card-text">
                            The Nano Center assists in the funding and ongoing support of Nano-related projects.
                         </div>
-                        <a href="https://nanocenter.org/" target="_BLANK" class="usernano-card-link arrow-link">Visit nanocenter.org</a>
+                        <a href="https://nanocenter.org/" target="_BLANK" rel="noopener noreferrer" className="usernano-card-link arrow-link">Visit nanocenter.org</a>
                      </div>
                   </div>
-                  <div class="usenano-card">
-                     <div class="usernano-card-top usernano-card-top-white">
-                        <img class="card-img-header" src={card_nano_usenano} />
+                  <div className="usenano-card">
+                     <div className="usernano-card-top usernano-card-top-white">
+                        <img className="card-img-header" src={card_nano_usenano} alt="" />
                      </div>
-                     <div class="usernano-card-bottom">
-                        <div class="usernano-card-title">
+                     <div className="usernano-card-bottom">
+                        <div className="usernano-card-title">
                            Use Nano
                         </div>
-                        <div class="usernano-card-text">
+                        <div className="usernano-card-text">
                         UseNano.org lists all known merchants that accept Nano as payment, both physical and online stores.
                         </div>
-                        <a href="https://usenano.org/" target="_BLANK" class="usernano-card-link arrow-link">Visit usenano.org</a>
+                        <a href="https://usenano.org/" target="_BLANK" rel="noopener noreferrer" className="usernano-card-link arrow-link">Visit usenano.org</a>
                      </div>
                   </div>
-                  <div class="usenano-card">
-                     <div class="usernano-card-top usernano-card-top-white">
-                        <img class="card-img-header" src={card_nano_nanolinks} />
+                  <div className="usenano-card">
+                     <div className="usernano-card-top usernano-card-top-white">
+                        <img className="card-img-header" src={card_nano_nanolinks} alt="" />
                      </div>
-                     <div class="usernano-card-bottom">
-                        <div class="usernano-card-title">
+                     <div className="usernano-card-bottom">
+                        <div className="usernano-card-title">
                            Nano Links
                         </div>
-                        <div class="usernano-card-text">
+                        <div className="usernano-card-text">
                            Find anything Nano related like wallets, exchanges, projects, applications, information, services and news.
                         </div>
-                        <a href="https://nanolinks.info/" target="_BLANK" class="usernano-card-link arrow-link">Visit nanolinks.info</a>
+                        <a href="https://nanolinks.info/" target="_BLANK" rel="noopener noreferrer" className="usernano-card-link arrow-link">Visit nanolinks.info</a>
                      </div>
                   </div>
-                  <div class="usenano-card">
-                     <div class="usernano-card-top usernano-card-top-grey">
-                        <img class="card-img-header" src={card_nano_alilnano} />
+                  <div className="usenano-card">
+                     <div className="usernano-card-top usernano-card-top-grey">
+                        <img className="card-img-header" src={card_nano_alilnano} alt="" />
                      </div>
-                     <div class="usernano-card-bottom">
-                        <div class="usernano-card-title">
+                     <div className="usernano-card-bottom">
+                        <div className="usernano-card-title">
                            A Lil Nano
                         </div>
-                        <div class="usernano-card-text">
+                        <div className="usernano-card-text">
                            A simple faucet with random payouts for NANO
                         </div>
-                        <a href="https://www.alilnano.com/" target="_BLANK" class="usernano-card-link arrow-link">Visit alilnano.com</a>
+                        <a href="https://www.alilnano.com/" target="_BLANK" rel="noopener noreferrer" className="usernano-card-link arrow-link">Visit alilnano.com</a>
                      </div>
                   </div>
             </div>

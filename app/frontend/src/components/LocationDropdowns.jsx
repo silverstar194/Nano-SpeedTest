@@ -176,11 +176,16 @@ class LocationDropdowns extends Component {
                 </Fragment>
                );
         }
-    };
+    }
+
+    ReRunTransaction(){
+        var card = document.getElementsByClassName("card")[0];
+        card.classList.remove('is-flipped')
+    }
 
     render() {
 
-        const {table, isFetchingTiming, isFetchingTransaction, pastTransactions } = this.props;
+        const { isFetchingTiming, isFetchingTransaction, pastTransactions } = this.props;
         var sendMessage = 'Send Again';
         sendMessage = !isFetchingTiming && isFetchingTransaction ? "Processing" : sendMessage;
         sendMessage = isFetchingTiming && !isFetchingTransaction ? "Sending" : sendMessage;
@@ -242,8 +247,7 @@ class LocationDropdowns extends Component {
 
                         </div>
                         <div className="transaction-box-footer-time">Transaction time: <div className="transaction-box-footer-text ">{time}</div></div>
-                        <div className="transaction-box-footer-try-again" onClick={
-                                        () => this.props.onRerun(table, isFetchingTransaction, isFetchingTiming)}>{sendMessage}</div>
+                        <div className="transaction-box-footer-try-again" onClick={() => this.ReRunTransaction()}>{sendMessage}</div>
                     </div>
                 </div>
             </div>
@@ -267,22 +271,6 @@ const mapStateToProps = (state) => {
     };
 };
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        onRerun(table, isFetchingTransaction, isFetchingTiming) {
-            if(!isFetchingTransaction && !isFetchingTiming)
-            {
-                dispatch(fetchTransaction(1, {
-                    transactions: [{
-                        originNodeId: table[table.length - 1].origin.id.toString(),
-                        destinationNodeId: table[table.length - 1].destination.id.toString(),
-                    }]
-                }));
-            }
-        }
-    };
- }
-
 
 // Allows form to communicate with store
 LocationDropdowns = reduxForm({
@@ -292,4 +280,4 @@ LocationDropdowns = reduxForm({
 })(LocationDropdowns);
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(LocationDropdowns);
+export default connect(mapStateToProps)(LocationDropdowns);
