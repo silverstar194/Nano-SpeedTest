@@ -176,7 +176,12 @@ class LocationDropdowns extends Component {
                 </Fragment>
                );
         }
-    };
+    }
+
+    ReRunTransaction(){
+        var card = document.getElementsByClassName("card")[0];
+        card.classList.remove('is-flipped')
+    }
 
     render() {
 
@@ -242,8 +247,7 @@ class LocationDropdowns extends Component {
 
                         </div>
                         <div className="transaction-box-footer-time">Transaction time: <div className="transaction-box-footer-text ">{time}</div></div>
-                        <div className="transaction-box-footer-try-again" onClick={
-                                        () => this.props.onRerun(table, isFetchingTransaction, isFetchingTiming)}>{sendMessage}</div>
+                        <div className="transaction-box-footer-try-again" onClick={() => this.ReRunTransaction()}>{sendMessage}</div>
                     </div>
                 </div>
             </div>
