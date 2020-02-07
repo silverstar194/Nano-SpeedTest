@@ -33,7 +33,7 @@ const NavBar = ({location}) => {
         <div className="general-navbar">
           <Link className="general-navbar-logo" to='' onClick={(e) => (function(e){e.preventDefault()})}></Link>
           <ul className="general-navbar-items">
-            <HeaderItem activeTab={activeTab} to='' text='Test Nano' />
+            <HeaderItem activeTab={activeTab} to='' text='Home' />
             <HeaderItem activeTab={activeTab} to='Stats' text='Global Statistic' />
             <HeaderItem activeTab={activeTab} to='Discover' text='Use Nano' />
             <HeaderItem activeTab={activeTab} to='Info' text='FAQ' />

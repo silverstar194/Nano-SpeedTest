@@ -141,7 +141,7 @@ class HomePage extends Component {
                <Ad/>
                <UserResultsPage />
             </div>
-            <div className="index-main-area-three">
+            <div className="stats-main-area-three max-width">
               <PastResultsTable tableData={pastTransactionsTemp}/>
             </div>
          </main>

@@ -49,7 +49,7 @@ const Header = ({location}) => {
             </div>
             <div className="sidebar__logo"></div>
             <ul className="sidenav__list">
-               <HeaderItem activeTab={activeTab} to='' text='Test Nano' />
+               <HeaderItem activeTab={activeTab} to='' text='Home' />
                <HeaderItem activeTab={activeTab} to='Stats' text='Global Statistics' />
                <HeaderItem activeTab={activeTab} to='Discover' text='Use Nano' />
                <HeaderItem activeTab={activeTab} to='Info' text='FAQ' />
