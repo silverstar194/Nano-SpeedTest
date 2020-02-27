@@ -5,7 +5,7 @@ django-cors-headers==2.4.0
 django-filter==2.0.0
 django-ipware==2.1.0
 django-ratelimit==1.1.0
-djangorestframework==3.9.0
+djangorestframework==3.9.1
 docutils==0.14
 idna==2.6
 Markdown==3.0.1
