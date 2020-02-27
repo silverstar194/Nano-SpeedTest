@@ -145,7 +145,7 @@ class MoreInfoPage extends Component {
                         <li>Time we broadcast receive block at location #2</li>
                         <li>Time we see the receive block back at location #1</li>
                     </ol>
-                    The time you see is the difference between steps 1 and 2. This represents the time is takes to send Nano.
+                    The time you see is the difference between steps 1 and 2. This represents the time it takes to send Nano.
                     Transactions are final and confirmed after step 2. Steps 3 and 4 are pocketing steps for the receiving wallet.
                     <br/>
                     The times vary due to many reasons including our server load and our Nano node load, often the network will be even faster than displayed.
@@ -157,7 +157,7 @@ class MoreInfoPage extends Component {
                    <br/>
                    <br/>
                    <h5>How much Nano are you sending?</h5>
-                   We are sending increments of nano, lower case, this is equal to less then $.01 USD. (lower nano and upper case NANO are different)
+                   We are sending increments of nano, lower case, this is equal to less than $.01 USD. (lower nano and upper case NANO are different)
                    <br/>
                    1 nano = 0.000001 NANO. NANO is the unit used on exchanges.
                    <br/>
