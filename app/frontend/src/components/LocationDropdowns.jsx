@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { fetchTransaction } from '../actions/table';
 import Map from './CurrentTransactions/Map';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import fb from '../img/icon-fb.png'
+import tw from '../img/icon-tw.png'
 
 class LocationDropdowns extends Component {
 
@@ -186,7 +188,7 @@ class LocationDropdowns extends Component {
     render() {
 
         const { isFetchingTiming, isFetchingTransaction, pastTransactions } = this.props;
-        var sendMessage = 'Send Again';
+        var sendMessage = 'Resend';
         sendMessage = !isFetchingTiming && isFetchingTransaction ? "Processing" : sendMessage;
         sendMessage = isFetchingTiming && !isFetchingTransaction ? "Sending" : sendMessage;
         // render the jsx
@@ -247,7 +249,31 @@ class LocationDropdowns extends Component {
 
                         </div>
                         <div className="transaction-box-footer-time">Transaction time: <div className="transaction-box-footer-text ">{time}</div></div>
-                        <div className="transaction-box-footer-try-again" onClick={() => this.ReRunTransaction()}>{sendMessage}</div>
+                        <div className="transaction-box-footer-buttons">
+                            <div className="transaction-box-footer-try-again" onClick={() => this.ReRunTransaction()}>{sendMessage}</div>
+                            <div className="transaction-box-footer-retry"> Retry </div>
+                        </div>
+                    </div>
+                    <div className="transaction-box-footer-extra">
+                        <div className="transaction-box-footer-wanna-try">
+                            <div className="try-title">Do You want to try for real?</div>
+                            <div className="try-desc">Head over to nanofaucet.org, download Natrium and receive a few nano for free!</div>
+                            <div className="try-buttons">
+                                <a href="#">Visit nanofaucet.org</a>
+                                <a href="#">Download Natrium</a>
+                            </div>
+                        </div>
+                        <div className="transaction-box-footer-wanna-share">
+                            <span>Share your results on:</span>
+                            <div className="share-btn">
+                                <a href="#">
+                                    <img src={fb} alt="" />
+                                </a>
+                                <a href="#">
+                                    <img src={tw} alt="" />
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
