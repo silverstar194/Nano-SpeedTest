@@ -1,6 +1,5 @@
-from django.conf import settings as settings
-
 from .. import models as models
+from ..common.retry import retry
 
 
 class NodeNotFoundException(Exception):
@@ -18,7 +17,7 @@ def new_node(URL, latitude, longitude, location_name=None):
     @return: New node object
     """
 
-    return models.Node.objects.create(URL=URL, latitude=latitude, longitude=longitude, location_name=location_name)
+    return retry(lambda: models.Node.objects.create(URL=URL, latitude=latitude, longitude=longitude, location_name=location_name))
 
 def get_nodes(enabled=True):
     """
@@ -28,7 +27,7 @@ def get_nodes(enabled=True):
     @return: Query of Node objects
     """
 
-    return models.Node.objects.filter(enabled=enabled)
+    return retry(lambda: models.Node.objects.filter(enabled=enabled))
 
 def get_node(id, enabled=True):
     """
@@ -39,7 +38,7 @@ def get_node(id, enabled=True):
     """
 
     try:
-        return models.Node.objects.get(id=id, enabled=enabled)
+        return retry(lambda: models.Node.objects.get(id=id, enabled=enabled))
     except models.Node.DoesNotExist:
         return None
     except MultipleObjectsReturned:

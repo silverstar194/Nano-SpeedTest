@@ -18,6 +18,7 @@ from django.core.cache import cache
 
 from ipware import get_client_ip
 from ratelimit.decorators import ratelimit
+from speedtest_api.common.retry import retry
 
 from speedtest_api.models import Transaction
 
@@ -228,6 +229,7 @@ def get_random_advertisement(request):
     else:
         return JsonResponse({'message': "No advertisements were found."}, status=200)
 
+
 @api_view(['POST'])
 @csrf_exempt
 def add_advertisement(request):
@@ -262,6 +264,7 @@ def add_advertisement(request):
     advertisements.email_admin_with_new_ad(ad)
 
     return JsonResponse({'message': "Success"}, status=200)
+
 
 @api_view(['GET'])
 def advertisement_information(request):
@@ -355,6 +358,7 @@ def get_transaction_statistics(request):
 
     return JsonResponse(statistics, status=200)
 
+
 @api_view(['GET'])
 def get_medians(request):
 
@@ -364,12 +368,13 @@ def get_medians(request):
     statistics = {}
 
     for i in range(len(times)):
-        difference_set = Transaction.objects.filter(end_send_timestamp__gt=(F('start_send_timestamp')+180)).filter(start_send_timestamp__gte=int(round(time.time() * 1000))-(times[i]*60*60*1000)).annotate(difference=(F('end_send_timestamp') - F('start_send_timestamp')))
+        difference_set = retry(lambda: Transaction.objects.filter(end_send_timestamp__gt=(F('start_send_timestamp')+180)).filter(start_send_timestamp__gte=int(round(time.time() * 1000))-(times[i]*60*60*1000)).annotate(difference=(F('end_send_timestamp') - F('start_send_timestamp'))))
         median_delta, count = median_value(difference_set, "difference")
         statistics[times_str[i]] = median_delta
         statistics[count_str[i]] = count
 
     return JsonResponse(statistics, status=200)
+
 
 @api_view(['GET'])
 def get_partners(request):
@@ -406,25 +411,6 @@ def download_transaction(request):
     qs = transactions.get_transactions(download=True)
     return render_to_csv_response(qs)
 
-
-@api_view(['POST'])
-@csrf_exempt
-def callback(request):
-    try:
-        body = json.loads(request.body)
-        client_ip, is_routable = get_client_ip(request)
-
-        cache_key = body["hash"]+"_"+client_ip  # needs to be unique
-        cache_time = 30  # time in seconds for cache to be valid
-
-        end_time = int(round(time.time() * 1000)) ## end time
-        cache.set(cache_key, end_time, cache_time)
-
-    except Exception as e:
-        return JsonResponse({'message': str(e.message)},
-                            status=400)
-
-    return JsonResponse({}, status=200)
 
 def convert_transaction_to_dict(transaction):
     """
@@ -484,6 +470,7 @@ def convert_transaction_to_dict(transaction):
 
     return converted_transaction
 
+
 def send_transaction_async(transaction, out_queue):
     """
     Private helper method to allow async transactions
@@ -494,6 +481,7 @@ def send_transaction_async(transaction, out_queue):
     """
     transaction_async = transactions.send_transaction(transaction)
     out_queue.put(convert_transaction_to_dict(transaction_async))
+
 
 def median_value(queryset, term):
     count = queryset.count()

@@ -1,6 +1,7 @@
 import logging
 from websocket import create_connection
 import json
+from ..common.retry import retry
 
 # Get an instance of a logger 
 logger = logging.getLogger(__name__)
@@ -19,13 +20,16 @@ def transaction_general(node_IP, current_hash):
     """
 
     websocket_address = "ws://"+node_IP+":7090/call"
-    websocket = create_connection(websocket_address)
+    websocket = retry(lambda: create_connection(websocket_address, timeout=120))
     data = {"hash": current_hash}
+
     logger.info("Opening websocket %s for %s" % (websocket_address, data))
-    websocket.send(json.dumps(data))
-    result = websocket.recv()
+    retry(lambda: websocket.send(json.dumps(data)))
+
+    result = retry(lambda: websocket.recv())
+
     logger.info("Websocket sent data %s" % (result))
-    websocket.close()
+    retry(lambda: websocket.close())
 
     return json.loads(result)['time']
 
@@ -40,7 +44,8 @@ def time_transaction_receive(transaction, hash_value):
     end_time = transaction_general(transaction.origin.wallet.node.IP_ADD, hash_value)
 
     transaction.end_receive_timestamp = end_time
-    transaction.save()
+    retry(lambda: transaction.save())
+
     return end_time
 
 
@@ -55,5 +60,6 @@ def time_transaction_send(transaction, hash_value):
     end_time = transaction_general(transaction.destination.wallet.node.IP_ADD, hash_value)
 
     transaction.end_send_timestamp = end_time
-    transaction.save()
+    retry(lambda: transaction.save())
+
     return end_time

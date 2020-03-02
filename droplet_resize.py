@@ -3,11 +3,25 @@ import os
 import time
 import requests
 import logging
+import sys
+from logging.handlers import RotatingFileHandler
 
-logging.basicConfig(filename='droplet_resize.log', format='%(asctime)s - %(message)s', level=logging.INFO)
+log_formatter = logging.Formatter('%(asctime)s %(message)s')
+
+logFile = 'droplet_resize.log'
+
+my_handler = RotatingFileHandler(logFile, mode='a', maxBytes=5*1024*1024, 
+                                 backupCount=2, encoding=None, delay=0)
+my_handler.setFormatter(log_formatter)
+my_handler.setLevel(logging.INFO)
+
+logger = logging.getLogger('root')
+logger.setLevel(logging.INFO)
+
+logger.addHandler(my_handler)
 
 ##constants
-UNCHECKED_LIMIT = 5000
+UNCHECKED_LIMIT = 1500
 UNSYNC_LIMIT = 99.9
 instance_large = "s-3vcpu-1gb"
 instance_small = "s-1vcpu-2gb"
@@ -43,9 +57,38 @@ def wait_on_resize(droplet):
 		time.sleep(1)
 		action.load()
 		actions = droplet.get_actions()
-		logging.info("Resize status for {0}: {1}".format(droplet.name, action.status))
+		logger.info("Resize status for {0}: {1}".format(droplet.name, action.status))
 		if action.status == "completed":
 			return
+
+def power_on(droplet):
+	while True:
+		time.sleep(15)
+		droplet.load()
+		logger.info("Droplet status {0}".format(droplet.status))
+		try:
+			droplet.power_on()
+		except E:
+			logger.info("Droplet already powering on")
+
+		if droplet.status == "active":
+			return
+
+
+if len(sys.argv) - 1 == 0:
+	logging.error("upsize or downsize arg needed")
+	print("upsize or downsize arg needed")
+	sys.exit()
+
+resize = sys.argv[1]
+
+if resize == "boot_nodes":
+	for droplet in node_droplets:
+		location, node_url, droplet = generate_droplet_info(droplet)
+		logger.info("Powering on {0}".format(location))
+		power_on(droplet)
+		time.sleep(1)
+	sys.exit()
 
 for droplet in node_droplets:
 	location, node_url, droplet = generate_droplet_info(droplet)
@@ -53,6 +96,7 @@ for droplet in node_droplets:
 	ninja_block_count = get_ninja_blocks()
 	unchecked, block_count = get_node_blocks(node_url)
 	percent_sync = (block_count/ninja_block_count) * 100
+
 	logging.info("Current status for node in {0} \n\t Percent Synced: {1} \n\t Unchecked Blocks: {2}".format(location, percent_sync, unchecked))
 
 	if percent_sync < UNSYNC_LIMIT or unchecked > UNCHECKED_LIMIT and not droplet.size['slug'] != instance_large:

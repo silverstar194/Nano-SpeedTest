@@ -7,6 +7,7 @@ import nano
 
 from .. import models as models
 from ._pow import POWService
+from ..common.retry import retry
 
 logger = logging.getLogger(__name__)
 
@@ -30,19 +31,20 @@ def new_account(wallet, address=None):
 
     address_nano = address.replace("xrb", "nano")
     if address is None:
-        address = rpc.account_create(wallet=wallet.wallet_id)
+        address = retry(lambda: rpc.account_create(wallet=wallet.wallet_id))
 
         try:
             # This won't work due to a source block being required for an open block?
             # If it doesn't work, send something to the new block
-            rpc.process(block=rpc.block_create(type='open', account=address_nano, wallet=wallet.wallet_id))
+            retry(lambda: rpc.process(block=rpc.block_create(type='open', account=address_nano, wallet=wallet.wallet_id)))
         except:
             pass
 
-    if not rpc.validate_account_number(account=address_nano):
+    if not retry(lambda: rpc.validate_account_number(account=address_nano)):
         raise AccountNotFound()
 
-    return models.Account.objects.create(wallet=wallet, address=address)
+    return retry(lambda: models.Account.objects.create(wallet=wallet, address=address))
+
 
 def get_accounts(enabled=True, node=None, in_use=None, empty=None):
     """
@@ -53,18 +55,19 @@ def get_accounts(enabled=True, node=None, in_use=None, empty=None):
     @return: Query of all accounts (filtered by enabled or node)
     """
     if in_use is not None and node:
-        return models.Account.objects.filter(wallet__node__id=node.id).filter(in_use=in_use).filter(current_balance__gt=0).select_related()
+        return retry(lambda: models.Account.objects.filter(wallet__node__id=node.id).filter(in_use=in_use).filter(current_balance__gt=0).select_related())
 
     if in_use is not None:
-        return models.Account.objects.filter(wallet__node__enabled=enabled).filter(in_use=in_use).filter(current_balance__gt=0).select_related()
+        return retry(lambda: models.Account.objects.filter(wallet__node__enabled=enabled).filter(in_use=in_use).filter(current_balance__gt=0).select_related())
 
     if node:
-        return models.Account.objects.filter(wallet__node__id=node.id).filter(current_balance__gt=0).select_related()
+        return retry(lambda: models.Account.objects.filter(wallet__node__id=node.id).filter(current_balance__gt=0).select_related())
 
     if empty:
-        return models.Account.objects.filter(current_balance=0).select_related()
+        return retry(lambda: models.Account.objects.filter(current_balance=0).select_related())
 
-    return models.Account.objects.filter(wallet__node__enabled=enabled).filter(current_balance__gt=0).select_related()
+    return retry(lambda: models.Account.objects.filter(wallet__node__enabled=enabled).filter(current_balance__gt=0).select_related())
+
 
 def get_account(address):
     """
@@ -76,12 +79,13 @@ def get_account(address):
     """
 
     try:
-        return models.Account.objects.get(address=address)
+        return retry(lambda: models.Account.objects.get(address=address))
     except models.Account.DoesNotExist:
         return None
     except MultipleObjectsReturned:
         logger.info("MultipleObjectsReturned for account %s " % address)
-        return models.Account.objects.filter(address=address).first()
+        return retry(lambda: models.Account.objects.filter(address=address).first())
+
 
 def get_accounts_ignore_lock():
     """
@@ -89,8 +93,9 @@ def get_accounts_ignore_lock():
     TODO
     """
 
-    accounts_list = models.Account.objects.filter(wallet__node__enabled=True).filter(current_balance__gt=0).select_related()
+    accounts_list = retry(lambda: models.Account.objects.filter(wallet__node__enabled=True).filter(current_balance__gt=0).select_related())
     return accounts_list
+
 
 def sync_accounts():
     """
@@ -122,22 +127,22 @@ def clear_receive_accounts():
     thread_pool.join()
 
 
-
 def unlock_all_accounts():
     """
     Unlock all the account at once for speed at DB layer
     """
-    models.Account.objects.all().update(in_use=False)
+    retry(lambda: models.Account.objects.all().update(in_use=False))
 
 
 def lock_all_accounts():
     """
     Lock all the account at once for speed at DB layer
     """
-    models.Account.objects.all().update(in_use=True)
+    retry(lambda: models.Account.objects.all().update(in_use=True))
+
 
 def number_accounts():
-    return models.Account.objects.filter(wallet__node__enabled=True).count()
+    return retry(lambda: models.Account.objects.filter(wallet__node__enabled=True).count())
 
 
 def clear_frontier_async(account):
@@ -151,7 +156,7 @@ def clear_frontier_async(account):
     try:
         rpc = nano.rpc.Client(account.wallet.node.URL)
         address_nano = account.address.replace("xrb", "nano")
-        pending_blocks = rpc.accounts_pending([account.address])[address_nano]
+        pending_blocks = retry(lambda: rpc.accounts_pending([account.address])[address_nano])
     except Exception as e:
         logger.exception('RCP call failed during receive %s' % str(e.message))
 
@@ -166,7 +171,7 @@ def clear_frontier_async(account):
             time.sleep(1)  ## Allow frontier to refresh
 
         try:
-            received_block = rpc.receive(wallet=account.wallet.wallet_id, account=account.address, work=account.POW, block=block)
+            received_block = retry(lambda: rpc.receive(wallet=account.wallet.wallet_id, account=account.address, work=account.POW, block=block))
             logger.info('Received block %s to %s' % (received_block, account.address))
         except nano.rpc.RPCException as e:
             logger.exception('Error during clean up receive account %s block %s ' % (account.address, block, str(e)))
@@ -187,9 +192,9 @@ def validate_or_regenerate_PoW(account):
     while not valid_PoW and count < 3:
         try:
             account.POW = None
-            account.save()
+            retry(lambda: account.save())
             address_nano = account.address.replace("xrb", "nano")
-            frontier = rpc.frontiers(account=account.address, count=1)[address_nano]
+            frontier = retry(lambda: rpc.frontiers(account=account.address, count=1)[address_nano])
             POWService.enqueue_account(address=account.address, frontier=frontier, urgent=True)
             logger.info('Generating PoW during validate_PoW for: %s' % account.address)
             count += 1
@@ -209,9 +214,10 @@ def validate_or_regenerate_PoW(account):
     if not valid_PoW:
         logger.error('Total failure of dPoW. Aborting transaction account %s' % account.address)
         account.POW = None
-        account.save()
+        retry(lambda: account.save())
 
     return valid_PoW
+
 
 def validate_PoW(account):
     """
@@ -224,20 +230,20 @@ def validate_PoW(account):
         logger.error('PoW empty %s' % account.POW)
         return False
 
-    valid_PoW = True
+    valid_PoW = False
     rpc = nano.rpc.Client(account.wallet.node.URL)
     try:
         address_nano = account.address.replace("xrb", "nano")
-        frontier = rpc.frontiers(account=account.address, count=1)[address_nano]
-        valid_PoW = rpc.work_validate(work=account.POW, hash=frontier)
+        frontier = retry(lambda: rpc.frontiers(account=account.address, count=1)[address_nano])
+        valid_PoW = retry(lambda: rpc.work_validate(work=account.POW, hash=frontier))
     except Exception as e:
         logger.exception('PoW invalid during validate_PoW %s' % str(e))
-        valid_PoW = False
 
     if not valid_PoW:
         logger.error('PoW invalid work %s frontier %s' % (account.POW, frontier))
 
     return valid_PoW
+
 
 def check_account_balance_async(account):
     """
@@ -245,32 +251,25 @@ def check_account_balance_async(account):
     :param account:
     :returns PoW valid on account
     """
-    for i in [1,2,3]:
-        try:
-            logger.info('Syncing account: %s' % account)
-            rpc = nano.rpc.Client(account.wallet.node.URL)
-            address_nano = account.address.replace("xrb", "nano")
-            new_balance = rpc.account_balance(account=address_nano)['balance']
-            break
-        except Exception as e:
-            logger.exception('RCP call failed during balance check %s try %s of 3' % (str(e)), i)
-            time.sleep(.1)
-            if i >= 3:
-                return
 
+    logger.info('Syncing account: %s' % account)
+    rpc = retry(lambda: nano.rpc.Client(account.wallet.node.URL))
+    address_nano = account.address.replace("xrb", "nano")
+    new_balance = retry(lambda: rpc.account_balance(account=address_nano)['balance'])
 
     if not account.current_balance == new_balance:
         logger.error('Updating balance %s' % (account.address))
         account.current_balance = new_balance
         account.POW = None
 
-    account.save()
+    retry(lambda: account.save())
     account.unlock()
+
 
 def clear_all_POW():
     """
     Clear all POW for regeneration
     :return:
     """
-    qs = models.Account.objects.all()
-    qs.update(POW=None)
+    qs = retry(lambda: models.Account.objects.all())
+    retry(lambda: qs.update(POW=None))
