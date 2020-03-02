@@ -1,5 +1,5 @@
 from .. import models
-
+from ..common.retry import retry
 
 def get_partners(enabled=True):
     """
@@ -7,4 +7,4 @@ def get_partners(enabled=True):
 
     @return: Query of all Sponsors
     """
-    return models.Partner.objects.filter(enabled=enabled).all()
+    return retry(lambda: models.Partner.objects.filter(enabled=enabled).all())

@@ -8,9 +8,8 @@ import threading
 
 from django.conf import settings as settings
 import nano
-
-from .. import models as models
-
+from ..common.constants import DPOW_DELAY
+from ..common.retry import retry
 
 
 logger = logging.getLogger(__name__)
@@ -53,7 +52,7 @@ class POWService:
             return temp_queue[0][0]
 
         head = temp_queue[0]
-        if head[1] + 30*1000 <= int(round(time.time() * 1000)): # 30 sec. wait
+        if head[1] + DPOW_DELAY <= int(round(time.time() * 1000)): # 30 sec. wait
             copy_queue = queue.Queue()
             [copy_queue.put(i) for i in temp_queue[1:]]
             cls._pow_queue = copy_queue
@@ -89,30 +88,10 @@ class POWService:
         account = get_account(address=address)
         POW = None
 
-        for i in range(5):
-            try:
-                POW = cls._get_dpow(hash_value)['work']
-                if POW:
-                    return POW
-            except Exception as e:
-                logger.exception('dPoW failure for hash %s: %s try %s of 4' % (hash_value, str(e), i))
-                if i == 4:
-                    logger.error('dPoW failure account %s' % address)
-            time.sleep(.5)
-
-        ## Moved PoW to nodes as work peers
-        # for i in range(5):
-        #     try:
-        #         POW = rpc_node.work_generate(hash)
-        #         break
-        #     except Exception as e:
-        #         logger.error('Node work_generate error: %s try %s of 4' % (e, i))
-        #         time.sleep(30)
-        #         if i == 4:
-        #             logger.error('dPoW failure account %s unlocked without PoW' % address)
-        #             account.unlock()
-        
-        # Add third POW that cannot fail (if it does our account object becomes broken)
+        try:
+            POW = retry(lambda: cls._get_dpow(hash_value)['work'], retries=5, pause=.5)
+        except:
+            logger.error('dPoW failure account %s' % address)
 
         if POW is None:
             account.unlock()
@@ -136,7 +115,7 @@ class POWService:
             "multiplier": 4.0, ##4x base
             "hash": hash_value,
         }
-        res = requests.post(url=settings.DPOW_ENDPOINT, json=data, timeout=15)
+        res = retry(lambda: requests.post(url=settings.DPOW_ENDPOINT, json=data, timeout=15))
         logger.info('dPoW Status %s %s' % (res.status_code, res.json()))
 
         if res.status_code == 200:
@@ -153,20 +132,21 @@ class POWService:
                 while not cls.is_empty():
                     from .accounts import get_account
                     address, frontier = cls.get_account()
+
                     try:
                         account = get_account(address=address)
                         account.POW = cls.get_pow(address=address, hash_value=frontier)
                         logger.info('Generated POW: %s for account %s' % (account.POW, account))
-                        time.sleep(.5)  ## Don't spam dPoW
+                        time.sleep(.1)  ## Don't spam dPoW
 
-                        account.save()
+                        retry(lambda: account.save())
                         account.unlock()
                     except Exception as e:
                         logger.error('Exception in POW thread: %s ' % e)
                         logger.error('dPoW failure account %s unlocked without PoW' % address)
                         account.unlock()  ## Prevent leaks
 
-                # Run this every second
+                # Run this every .1 second
                 time.sleep(.1)
         except Exception as e:
             logger.error('dPoW failure account %s' % e)
@@ -226,7 +206,7 @@ class POWService:
             try:
                 rpc = nano.rpc.Client(account.wallet.node.URL)
                 address_nano = account.address.replace("xrb", "nano")
-                frontier = rpc.frontiers(account=account.address, count=1)[address_nano]
+                frontier = retry(lambda: rpc.frontiers(account=account.address, count=1)[address_nano])
                 POWService.enqueue_account(address=account.address, frontier=frontier, urgent=urgent)
                 logger.info('Generating PoW on start up address %s frontier %s urgent %s' % (account.address, frontier, urgent))
             except Exception as e:

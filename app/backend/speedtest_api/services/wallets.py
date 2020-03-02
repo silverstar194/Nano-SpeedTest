@@ -2,6 +2,7 @@ from django.conf import settings as settings
 import nano
 
 from .. import models as models
+from ..common.retry import retry
 
 
 class WalletNotFoundException(Exception):
@@ -19,9 +20,9 @@ def new_wallet(node, wallet_id=None):
 
     if wallet_id is None:
         rpc = nano.rpc.Client(node.URL)
-        wallet_id = rpc.wallet_create()
+        wallet_id = retry(lambda: rpc.wallet_create())
 
-    return models.Wallet.objects.create(node=node, wallet_id=wallet_id)
+    return retry(lambda: models.Wallet.objects.create(node=node, wallet_id=wallet_id))
 
 def get_wallets(enabled=True):
     """
@@ -31,7 +32,7 @@ def get_wallets(enabled=True):
     @return: Query of all wallets
     """
 
-    return models.Wallet.objects.filter(node__enabled=enabled)
+    return retry(lambda: models.Wallet.objects.filter(node__enabled=enabled))
 
 def get_wallet(id):
     """
@@ -43,7 +44,7 @@ def get_wallet(id):
     """
 
     try:
-        return models.Wallet.objects.get(id=id)
+        return retry(lambda: models.Wallet.objects.get(id=id))
     except models.Wallet.DoesNotExist:
         return None
     except MultipleObjectsReturned:

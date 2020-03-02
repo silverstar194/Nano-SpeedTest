@@ -1,5 +1,4 @@
-from django.conf import settings as settings
-
+from ..common.retry import retry
 from .. import models as models
 
 
@@ -11,7 +10,7 @@ def new_batch(initiated_by):
     @return: New batch object
     """
 
-    return models.Batch.objects.create(initiated_by=initiated_by)
+    return retry(lambda: models.Batch.objects.create(initiated_by=initiated_by))
 
 def get_batches():
     """
@@ -20,7 +19,7 @@ def get_batches():
     @return: Query of all batches
     """
 
-    return models.Batch.objects.all()
+    return retry(lambda: models.Batch.objects.all())
 
 def get_batch(id):
     """
@@ -32,7 +31,7 @@ def get_batch(id):
     """
 
     try:
-        return models.Batch.objects.get(id=id)
+        return retry(lambda: models.Batch.objects.get(id=id))
     except models.Batch.DoesNotExist:
         return None
     except MultipleObjectsReturned:

@@ -1,0 +1,1 @@
+DPOW_DELAY = 30
