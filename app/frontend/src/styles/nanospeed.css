@@ -174,7 +174,7 @@ td {
   background-color: rgba(234, 137, 31, 0.2);
   color: rgba(234, 137, 31, 1);
   padding: 0 10px;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   text-transform: uppercase;
   margin: 0 2px;
 }
@@ -184,7 +184,7 @@ td {
   background-color: rgba(74, 144, 226,0.2);
   color: rgba(74, 144, 226,1);
   padding: 0 10px;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   text-transform: uppercase;
   margin: 0 2px;
 }
@@ -348,11 +348,11 @@ button.transaction-box__choice__button:hover {
     color: #EA891F;
     padding-left: 10px;
     padding-right: 10px;
-    line-height: 50px;
+    line-height: 55px;
   }
 
   .transaction-box-footer-location-origin .active-one {
-    background-color:#FFF;
+    background-color:transparent;
     font-weight: 600;
   }
 
@@ -361,11 +361,11 @@ button.transaction-box__choice__button:hover {
     color: #4A90E2;
     padding-right: 10px;
     padding-left: 10px;
-    line-height: 50px;
+    line-height: 55px;
   }
 
   .transaction-box-footer-location-destination .active-two {
-    background-color:#FFF;
+    background-color:transparent;
     font-weight: 600;
   }
 
@@ -386,13 +386,14 @@ button.transaction-box__choice__button:hover {
   .transaction-box-footer-time {
     display: inline;
     border: 1px solid #E2E2E2;
-    border-radius: 5px;
+    border-radius: 50px;
     padding: 5px;
-    height: 30px;
+    height: 33px;
     font-size: 14px;
     color: #949494;
     text-align: center;
-    line-height: 30px;
+    line-height: 33px;
+    margin-top:2px;
   }
 
   .transaction-box-map {
@@ -410,54 +411,123 @@ button.transaction-box__choice__button:hover {
     color: black;
     font-size: 14px;
     text-align: center;
-    line-height: 30px;
+    line-height: 33px;
     font-weight: 600;
   }
 
-  .transaction-box-footer-try-again {
-    background-color:  #4A90E2;
-    color: #FFF;
-    border-radius: 25px;
-    padding: 5px;
-    height: 30px;
+  .transaction-box-footer-buttons {
+    display: flex;
+    flex: 1 1 auto;
     margin-right: 15px;
+  }
+
+  .transaction-box-footer-retry, .transaction-box-footer-try-again {
+    flex: 1 1 auto;
+    margin:0 5px;
+  }
+
+  .transaction-box-footer-retry {
+    background-color:  #4A90E2;
+    border: 1px solid #4A90E2;
+    color: #FFF;
+    border-radius: 5px;
+    padding: 5px;
+    height: 33px;
     text-align: center;
-    line-height: 30px;
+    line-height: 33px;
     font-weight: bold;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     cursor: pointer;
+    margin-top:2px;
   }
 
-  .transaction-box-footer-try-again:hover {
+   .transaction-box-footer-try-again:hover, .transaction-box-footer-retry:hover {
     color: #FFF;
-    background-color: #3379ca;
+    background-color: #3379ca;  
+  }
+
+  .transaction-box-footer-try-again {
+    border:1px solid #4A90E2;
+    color: #4A90E2;
     border-radius: 5px;
     padding: 5px;
-    height: 30px;
-    margin-right: 15px;
+    height: 33px;
     text-align: center;
-    line-height: 30px;
+    line-height: 33px;
     font-weight: bold;
     overflow: hidden;
     white-space: nowrap;
-    text-overflow: ellipsis;    
+    text-overflow: ellipsis;
+    cursor: pointer;
+    margin-top:2px;
   }
-
-
 
 
   .transaction-box-footer {
     display: grid;
     background-color: white;
-    grid-template-columns: 318fr 196fr 126fr;
+    grid-template-columns: 1fr 25% 25%;
     grid-gap: 10px;
     grid-row-start: 2;
     padding-top: 5px;
     grid-column: 1 / 3;
     height: 100%;
+  }
+
+  .transaction-box-footer-extra {
+    background-color: #FFF;
+    display: flex;
+    grid-column: 1 / 3;
     border-radius: 0 0 10px 10px;
+    box-shadow: 0px -5px 25px rgba(0, 0, 0, 0.1);
+  }
+
+  .transaction-box-footer-wanna-try {
+    padding: 10px 15px;
+    border-right: 1px solid #e2e2e2;
+    max-width: 550px;
+    flex: 1;
+  }
+
+  .try-title {
+    font-size:18px;
+    font-weight:600;
+  }
+
+  .try-desc {
+    font-size:14px;
+    color:#707070;
+    margin-bottom: 5px;
+  }
+
+  .try-buttons a {
+    color:#4A90E2;
+    margin-right:25px;
+  }
+
+  .try-buttons a:hover {
+    color:#3379ca;
+  }
+
+  .transaction-box-footer-wanna-share {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 327px;
+  }
+
+  .share-btn {
+    margin-left:10px;
+    display:flex;
+  }
+
+  .share-btn a {
+    width: 44px;
+    height: 44px;
+    margin:0 3px;
   }
 
 
@@ -660,8 +730,10 @@ ul.sidenav__list a {
   position: relative;
   transition: transform 1s;
   transform-style: preserve-3d;
-  margin-top: 20px;
   z-index: 4;
+  height: 470px;
+  padding-bottom: 130px;
+  margin-bottom: 25px;
 }
 
 .is-flipped {
@@ -675,7 +747,7 @@ ul.sidenav__list a {
 
 .loader-custom {
     display: block;
-    margin-top: 20px;
+    margin-top: 25px;
     background-color: orange;
     transparent: .5;
     height: 5px;
@@ -700,12 +772,10 @@ ul.sidenav__list a {
 }
 
 .transaction-box-back {
-  display: grid;
-  grid-template-rows: 1fr 50px;
-  margin-top:-500px;
+  grid-template-rows: 1fr 55px auto;
+  margin-top:-470px;
   transform: rotateY(180deg);
-  height: 440px;
-  padding: 50px;
+  padding: 50px 10px;
   backface-visibility: hidden;
   border-radius: 5px;
 }
@@ -713,7 +783,7 @@ ul.sidenav__list a {
 .transaction-box-footer {
   display: grid;
   height: 100%;
-  border-radius: 0 0 10px 10px;
+  box-shadow: 0px -5px 25px rgba(0, 0, 0, 0.25);
 }
 
 .header__learnmorebutton {
@@ -1703,6 +1773,24 @@ a.usernano-card-link {
   }
 }
 
+@media all and (max-width: 967px) {
+  .transaction-box-footer-location-origin {
+    padding-right:0;
+    font-size: 13px;
+    line-height: 55px;
+  }
+
+  .transaction-box-footer-location-destination {
+    padding-left: 0;
+    font-size: 13px;
+    line-height: 55px;
+  }
+  .transaction-box-footer-try-again, .transaction-box-footer-retry {
+    font-size:14px;
+    letter-spacing: 1px;;
+  }
+}
+
 
 /* Table redesign */
 
@@ -1797,7 +1885,6 @@ a.usernano-card-link {
 
     .index-main {
       display: grid;
-      grid-template-rows: 95px 850px auto auto;
     }
 
 @media (max-device-width: 1024px) and (min-device-width: 768px), only screen and (max-width: 760px){
@@ -1818,6 +1905,14 @@ a.usernano-card-link {
         }
         .social-icons a {
           margin: 15px;
+        }
+
+        .transaction-box-footer-location-origin {
+          padding-right:0;
+        }
+    
+        .transaction-box-footer-location-destination {
+          padding-left: 0
         }
 
       }
@@ -1859,21 +1954,56 @@ a.usernano-card-link {
       position: relative;
       display: flex;
       flex-direction: column;
+      margin-top:60px;
     }
 
     .index-main-area-one {
       position: relative;
       display: flex;
       flex-direction: column;
-      padding-bottom: 120px;
+      /*padding-bottom: 300px;*/
     }
+
+    .transaction-box-footer-extra {
+      margin-top:0;
+      flex-direction: column;
+      text-align: center;
+      width:100%;
+    }
+
+    .transaction-box-footer-wanna-try {
+      max-width: 100%;
+      border-right:0;
+    }
+
+    .transaction-box-footer-wanna-share {
+      width:100%;
+      text-align:center;
+      flex-direction: row;
+      border-top: 1px solid #e2e2e2;
+      padding: 5px 0;
+    }
+
+    .share-btn {
+      margin-left:10px;
+      display:flex;
+    }
+
+    .share-btn a {
+      width: 44px;
+      height: 44px;
+      margin:0 3px;
+    }
+
+    .transaction-box-footer-buttons {
+      margin-right:0px;
+    }
+
 
     .transaction-box-back {
       grid-template-rows: 1fr 1fr;
-      margin-top: -470px;
       -webkit-transform: rotateY(180deg);
       transform: rotateY(180deg);
-      height: 440px;
       padding: 0px;
       border-radius: 5px;
     }
@@ -1882,29 +2012,34 @@ a.usernano-card-link {
       display: flex;
       height: auto;
       flex-direction: column;
-      border-radius: 0 0 10px 10px;
+      border-radius: 0;
       padding: 20px 20px;
     }
 
+    .transaction-box-footer-time {
+      margin-bottom:15px;
+    }
 
-    .transaction-box-footer-try-again {
+    .transaction-box-footer-retry {
       margin-right: 0;
     }
 
-    .transaction-box-footer-try-again:hover {
-      border-radius:25px;
+    .transaction-box-footer-retry:hover {
+      border-radius:5px;
       margin-right: 0;
     }
     .card {
-      margin-top:30px;
+      height: 470px;
+      padding-bottom: 130px;
+      margin-bottom: 25px;
     }
 
     .transaction-box-footer-time {
       margin-top:10px;
     }
 
-    .transaction-box-footer-try-again {
-      margin-top: 15px;
+    .transaction-box-footer-retry {
+      margin-top: 2px;
     }
 
 	}
