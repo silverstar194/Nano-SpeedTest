@@ -194,6 +194,7 @@ def validate_or_regenerate_PoW(account):
 
         wait_on_PoW = 0
         while not valid_PoW and wait_on_PoW < 7:
+            logger.info('Waiting for PoW')
             wait_on_PoW += 1
             account = get_account(account.address)
             valid_PoW = validate_PoW(account)
