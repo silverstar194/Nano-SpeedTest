@@ -185,18 +185,12 @@ def validate_or_regenerate_PoW(account):
     # Make sure the POW is there (not in the POW regen queue) if not wait for it and its valid
     count = 0
     while not valid_PoW and count < 3:
-        try:
-            account.POW = None
-            account.save()
-            address_nano = account.address.replace("xrb", "nano")
-            frontier = rpc.frontiers(account=account.address, count=1)[address_nano]
-            POWService.enqueue_account(address=account.address, frontier=frontier, urgent=True)
-            logger.info('Generating PoW during validate_PoW for: %s' % account.address)
-            count += 1
-        except Exception as e:
-            count += 1
-            if count >= 3:
-                logger.error('Error adding address, frontier pair to POWService: %s' % e)
+        account.POW = None
+        address_nano = account.address.replace("xrb", "nano")
+        frontier = rpc.frontiers(account=address_nano, count=1)[address_nano]
+        POWService.enqueue_account(address=account.address, frontier=frontier, urgent=True)
+        logger.info('Generating PoW during validate_PoW for: %s' % account.address)
+        count += 1
 
         wait_on_PoW = 0
         while not valid_PoW and wait_on_PoW < 7:
