@@ -79,7 +79,7 @@ class Command(BaseCommand):
             
             # If the wallet is new, allow the balancing to happen
             try:
-                address_nano = accounts[lower].address.replace("xrb", "nano")
+                address_nano = accounts[lower].address.replace("xrb", "nano", 1)
                 rpc.account_info(account=address_nano)
             except:
                 found_lower = True

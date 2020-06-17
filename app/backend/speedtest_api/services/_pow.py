@@ -225,7 +225,7 @@ class POWService:
         if not valid:
             try:
                 rpc = nano.rpc.Client(account.wallet.node.URL)
-                address_nano = account.address.replace("xrb", "nano")
+                address_nano = account.address.replace("xrb", "nano", 1)
                 frontier = rpc.frontiers(account=account.address, count=1)[address_nano]
                 POWService.enqueue_account(address=account.address, frontier=frontier, urgent=urgent)
                 logger.info('Generating PoW on start up address %s frontier %s urgent %s' % (account.address, frontier, urgent))

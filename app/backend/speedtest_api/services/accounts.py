@@ -28,7 +28,7 @@ def new_account(wallet, address=None):
 
     rpc = nano.rpc.Client(wallet.node.URL)
 
-    address_nano = address.replace("xrb", "nano")
+    address_nano = address.replace("xrb", "nano", 1)
     if address is None:
         address = rpc.account_create(wallet=wallet.wallet_id)
 
@@ -150,17 +150,13 @@ def clear_frontier_async(account):
     pending_blocks = None
     try:
         rpc = nano.rpc.Client(account.wallet.node.URL)
-        address_nano = account.address.replace("xrb", "nano")
+        address_nano = account.address.replace("xrb", "nano", 1)
         pending_blocks = rpc.accounts_pending([account.address])[address_nano]
     except Exception as e:
         logger.exception('RCP call failed during receive %s' % str(e.message))
 
     for block in pending_blocks:
         logger.info("Found block %s to receive for %s " % (block, account.address))
-
-        if not validate_or_regenerate_PoW(account):
-            logger.error('Total faliure of dPoW. Aborting receive account %s' % account.address)
-            continue
 
         if len(pending_blocks) > 1:
             time.sleep(1)  ## Allow frontier to refresh
@@ -187,14 +183,14 @@ def validate_or_regenerate_PoW(account):
     while not valid_PoW and count < 3:
         logger.info('Generating PoW during validate_PoW for: %s' % account.address)
         account.POW = None
-        address_nano = account.address.replace("xrb", "nano")
-        frontier = rpc.frontiers(account=address_nano, count=1)[address_nano]
+        address_nano = account.address.replace("xrb", "nano", 1)
+        frontier = rpc.frontiers(account=account.address, count=1)[address_nano]
         POWService.enqueue_account(address=account.address, frontier=frontier, urgent=True)
         count += 1
 
         wait_on_PoW = 0
         while not valid_PoW and wait_on_PoW < 7:
-            logger.info('Waiting for PoW')
+            logger.info('Waiting for PoW on account %s' % address_nano)
             wait_on_PoW += 1
             account = get_account(account.address)
             valid_PoW = validate_PoW(account)
@@ -222,7 +218,7 @@ def validate_PoW(account):
     valid_PoW = True
     rpc = nano.rpc.Client(account.wallet.node.URL)
     try:
-        address_nano = account.address.replace("xrb", "nano")
+        address_nano = account.address.replace("xrb", "nano", 1)
         frontier = rpc.frontiers(account=account.address, count=1)[address_nano]
         valid_PoW = rpc.work_validate(work=account.POW, hash=frontier)
     except Exception as e:
@@ -244,7 +240,7 @@ def check_account_balance_async(account):
         try:
             logger.info('Syncing account: %s' % account)
             rpc = nano.rpc.Client(account.wallet.node.URL)
-            address_nano = account.address.replace("xrb", "nano")
+            address_nano = account.address.replace("xrb", "nano", 1)
             new_balance = rpc.account_balance(account=address_nano)['balance']
             break
         except Exception as e:
