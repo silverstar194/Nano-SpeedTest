@@ -1,5 +1,7 @@
 import logging
 import time
+import json
+import requests
 from multiprocessing.pool import ThreadPool
 
 from django.core.exceptions import MultipleObjectsReturned
@@ -44,6 +46,7 @@ def new_account(wallet, address=None):
 
     return models.Account.objects.create(wallet=wallet, address=address)
 
+
 def get_accounts(enabled=True, node=None, in_use=None, empty=None):
     """
     Get all accounts in the database
@@ -66,6 +69,7 @@ def get_accounts(enabled=True, node=None, in_use=None, empty=None):
 
     return models.Account.objects.filter(wallet__node__enabled=enabled).filter(current_balance__gt=0).select_related()
 
+
 def get_account(address):
     """
     Get an account in the database with the specified address
@@ -82,6 +86,7 @@ def get_account(address):
     except MultipleObjectsReturned:
         logger.info("MultipleObjectsReturned for account %s " % address)
         return models.Account.objects.filter(address=address).first()
+
 
 def get_accounts_ignore_lock():
     """
@@ -135,6 +140,7 @@ def lock_all_accounts():
     Lock all the account at once for speed at DB layer
     """
     models.Account.objects.all().update(in_use=True)
+
 
 def number_accounts():
     return models.Account.objects.filter(wallet__node__enabled=True).count()
@@ -204,6 +210,7 @@ def validate_or_regenerate_PoW(account):
 
     return valid_PoW
 
+
 def validate_PoW(account):
     """
     Check for valid PoW.
@@ -220,7 +227,8 @@ def validate_PoW(account):
     try:
         address_nano = account.address.replace("xrb", "nano", 1)
         frontier = rpc.frontiers(account=account.address, count=1)[address_nano]
-        valid_PoW = rpc.work_validate(work=account.POW, hash=frontier)
+        # valid_PoW = rpc.work_validate(work=account.POW, hash=frontier)
+        valid_PoW = validate_work_with_node(work=account.POW, hash=frontier, node_url=account.wallet.node.URL)
     except Exception as e:
         logger.exception('PoW invalid during validate_PoW %s' % str(e))
         valid_PoW = False
@@ -229,6 +237,7 @@ def validate_PoW(account):
         logger.error('PoW invalid work %s frontier %s' % (account.POW, frontier))
 
     return valid_PoW
+
 
 def check_account_balance_async(account):
     """
@@ -258,6 +267,7 @@ def check_account_balance_async(account):
     account.save()
     account.unlock()
 
+
 def clear_all_POW():
     """
     Clear all POW for regeneration
@@ -265,3 +275,32 @@ def clear_all_POW():
     """
     qs = models.Account.objects.all()
     qs.update(POW=None)
+
+
+def validate_work_with_node(work, hash, node_url):
+
+    headers = {
+        'Content-Type': 'application/json',
+    }
+
+    validate_work_data = {
+        "action": "work_validate",
+        "work": work,
+        "hash": hash
+    }
+
+    sent_successful = False
+    count = 0
+    while not sent_successful and count < 5:
+        try:
+            response = requests.post(node_url, headers=headers, data=json.dumps(validate_work_data))
+        except Exception as E:
+            logger.exception("validate_work_with_node had retry %s of 4" % (count))
+            if count >= 4:
+                return sent_successful
+
+        if response.status_code == requests.codes.ok:
+            sent_successful = True
+    response_data = json.loads(response.text)
+
+    return response_data['valid_all'] == "1"
