@@ -148,8 +148,8 @@ class POWService:
     @classmethod
     def _run(cls):
 
-        try:
-            while cls._running:
+        while cls._running:
+            try:
                 while not cls.is_empty():
                     from .accounts import get_account
                     address, frontier = cls.get_account()
@@ -168,9 +168,9 @@ class POWService:
 
                 # Run this every second
                 time.sleep(.1)
-        except Exception as e:
-            logger.error('dPoW failure account %s' % e)
-            logger.error("Error in _run PoW address")
+            except Exception as e:
+                logger.error('dPoW failure account %s' % e)
+                logger.error("Error in _run PoW address")
 
 
     @classmethod
